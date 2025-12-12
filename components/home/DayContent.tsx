@@ -64,11 +64,11 @@ function mapTimelineDayToDisplayData(day: TimelineDayDocument | null) {
   const parliament = day.context?.public_hansard || 'No parliamentary activity recorded.';
 
   // Cabinet activity from meeting details
-  const cabinet = day.prime_minister?.meeting_details 
+  const cabinet = day?.context?.secret_churchill || (day.prime_minister?.meeting_details 
     ? day.prime_minister.meeting_details
     : day.prime_minister?.meeting_with_venetia
     ? 'Meeting with Venetia recorded.'
-    : 'No cabinet activity recorded.';
+    : 'No cabinet activity recorded.');
 
   // Newspaper - using context or default
   const newspaper = day.context?.secret_churchill || 'No newspaper headlines available.';
@@ -206,7 +206,7 @@ export default function DayContent({ currentDate }: DayContentProps) {
         <div className="flex-1 space-y-3">
           {displayData.emotionalTone && (
             <div className="bg-[#F5F0E8] rounded-lg p-4">
-              <h4 className="text-xs font-semibold text-[#2D3648] uppercase tracking-wider mb-2">
+              <h4 className="text-base font-semibold text-[#2D3648] uppercase tracking-wider mb-2">
                 Emotional Tone of Letter
               </h4>
               <p className="text-sm text-[#1A2A40] leading-relaxed">
@@ -216,14 +216,14 @@ export default function DayContent({ currentDate }: DayContentProps) {
           )}
 
           <div className="bg-[#F5F0E8] rounded-lg p-4">
-            <h4 className="text-xs font-semibold text-[#2D3648] uppercase tracking-wider mb-1">
+            <h4 className="text-base font-semibold text-[#2D3648] uppercase tracking-wider mb-1">
               Parliament Activity:
             </h4>
             <p className="text-sm text-[#1A2A40]">{displayData.parliament}</p>
           </div>
 
           <div className="bg-[#F5F0E8] rounded-lg p-4">
-            <h4 className="text-xs font-semibold text-[#2D3648] uppercase tracking-wider mb-1">
+            <h4 className="text-base font-semibold text-[#2D3648] uppercase tracking-wider mb-1">
               Cabinet Activity:
             </h4>
             <p className="text-sm text-[#1A2A40]">{displayData.cabinet}</p>
@@ -257,7 +257,7 @@ export default function DayContent({ currentDate }: DayContentProps) {
                       <img
                         src={personImage}
                         alt={person.name}
-                        className="w-12 h-12 rounded-full object-cover flex-shrink-0 border-2 border-[#D4CFC4]"
+                        className="w-16 h-16 rounded-full object-cover flex-shrink-0 border-2 border-[#D4CFC4]"
                         onError={(e) => {
                           // Hide image if it fails to load
                           e.currentTarget.style.display = 'none';

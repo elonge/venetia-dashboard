@@ -16,6 +16,9 @@ interface MessageBubbleProps {
 
 export default function MessageBubble({ message }: MessageBubbleProps) {
   const isUser = message.role === 'user';
+  const displayContent = message.isStreaming && !message.content
+    ? 'Thinking...'
+    : message.content;
   
   return (
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-4`}>
@@ -27,7 +30,7 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
         }`}
       >
         <div className="prose prose-sm max-w-none">
-          <p className="whitespace-pre-wrap leading-relaxed">{message.content}</p>
+          <p className="whitespace-pre-wrap leading-relaxed">{displayContent}</p>
           {message.isStreaming && (
             <span className="inline-block w-2 h-4 ml-1 bg-current animate-pulse" />
           )}
@@ -47,4 +50,3 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
     </div>
   );
 }
-

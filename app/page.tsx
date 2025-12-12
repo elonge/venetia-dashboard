@@ -16,7 +16,7 @@ const CHAT_MAX_WIDTH = 600;
 const CHAT_DEFAULT_WIDTH = 400;
 
 export default function Home() {
-  const [currentDate, setCurrentDate] = useState('MAY 12, 1915');
+  const [currentDate, setCurrentDate] = useState('July 28, 1914');
   const [sidebarWidth, setSidebarWidth] = useState(SIDEBAR_DEFAULT_WIDTH);
   const [chatWidth, setChatWidth] = useState(CHAT_DEFAULT_WIDTH);
   const [isResizingSidebar, setIsResizingSidebar] = useState(false);

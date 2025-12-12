@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import MessageBubble, { Message } from './MessageBubble';
 
+const CHAT_STORAGE_KEY = 'chatMessages';
+
 export default function ChatInterface() {
   const searchParams = useSearchParams();
   const [messages, setMessages] = useState<Message[]>([]);
@@ -22,6 +24,40 @@ export default function ChatInterface() {
 
   useEffect(() => {
     scrollToBottom();
+  }, [messages]);
+
+  // Restore chat history on mount
+  useEffect(() => {
+    const savedMessages = localStorage.getItem(CHAT_STORAGE_KEY);
+    if (savedMessages) {
+      try {
+        const parsed = JSON.parse(savedMessages);
+        if (Array.isArray(parsed)) {
+          const sanitizedMessages: Message[] = parsed
+            .filter((msg) => msg && typeof msg.role === 'string' && typeof msg.content === 'string')
+            .map((msg) => ({
+              role: msg.role === 'assistant' ? 'assistant' : 'user',
+              content: msg.content,
+              sources: msg.sources,
+              isStreaming: msg.isStreaming,
+            }));
+          if (sanitizedMessages.length > 0) {
+            setMessages(sanitizedMessages);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to parse saved chat messages', err);
+      }
+    }
+  }, []);
+
+  // Persist chat history across pages
+  useEffect(() => {
+    if (messages.length > 0) {
+      localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(messages));
+    } else {
+      localStorage.removeItem(CHAT_STORAGE_KEY);
+    }
   }, [messages]);
 
   const handleSend = useCallback(async (questionOverride?: string) => {
@@ -274,4 +310,3 @@ export default function ChatInterface() {
     </div>
   );
 }
-
