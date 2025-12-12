@@ -1,11 +1,16 @@
 'use client';
 
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { ArrowLeft, Play, Headphones, ExternalLink, Send, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import SicilyMap from '@/components/chapter/SicilyMap';
+
+// Dynamically import SicilyMap with SSR disabled to prevent window is not defined error
+const SicilyMap = dynamic(() => import('@/components/chapter/SicilyMap'), {
+  ssr: false,
+});
 
 // Mock data for a chapter
 const chapterData = {
