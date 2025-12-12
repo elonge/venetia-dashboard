@@ -39,6 +39,7 @@ async function generateQueryEmbedding(
     const response = await openai.embeddings.create({
       model: EMBEDDING_MODEL,
       input: query,
+      dimensions: 1536, // Match MongoDB index dimensions
     });
     
     return response.data[0].embedding;
