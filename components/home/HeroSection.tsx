@@ -1,9 +1,27 @@
+'use client';
+
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Input } from "@/components/ui/input";
 import { Send, MessageSquare, MoreHorizontal } from 'lucide-react';
 
 export default function HeroSection() {
   const [query, setQuery] = useState('');
+  const router = useRouter();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (query.trim()) {
+      router.push(`/chat?q=${encodeURIComponent(query.trim())}`);
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e);
+    }
+  };
 
   return (
     <div className="bg-[#F5F0E8] rounded-lg overflow-hidden mb-4">
@@ -42,17 +60,21 @@ export default function HeroSection() {
             </p>
           </div>
 
-          <div className="relative">
+          <form onSubmit={handleSubmit} className="relative">
             <Input 
               placeholder='e.g., "What did the PM write on D-Day?"'
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              onKeyPress={handleKeyPress}
               className="pr-10 bg-white border-[#D4CFC4] text-sm placeholder:text-[#9CA3AF]"
             />
-            <button className="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 bg-[#1A2A40] rounded flex items-center justify-center">
+            <button 
+              type="submit"
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 bg-[#1A2A40] rounded flex items-center justify-center hover:bg-[#2A3A50] transition-colors"
+            >
               <Send className="w-3 h-3 text-white" />
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>

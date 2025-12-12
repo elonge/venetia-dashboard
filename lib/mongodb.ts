@@ -1,10 +1,11 @@
 import { MongoClient } from 'mongodb';
 
-if (!process.env.MONGODB_URI) {
-  throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
-}
+// Temp EGEG
+// if (!process.env.MONGODB_URI) {
+//   throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
+// }
 
-const uri = process.env.MONGODB_URI;
+const uri = "mongodb+srv://alwaystest:alwaystest004@free-testing.tzjctgr.mongodb.net/?retryWrites=true&w=majority&appName=free-testing";
 const options = {};
 
 let client: MongoClient;
