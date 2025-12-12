@@ -1,0 +1,100 @@
+What Is The Venetia Project?
+
+When AI meets primary sources.
+
+The Venetia Project is a historical reconstruction experiment that blends archival research, data analysis, and modern AI tools to retell, day by day, the private world surrounding Venetia Stanley, Prime Minister H. H. Asquith, and Edwin Montagu during the turbulent years 1912–1916.
+
+It rebuilds history not as a summary, but as a living timeline of letters, diaries, Cabinet minutes, political pressures, emotional turning points, and shifting alliances.
+
+At its core, the project explores one question:
+
+What really happened—emotionally, politically, privately—on each day of this extraordinary relationship?
+
+How the Reconstruction Works
+
+Using the primary sources listed in the research brief—letters, diaries, Hansard debates, Cabinet papers, memoirs, and eyewitness writing—the system attempts to answer for every date: 
+
+The Venetia Project
+
+Where were Venetia, Asquith, and Edwin?
+
+Did they meet? With whom?
+
+How many letters were exchanged that day, and what was their tone?
+
+What topics appeared—politics, affection, gossip, anxiety?
+
+What was happening in Parliament or Cabinet?
+
+What did contemporaries like Violet Asquith, Margot Asquith, Cynthia Asquith, and Diana Manners record in their diaries?
+
+What did the newspapers report?
+
+Were there noticeable shifts in mood, influence, or emotional distance?
+
+The website compiles this into:
+
+Letter-volume timelines
+
+Topic heat maps
+
+Emotional tone graphs
+
+Daily summaries
+
+Maps of movement
+
+Cross-perspective views (“what others did”)
+
+Links between private correspondence and public events
+
+It turns the scattered sources of 1912–1916 into a unified, interactive archive.
+
+AI Tools Used in the Project
+
+This project was built through multiple AI tools working together, each chosen for its strengths.
+
+NotebookLM
+
+To summarize diaries, build daily timelines, and identify recurring themes across long documents.
+
+Gemini
+
+For linguistic extraction, emotional modeling, and detecting tone shifts across letters.
+
+Gemini Gem
+
+For structuring data, clustering topics, and generating comparative timelines.
+
+Claude
+
+For contextual reasoning, resolving conflicting accounts, and reconstructing ambiguous or partial days.
+
+Codex
+
+For generating scripts, data pipelines, and automations that processed the source material.
+
+Cursor
+
+My main development environment—connecting AI-assisted reasoning directly to the codebase while building the site.
+
+Base44
+
+Used heavily for vibe-coding the entire interface: iterating layouts, UI components, design decisions, and stylistic polish.
+
+Together, these tools made it possible to build a research system that combines storytelling, data, and historical methodology.
+
+Why I Built This
+
+I built the Venetia Project for two reasons:
+
+1. I love history.
+
+Especially the moments when personal relationships intersect with political events — when private letters illuminate public decisions, and when human emotion reshapes the course of nations.
+
+2. I love working with new AI technologies.
+
+This project allowed me to combine both passions:
+to take cutting-edge tools like Gemini, Claude, Cursor, Codex, NotebookLM, and Base44, and use them not to replace history, but to restructure it, explore it, and bring it to life.
+
+The result is a personal experiment — part research platform, part storytelling engine, part technical challenge — built out of curiosity, admiration for the past, and excitement for the future.

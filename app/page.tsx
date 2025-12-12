@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback, Suspense } from 'react';
+import Link from 'next/link';
 import HeroSection from '@/components/home/HeroSection';
 import DayNavigation from '@/components/home/DayNavigation';
 import DayContent from '@/components/home/DayContent';
@@ -114,7 +115,15 @@ export default function Home() {
       {/* Header */}
       <header className="bg-[#F5F0E8] border-b border-[#D4CFC4] px-6 py-3 flex items-center justify-between">
         <h1 className="text-[#1A2A40] font-serif text-lg font-medium">The Venetia Project</h1>
-        <span className="text-[#6B7280] text-sm">When AI Meets Primary Sources</span>
+        <div className="flex items-center gap-6">
+          <span className="text-[#6B7280] text-sm">When AI Meets Primary Sources</span>
+          <Link 
+            href="/about" 
+            className="text-[#1A2A40] hover:text-[#4A7C59] transition-colors text-sm font-medium"
+          >
+            What is the Venetia Project?
+          </Link>
+        </div>
         <div className="w-8 h-8 rounded-full bg-[#4A7C59] flex items-center justify-center">
           <span className="text-white text-xs font-medium">V</span>
         </div>

@@ -528,7 +528,7 @@ export default function Sidebar() {
         </div>
 
         {/* View Full Link */}
-        <div className="mt-4 pt-3 border-t border-[#1A2A40]">
+        {/* <div className="mt-4 pt-3 border-t border-[#1A2A40]">
           <a 
             href="#" 
             className="text-[10px] text-[#4A7C59] hover:text-[#5A8C69] flex items-center gap-1 transition-colors"
@@ -536,7 +536,7 @@ export default function Sidebar() {
             <span>View Full Data Room</span>
             <ArrowRight className="w-3 h-3" />
           </a>
-        </div>
+        </div> */}
       </div>
 
       {/* Fun Facts */}
