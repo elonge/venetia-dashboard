@@ -143,7 +143,7 @@ export default function DayContent({ currentDate }: DayContentProps) {
   if (loading) {
     return (
       <div className="space-y-4">
-        <div className="bg-[#F5F0E8] rounded-lg p-4 text-center text-[#6B7280]">
+        <div className="bg-[#F5F0E8] rounded-lg p-4 text-center text-[#2D3648]">
           Loading...
         </div>
       </div>
@@ -156,15 +156,15 @@ export default function DayContent({ currentDate }: DayContentProps) {
         <div className="bg-[#F5F0E8] rounded-lg p-12 text-center">
           <div className="max-w-md mx-auto">
             <div className="mb-4">
-              <Calendar className="w-16 h-16 text-[#9CA3AF] mx-auto mb-4" />
+              <Calendar className="w-16 h-16 text-[#3E4A60] mx-auto mb-4" />
             </div>
             <h3 className="text-xl font-serif text-[#1A2A40] mb-2">
               No Historical Data Available
             </h3>
-            <p className="text-sm text-[#6B7280] mb-4">
+            <p className="text-sm text-[#2D3648] mb-4">
               We don't have any records for <span className="font-semibold text-[#1A2A40]">{currentDate}</span> in our archive.
             </p>
-            <p className="text-xs text-[#9CA3AF]">
+            <p className="text-xs text-[#3E4A60]">
               Try navigating to a different date using the Previous/Next buttons or the date picker above.
             </p>
           </div>
@@ -206,7 +206,7 @@ export default function DayContent({ currentDate }: DayContentProps) {
         <div className="flex-1 space-y-3">
           {displayData.emotionalTone && (
             <div className="bg-[#F5F0E8] rounded-lg p-4">
-              <h4 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider mb-2">
+              <h4 className="text-xs font-semibold text-[#2D3648] uppercase tracking-wider mb-2">
                 Emotional Tone of Letter
               </h4>
               <p className="text-sm text-[#1A2A40] leading-relaxed">
@@ -216,14 +216,14 @@ export default function DayContent({ currentDate }: DayContentProps) {
           )}
 
           <div className="bg-[#F5F0E8] rounded-lg p-4">
-            <h4 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider mb-1">
+            <h4 className="text-xs font-semibold text-[#2D3648] uppercase tracking-wider mb-1">
               Parliament Activity:
             </h4>
             <p className="text-sm text-[#1A2A40]">{displayData.parliament}</p>
           </div>
 
           <div className="bg-[#F5F0E8] rounded-lg p-4">
-            <h4 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider mb-1">
+            <h4 className="text-xs font-semibold text-[#2D3648] uppercase tracking-wider mb-1">
               Cabinet Activity:
             </h4>
             <p className="text-sm text-[#1A2A40]">{displayData.cabinet}</p>
@@ -237,13 +237,13 @@ export default function DayContent({ currentDate }: DayContentProps) {
           onClick={() => setOthersExpanded(!othersExpanded)}
           className="w-full p-4 flex items-center justify-between hover:bg-[#E8E4DC] transition-colors"
         >
-          <h4 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider">
+          <h4 className="text-xs font-semibold text-[#2D3648] uppercase tracking-wider">
             What Others Did
           </h4>
           {othersExpanded ? (
-            <ChevronUp className="w-4 h-4 text-[#6B7280]" />
+            <ChevronUp className="w-4 h-4 text-[#2D3648]" />
           ) : (
-            <ChevronDown className="w-4 h-4 text-[#6B7280]" />
+            <ChevronDown className="w-4 h-4 text-[#2D3648]" />
           )}
         </button>
         {othersExpanded && (
@@ -265,7 +265,7 @@ export default function DayContent({ currentDate }: DayContentProps) {
                       />
                     ) : (
                       <div className="w-12 h-12 rounded-full bg-[#E8E4DC] flex items-center justify-center flex-shrink-0 border-2 border-[#D4CFC4]">
-                        <span className="text-[#6B7280] text-xs font-semibold">
+                        <span className="text-[#2D3648] text-xs font-semibold">
                           {person.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
                         </span>
                       </div>

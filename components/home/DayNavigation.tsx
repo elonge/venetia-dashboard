@@ -144,7 +144,7 @@ export default function DayNavigation({ currentDate, setCurrentDate }: DayNaviga
           A DAY IN HISTORY: <span className="font-bold">{currentDate}</span>
         </h2>
         <div className="flex flex-col items-end gap-1">
-          <div className="flex items-center gap-2 text-sm text-[#6B7280]">
+          <div className="flex items-center gap-2 text-sm text-[#2D3648]">
             <span>JUMP TO DATE:</span>
             <div className="relative">
               <input
@@ -155,7 +155,7 @@ export default function DayNavigation({ currentDate, setCurrentDate }: DayNaviga
                 max="2000-12-31"
                 className="w-36 h-8 text-xs bg-white border border-[#D4CFC4] rounded px-2 pr-8 text-[#1A2A40] focus:outline-none focus:ring-2 focus:ring-[#4A7C59] focus:border-transparent cursor-pointer"
               />
-              <Calendar className="w-4 h-4 absolute right-2 top-1/2 -translate-y-1/2 text-[#6B7280] pointer-events-none" />
+              <Calendar className="w-4 h-4 absolute right-2 top-1/2 -translate-y-1/2 text-[#2D3648] pointer-events-none" />
             </div>
           </div>
           {dateError && (

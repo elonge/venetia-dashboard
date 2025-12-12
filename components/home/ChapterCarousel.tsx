@@ -146,13 +146,13 @@ export default function ChapterCarousel({ chapters, loading }: ChapterCarouselPr
 
   if (loading) {
     return (
-      <div className="text-sm text-[#9CA3AF] p-3">Loading chapters...</div>
+      <div className="text-sm text-[#E5E8F0] p-3">Loading chapters...</div>
     );
   }
 
   if (sortedChapters.length === 0) {
     return (
-      <div className="text-sm text-[#9CA3AF] p-3">No chapters available</div>
+      <div className="text-sm text-[#E5E8F0] p-3">No chapters available</div>
     );
   }
 
@@ -210,13 +210,13 @@ export default function ChapterCarousel({ chapters, loading }: ChapterCarouselPr
               {chapter.chapter_title}
             </h4>
             {chapter.main_story && (
-              <p className="text-xs text-[#6B7280] line-clamp-3 leading-relaxed">
+              <p className="text-xs text-[#2D3648] line-clamp-3 leading-relaxed">
                 {chapter.main_story.substring(0, 150)}
                 {chapter.main_story.length > 150 ? '...' : ''}
               </p>
             )}
             <div className="mt-3 pt-3 border-t border-[#D4CFC4]">
-              <span className="text-[10px] text-[#9CA3AF] uppercase tracking-wider">
+              <span className="text-[10px] text-[#3E4A60] uppercase tracking-wider">
                 Read Chapter →
               </span>
             </div>
@@ -226,4 +226,3 @@ export default function ChapterCarousel({ chapters, loading }: ChapterCarouselPr
     </div>
   );
 }
-

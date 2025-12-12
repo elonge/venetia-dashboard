@@ -229,7 +229,7 @@ export default function ChatInterface() {
               <h2 className="text-2xl font-serif text-[#1A2A40] mb-2">
                 Chat with Historical Documents
               </h2>
-              <p className="text-[#6B7280]">
+              <p className="text-[#2D3648]">
                 Ask questions about Venetia Stanley, H.H. Asquith, Edwin Montagu,
                 and the political events of 1912-1916. I'll search through the
                 primary sources to provide accurate answers.

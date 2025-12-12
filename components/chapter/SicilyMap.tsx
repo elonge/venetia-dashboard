@@ -76,10 +76,10 @@ export default function SicilyMap({
   return (
     <div className="bg-[#F5F0E8] rounded-lg overflow-hidden">
       <div className="p-4 border-b border-[#D4CFC4]">
-        <h2 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider">
+        <h2 className="text-xs font-semibold text-[#2D3648] uppercase tracking-wider">
           {title}
         </h2>
-        <p className="text-sm text-[#6B7280] mt-1">
+        <p className="text-sm text-[#2D3648] mt-1">
           {description}
         </p>
       </div>

@@ -19,11 +19,11 @@ export default function SourceCitation({
   const displayName = documentTitle || source;
   
   return (
-    <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-[#F5F0E8] border border-[#D4CFC4] text-xs text-[#6B7280]">
+    <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-[#F5F0E8] border border-[#D4CFC4] text-xs text-[#2D3648]">
       <FileText className="w-3 h-3" />
       <span className="font-medium">{displayName}</span>
       {score !== undefined && score > 0 && (
-        <span className="text-[#9CA3AF]">({Math.round(score * 100)}%)</span>
+        <span className="text-[#3E4A60]">({Math.round(score * 100)}%)</span>
       )}
     </div>
   );

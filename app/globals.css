@@ -6,6 +6,8 @@
   --page-bg: #f4f0e6;
   --ink: #241b15;
   --font-serif: var(--font-playfair, "Playfair Display");
+  --font-size-base: clamp(17px, 0.35vw + 14px, 19px);
+  --line-height-base: 1.7;
 }
 
 @theme inline {
@@ -24,12 +26,17 @@
 }
 
 body {
+  font-size: var(--font-size-base);
   background: var(--page-bg);
   color: var(--ink);
   font-family: var(--font-serif), "Iowan Old Style", "Georgia", "Times New Roman", serif;
   letter-spacing: 0.01em;
-  line-height: 1.6;
+  line-height: var(--line-height-base);
   -webkit-font-smoothing: antialiased;
+}
+
+html {
+  font-size: var(--font-size-base);
 }
 
 /* Hide scrollbar for chapter carousel */

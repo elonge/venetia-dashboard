@@ -35,7 +35,7 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
         
         {message.sources && message.sources.length > 0 && !message.isStreaming && (
           <div className="mt-3 pt-3 border-t border-[#D4CFC4]">
-            <div className="text-xs text-[#6B7280] mb-2 font-medium">Sources:</div>
+            <div className="text-xs text-[#2D3648] mb-2 font-medium">Sources:</div>
             <div className="flex flex-wrap gap-2">
               {message.sources.map((source, index) => (
                 <SourceCitation key={index} {...source} />

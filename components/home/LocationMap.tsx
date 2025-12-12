@@ -40,7 +40,7 @@ export default function LocationMap() {
   return (
     <div className="bg-[#F5F0E8] rounded-lg overflow-hidden">
       <div className="p-3 border-b border-[#D4CFC4]">
-        <h4 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider">
+        <h4 className="text-xs font-semibold text-[#2D3648] uppercase tracking-wider">
           Location of People Involved
         </h4>
       </div>
@@ -61,7 +61,7 @@ export default function LocationMap() {
               <Popup>
                 <div className="text-sm">
                   <p className="font-semibold text-[#1A2A40]">{loc.person}</p>
-                  <p className="text-xs text-[#6B7280]">{loc.location}</p>
+                  <p className="text-xs text-[#2D3648]">{loc.location}</p>
                 </div>
               </Popup>
             </Marker>

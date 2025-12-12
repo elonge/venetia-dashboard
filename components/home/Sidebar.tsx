@@ -272,7 +272,7 @@ export default function Sidebar() {
     <aside className="w-full bg-[#1A2A40] text-white p-4 min-h-screen">
       {/* Chapters */}
       <div className="mb-6">
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-[#9CA3AF] mb-3">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-[#E5E8F0] mb-3">
           Chapters
         </h3>
         <ChapterCarousel chapters={chapters} loading={chaptersLoading} />
@@ -280,14 +280,14 @@ export default function Sidebar() {
 
       {/* Popular Questions */}
       <div className="mb-6">
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-[#9CA3AF] mb-3">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-[#E5E8F0] mb-3">
           Popular Questions
         </h3>
         <div className="space-y-2">
           {loading ? (
-            <div className="text-sm text-[#9CA3AF] p-3">Loading questions...</div>
+            <div className="text-sm text-[#E5E8F0] p-3">Loading questions...</div>
           ) : questions.length === 0 ? (
-            <div className="text-sm text-[#9CA3AF] p-3">No questions available</div>
+            <div className="text-sm text-[#E5E8F0] p-3">No questions available</div>
           ) : (
             <>
               {displayedQuestions.map((q) => (
@@ -297,7 +297,7 @@ export default function Sidebar() {
                   className="bg-[#F5F0E8] text-[#1A2A40] rounded p-3 flex items-center justify-between cursor-pointer hover:bg-[#E8E4DC] transition-colors"
                 >
                   <span className="text-sm">{q.Question}</span>
-                  <ChevronRight className="w-4 h-4 text-[#9CA3AF]" />
+                  <ChevronRight className="w-4 h-4 text-[#3E4A60]" />
                 </Link>
               ))}
               {hasMoreQuestions && (
@@ -329,7 +329,7 @@ export default function Sidebar() {
           <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-1">
             The Data Room
           </h3>
-          <p className="text-[10px] text-[#9CA3AF]">
+          <p className="text-[10px] text-[#E5E8F0]">
             A living analytical view of the Asquith–Venetia archive.
           </p>
         </div>
@@ -343,7 +343,7 @@ export default function Sidebar() {
               className={`text-[10px] px-2 py-1 rounded transition-all ${
                 activeTab === tab.id
                   ? 'bg-[#4A7C59] text-white'
-                  : 'bg-[#1A2A40] text-[#9CA3AF] hover:bg-[#252F3F]'
+                  : 'bg-[#1A2A40] text-[#E5E8F0] hover:bg-[#252F3F]'
               }`}
             >
               {tab.label}
@@ -358,14 +358,14 @@ export default function Sidebar() {
         >
           {activeTab === 'sentiment' && (
             <div>
-              <h4 className="text-xs text-[#9CA3AF] mb-2">Emotional tone across timeline</h4>
+              <h4 className="text-xs text-[#E5E8F0] mb-2">Emotional tone across timeline</h4>
               {dataRoomLoading ? (
                 <div className="h-32 bg-[#1A2A40] rounded flex items-center justify-center">
-                  <span className="text-xs text-[#9CA3AF]">Loading sentiment data...</span>
+                  <span className="text-xs text-[#E5E8F0]">Loading sentiment data...</span>
                 </div>
               ) : !dataRoomData ? (
                 <div className="h-32 bg-[#1A2A40] rounded flex items-center justify-center">
-                  <span className="text-xs text-[#9CA3AF]">No sentiment data available</span>
+                  <span className="text-xs text-[#E5E8F0]">No sentiment data available</span>
                 </div>
               ) : (
                 <>
@@ -405,25 +405,25 @@ export default function Sidebar() {
                         strokeLinejoin="round"
                       />
                     </svg>
-                    <div className="absolute bottom-2 left-2 text-[9px] text-[#6B7280]">
+                    <div className="absolute bottom-2 left-2 text-[9px] text-[#E5E8F0]">
                       {dataRoomData.sentiment.dateRange.start}
                     </div>
-                    <div className="absolute bottom-2 right-2 text-[9px] text-[#6B7280]">
+                    <div className="absolute bottom-2 right-2 text-[9px] text-[#E5E8F0]">
                       {dataRoomData.sentiment.dateRange.end}
                     </div>
                   </div>
                   <div className="flex gap-3 mt-2 text-[9px]">
                     <div className="flex items-center gap-1">
                       <div className="w-2 h-2 rounded-full bg-[#DC2626]" />
-                      <span className="text-[#9CA3AF]">Political Unburdening</span>
+                      <span className="text-[#E5E8F0]">Political Unburdening</span>
                     </div>
                     <div className="flex items-center gap-1">
                       <div className="w-2 h-2 rounded-full bg-[#4A7C59]" />
-                      <span className="text-[#9CA3AF]">Romantic Adoration</span>
+                      <span className="text-[#E5E8F0]">Romantic Adoration</span>
                     </div>
                     <div className="flex items-center gap-1">
                       <div className="w-2 h-2 rounded-full bg-[#F59E0B]" />
-                      <span className="text-[#9CA3AF]">Emotional Desolation</span>
+                      <span className="text-[#E5E8F0]">Emotional Desolation</span>
                     </div>
                   </div>
                 </>
@@ -433,18 +433,18 @@ export default function Sidebar() {
 
           {activeTab === 'topics' && (
             <div>
-              <h4 className="text-xs text-[#9CA3AF] mb-3">Dominant themes in correspondence</h4>
+              <h4 className="text-xs text-[#E5E8F0] mb-3">Dominant themes in correspondence</h4>
               {dataRoomLoading ? (
-                <div className="text-xs text-[#9CA3AF] p-3">Loading topics data...</div>
+                <div className="text-xs text-[#E5E8F0] p-3">Loading topics data...</div>
               ) : !dataRoomData || !dataRoomData.topics || dataRoomData.topics.length === 0 ? (
-                <div className="text-xs text-[#9CA3AF] p-3">No topics data available</div>
+                <div className="text-xs text-[#E5E8F0] p-3">No topics data available</div>
               ) : (
                 <div className="space-y-2">
                   {dataRoomData.topics.map((item) => (
                     <div key={item.topic}>
                       <div className="flex justify-between text-[10px] mb-1">
                         <span className="text-white">{item.topic}</span>
-                        <span className="text-[#9CA3AF]">{item.value}%</span>
+                        <span className="text-[#E5E8F0]">{item.value}%</span>
                       </div>
                       <div className="h-1.5 bg-[#1A2A40] rounded-full overflow-hidden">
                         <div 
@@ -461,14 +461,14 @@ export default function Sidebar() {
 
           {activeTab === 'weekly-letter-count' && (
             <div>
-              <h4 className="text-xs text-[#9CA3AF] mb-2">Number of letters per week over time</h4>
+              <h4 className="text-xs text-[#E5E8F0] mb-2">Number of letters per week over time</h4>
               {dataRoomLoading ? (
                 <div className="h-28 bg-[#1A2A40] rounded flex items-center justify-center">
-                  <span className="text-xs text-[#9CA3AF]">Loading letter count data...</span>
+                  <span className="text-xs text-[#E5E8F0]">Loading letter count data...</span>
                 </div>
               ) : !dataRoomData || !dataRoomData.dailyLetterCount ? (
                 <div className="h-28 bg-[#1A2A40] rounded flex items-center justify-center">
-                  <span className="text-xs text-[#9CA3AF]">No letter count data available</span>
+                  <span className="text-xs text-[#E5E8F0]">No letter count data available</span>
                 </div>
               ) : (
                 <>
@@ -488,14 +488,14 @@ export default function Sidebar() {
                         return <circle cx={peakPoint.x} cy={peakPoint.y} r="3" fill="#DC2626" />;
                       })()}
                     </svg>
-                    <div className="absolute bottom-2 left-2 text-[9px] text-[#6B7280]">
+                    <div className="absolute bottom-2 left-2 text-[9px] text-[#E5E8F0]">
                       {dataRoomData.dailyLetterCount.dateRange.start}
                     </div>
-                    <div className="absolute bottom-2 right-2 text-[9px] text-[#6B7280]">
+                    <div className="absolute bottom-2 right-2 text-[9px] text-[#E5E8F0]">
                       {dataRoomData.dailyLetterCount.dateRange.end}
                     </div>
                   </div>
-                  <p className="text-[10px] text-[#9CA3AF] mt-2">
+                  <p className="text-[10px] text-[#E5E8F0] mt-2">
                     Peak correspondence: {dataRoomData.dailyLetterCount.peak.date} ({dataRoomData.dailyLetterCount.peak.count} letters/week)
                   </p>
                 </>
@@ -505,17 +505,17 @@ export default function Sidebar() {
 
           {activeTab === 'people' && (
             <div>
-              <h4 className="text-xs text-[#9CA3AF] mb-3">Most mentioned individuals</h4>
+              <h4 className="text-xs text-[#E5E8F0] mb-3">Most mentioned individuals</h4>
               {dataRoomLoading ? (
-                <div className="text-xs text-[#9CA3AF] p-3">Loading people data...</div>
+                <div className="text-xs text-[#E5E8F0] p-3">Loading people data...</div>
               ) : !dataRoomData || !dataRoomData.people || dataRoomData.people.length === 0 ? (
-                <div className="text-xs text-[#9CA3AF] p-3">No people data available</div>
+                <div className="text-xs text-[#E5E8F0] p-3">No people data available</div>
               ) : (
                 <div className="space-y-2">
                   {dataRoomData.people.map((person, idx) => (
                     <div key={person.name} className="flex items-center justify-between text-[11px]">
                       <div className="flex items-center gap-2">
-                        <span className="text-[#6B7280] w-4">{idx + 1}.</span>
+                        <span className="text-[#E5E8F0] w-4">{idx + 1}.</span>
                         <span className="text-white">{person.name}</span>
                       </div>
                       <span className="text-[#4A7C59] font-semibold">{person.count}</span>
@@ -544,21 +544,21 @@ export default function Sidebar() {
         <div className="flex items-center justify-between mb-2">
           <h4 className="text-xs font-semibold uppercase tracking-wider">Fun Facts</h4>
           {funFacts.length > 0 && (
-            <span className="text-xs text-[#6B7280]">
+            <span className="text-xs text-[#2D3648]">
               {currentFunFactIndex + 1} / {funFacts.length}
             </span>
           )}
         </div>
         {funFactsLoading ? (
-          <div className="text-xs text-[#9CA3AF] text-center py-2 h-24 flex items-center justify-center">Loading fun facts...</div>
+          <div className="text-xs text-[#3E4A60] text-center py-2 h-24 flex items-center justify-center">Loading fun facts...</div>
         ) : funFacts.length === 0 ? (
-          <div className="text-xs text-[#9CA3AF] text-center py-2 h-24 flex items-center justify-center">No fun facts available</div>
+          <div className="text-xs text-[#3E4A60] text-center py-2 h-24 flex items-center justify-center">No fun facts available</div>
         ) : (
           <div className="h-24 flex flex-col">
             <div className="flex items-start gap-2 flex-1 min-h-0">
               <button
                 onClick={handlePreviousFunFact}
-                className="w-4 h-4 text-[#9CA3AF] hover:text-[#1A2A40] transition-colors flex-shrink-0 mt-1"
+                className="w-4 h-4 text-[#3E4A60] hover:text-[#1A2A40] transition-colors flex-shrink-0 mt-1"
                 aria-label="Previous fun fact"
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -574,7 +574,7 @@ export default function Sidebar() {
                     {funFacts[currentFunFactIndex].tags.map((tag, idx) => (
                       <span
                         key={idx}
-                        className="text-[10px] px-1.5 py-0.5 bg-[#1A2A40]/10 text-[#6B7280] rounded"
+                        className="text-[10px] px-1.5 py-0.5 bg-[#1A2A40]/10 text-[#2D3648] rounded"
                       >
                         {tag}
                       </span>
@@ -584,7 +584,7 @@ export default function Sidebar() {
               </div>
               <button
                 onClick={handleNextFunFact}
-                className="w-4 h-4 text-[#9CA3AF] hover:text-[#1A2A40] transition-colors flex-shrink-0 mt-1"
+                className="w-4 h-4 text-[#3E4A60] hover:text-[#1A2A40] transition-colors flex-shrink-0 mt-1"
                 aria-label="Next fun fact"
               >
                 <ChevronRight className="w-4 h-4" />
