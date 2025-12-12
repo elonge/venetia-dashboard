@@ -89,6 +89,12 @@ export async function POST(request: NextRequest) {
     const body: ChatRequest = await request.json();
     const { message, conversationHistory = [] } = body;
 
+    console.log('Chat API received request', {
+      messagePreview: message?.slice?.(0, 120),
+      historyCount: conversationHistory.length,
+      historyPreview: conversationHistory.slice(-2),
+    });
+
     if (!message || typeof message !== 'string') {
       return NextResponse.json(
         { error: 'Message is required' },
@@ -192,4 +198,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-

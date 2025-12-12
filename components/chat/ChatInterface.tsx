@@ -71,16 +71,19 @@ export default function ChatInterface() {
       content: questionToSend,
     };
 
-    // Get previous messages (before adding the new user message)
-    let previousMessages: Message[] = [];
-    setMessages((prev) => {
-      previousMessages = prev; // Store previous messages
-      return [...prev, userMessage]; // Add user message to state
+    // Capture current history before adding the new user/assistant messages
+    const historyToSend = messages
+      .filter((m) => !m.isStreaming) // Exclude streaming messages
+      .map((m) => ({
+        role: m.role,
+        content: m.content,
+      }));
+
+    console.log('Sending chat payload', {
+      question: questionToSend,
+      historyCount: historyToSend.length,
+      historyPreview: historyToSend.slice(-2),
     });
-    if (!questionOverride) {
-      setInput('');
-    }
-    setIsLoading(true);
 
     // Add placeholder for assistant response
     const assistantMessage: Message = {
@@ -88,7 +91,13 @@ export default function ChatInterface() {
       content: '',
       isStreaming: true,
     };
-    setMessages((prev) => [...prev, assistantMessage]);
+
+    // Append both user and assistant placeholder together using the current snapshot
+    setMessages((prev) => [...prev, userMessage, assistantMessage]);
+    if (!questionOverride) {
+      setInput('');
+    }
+    setIsLoading(true);
 
     try {
       const response = await fetch('/api/chat', {
@@ -98,12 +107,7 @@ export default function ChatInterface() {
         },
         body: JSON.stringify({
           message: questionToSend,
-          conversationHistory: previousMessages
-            .filter((m) => !m.isStreaming) // Exclude streaming messages
-            .map((m) => ({
-              role: m.role,
-              content: m.content,
-            })),
+          conversationHistory: historyToSend,
         }),
       });
 
@@ -229,7 +233,7 @@ export default function ChatInterface() {
       setIsLoading(false);
       inputRef.current?.focus();
     }
-  }, [isLoading, input]);
+  }, [isLoading, input, messages]);
 
   // Auto-send question from URL parameter
   useEffect(() => {

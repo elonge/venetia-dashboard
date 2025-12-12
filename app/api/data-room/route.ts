@@ -585,14 +585,35 @@ export async function GET() {
     
     const dailyLetterCountData = await generateDailyLetterData();
 
-    // Mock people data
-    const peopleData: PeopleData[] = [
-      { name: 'Lloyd George', count: 287 },
-      { name: 'Churchill', count: 214 },
-      { name: 'Violet Asquith', count: 189 },
-      { name: 'Margot Asquith', count: 156 },
-      { name: 'Edwin Montagu', count: 142 }
-    ];
+    // Generate people data from timeline_days collection
+    const generatePeopleData = async (): Promise<PeopleData[]> => {
+      const allDays = await getAllTimelineDays();
+      const peopleFrequency = new Map<string, number>();
+      
+      // Aggregate all people_mentioned arrays from all timeline days
+      for (const day of allDays) {
+        const peopleMentioned = day.people_mentioned || [];
+        for (const person of peopleMentioned) {
+          if (person && person.trim()) {
+            const normalizedPerson = person.trim();
+            peopleFrequency.set(
+              normalizedPerson,
+              (peopleFrequency.get(normalizedPerson) || 0) + 1
+            );
+          }
+        }
+      }
+      
+      // Convert to array and sort by frequency (descending)
+      const peopleArray = Array.from(peopleFrequency.entries())
+        .map(([name, count]) => ({ name, count }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 10); // Return only top 10
+      
+      return peopleArray;
+    };
+    
+    const peopleData = await generatePeopleData();
 
     const dataRoomData: DataRoomData = {
       sentiment: sentimentData,
