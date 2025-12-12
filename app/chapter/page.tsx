@@ -279,12 +279,13 @@ function ChapterContent() {
                   <p className="text-sm text-[#6B7280] mb-3">
                     {podcastData?.description || chapterData.podcast?.description}
                   </p>
-                  {podcastData && (
+                  {/* Show audio player if podcast exists (either from PODCASTS or chapterData.podcast) */}
+                  {(podcastData || chapterData.podcast) && (
                     <div className="mb-3">
                       <audio 
                         controls 
                         className="w-full"
-                        src={`/audio/${chapterData.chapter_id}.m4a`}
+                        src={`/audio/${chapterData.chapter_id}.mp3`}
                       >
                         Your browser does not support the audio element.
                       </audio>
@@ -296,15 +297,6 @@ function ChapterContent() {
                         ? formatDuration(podcastData.duration) 
                         : chapterData.podcast?.duration || 'N/A'}
                     </span>
-                    {!podcastData && chapterData.podcast && (
-                      <Button 
-                        size="sm"
-                        className="bg-[#1A2A40] hover:bg-[#2A3A50] text-white"
-                      >
-                        <Play className="w-4 h-4 mr-2" />
-                        Play
-                      </Button>
-                    )}
                   </div>
                 </div>
               </div>

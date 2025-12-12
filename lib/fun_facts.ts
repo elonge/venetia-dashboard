@@ -22,13 +22,16 @@ export async function getAllFunFacts(): Promise<FunFact[]> {
     const collection = db.collection(COLLECTION_NAME);
     
     const funFacts = await collection.find({}).toArray();
-    const mappedFunFacts = funFacts.map((fact) => ({
-      _id: fact._id.toString(),
-      fact: fact.fact || fact.text || fact.content || '',
-      tags: fact.tags || [],
-      source: fact.source || '',
-      ...fact,
-    }));
+    const mappedFunFacts = funFacts.map((fact) => {
+      const { _id, ...rest } = fact;
+      return {
+        _id: _id.toString(),
+        fact: fact.fact || fact.text || fact.content || '',
+        tags: fact.tags || [],
+        source: fact.source || '',
+        ...rest,
+      };
+    });
     return mappedFunFacts;
   } catch (error) {
     console.error('Error fetching fun facts:', error);
