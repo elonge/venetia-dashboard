@@ -8,10 +8,12 @@ export const PEOPLE_IMAGES = {
     "Colonel Bridges": "https://commons.wikimedia.org/wiki/Special:FilePath/Tom_Bridges_1918.jpg",
     "Colonel Repington": "https://commons.wikimedia.org/wiki/Special:FilePath/Charles_%C3%A0_Court_Repington.jpg",
     "Cynthia Asquith": "https://commons.wikimedia.org/wiki/Special:FilePath/Lady-Cynthia-Mary-Evelyn-Asquith-ne-Charteris.jpg",
+    "Cynthia": "https://commons.wikimedia.org/wiki/Special:FilePath/Lady-Cynthia-Mary-Evelyn-Asquith-ne-Charteris.jpg",
     "David Lloyd George": "https://commons.wikimedia.org/wiki/Special:FilePath/David_Lloyd_George_c1911.jpg",
     "Diana Cooper": "https://upload.wikimedia.org/wikipedia/commons/2/27/Lady_Diana_Manners_1.jpg",
     "Duff Cooper": "https://commons.wikimedia.org/wiki/Special:FilePath/Alfred_Duff_Cooper.jpg",
     "Edwin Montagu": "https://en.wikipedia.org/wiki/Special:FilePath/Edwin_Montagu.jpg",
+    "Edwin": "https://en.wikipedia.org/wiki/Special:FilePath/Edwin_Montagu.jpg",
     "H.H. Asquith": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Asquith_Q_42036_%28cropped%29%28b%29.jpg/250px-Asquith_Q_42036_%28cropped%29%28b%29.jpg",
     "Herbert Samuel": "https://en.wikipedia.org/wiki/Special:FilePath/1893_Herbert_Samuel.jpg",
     "John Redmond": "https://commons.wikimedia.org/wiki/Special:FilePath/John_Redmond_1917.JPG",
@@ -26,6 +28,7 @@ export const PEOPLE_IMAGES = {
     "Lord Northcliffe": "https://commons.wikimedia.org/wiki/Special:FilePath/Alfred_Harmsworth,_1st_Viscount_Northcliffe_(37858960494).jpg",
     "Lord Sheffield": "https://commons.wikimedia.org/wiki/Special:FilePath/Edward_Stanley_4th_Baron_Sheffield.jpg",
     "Margot Asquith": "https://commons.wikimedia.org/wiki/Special:FilePath/Margaret-Emma-Alice-Margot-Asquith-ne-Tennant-Countess-of-Oxford-and-Asquith.jpg",
+    "Margot": "https://commons.wikimedia.org/wiki/Special:FilePath/Margaret-Emma-Alice-Margot-Asquith-ne-Tennant-Countess-of-Oxford-and-Asquith.jpg",
     "Maurice Hankey": "https://commons.wikimedia.org/wiki/Special:FilePath/Maurice_Hankey.jpg",
     "Prince Louis of Battenberg": "https://commons.wikimedia.org/wiki/Special:FilePath/Prince_Louis_Alexander_of_Battenberg_with_two_sons.jpg",
     "Raymond Asquith": "https://commons.wikimedia.org/wiki/Special:FilePath/Raymond_Asquith_and_Katharine.jpg",
@@ -38,10 +41,18 @@ export const PEOPLE_IMAGES = {
     "Sylvia Henley": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg",
     "Venetia Stanley": "https://en.wikipedia.org/wiki/Special:FilePath/Venetia_Stanley.jpg",
     "Violet Asquith": "https://commons.wikimedia.org/wiki/Special:FilePath/Violet_Bonham_Carter_1915.jpg",
+    "Violet": "https://commons.wikimedia.org/wiki/Special:FilePath/Violet_Bonham_Carter_1915.jpg",
     "Winston Churchill": "https://commons.wikimedia.org/wiki/Special:FilePath/Churchill_in_Oxford_Yeomanry_uniform_1915.jpg"
   }
 
 export const PODCASTS = [
+    {
+        "title": "Sicily 1912: The Prime Minister's Holiday",
+        "description": "A sun-drenched trip to Sicily reveals the shifting dynamics of Asquith's inner circle and the dawn of his obsession with Venetia Stanley.",
+        "duration": 317,
+        "chapter_id": "sicily",
+        "video_exists": true
+      },
     {
         "title": "Marconi Scandal: The Razor Thin Defense",
         "description": "Uncovering the clever legal distinction that saved British ministers from a massive insider trading scandal in 1912.",
@@ -49,16 +60,11 @@ export const PODCASTS = [
         "chapter_id": "marconi_scandal"
       },
       {
-        "title": "Sicily 1912: The Prime Minister's Holiday",
-        "description": "A sun-drenched trip to Sicily reveals the shifting dynamics of Asquith's inner circle and the dawn of his obsession with Venetia Stanley.",
-        "duration": 317,
-        "chapter_id": "sicily"
-      },
-      {
         "title": "The Friday Drives",
         "description": "Asquith's weekly escape: the intimate car rides with Venetia where state secrets were shared.",
         "chapter_id": "friday_drives",
-        "duration": 266
+        "duration": 266,
+        "video_exists": true
       },
       {
         "title": "The Corrupt Coterie",
@@ -88,13 +94,15 @@ export const PODCASTS = [
         "title": "Venetia the Nurse",
         "description": "Venetia leaves high society for the harsh reality of training as a nurse at the London Hospital.",
         "chapter_id": "venetia_nurse",
-        "duration": 333
+        "duration": 333,
+        "video_exists": true
       },
       {
         "title": "The Betrayal",
         "description": "The shock engagement to Edwin Montagu that broke the Prime Minister's heart and changed the war.",
         "chapter_id": "venetia_engagement",
-        "duration": 393
+        "duration": 393,
+        "video_exists": true
       },
       {
         "title": "Fisher vs. Churchill",

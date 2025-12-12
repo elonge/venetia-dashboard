@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { ChevronDown, ChevronUp, Calendar } from 'lucide-react';
 import { TimelineDayDocument } from '@/types';
+import { PEOPLE_IMAGES } from '@/constants';
 
 // Dynamically import LocationMap with SSR disabled to prevent window is not defined error
 const LocationMap = dynamic(() => import('./LocationMap'), {
@@ -46,8 +47,8 @@ function mapTimelineDayToDisplayData(day: TimelineDayDocument | null) {
   // Get the first letter from Venetia to Asquith (PM) or vice versa for quote
   const firstVenetiaLetter = day.venetia?.letters_to_edwin?.[0];
   const firstPmLetter = day.prime_minister?.letters?.[0];
-  
-  const quoteText = firstPmLetter?.summary || firstVenetiaLetter?.summary || '';
+  const excerpt = day?.excerpt;
+  const quoteText = excerpt ||firstPmLetter?.summary || firstVenetiaLetter?.summary || '';
   const quoteContext = firstPmLetter 
     ? `ASQUITH${day.prime_minister?.location ? ` at ${day.prime_minister.location}` : ''}. VENETIA${day.venetia?.location ? ` in ${day.venetia.location}` : ''}.`
     : firstVenetiaLetter
@@ -99,7 +100,7 @@ function mapTimelineDayToDisplayData(day: TimelineDayDocument | null) {
 }
 
 export default function DayContent({ currentDate }: DayContentProps) {
-  const [othersExpanded, setOthersExpanded] = useState(false);
+  const [othersExpanded, setOthersExpanded] = useState(true);
   const [timelineDay, setTimelineDay] = useState<TimelineDayDocument | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -180,11 +181,6 @@ export default function DayContent({ currentDate }: DayContentProps) {
           <p className="font-serif text-lg text-[#1A2A40] italic mb-2">
             {displayData.quote.text}
           </p>
-          {displayData.quote.context && (
-            <p className="text-sm text-[#6B7280]">
-              {displayData.quote.context}
-            </p>
-          )}
         </div>
       )}
 
@@ -253,16 +249,38 @@ export default function DayContent({ currentDate }: DayContentProps) {
         {othersExpanded && (
           <div className="px-4 pb-4 space-y-3">
             {displayData.otherPeople.length > 0 ? (
-              displayData.otherPeople.map((person, idx) => (
-                <div key={idx} className="flex gap-2">
-                  <span className="font-semibold text-[#1A2A40] text-sm min-w-[140px]">
-                    {person.name}:
-                  </span>
-                  <span className="text-sm text-[#4B5563]">
-                    {person.action}
-                  </span>
-                </div>
-              ))
+              displayData.otherPeople.map((person, idx) => {
+                const personImage = PEOPLE_IMAGES[person.name as keyof typeof PEOPLE_IMAGES];
+                return (
+                  <div key={idx} className="flex gap-3 items-start">
+                    {personImage ? (
+                      <img
+                        src={personImage}
+                        alt={person.name}
+                        className="w-12 h-12 rounded-full object-cover flex-shrink-0 border-2 border-[#D4CFC4]"
+                        onError={(e) => {
+                          // Hide image if it fails to load
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    ) : (
+                      <div className="w-12 h-12 rounded-full bg-[#E8E4DC] flex items-center justify-center flex-shrink-0 border-2 border-[#D4CFC4]">
+                        <span className="text-[#6B7280] text-xs font-semibold">
+                          {person.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
+                        </span>
+                      </div>
+                    )}
+                    <div className="flex-1 min-w-0">
+                      <span className="font-semibold text-[#1A2A40] text-sm block mb-1">
+                        {person.name}
+                      </span>
+                      <span className="text-sm text-[#4B5563] leading-relaxed">
+                        {person.action}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })
             ) : (
               <div className="text-sm text-[#4B5563]">No additional information available</div>
             )}
@@ -271,7 +289,7 @@ export default function DayContent({ currentDate }: DayContentProps) {
       </div>
 
       {/* Newspaper Banner */}
-      {displayData.newspaper && (
+      {/* {displayData.newspaper && (
         <div className="bg-[#8B3A3A] rounded-lg p-4 text-center">
           <h4 className="text-xs font-semibold text-[#F5E6C8] uppercase tracking-wider mb-2">
             Newspaper:
@@ -280,7 +298,7 @@ export default function DayContent({ currentDate }: DayContentProps) {
             {displayData.newspaper}
           </p>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

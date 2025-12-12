@@ -303,27 +303,32 @@ function ChapterContent() {
             )}
 
             {/* Video */}
-            {chapterData.video && (
+            {podcastData?.video_exists && (
               <div className="bg-[#F5F0E8] rounded-lg overflow-hidden">
-                <div className="relative h-32 bg-[#1A2A40] group cursor-pointer">
-                  <img 
-                    src={chapterData.video.thumbnail}
-                    alt="Video thumbnail"
-                    className="w-full h-full object-cover opacity-70 group-hover:opacity-90 transition-opacity"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <Play className="w-6 h-6 text-[#1A2A40] ml-1" />
-                    </div>
+                <div className="p-5">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Play className="w-5 h-5 text-[#6B2D3C]" />
+                    <h2 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider">
+                      Video
+                    </h2>
                   </div>
-                  <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                    {chapterData.video.duration}
+                  <div className="rounded-lg overflow-hidden bg-[#1A2A40] mb-3">
+                    <video 
+                      controls
+                      className="w-full"
+                      src={`/video/${chapterData.chapter_id}.mp4`}
+                    >
+                      Your browser does not support the video element.
+                    </video>
                   </div>
-                </div>
-                <div className="p-4">
-                  <h3 className="font-medium text-[#1A2A40] text-sm">
-                    {chapterData.video.title}
+                  <h3 className="font-serif text-lg font-semibold text-[#1A2A40] mb-1">
+                    {`${podcastData?.title || chapterData.video?.title}: A Visual Reconstruction`}
                   </h3>
+                  {podcastData?.description && (
+                    <p className="text-sm text-[#6B7280]">
+                      {podcastData.description}
+                    </p>
+                  )}
                 </div>
               </div>
             )}

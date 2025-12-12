@@ -82,6 +82,13 @@ export async function getPreviousTimelineDay(dateString: string): Promise<Timeli
 function mapDayToTimelineDayDocument(day: any): TimelineDayDocument {
   return {
     _id: day._id.toString(),
+    excerpt: day.excerpt || '',
+    people_mentioned: day.people_mentioned || [],
+    scores: day.scores || {
+      romantic_adoration: 0,
+      political_unburdening: 0,
+      emotional_desolation: 0,
+    },
     date: day.date ? (typeof day.date === 'object' && '$date' in day.date 
       ? new Date(day.date.$date.$numberLong).toISOString()
       : day.date instanceof Date 

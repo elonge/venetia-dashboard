@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ChevronRight, ChevronLeft, ArrowRight, ChevronDown, ChevronUp } from 'lucide-react';
+import ChapterCarousel from './ChapterCarousel';
 
 interface Chapter {
   _id: string;
@@ -137,6 +138,38 @@ export default function Sidebar() {
         const response = await fetch('/api/data-room');
         if (response.ok) {
           const data = await response.json();
+          console.log('[BROWSER DEBUG] Data room data received:', {
+            sentiment: {
+              tensionCount: data.sentiment?.tension?.length || 0,
+              warmthCount: data.sentiment?.warmth?.length || 0,
+              anxietyCount: data.sentiment?.anxiety?.length || 0,
+              dateRange: data.sentiment?.dateRange
+            }
+          });
+          
+          // Log sample points from each sentiment
+          if (data.sentiment?.tension?.length > 0) {
+            console.log('[BROWSER DEBUG] Sample tension points (first 5):', data.sentiment.tension.slice(0, 5));
+            const nonZeroTension = data.sentiment.tension.filter((p: { x: number; y: number }) => p.y < 70).slice(0, 5);
+            if (nonZeroTension.length > 0) {
+              console.log('[BROWSER DEBUG] Sample tension points with non-zero scores:', nonZeroTension);
+            }
+          }
+          if (data.sentiment?.warmth?.length > 0) {
+            console.log('[BROWSER DEBUG] Sample warmth points (first 5):', data.sentiment.warmth.slice(0, 5));
+            const nonZeroWarmth = data.sentiment.warmth.filter((p: { x: number; y: number }) => p.y < 70).slice(0, 5);
+            if (nonZeroWarmth.length > 0) {
+              console.log('[BROWSER DEBUG] Sample warmth points with non-zero scores:', nonZeroWarmth);
+            }
+          }
+          if (data.sentiment?.anxiety?.length > 0) {
+            console.log('[BROWSER DEBUG] Sample anxiety points (first 5):', data.sentiment.anxiety.slice(0, 5));
+            const nonZeroAnxiety = data.sentiment.anxiety.filter((p: { x: number; y: number }) => p.y < 70).slice(0, 5);
+            if (nonZeroAnxiety.length > 0) {
+              console.log('[BROWSER DEBUG] Sample anxiety points with non-zero scores:', nonZeroAnxiety);
+            }
+          }
+          
           setDataRoomData(data);
         } else {
           console.error('Error fetching data room: HTTP', response.status, await response.text());
@@ -161,31 +194,70 @@ export default function Sidebar() {
   };
 
   // Helper function to convert data points to SVG path
-  const pointsToPath = (points: Array<{ x: number; y: number }>, smooth: boolean = false): string => {
-    if (points.length === 0) return '';
-    if (points.length === 1) return `M${points[0].x},${points[0].y}`;
+  const pointsToPath = (points: Array<{ x: number; y: number }>, smooth: boolean = false, label: string = ''): string => {
+    if (points.length === 0) {
+      console.log(`[BROWSER DEBUG] ${label} - No points provided`);
+      return '';
+    }
+    if (points.length === 1) {
+      console.log(`[BROWSER DEBUG] ${label} - Single point:`, points[0]);
+      return `M${points[0].x},${points[0].y}`;
+    }
     
-    if (smooth && points.length >= 3) {
-      // Create smooth curve using quadratic bezier with Q and T commands
-      // Format: M x,y Q cx,cy x,y T x,y T x,y ...
-      // For the first curve, we need a control point between start and first point
-      let path = `M${points[0].x},${points[0].y}`;
-      
-      if (points.length >= 2) {
-        // Calculate control point for first quadratic curve
-        const cpX = points[0].x + (points[1].x - points[0].x) * 0.6;
-        const cpY = points[0].y + (points[1].y - points[0].y) * 0.6;
-        path += ` Q${cpX},${cpY} ${points[1].x},${points[1].y}`;
-        
-        // Use T (smooth quadratic) for subsequent points
-        for (let i = 2; i < points.length; i++) {
-          path += ` T${points[i].x},${points[i].y}`;
-        }
-      }
-      return path;
+    // Sort points by x coordinate to ensure proper path generation
+    const sortedPoints = [...points].sort((a, b) => a.x - b.x);
+    
+    console.log(`[BROWSER DEBUG] ${label} - Generating path from ${sortedPoints.length} points`);
+    console.log(`[BROWSER DEBUG] ${label} - First point:`, { x: sortedPoints[0]?.x.toFixed(2), y: sortedPoints[0]?.y.toFixed(2) });
+    console.log(`[BROWSER DEBUG] ${label} - Last point:`, { x: sortedPoints[sortedPoints.length - 1]?.x.toFixed(2), y: sortedPoints[sortedPoints.length - 1]?.y.toFixed(2) });
+    console.log(`[BROWSER DEBUG] ${label} - First 5 sorted points:`, sortedPoints.slice(0, 5).map(p => ({ x: p.x.toFixed(2), y: p.y.toFixed(2) })));
+    console.log(`[BROWSER DEBUG] ${label} - Last 5 sorted points:`, sortedPoints.slice(-5).map(p => ({ x: p.x.toFixed(2), y: p.y.toFixed(2) })));
+    
+    // Find points at different x positions to see distribution
+    const quarterPoints = [
+      sortedPoints[Math.floor(sortedPoints.length * 0.25)],
+      sortedPoints[Math.floor(sortedPoints.length * 0.5)],
+      sortedPoints[Math.floor(sortedPoints.length * 0.75)],
+    ];
+    console.log(`[BROWSER DEBUG] ${label} - Points at 25%, 50%, 75% of timeline:`, quarterPoints.map(p => ({ x: p.x.toFixed(2), y: p.y.toFixed(2) })));
+    
+    // Check for y-value range
+    const yValues = sortedPoints.map(p => p.y);
+    const minY = Math.min(...yValues);
+    const maxY = Math.max(...yValues);
+    const xValues = sortedPoints.map(p => p.x);
+    const minX = Math.min(...xValues);
+    const maxX = Math.max(...xValues);
+    console.log(`[BROWSER DEBUG] ${label} - X value range: min=${minX.toFixed(2)}, max=${maxX.toFixed(2)}`);
+    console.log(`[BROWSER DEBUG] ${label} - Y value range: min=${minY.toFixed(2)}, max=${maxY.toFixed(2)}`);
+    
+    // Count points at different y levels
+    const pointsAtBottom = sortedPoints.filter(p => p.y >= 69.5).length;
+    const pointsAtTop = sortedPoints.filter(p => p.y <= 10.5).length;
+    const pointsInMiddle = sortedPoints.length - pointsAtBottom - pointsAtTop;
+    console.log(`[BROWSER DEBUG] ${label} - Points distribution: bottom (y>=69.5)=${pointsAtBottom}, middle=${pointsInMiddle}, top (y<=10.5)=${pointsAtTop}`);
+    
+    // Find some example points with different y values
+    const samplePoints = [
+      sortedPoints.find(p => p.y < 69.5),
+      sortedPoints.find(p => p.y < 60 && p.y > 50),
+      sortedPoints.find(p => p.y < 40 && p.y > 30),
+      sortedPoints.find(p => p.y < 20 && p.y > 10),
+    ].filter((p): p is { x: number; y: number } => p !== undefined).slice(0, 3);
+    if (samplePoints.length > 0) {
+      console.log(`[BROWSER DEBUG] ${label} - Sample points with varying y values:`, samplePoints.map(p => ({ x: p.x.toFixed(2), y: p.y.toFixed(2) })));
+    }
+    
+    if (smooth && sortedPoints.length >= 3) {
+      // Use simple polyline for accurate representation
+      // Smooth curves can overshoot and create visual artifacts
+      // A clean polyline will accurately show the data
+      return sortedPoints.map((p, i) => (i === 0 ? `M${p.x},${p.y}` : `L${p.x},${p.y}`)).join(' ');
     } else {
       // Simple line path
-      return points.map((p, i) => (i === 0 ? `M${p.x},${p.y}` : `L${p.x},${p.y}`)).join(' ');
+      const path = sortedPoints.map((p, i) => (i === 0 ? `M${p.x},${p.y}` : `L${p.x},${p.y}`)).join(' ');
+      console.log(`[BROWSER DEBUG] ${label} - Generated line path (first 200 chars):`, path.substring(0, 200));
+      return path;
     }
   };
 
@@ -203,30 +275,7 @@ export default function Sidebar() {
         <h3 className="text-xs font-semibold uppercase tracking-wider text-[#9CA3AF] mb-3">
           Chapters
         </h3>
-        {chaptersLoading ? (
-          <div className="text-sm text-[#9CA3AF] p-3">Loading chapters...</div>
-        ) : chapters.length === 0 ? (
-          <div className="text-sm text-[#9CA3AF] p-3">No chapters available</div>
-        ) : (
-          <div className="grid grid-cols-2 gap-2">
-            {chapters.map((chapter) => (
-              <Link 
-                key={chapter._id}
-                href={`/chapter?chapter_id=${encodeURIComponent(chapter.chapter_id)}`}
-                className="bg-[#F5F0E8] text-[#1A2A40] rounded p-2 cursor-pointer hover:bg-[#E8E4DC] transition-colors block"
-              >
-                <h4 className="font-serif text-sm font-medium leading-tight">
-                  {chapter.chapter_title}
-                </h4>
-                {chapter.main_story && (
-                  <p className="text-xs text-[#9CA3AF] mt-1 line-clamp-2">
-                    {chapter.main_story.substring(0, 100)}...
-                  </p>
-                )}
-              </Link>
-            ))}
-          </div>
-        )}
+        <ChapterCarousel chapters={chapters} loading={chaptersLoading} />
       </div>
 
       {/* Popular Questions */}
@@ -320,28 +369,40 @@ export default function Sidebar() {
                 </div>
               ) : (
                 <>
+                  {console.log('[BROWSER DEBUG] Rendering sentiment visualization with', {
+                    tensionPoints: dataRoomData.sentiment.tension.length,
+                    warmthPoints: dataRoomData.sentiment.warmth.length,
+                    anxietyPoints: dataRoomData.sentiment.anxiety.length
+                  })}
                   <div className="h-32 bg-[#1A2A40] rounded relative overflow-hidden p-2">
-                    <svg viewBox="0 0 200 100" className="w-full h-full">
-                      {/* Tension line */}
+                    <svg viewBox="0 0 200 80" className="w-full h-full">
+                      {/* Draw in reverse order so emotional_desolation (orange) is drawn first and appears behind others */}
+                      {/* Emotional Desolation line - drawn first so it appears behind */}
                       <path 
-                        d={pointsToPath(dataRoomData.sentiment.tension, true)} 
-                        fill="none" 
-                        stroke="#DC2626" 
-                        strokeWidth="1.5"
-                      />
-                      {/* Warmth line */}
-                      <path 
-                        d={pointsToPath(dataRoomData.sentiment.warmth, true)} 
-                        fill="none" 
-                        stroke="#4A7C59" 
-                        strokeWidth="1.5"
-                      />
-                      {/* Anxiety line */}
-                      <path 
-                        d={pointsToPath(dataRoomData.sentiment.anxiety, true)} 
+                        d={pointsToPath(dataRoomData.sentiment.anxiety, true, 'Emotional Desolation')} 
                         fill="none" 
                         stroke="#F59E0B" 
                         strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      {/* Romantic Adoration line */}
+                      <path 
+                        d={pointsToPath(dataRoomData.sentiment.warmth, true, 'Romantic Adoration')} 
+                        fill="none" 
+                        stroke="#4A7C59" 
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      {/* Political Unburdening line - drawn last so it appears on top */}
+                      <path 
+                        d={pointsToPath(dataRoomData.sentiment.tension, true, 'Political Unburdening')} 
+                        fill="none" 
+                        stroke="#DC2626" 
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                     </svg>
                     <div className="absolute bottom-2 left-2 text-[9px] text-[#6B7280]">
@@ -354,15 +415,15 @@ export default function Sidebar() {
                   <div className="flex gap-3 mt-2 text-[9px]">
                     <div className="flex items-center gap-1">
                       <div className="w-2 h-2 rounded-full bg-[#DC2626]" />
-                      <span className="text-[#9CA3AF]">Tension</span>
+                      <span className="text-[#9CA3AF]">Political Unburdening</span>
                     </div>
                     <div className="flex items-center gap-1">
                       <div className="w-2 h-2 rounded-full bg-[#4A7C59]" />
-                      <span className="text-[#9CA3AF]">Warmth</span>
+                      <span className="text-[#9CA3AF]">Romantic Adoration</span>
                     </div>
                     <div className="flex items-center gap-1">
                       <div className="w-2 h-2 rounded-full bg-[#F59E0B]" />
-                      <span className="text-[#9CA3AF]">Anxiety</span>
+                      <span className="text-[#9CA3AF]">Emotional Desolation</span>
                     </div>
                   </div>
                 </>
@@ -413,37 +474,6 @@ export default function Sidebar() {
                 <>
                   <div className="h-28 bg-[#1A2A40] rounded relative overflow-hidden">
                     <svg viewBox="0 0 200 80" className="w-full h-full">
-                      {(() => {
-                        // Debug: log first few and last few points
-                        if (dataRoomData.dailyLetterCount.data.length > 0) {
-                          console.log('[CLIENT DEBUG] Letter count data received:');
-                          console.log(`[CLIENT DEBUG]   Total points: ${dataRoomData.dailyLetterCount.data.length}`);
-                          const first5 = dataRoomData.dailyLetterCount.data.slice(0, 5);
-                          console.log(`[CLIENT DEBUG]   First 5 points:`, first5.map(p => `x:${p.x.toFixed(2)}, y:${p.y.toFixed(2)}`).join(' | '));
-                          const last5 = dataRoomData.dailyLetterCount.data.slice(-5);
-                          console.log(`[CLIENT DEBUG]   Last 5 points:`, last5.map(p => `x:${p.x.toFixed(2)}, y:${p.y.toFixed(2)}`).join(' | '));
-                          const nonZeroPoints = dataRoomData.dailyLetterCount.data.filter(p => p.y < 70);
-                          console.log(`[CLIENT DEBUG]   Points with y < 70 (non-zero letters): ${nonZeroPoints.length}`);
-                          if (nonZeroPoints.length > 0) {
-                            const sample = nonZeroPoints.slice(0, 10);
-                            console.log(`[CLIENT DEBUG]   Sample non-zero points (first 10):`, sample.map(p => `x:${p.x.toFixed(2)}, y:${p.y.toFixed(2)}`).join(' | '));
-                          }
-                          // Check y value range
-                          const yValues = dataRoomData.dailyLetterCount.data.map(p => p.y);
-                          const minY = Math.min(...yValues);
-                          const maxY = Math.max(...yValues);
-                          console.log(`[CLIENT DEBUG]   Y value range: [${minY.toFixed(2)}, ${maxY.toFixed(2)}] (should be [70, 10] - inverted, smaller y = higher on screen)`);
-                          // Check x value range
-                          const xValues = dataRoomData.dailyLetterCount.data.map(p => p.x);
-                          const minX = Math.min(...xValues);
-                          const maxX = Math.max(...xValues);
-                          console.log(`[CLIENT DEBUG]   X value range: [${minX.toFixed(2)}, ${maxX.toFixed(2)}] (should be [0, 200])`);
-                          const pathString = pointsToPath(dataRoomData.dailyLetterCount.data, false);
-                          console.log(`[CLIENT DEBUG]   Generated path length: ${pathString.length} chars`);
-                          console.log(`[CLIENT DEBUG]   Generated path (first 300 chars):`, pathString.substring(0, 300));
-                        }
-                        return null;
-                      })()}
                       <path 
                         d={pointsToPath(dataRoomData.dailyLetterCount.data, false)} 
                         fill="none" 
@@ -455,7 +485,6 @@ export default function Sidebar() {
                         const peakPoint = dataRoomData.dailyLetterCount.data.reduce((min, p) => 
                           p.y < min.y ? p : min
                         );
-                        console.log(`[CLIENT DEBUG] Peak point: x:${peakPoint.x}, y:${peakPoint.y}`);
                         return <circle cx={peakPoint.x} cy={peakPoint.y} r="3" fill="#DC2626" />;
                       })()}
                     </svg>

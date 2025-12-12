@@ -32,6 +32,36 @@ function buildContext(searchResults: SearchResult[]): string {
   return contextParts.join('\n\n---\n\n');
 }
 
+// Build a query string that includes conversation context for better embedding
+function buildQueryWithContext(currentMessage: string, conversationHistory: Message[]): string {
+  if (conversationHistory.length === 0) {
+    return currentMessage;
+  }
+
+  // Take the last 3-4 messages for context (last user question + assistant response + maybe one more)
+  // This helps the embedding understand what the current question is referring to
+  const recentMessages = conversationHistory.slice(-4);
+  
+  // Build context string from recent messages
+  const contextParts: string[] = [];
+  for (const msg of recentMessages) {
+    if (msg.role === 'user') {
+      contextParts.push(`Previous question: ${msg.content}`);
+    } else if (msg.role === 'assistant') {
+      // Include a brief summary of the assistant's response for context
+      const briefResponse = msg.content.substring(0, 200);
+      contextParts.push(`Previous answer: ${briefResponse}${msg.content.length > 200 ? '...' : ''}`);
+    }
+  }
+  
+  // Combine context with current message
+  if (contextParts.length > 0) {
+    return `${contextParts.join('\n')}\n\nCurrent question: ${currentMessage}`;
+  }
+  
+  return currentMessage;
+}
+
 // Format sources for response
 function formatSources(searchResults: SearchResult[]): Array<{
   source: string;
@@ -66,8 +96,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Search for relevant chunks
-    const searchResults = await searchSimilarChunks(message, 8);
+    // Build query with conversation context for better embedding search
+    const queryWithContext = buildQueryWithContext(message, conversationHistory);
+    
+    // Search for relevant chunks using the contextualized query
+    const searchResults = await searchSimilarChunks(queryWithContext, 8);
     
     if (searchResults.length === 0) {
       return NextResponse.json({
@@ -80,13 +113,15 @@ export async function POST(request: NextRequest) {
     const context = buildContext(searchResults);
     
     // Build conversation messages
+    // conversationHistory already contains all previous messages (user + assistant)
+    // We just need to add the current user message
     const messages: Message[] = [
       { role: 'system', content: SYSTEM_PROMPT },
       {
         role: 'system',
         content: `Use the following context from primary sources to answer the question. If the answer cannot be found in the context, say so.\n\nContext:\n${context}`,
       },
-      ...conversationHistory.filter(m => m.role !== 'system'),
+      ...(conversationHistory || []).filter(m => m.role !== 'system'),
       { role: 'user', content: message },
     ];
 
@@ -99,6 +134,7 @@ export async function POST(request: NextRequest) {
     const model = process.env.OPENAI_MODEL || 'gpt-4o';
     
     // Create streaming response
+    console.log('messages', messages);
     const stream = await openai.chat.completions.create({
       model,
       messages: messages as any,

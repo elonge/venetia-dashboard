@@ -33,10 +33,11 @@ export default function ChatInterface() {
       content: questionToSend,
     };
 
-    let currentMessages: Message[] = [];
+    // Get previous messages (before adding the new user message)
+    let previousMessages: Message[] = [];
     setMessages((prev) => {
-      currentMessages = [...prev, userMessage];
-      return currentMessages;
+      previousMessages = prev; // Store previous messages
+      return [...prev, userMessage]; // Add user message to state
     });
     if (!questionOverride) {
       setInput('');
@@ -59,10 +60,12 @@ export default function ChatInterface() {
         },
         body: JSON.stringify({
           message: questionToSend,
-          conversationHistory: currentMessages.map((m) => ({
-            role: m.role,
-            content: m.content,
-          })),
+          conversationHistory: previousMessages
+            .filter((m) => !m.isStreaming) // Exclude streaming messages
+            .map((m) => ({
+              role: m.role,
+              content: m.content,
+            })),
         }),
       });
 

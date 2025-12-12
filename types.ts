@@ -1,6 +1,12 @@
 // types/index.ts
 import { ObjectId } from "mongodb";
 
+export interface Scores {
+  romantic_adoration?: number;
+  political_unburdening?: number;
+  emotional_desolation?: number;
+}
+
 export interface Letter {
   summary: string;
   topics: string[];
@@ -62,4 +68,7 @@ export interface TimelineDayDocument {
   venetia: Venetia;
   context: Context;
   diaries?: DiaryEntry[];
+  excerpt?: string;
+  people_mentioned?: string[];
+  scores: Scores;
 }
