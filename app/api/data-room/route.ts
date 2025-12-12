@@ -28,11 +28,19 @@ export interface PeopleData {
   count: number;
 }
 
+export interface MeetingDatesData {
+  dates: string[];
+  total: number;
+  dateRange: { start: string; end: string };
+  timeline: Array<{ x: number; date: string }>; // x coordinate and date for timeline visualization
+}
+
 export interface DataRoomData {
   sentiment: SentimentData;
   topics: TopicData[];
   dailyLetterCount: DailyLetterCountData;
   people: PeopleData[];
+  meetingDates: MeetingDatesData;
 }
 
 export async function GET() {
@@ -615,11 +623,77 @@ export async function GET() {
     
     const peopleData = await generatePeopleData();
 
+    // Generate meeting dates data from timeline_days collection
+    const generateMeetingDatesData = async (): Promise<MeetingDatesData> => {
+      const allDays = await getAllTimelineDays();
+      
+      // Filter days where they met
+      const meetingDays = allDays.filter(day => 
+        day.prime_minister?.meeting_with_venetia === true
+      );
+      
+      // Extract and sort dates
+      const meetingDates = meetingDays
+        .map(day => day.date_string)
+        .sort((a, b) => a.localeCompare(b));
+      
+      // Find date range
+      const dateRange = meetingDates.length > 0
+        ? {
+            start: meetingDates[0].split('-')[0], // Year only
+            end: meetingDates[meetingDates.length - 1].split('-')[0] // Year only
+          }
+        : { start: '', end: '' };
+      
+      // Generate timeline data points for visualization
+      // Similar to other visualizations, use viewBox width of 200
+      const viewBoxWidth = 200;
+      const timeline: Array<{ x: number; date: string }> = [];
+      
+      if (meetingDates.length > 0) {
+        // Calculate date range for scaling
+        const firstDate = meetingDates[0];
+        const lastDate = meetingDates[meetingDates.length - 1];
+        
+        const [startYear, startMonth, startDay] = firstDate.split('-').map(Number);
+        const [endYear, endMonth, endDay] = lastDate.split('-').map(Number);
+        
+        const startDate = new Date(startYear, startMonth - 1, startDay);
+        const endDate = new Date(endYear, endMonth - 1, endDay);
+        const totalDays = Math.floor((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+        
+        // Helper function to get days since start
+        const getDaysSinceStart = (dateString: string): number => {
+          const [year, month, day] = dateString.split('-').map(Number);
+          const date = new Date(year, month - 1, day);
+          const diffTime = date.getTime() - startDate.getTime();
+          return Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        };
+        
+        // Scale each meeting date to x coordinate
+        for (const date of meetingDates) {
+          const daysSinceStart = getDaysSinceStart(date);
+          const scaledX = totalDays > 0 ? (daysSinceStart / totalDays) * viewBoxWidth : 0;
+          timeline.push({ x: scaledX, date });
+        }
+      }
+      
+      return {
+        dates: meetingDates,
+        total: meetingDates.length,
+        dateRange,
+        timeline
+      };
+    };
+    
+    const meetingDatesData = await generateMeetingDatesData();
+
     const dataRoomData: DataRoomData = {
       sentiment: sentimentData,
       topics: topicsData,
       dailyLetterCount: dailyLetterCountData,
-      people: peopleData
+      people: peopleData,
+      meetingDates: meetingDatesData
     };
 
     return NextResponse.json(dataRoomData);

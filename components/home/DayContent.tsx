@@ -122,6 +122,7 @@ export default function DayContent({ currentDate }: DayContentProps) {
           }
         } else {
           const data = await response.json();
+          console.log('prime_minister', data?.prime_minister);
           setTimelineDay(data);
         }
       } catch (err) {
@@ -175,6 +176,35 @@ export default function DayContent({ currentDate }: DayContentProps) {
 
   return (
     <div className="space-y-4">
+      {/* Meeting Indicator */}
+      {timelineDay?.prime_minister?.meeting_with_venetia && (
+        <div className="bg-emerald-50 border-2 border-emerald-400 rounded-lg p-4 flex items-center gap-3">
+          <div className="flex-shrink-0">
+            {/* Cameo icon: two heads/busts side-by-side */}
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-emerald-700">
+              {/* Left head */}
+              <circle cx="10" cy="12" r="6" stroke="currentColor" strokeWidth="1.5" fill="currentColor" fillOpacity="0.1"/>
+              <circle cx="10" cy="10" r="2" fill="currentColor"/>
+              <path d="M8 14 Q10 15 12 14" stroke="currentColor" strokeWidth="1" fill="none"/>
+              {/* Right head */}
+              <circle cx="22" cy="12" r="6" stroke="currentColor" strokeWidth="1.5" fill="currentColor" fillOpacity="0.1"/>
+              <circle cx="22" cy="10" r="2" fill="currentColor"/>
+              <path d="M20 14 Q22 15 24 14" stroke="currentColor" strokeWidth="1" fill="none"/>
+            </svg>
+          </div>
+          <div className="flex-1">
+            <h3 className="text-base font-semibold text-emerald-800 mb-1">
+              They Met Today
+            </h3>
+            {timelineDay.prime_minister.meeting_details && (
+              <p className="text-sm text-emerald-700">
+                {timelineDay.prime_minister.meeting_details}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Quote Card */}
       {displayData.quote.text && (
         <div className="bg-[#F5F0E8] rounded-lg p-4 border-l-4 border-[#6B2D3C]">

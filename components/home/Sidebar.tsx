@@ -53,11 +53,19 @@ interface PeopleData {
   count: number;
 }
 
+interface MeetingDatesData {
+  dates: string[];
+  total: number;
+  dateRange: { start: string; end: string };
+  timeline: Array<{ x: number; date: string }>;
+}
+
 interface DataRoomData {
   sentiment: SentimentData;
   topics: TopicData[];
   dailyLetterCount: DailyLetterCountData;
   people: PeopleData[];
+  meetingDates: MeetingDatesData;
 }
 
 export default function Sidebar() {
@@ -265,7 +273,8 @@ export default function Sidebar() {
     { id: 'sentiment', label: 'Sentiment Over Time' },
     { id: 'topics', label: 'Topic Frequency' },
     { id: 'weekly-letter-count', label: 'Weekly Letter Count' },
-    { id: 'people', label: 'People Mentioned' }
+    { id: 'people', label: 'People Mentioned' },
+    { id: 'meeting-dates', label: 'Meeting Dates' }
   ];
 
   return (
@@ -521,6 +530,102 @@ export default function Sidebar() {
                       <span className="text-[#9EE6B3] font-bold">{person.count}</span>
                     </div>
                   ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {activeTab === 'meeting-dates' && (
+            <div>
+              <h4 className="text-sm font-semibold text-white mb-3">Dates when they met</h4>
+              {dataRoomLoading ? (
+                <div className="text-sm text-[#C8D5EA] p-3">Loading meeting dates data...</div>
+              ) : !dataRoomData || !dataRoomData.meetingDates || dataRoomData.meetingDates.dates.length === 0 ? (
+                <div className="text-sm text-[#C8D5EA] p-3">No meeting dates data available</div>
+              ) : (
+                <div>
+                  <div className="mb-3 text-sm text-[#C8D5EA]">
+                    <span className="text-white font-semibold">{dataRoomData.meetingDates.total}</span> meeting{dataRoomData.meetingDates.total !== 1 ? 's' : ''} recorded
+                    {dataRoomData.meetingDates.dateRange.start && dataRoomData.meetingDates.dateRange.end && (
+                      <span className="block mt-1 text-xs">
+                        {dataRoomData.meetingDates.dateRange.start} - {dataRoomData.meetingDates.dateRange.end}
+                      </span>
+                    )}
+                  </div>
+                  
+                  {/* Timeline Visualization */}
+                  <div className="h-32 bg-[#13243A] rounded relative overflow-hidden p-3 mb-3">
+                    <svg viewBox="0 0 200 80" className="w-full h-full">
+                      {/* Timeline line */}
+                      <line 
+                        x1="0" 
+                        y1="40" 
+                        x2="200" 
+                        y2="40" 
+                        stroke="#4A7C59" 
+                        strokeWidth="2"
+                      />
+                      
+                      {/* Meeting markers */}
+                      {dataRoomData.meetingDates.timeline.map((point, idx) => (
+                        <g key={idx}>
+                          {/* Vertical line from timeline */}
+                          <line 
+                            x1={point.x} 
+                            y1="35" 
+                            x2={point.x} 
+                            y2="45" 
+                            stroke="#4A7C59" 
+                            strokeWidth="1.5"
+                          />
+                          {/* Cameo icon marker - two heads side-by-side */}
+                          <g transform={`translate(${point.x - 6}, 20)`}>
+                            {/* Left head */}
+                            <circle cx="4" cy="6" r="4" stroke="#4A7C59" strokeWidth="1.5" fill="#13243A"/>
+                            <circle cx="4" cy="5" r="1.5" fill="#4A7C59"/>
+                            {/* Right head */}
+                            <circle cx="8" cy="6" r="4" stroke="#4A7C59" strokeWidth="1.5" fill="#13243A"/>
+                            <circle cx="8" cy="5" r="1.5" fill="#4A7C59"/>
+                          </g>
+                        </g>
+                      ))}
+                    </svg>
+                    <div className="absolute bottom-2 left-3 text-xs text-[#C8D5EA] font-medium">
+                      {dataRoomData.meetingDates.dateRange.start}
+                    </div>
+                    <div className="absolute bottom-2 right-3 text-xs text-[#C8D5EA] font-medium">
+                      {dataRoomData.meetingDates.dateRange.end}
+                    </div>
+                  </div>
+                  
+                  {/* Meeting frequency info */}
+                  <div className="text-xs text-[#C8D5EA] space-y-1">
+                    {dataRoomData.meetingDates.dates.length > 0 && (() => {
+                      // Calculate average days between meetings
+                      const dates = dataRoomData.meetingDates.dates.map(d => {
+                        const [y, m, day] = d.split('-').map(Number);
+                        return new Date(y, m - 1, day);
+                      });
+                      
+                      const intervals: number[] = [];
+                      for (let i = 1; i < dates.length; i++) {
+                        const diff = Math.floor((dates[i].getTime() - dates[i - 1].getTime()) / (1000 * 60 * 60 * 24));
+                        intervals.push(diff);
+                      }
+                      
+                      const avgInterval = intervals.length > 0 
+                        ? Math.round(intervals.reduce((a, b) => a + b, 0) / intervals.length)
+                        : 0;
+                      
+                      return (
+                        <div>
+                          {avgInterval > 0 && (
+                            <span>Average: {avgInterval} days between meetings</span>
+                          )}
+                        </div>
+                      );
+                    })()}
+                  </div>
                 </div>
               )}
             </div>
