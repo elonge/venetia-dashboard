@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import LocationMap from './LocationMap';
+
+// Dynamically import LocationMap with SSR disabled to prevent window is not defined error
+const LocationMap = dynamic(() => import('./LocationMap'), {
+  ssr: false,
+});
 
 const mockData = {
   quote: {
