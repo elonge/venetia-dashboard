@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
+import React, { useEffect } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
@@ -14,50 +14,79 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-const sicilianLocations: Array<{
+interface Location {
   name: string;
-  description: string;
-  coords: [number, number];
-}> = [
-  {
-    name: 'Palermo',
-    description: 'Arrival point - explored the Norman Palace and Cathedral',
-    coords: [38.1157, 13.3615] as [number, number]
-  },
-  {
-    name: 'Taormina',
-    description: 'Visited the ancient Greek Theater, a pivotal moment',
-    coords: [37.8526, 15.2876] as [number, number]
-  },
-  {
-    name: 'Syracuse',
-    description: 'Explored ancient ruins and the Ear of Dionysius',
-    coords: [37.0755, 15.2866] as [number, number]
-  },
-  {
-    name: 'Agrigento',
-    description: 'Visited the Valley of the Temples',
-    coords: [37.3118, 13.5765] as [number, number]
-  }
-];
+  lat: number;
+  long: number;
+}
 
-export default function SicilyMap() {
-  const routeCoords = sicilianLocations.map(loc => loc.coords) as [number, number][];
+interface SicilyMapProps {
+  locations?: Location[];
+  title?: string;
+  description?: string;
+}
+
+// Component to fit bounds to show all markers
+function FitBounds({ locations }: { locations: Location[] }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (locations.length > 0) {
+      const bounds = locations.map(loc => [loc.lat, loc.long] as [number, number]);
+      if (bounds.length === 1) {
+        // If only one location, center on it with a reasonable zoom
+        map.setView(bounds[0], 12);
+      } else {
+        // Fit bounds to show all locations with padding
+        map.fitBounds(bounds, {
+          padding: [20, 20],
+          maxZoom: 12
+        });
+      }
+    }
+  }, [locations, map]);
+
+  return null;
+}
+
+export default function SicilyMap({ 
+  locations = [], 
+  title = 'Journey Map',
+  description = 'Locations from the chapter'
+}: SicilyMapProps) {
+  // Convert locations to map format
+  const mapLocations = locations.map(loc => ({
+    name: loc.name,
+    coords: [loc.lat, loc.long] as [number, number]
+  }));
+
+  // Calculate center point from locations, or use default
+  const centerLat = locations.length > 0 
+    ? locations.reduce((sum, loc) => sum + loc.lat, 0) / locations.length
+    : 37.5;
+  const centerLong = locations.length > 0
+    ? locations.reduce((sum, loc) => sum + loc.long, 0) / locations.length
+    : 14.5;
+
+  const routeCoords = mapLocations.map(loc => loc.coords) as [number, number][];
+
+  // Default zoom (will be adjusted by FitBounds component)
+  const zoom = 8;
 
   return (
     <div className="bg-[#F5F0E8] rounded-lg overflow-hidden">
       <div className="p-4 border-b border-[#D4CFC4]">
         <h2 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider">
-          Journey Through Sicily
+          {title}
         </h2>
         <p className="text-sm text-[#6B7280] mt-1">
-          The route taken during the Mediterranean cruise
+          {description}
         </p>
       </div>
       <div className="h-80">
         <MapContainer 
-          center={[37.5, 14.5]} 
-          zoom={8} 
+          center={[centerLat, centerLong]} 
+          zoom={zoom} 
           style={{ height: '100%', width: '100%' }}
           scrollWheelZoom={false}
         >
@@ -66,22 +95,26 @@ export default function SicilyMap() {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           
-          {/* Route line */}
-          <Polyline 
-            positions={routeCoords} 
-            color="#6B2D3C" 
-            weight={2}
-            opacity={0.7}
-            dashArray="5, 10"
-          />
+          {/* Fit bounds to show all locations */}
+          {locations.length > 0 && <FitBounds locations={locations} />}
+          
+          {/* Route line - only show if there are multiple locations */}
+          {routeCoords.length > 1 && (
+            <Polyline 
+              positions={routeCoords} 
+              color="#6B2D3C" 
+              weight={2}
+              opacity={0.7}
+              dashArray="5, 10"
+            />
+          )}
 
           {/* Location markers */}
-          {sicilianLocations.map((location, idx) => (
+          {mapLocations.map((location, idx) => (
             <Marker key={idx} position={location.coords}>
               <Popup>
                 <div className="text-sm">
                   <p className="font-semibold text-[#1A2A40]">{location.name}</p>
-                  <p className="text-xs text-[#6B7280] mt-1">{location.description}</p>
                 </div>
               </Popup>
             </Marker>

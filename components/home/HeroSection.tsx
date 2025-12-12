@@ -11,7 +11,7 @@ export default function HeroSection() {
         {/* Left - Big Story with Image */}
         <div className="relative w-[45%]">
           <img 
-            src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&q=80"
+            src="/asquith_venetia_split_screen.jpg"
             alt="Historical portrait"
             className="w-full h-64 object-cover sepia"
           />

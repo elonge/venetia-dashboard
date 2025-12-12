@@ -1,30 +1,94 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { ArrowLeft, Send, ExternalLink, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-// Mock Q&A data
-const qaData = {
-  question: 'How many letters a day?',
-  answer: 'At the height of their correspondence in 1914-1915, Prime Minister Asquith wrote to Venetia Stanley as many as three times a day. The letters varied in length from brief notes dashed off between Cabinet meetings to lengthy epistles of several pages written late at night. On particularly intense days during the First World War, Asquith would write during Cabinet meetings themselves, documenting his own government\'s deliberations in real-time to his young confidante. Over the course of their correspondence, he wrote over 560 letters to her, an extraordinary volume for a sitting Prime Minister during wartime.',
-  sources: [
-    'H.H. Asquith: Letters to Venetia Stanley (Oxford University Press, 1982)',
-    'The Asquith Papers, Bodleian Library, Oxford',
-    'Contemporary diary entries from Venetia Stanley'
-  ],
-  suggestedQuestions: [
-    'What did Asquith write about during Cabinet meetings?',
-    'Was Venetia a spy?',
-    'How did the letters affect British politics?',
-    'When did the correspondence begin?'
-  ]
-};
+interface QuestionAnswer {
+  text: string;
+  link: string;
+}
 
-export default function QA() {
+interface Question {
+  _id: string;
+  Question: string;
+  Answer: QuestionAnswer[];
+}
+
+function QAContent() {
   const [chatQuery, setChatQuery] = useState('');
+  const [question, setQuestion] = useState<Question | null>(null);
+  const [allQuestions, setAllQuestions] = useState<Question[]>([]);
+  const [loading, setLoading] = useState(true);
+  const searchParams = useSearchParams();
+  
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const questionId = searchParams.get('id');
+        
+        // Fetch all questions for related questions section
+        const allQuestionsResponse = await fetch('/api/questions');
+        let allData: Question[] = [];
+        if (allQuestionsResponse.ok) {
+          allData = await allQuestionsResponse.json();
+          setAllQuestions(allData);
+        }
+        
+        // Fetch specific question if ID is provided
+        if (questionId) {
+          const questionResponse = await fetch(`/api/questions/${questionId}`);
+          if (questionResponse.ok) {
+            const questionData = await questionResponse.json();
+            setQuestion(questionData);
+          } else {
+            // If question not found, use first question as fallback
+            if (allData.length > 0) {
+              setQuestion(allData[0]);
+            }
+          }
+        } else {
+          // If no ID provided, use first question
+          if (allData.length > 0) {
+            setQuestion(allData[0]);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching question:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    fetchData();
+  }, [searchParams]);
+  
+  // Get related questions (exclude current question)
+  const relatedQuestions = allQuestions
+    .filter(q => q._id !== question?._id)
+    .slice(0, 4);
+  
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#E8E4DC] flex items-center justify-center">
+        <div className="text-[#1A2A40]">Loading...</div>
+      </div>
+    );
+  }
+  
+  if (!question) {
+    return (
+      <div className="min-h-screen bg-[#E8E4DC] flex items-center justify-center">
+        <div className="text-[#1A2A40]">Question not found</div>
+      </div>
+    );
+  }
+  
+  // Extract unique sources from answer links
+  const sources = Array.from(new Set(question.Answer.map(a => a.link)));
 
   return (
     <div className="min-h-screen bg-[#E8E4DC]">
@@ -56,7 +120,7 @@ export default function QA() {
             </span>
           </div>
           <h1 className="text-4xl font-serif font-bold text-[#1A2A40]">
-            {qaData.question}
+            {question.Question}
           </h1>
         </div>
 
@@ -65,30 +129,39 @@ export default function QA() {
           <h2 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider mb-4">
             Answer
           </h2>
-          <p className="text-[#1A2A40] leading-relaxed text-lg">
-            {qaData.answer}
-          </p>
+          <div className="space-y-4">
+            {question.Answer.map((answer, idx) => (
+              <div key={idx} className="text-[#1A2A40] leading-relaxed">
+                <p className="text-lg mb-1">{answer.text}</p>
+                {answer.link && (
+                  <p className="text-sm text-[#6B7280] italic">Source: {answer.link}</p>
+                )}
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* Sources */}
-        <section className="bg-[#F5F0E8] rounded-lg p-5 mb-6">
-          <div className="flex items-start gap-2">
-            <ExternalLink className="w-4 h-4 text-[#6B7280] mt-1" />
-            <div className="flex-1">
-              <h2 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider mb-3">
-                Sources
-              </h2>
-              <ul className="space-y-2">
-                {qaData.sources.map((source, idx) => (
-                  <li key={idx} className="text-sm text-[#4B5563] hover:text-[#1A2A40] cursor-pointer flex items-start gap-2">
-                    <span className="text-[#6B2D3C] font-bold">•</span>
-                    <span>{source}</span>
-                  </li>
-                ))}
-              </ul>
+        {sources.length > 0 && (
+          <section className="bg-[#F5F0E8] rounded-lg p-5 mb-6">
+            <div className="flex items-start gap-2">
+              <ExternalLink className="w-4 h-4 text-[#6B7280] mt-1" />
+              <div className="flex-1">
+                <h2 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider mb-3">
+                  Sources
+                </h2>
+                <ul className="space-y-2">
+                  {sources.map((source, idx) => (
+                    <li key={idx} className="text-sm text-[#4B5563] hover:text-[#1A2A40] cursor-pointer flex items-start gap-2">
+                      <span className="text-[#6B2D3C] font-bold">•</span>
+                      <span>{source}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* Ask Your Own Question */}
         <section className="bg-[#F5F0E8] rounded-lg p-5 mb-6">
@@ -112,25 +185,39 @@ export default function QA() {
         </section>
 
         {/* Suggested Questions */}
-        <section>
-          <h2 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider mb-4">
-            Related Questions
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {qaData.suggestedQuestions.map((question, idx) => (
-              <Link
-                key={idx}
-                href="/qa"
-                className="bg-[#F5F0E8] hover:bg-[#E8E4DC] rounded-lg p-4 transition-colors border border-transparent hover:border-[#D4CFC4] group"
-              >
-                <p className="text-sm text-[#1A2A40] group-hover:text-[#6B2D3C] font-medium">
-                  {question}
-                </p>
-              </Link>
-            ))}
-          </div>
-        </section>
+        {relatedQuestions.length > 0 && (
+          <section>
+            <h2 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider mb-4">
+              Related Questions
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {relatedQuestions.map((relatedQ) => (
+                <Link
+                  key={relatedQ._id}
+                  href={`/qa?id=${encodeURIComponent(relatedQ._id)}`}
+                  className="bg-[#F5F0E8] hover:bg-[#E8E4DC] rounded-lg p-4 transition-colors border border-transparent hover:border-[#D4CFC4] group"
+                >
+                  <p className="text-sm text-[#1A2A40] group-hover:text-[#6B2D3C] font-medium">
+                    {relatedQ.Question}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
       </main>
     </div>
+  );
+}
+
+export default function QA() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#E8E4DC] flex items-center justify-center">
+        <div className="text-[#1A2A40]">Loading...</div>
+      </div>
+    }>
+      <QAContent />
+    </Suspense>
   );
 }
