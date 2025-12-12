@@ -53,8 +53,10 @@ export default function ChatInterface() {
 
   // Persist chat history across pages
   useEffect(() => {
-    if (messages.length > 0) {
-      localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(messages));
+    // Persist only completed messages to avoid keeping stale "Thinking..." states
+    const completedMessages = messages.filter((msg) => !msg.isStreaming);
+    if (completedMessages.length > 0) {
+      localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(completedMessages));
     } else {
       localStorage.removeItem(CHAT_STORAGE_KEY);
     }
