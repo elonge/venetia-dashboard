@@ -23,7 +23,7 @@ export const PEOPLE_IMAGES = {
     "Lady Gwendeline Churchill": "https://commons.wikimedia.org/wiki/Special:FilePath/Portrait_of_Lady_Gwendoline_Churchill.jpg",
     "Lady Sheffield": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg",
     "Lord Fisher": "https://commons.wikimedia.org/wiki/Special:FilePath/First_Sea_Lord_Admiral_John_Fisher_1915.jpg",
-    "Lord Kitchener": "https://commons.wikimedia.org/wiki/Special:FilePath/Lord_Kitchener_LCCN2014717145.jpg",
+    "Lord Kitchener": "https://en.wikipedia.org/wiki/Herbert_Kitchener,_1st_Earl_Kitchener#/media/File:Horatio_Herbert_Kitchener_(cropped).jpg",
     "Lord Murray": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg",
     "Lord Northcliffe": "https://commons.wikimedia.org/wiki/Special:FilePath/Alfred_Harmsworth,_1st_Viscount_Northcliffe_(37858960494).jpg",
     "Lord Sheffield": "https://commons.wikimedia.org/wiki/Special:FilePath/Edward_Stanley_4th_Baron_Sheffield.jpg",

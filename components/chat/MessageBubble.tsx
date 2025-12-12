@@ -26,11 +26,11 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
         className={`max-w-[80%] rounded-lg px-4 py-3 ${
           isUser
             ? 'bg-[#1A2A40] text-white'
-            : 'bg-white border border-[#D4CFC4] text-[#1A2A40]'
+            : 'bg-[#F5F0E8] border border-[#D4CFC4] text-[#1A2A40]'
         }`}
       >
-        <div className="prose prose-sm max-w-none">
-          <p className="whitespace-pre-wrap leading-relaxed">{displayContent}</p>
+        <div className="prose prose-sm max-w-none font-serif">
+          <p className="whitespace-pre-wrap leading-relaxed font-serif">{displayContent}</p>
           {message.isStreaming && (
             <span className="inline-block w-2 h-4 ml-1 bg-current animate-pulse" />
           )}
