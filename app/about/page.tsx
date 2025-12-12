@@ -18,7 +18,7 @@ export default function AboutPage() {
             <h1 className="font-serif text-lg font-medium">The Venetia Project</h1>
           </Link>
         </div>
-        <span className="text-[#6B7280] text-sm">When AI Meets Primary Sources</span>
+        <span className="text-[#6B7280] text-base">When AI Meets Primary Sources</span>
         <div className="w-8 h-8 rounded-full bg-[#4A7C59] flex items-center justify-center">
           <span className="text-white text-xs font-medium">V</span>
         </div>

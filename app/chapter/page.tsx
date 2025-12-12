@@ -160,7 +160,7 @@ function ChapterContent() {
               </Button>
             </Link>
             <div className="h-6 w-px bg-[#D4CFC4]" />
-            <h1 className="text-[#1A2A40] font-serif text-lg font-medium">The Venetia Project</h1>
+            <h1 className="text-[#1A2A40] font-serif text-2xl font-medium">The Venetia Project</h1>
           </div>
         </header>
         <main className="max-w-5xl mx-auto p-8">
@@ -206,7 +206,7 @@ function ChapterContent() {
             </Button>
           </Link>
           <div className="h-6 w-px bg-[#D4CFC4]" />
-          <h1 className="text-[#1A2A40] font-serif text-lg font-medium">The Venetia Project</h1>
+          <h1 className="text-[#1A2A40] font-serif text-2xl font-medium">The Venetia Project</h1>
         </div>
         <div className="w-8 h-8 rounded-full bg-[#4A7C59] flex items-center justify-center">
           <span className="text-white text-xs font-medium">V</span>
