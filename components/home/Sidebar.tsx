@@ -324,12 +324,12 @@ export default function Sidebar() {
       </div>
 
       {/* The Data Room */}
-      <div className="bg-[#0F1A28] rounded-lg p-4 mb-4">
+      <div className="bg-[#0D1B2A] border border-[#23354D] rounded-lg p-5 mb-4 text-[#EAF2FF]">
         <div className="mb-3">
-          <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-1">
+          <h3 className="text-base font-semibold uppercase tracking-wide text-white mb-1">
             The Data Room
           </h3>
-          <p className="text-[10px] text-[#E5E8F0]">
+          <p className="text-sm text-[#C8D5EA]">
             A living analytical view of the Asquith–Venetia archive.
           </p>
         </div>
@@ -340,10 +340,10 @@ export default function Sidebar() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`text-[10px] px-2 py-1 rounded transition-all ${
+              className={`text-sm px-3 py-1.5 rounded-md font-semibold transition-all ${
                 activeTab === tab.id
-                  ? 'bg-[#4A7C59] text-white'
-                  : 'bg-[#1A2A40] text-[#E5E8F0] hover:bg-[#252F3F]'
+                  ? 'bg-[#4A7C59] text-white shadow-sm'
+                  : 'bg-[#15263E] text-[#EAF2FF] border border-[#1F3350] hover:bg-[#1F3350]'
               }`}
             >
               {tab.label}
@@ -358,14 +358,14 @@ export default function Sidebar() {
         >
           {activeTab === 'sentiment' && (
             <div>
-              <h4 className="text-xs text-[#E5E8F0] mb-2">Emotional tone across timeline</h4>
+              <h4 className="text-sm font-semibold text-white mb-2">Emotional tone across timeline</h4>
               {dataRoomLoading ? (
-                <div className="h-32 bg-[#1A2A40] rounded flex items-center justify-center">
-                  <span className="text-xs text-[#E5E8F0]">Loading sentiment data...</span>
+                <div className="h-32 bg-[#13243A] rounded flex items-center justify-center">
+                  <span className="text-sm text-[#C8D5EA]">Loading sentiment data...</span>
                 </div>
               ) : !dataRoomData ? (
-                <div className="h-32 bg-[#1A2A40] rounded flex items-center justify-center">
-                  <span className="text-xs text-[#E5E8F0]">No sentiment data available</span>
+                <div className="h-32 bg-[#13243A] rounded flex items-center justify-center">
+                  <span className="text-sm text-[#C8D5EA]">No sentiment data available</span>
                 </div>
               ) : (
                 <>
@@ -374,7 +374,7 @@ export default function Sidebar() {
                     warmthPoints: dataRoomData.sentiment.warmth.length,
                     anxietyPoints: dataRoomData.sentiment.anxiety.length
                   })}
-                  <div className="h-32 bg-[#1A2A40] rounded relative overflow-hidden p-2">
+                  <div className="h-32 bg-[#13243A] rounded relative overflow-hidden p-3">
                     <svg viewBox="0 0 200 80" className="w-full h-full">
                       {/* Draw in reverse order so emotional_desolation (orange) is drawn first and appears behind others */}
                       {/* Emotional Desolation line - drawn first so it appears behind */}
@@ -405,25 +405,25 @@ export default function Sidebar() {
                         strokeLinejoin="round"
                       />
                     </svg>
-                    <div className="absolute bottom-2 left-2 text-[9px] text-[#E5E8F0]">
+                    <div className="absolute bottom-2 left-3 text-xs text-[#C8D5EA] font-medium">
                       {dataRoomData.sentiment.dateRange.start}
                     </div>
-                    <div className="absolute bottom-2 right-2 text-[9px] text-[#E5E8F0]">
+                    <div className="absolute bottom-2 right-3 text-xs text-[#C8D5EA] font-medium">
                       {dataRoomData.sentiment.dateRange.end}
                     </div>
                   </div>
-                  <div className="flex gap-3 mt-2 text-[9px]">
-                    <div className="flex items-center gap-1">
-                      <div className="w-2 h-2 rounded-full bg-[#DC2626]" />
-                      <span className="text-[#E5E8F0]">Political Unburdening</span>
+                  <div className="flex gap-3 mt-3 text-xs">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#DC2626]" />
+                      <span className="text-[#EAF2FF]">Political Unburdening</span>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <div className="w-2 h-2 rounded-full bg-[#4A7C59]" />
-                      <span className="text-[#E5E8F0]">Romantic Adoration</span>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#4A7C59]" />
+                      <span className="text-[#EAF2FF]">Romantic Adoration</span>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <div className="w-2 h-2 rounded-full bg-[#F59E0B]" />
-                      <span className="text-[#E5E8F0]">Emotional Desolation</span>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#F59E0B]" />
+                      <span className="text-[#EAF2FF]">Emotional Desolation</span>
                     </div>
                   </div>
                 </>
@@ -433,20 +433,20 @@ export default function Sidebar() {
 
           {activeTab === 'topics' && (
             <div>
-              <h4 className="text-xs text-[#E5E8F0] mb-3">Dominant themes in correspondence</h4>
+              <h4 className="text-sm font-semibold text-white mb-3">Dominant themes in correspondence</h4>
               {dataRoomLoading ? (
-                <div className="text-xs text-[#E5E8F0] p-3">Loading topics data...</div>
+                <div className="text-sm text-[#C8D5EA] p-3">Loading topics data...</div>
               ) : !dataRoomData || !dataRoomData.topics || dataRoomData.topics.length === 0 ? (
-                <div className="text-xs text-[#E5E8F0] p-3">No topics data available</div>
+                <div className="text-sm text-[#C8D5EA] p-3">No topics data available</div>
               ) : (
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {dataRoomData.topics.map((item) => (
                     <div key={item.topic}>
-                      <div className="flex justify-between text-[10px] mb-1">
-                        <span className="text-white">{item.topic}</span>
-                        <span className="text-[#E5E8F0]">{item.value}%</span>
+                      <div className="flex justify-between text-sm mb-1">
+                        <span className="text-white font-medium">{item.topic}</span>
+                        <span className="text-[#C8D5EA] font-semibold">{item.value}%</span>
                       </div>
-                      <div className="h-1.5 bg-[#1A2A40] rounded-full overflow-hidden">
+                      <div className="h-2.5 bg-[#15263E] rounded-full overflow-hidden">
                         <div 
                           className="h-full rounded-full transition-all duration-300"
                           style={{ width: `${item.value}%`, backgroundColor: item.color }}
@@ -461,18 +461,18 @@ export default function Sidebar() {
 
           {activeTab === 'weekly-letter-count' && (
             <div>
-              <h4 className="text-xs text-[#E5E8F0] mb-2">Number of letters per week over time</h4>
+              <h4 className="text-sm font-semibold text-white mb-2">Number of letters per week over time</h4>
               {dataRoomLoading ? (
-                <div className="h-28 bg-[#1A2A40] rounded flex items-center justify-center">
-                  <span className="text-xs text-[#E5E8F0]">Loading letter count data...</span>
+                <div className="h-28 bg-[#13243A] rounded flex items-center justify-center">
+                  <span className="text-sm text-[#C8D5EA]">Loading letter count data...</span>
                 </div>
               ) : !dataRoomData || !dataRoomData.dailyLetterCount ? (
-                <div className="h-28 bg-[#1A2A40] rounded flex items-center justify-center">
-                  <span className="text-xs text-[#E5E8F0]">No letter count data available</span>
+                <div className="h-28 bg-[#13243A] rounded flex items-center justify-center">
+                  <span className="text-sm text-[#C8D5EA]">No letter count data available</span>
                 </div>
               ) : (
                 <>
-                  <div className="h-28 bg-[#1A2A40] rounded relative overflow-hidden">
+                  <div className="h-28 bg-[#13243A] rounded relative overflow-hidden p-3">
                     <svg viewBox="0 0 200 80" className="w-full h-full">
                       <path 
                         d={pointsToPath(dataRoomData.dailyLetterCount.data, false)} 
@@ -488,14 +488,14 @@ export default function Sidebar() {
                         return <circle cx={peakPoint.x} cy={peakPoint.y} r="3" fill="#DC2626" />;
                       })()}
                     </svg>
-                    <div className="absolute bottom-2 left-2 text-[9px] text-[#E5E8F0]">
+                    <div className="absolute bottom-2 left-3 text-xs text-[#C8D5EA] font-medium">
                       {dataRoomData.dailyLetterCount.dateRange.start}
                     </div>
-                    <div className="absolute bottom-2 right-2 text-[9px] text-[#E5E8F0]">
+                    <div className="absolute bottom-2 right-3 text-xs text-[#C8D5EA] font-medium">
                       {dataRoomData.dailyLetterCount.dateRange.end}
                     </div>
                   </div>
-                  <p className="text-[10px] text-[#E5E8F0] mt-2">
+                  <p className="text-sm text-[#C8D5EA] mt-3">
                     Peak correspondence: {dataRoomData.dailyLetterCount.peak.date} ({dataRoomData.dailyLetterCount.peak.count} letters/week)
                   </p>
                 </>
@@ -505,20 +505,20 @@ export default function Sidebar() {
 
           {activeTab === 'people' && (
             <div>
-              <h4 className="text-xs text-[#E5E8F0] mb-3">Most mentioned individuals</h4>
+              <h4 className="text-sm font-semibold text-white mb-3">Most mentioned individuals</h4>
               {dataRoomLoading ? (
-                <div className="text-xs text-[#E5E8F0] p-3">Loading people data...</div>
+                <div className="text-sm text-[#C8D5EA] p-3">Loading people data...</div>
               ) : !dataRoomData || !dataRoomData.people || dataRoomData.people.length === 0 ? (
-                <div className="text-xs text-[#E5E8F0] p-3">No people data available</div>
+                <div className="text-sm text-[#C8D5EA] p-3">No people data available</div>
               ) : (
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {dataRoomData.people.map((person, idx) => (
-                    <div key={person.name} className="flex items-center justify-between text-[11px]">
+                    <div key={person.name} className="flex items-center justify-between text-sm">
                       <div className="flex items-center gap-2">
-                        <span className="text-[#E5E8F0] w-4">{idx + 1}.</span>
-                        <span className="text-white">{person.name}</span>
+                        <span className="text-[#EAF2FF] w-5 font-medium">{idx + 1}.</span>
+                        <span className="text-white font-semibold">{person.name}</span>
                       </div>
-                      <span className="text-[#4A7C59] font-semibold">{person.count}</span>
+                      <span className="text-[#9EE6B3] font-bold">{person.count}</span>
                     </div>
                   ))}
                 </div>
@@ -565,7 +565,7 @@ export default function Sidebar() {
               </button>
               <div className="flex-1 min-w-0 flex flex-col">
                 <div className="flex-1 overflow-y-auto min-h-0">
-                  <p className="text-xs text-center px-2">
+                  <p className="text-sm text-center px-2">
                     {funFacts[currentFunFactIndex]?.fact || 'No fun fact available'}
                   </p>
                 </div>
