@@ -256,7 +256,7 @@ export default function ChatInterface() {
             className="flex-1"
           />
           <Button
-            onClick={handleSend}
+            onClick={() => handleSend()}
             disabled={isLoading || !input.trim()}
             size="icon"
           >
