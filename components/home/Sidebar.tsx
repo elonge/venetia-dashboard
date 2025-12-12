@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { ChevronRight, ChevronLeft, ArrowRight, ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronRight, ChevronLeft, ArrowRight, ChevronDown, ChevronUp, RotateCcw } from 'lucide-react';
 import ChapterCarousel from './ChapterCarousel';
 
 interface Chapter {
@@ -81,6 +81,20 @@ export default function Sidebar() {
   const [dataRoomData, setDataRoomData] = useState<DataRoomData | null>(null);
   const [showAllQuestions, setShowAllQuestions] = useState(false);
   
+  // Zoom state for each widget
+  const [sentimentZoom, setSentimentZoom] = useState({ minX: 0, maxX: 200 });
+  const [letterCountZoom, setLetterCountZoom] = useState({ minX: 0, maxX: 200 });
+  const [meetingDatesZoom, setMeetingDatesZoom] = useState({ minX: 0, maxX: 200 });
+  
+  // Brush selection state
+  const [brushDragging, setBrushDragging] = useState<string | null>(null);
+  const [brushStart, setBrushStart] = useState<number | null>(null);
+  const brushRefs = {
+    sentiment: useRef<SVGSVGElement>(null),
+    letterCount: useRef<SVGSVGElement>(null),
+    meetingDates: useRef<SVGSVGElement>(null),
+  };
+  
   const MAX_QUESTIONS_DEFAULT = 5;
   const displayedQuestions = showAllQuestions ? questions : questions.slice(0, MAX_QUESTIONS_DEFAULT);
   const hasMoreQuestions = questions.length > MAX_QUESTIONS_DEFAULT;
@@ -146,38 +160,6 @@ export default function Sidebar() {
         const response = await fetch('/api/data-room');
         if (response.ok) {
           const data = await response.json();
-          console.log('[BROWSER DEBUG] Data room data received:', {
-            sentiment: {
-              tensionCount: data.sentiment?.tension?.length || 0,
-              warmthCount: data.sentiment?.warmth?.length || 0,
-              anxietyCount: data.sentiment?.anxiety?.length || 0,
-              dateRange: data.sentiment?.dateRange
-            }
-          });
-          
-          // Log sample points from each sentiment
-          if (data.sentiment?.tension?.length > 0) {
-            console.log('[BROWSER DEBUG] Sample tension points (first 5):', data.sentiment.tension.slice(0, 5));
-            const nonZeroTension = data.sentiment.tension.filter((p: { x: number; y: number }) => p.y < 70).slice(0, 5);
-            if (nonZeroTension.length > 0) {
-              console.log('[BROWSER DEBUG] Sample tension points with non-zero scores:', nonZeroTension);
-            }
-          }
-          if (data.sentiment?.warmth?.length > 0) {
-            console.log('[BROWSER DEBUG] Sample warmth points (first 5):', data.sentiment.warmth.slice(0, 5));
-            const nonZeroWarmth = data.sentiment.warmth.filter((p: { x: number; y: number }) => p.y < 70).slice(0, 5);
-            if (nonZeroWarmth.length > 0) {
-              console.log('[BROWSER DEBUG] Sample warmth points with non-zero scores:', nonZeroWarmth);
-            }
-          }
-          if (data.sentiment?.anxiety?.length > 0) {
-            console.log('[BROWSER DEBUG] Sample anxiety points (first 5):', data.sentiment.anxiety.slice(0, 5));
-            const nonZeroAnxiety = data.sentiment.anxiety.filter((p: { x: number; y: number }) => p.y < 70).slice(0, 5);
-            if (nonZeroAnxiety.length > 0) {
-              console.log('[BROWSER DEBUG] Sample anxiety points with non-zero scores:', nonZeroAnxiety);
-            }
-          }
-          
           setDataRoomData(data);
         } else {
           console.error('Error fetching data room: HTTP', response.status, await response.text());
@@ -191,6 +173,51 @@ export default function Sidebar() {
     fetchDataRoom();
   }, []);
 
+  // Global mouse event handlers for brush selection
+  useEffect(() => {
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      if (!brushDragging || brushStart === null) return;
+      
+      const widgetId = brushDragging;
+      const svg = brushRefs[widgetId as keyof typeof brushRefs].current;
+      if (!svg) return;
+      
+      const rect = svg.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 200;
+      const clampedX = Math.max(0, Math.min(200, x));
+      
+      const minX = Math.min(brushStart, clampedX);
+      const maxX = Math.max(brushStart, clampedX);
+      
+      // Ensure minimum zoom width
+      if (maxX - minX < 10) return;
+      
+      // Update zoom state
+      if (widgetId === 'sentiment') {
+        setSentimentZoom({ minX, maxX });
+      } else if (widgetId === 'letterCount') {
+        setLetterCountZoom({ minX, maxX });
+      } else if (widgetId === 'meetingDates') {
+        setMeetingDatesZoom({ minX, maxX });
+      }
+    };
+
+    const handleGlobalMouseUp = () => {
+      setBrushDragging(null);
+      setBrushStart(null);
+    };
+
+    if (brushDragging) {
+      window.addEventListener('mousemove', handleGlobalMouseMove);
+      window.addEventListener('mouseup', handleGlobalMouseUp);
+      
+      return () => {
+        window.removeEventListener('mousemove', handleGlobalMouseMove);
+        window.removeEventListener('mouseup', handleGlobalMouseUp);
+      };
+    }
+  }, [brushDragging, brushStart]);
+
   const handlePreviousFunFact = () => {
     if (funFacts.length === 0) return;
     setCurrentFunFactIndex((prev) => (prev === 0 ? funFacts.length - 1 : prev - 1));
@@ -201,60 +228,158 @@ export default function Sidebar() {
     setCurrentFunFactIndex((prev) => (prev === funFacts.length - 1 ? 0 : prev + 1));
   };
 
+  // Helper function to transform points based on zoom level
+  const transformPoints = (points: Array<{ x: number; y: number }>, zoom: { minX: number; maxX: number }): Array<{ x: number; y: number }> => {
+    if (zoom.minX === 0 && zoom.maxX === 200) {
+      return points; // No zoom, return original points
+    }
+    
+    const zoomWidth = zoom.maxX - zoom.minX;
+    return points
+      .filter(p => p.x >= zoom.minX && p.x <= zoom.maxX)
+      .map(p => ({
+        x: ((p.x - zoom.minX) / zoomWidth) * 200,
+        y: p.y
+      }));
+  };
+
+  // Helper function to calculate date from x coordinate
+  const getDateFromX = (x: number, dateRange: { start: string; end: string }): string => {
+    // Convert x (0-200) to approximate date
+    const ratio = x / 200;
+    const startYear = parseInt(dateRange.start) || 1910;
+    const endYear = parseInt(dateRange.end) || 1915;
+    const year = Math.round(startYear + (endYear - startYear) * ratio);
+    return year.toString();
+  };
+
+  // Helper function to get y-axis value from y coordinate (for sentiment: scores 0-10, inverted)
+  const getYValueFromY = (y: number, minValue: number = 0, maxValue: number = 10, yTop: number = 10, yBottom: number = 70): number => {
+    // Inverted: higher y coordinate = lower value
+    const normalized = (yBottom - y) / (yBottom - yTop);
+    return minValue + (maxValue - minValue) * normalized;
+  };
+
+  // Helper function to generate horizontal ticks (x-axis)
+  const generateHorizontalTicks = (minX: number, maxX: number, dateRange: { start: string; end: string }, numTicks: number = 5): Array<{ x: number; label: string }> => {
+    const ticks: Array<{ x: number; label: string }> = [];
+    const zoomWidth = maxX - minX;
+    const tickSpacing = zoomWidth / (numTicks - 1);
+    
+    for (let i = 0; i < numTicks; i++) {
+      const x = minX + (i * tickSpacing);
+      const transformedX = ((x - minX) / zoomWidth) * 200;
+      const label = getDateFromX(x, dateRange);
+      ticks.push({ x: transformedX, label });
+    }
+    
+    return ticks;
+  };
+
+  // Helper function to generate vertical ticks (y-axis) for sentiment (scores 0-10)
+  const generateVerticalTicksSentiment = (numTicks: number = 5): Array<{ y: number; value: number }> => {
+    const ticks: Array<{ y: number; value: number }> = [];
+    const yTop = 10;
+    const yBottom = 70;
+    const minValue = 0;
+    const maxValue = 10;
+    
+    for (let i = 0; i < numTicks; i++) {
+      const value = minValue + (maxValue - minValue) * (i / (numTicks - 1));
+      const y = yBottom - ((value - minValue) / (maxValue - minValue)) * (yBottom - yTop);
+      ticks.push({ y, value });
+    }
+    
+    return ticks;
+  };
+
+  // Helper function to generate vertical ticks (y-axis) for letter count
+  const generateVerticalTicksLetterCount = (points: Array<{ x: number; y: number }>, maxCount: number, numTicks: number = 5): Array<{ y: number; value: number }> => {
+    if (points.length === 0 || maxCount === 0) return [];
+    
+    const yTop = 10;
+    const yBottom = 70;
+    const minValue = 0;
+    const maxValue = maxCount;
+    
+    const ticks: Array<{ y: number; value: number }> = [];
+    
+    for (let i = 0; i < numTicks; i++) {
+      const value = minValue + (maxValue - minValue) * (i / (numTicks - 1));
+      const y = yBottom - ((value - minValue) / (maxValue - minValue)) * (yBottom - yTop);
+      ticks.push({ y, value: Math.round(value) });
+    }
+    
+    return ticks;
+  };
+
+  // Brush selection handlers
+  const handleBrushMouseDown = (widgetId: string, e: React.MouseEvent<SVGSVGElement>) => {
+    const svg = brushRefs[widgetId as keyof typeof brushRefs].current;
+    if (!svg) return;
+    
+    const rect = svg.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 200;
+    const clampedX = Math.max(0, Math.min(200, x));
+    
+    setBrushDragging(widgetId);
+    setBrushStart(clampedX);
+    e.preventDefault();
+  };
+
+  const handleBrushMouseMove = (widgetId: string, e: React.MouseEvent<SVGSVGElement>) => {
+    if (!brushDragging || brushDragging !== widgetId || brushStart === null) return;
+    
+    const svg = brushRefs[widgetId as keyof typeof brushRefs].current;
+    if (!svg) return;
+    
+    const rect = svg.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 200;
+    const clampedX = Math.max(0, Math.min(200, x));
+    
+    const minX = Math.min(brushStart, clampedX);
+    const maxX = Math.max(brushStart, clampedX);
+    
+    // Ensure minimum zoom width
+    if (maxX - minX < 10) return;
+    
+    // Update zoom state
+    if (widgetId === 'sentiment') {
+      setSentimentZoom({ minX, maxX });
+    } else if (widgetId === 'letterCount') {
+      setLetterCountZoom({ minX, maxX });
+    } else if (widgetId === 'meetingDates') {
+      setMeetingDatesZoom({ minX, maxX });
+    }
+  };
+
+  const handleBrushMouseUp = () => {
+    setBrushDragging(null);
+    setBrushStart(null);
+  };
+
+  // Reset zoom handlers
+  const resetZoom = (widgetId: string) => {
+    if (widgetId === 'sentiment') {
+      setSentimentZoom({ minX: 0, maxX: 200 });
+    } else if (widgetId === 'letterCount') {
+      setLetterCountZoom({ minX: 0, maxX: 200 });
+    } else if (widgetId === 'meetingDates') {
+      setMeetingDatesZoom({ minX: 0, maxX: 200 });
+    }
+  };
+
   // Helper function to convert data points to SVG path
   const pointsToPath = (points: Array<{ x: number; y: number }>, smooth: boolean = false, label: string = ''): string => {
     if (points.length === 0) {
-      console.log(`[BROWSER DEBUG] ${label} - No points provided`);
       return '';
     }
     if (points.length === 1) {
-      console.log(`[BROWSER DEBUG] ${label} - Single point:`, points[0]);
       return `M${points[0].x},${points[0].y}`;
     }
     
     // Sort points by x coordinate to ensure proper path generation
     const sortedPoints = [...points].sort((a, b) => a.x - b.x);
-    
-    console.log(`[BROWSER DEBUG] ${label} - Generating path from ${sortedPoints.length} points`);
-    console.log(`[BROWSER DEBUG] ${label} - First point:`, { x: sortedPoints[0]?.x.toFixed(2), y: sortedPoints[0]?.y.toFixed(2) });
-    console.log(`[BROWSER DEBUG] ${label} - Last point:`, { x: sortedPoints[sortedPoints.length - 1]?.x.toFixed(2), y: sortedPoints[sortedPoints.length - 1]?.y.toFixed(2) });
-    console.log(`[BROWSER DEBUG] ${label} - First 5 sorted points:`, sortedPoints.slice(0, 5).map(p => ({ x: p.x.toFixed(2), y: p.y.toFixed(2) })));
-    console.log(`[BROWSER DEBUG] ${label} - Last 5 sorted points:`, sortedPoints.slice(-5).map(p => ({ x: p.x.toFixed(2), y: p.y.toFixed(2) })));
-    
-    // Find points at different x positions to see distribution
-    const quarterPoints = [
-      sortedPoints[Math.floor(sortedPoints.length * 0.25)],
-      sortedPoints[Math.floor(sortedPoints.length * 0.5)],
-      sortedPoints[Math.floor(sortedPoints.length * 0.75)],
-    ];
-    console.log(`[BROWSER DEBUG] ${label} - Points at 25%, 50%, 75% of timeline:`, quarterPoints.map(p => ({ x: p.x.toFixed(2), y: p.y.toFixed(2) })));
-    
-    // Check for y-value range
-    const yValues = sortedPoints.map(p => p.y);
-    const minY = Math.min(...yValues);
-    const maxY = Math.max(...yValues);
-    const xValues = sortedPoints.map(p => p.x);
-    const minX = Math.min(...xValues);
-    const maxX = Math.max(...xValues);
-    console.log(`[BROWSER DEBUG] ${label} - X value range: min=${minX.toFixed(2)}, max=${maxX.toFixed(2)}`);
-    console.log(`[BROWSER DEBUG] ${label} - Y value range: min=${minY.toFixed(2)}, max=${maxY.toFixed(2)}`);
-    
-    // Count points at different y levels
-    const pointsAtBottom = sortedPoints.filter(p => p.y >= 69.5).length;
-    const pointsAtTop = sortedPoints.filter(p => p.y <= 10.5).length;
-    const pointsInMiddle = sortedPoints.length - pointsAtBottom - pointsAtTop;
-    console.log(`[BROWSER DEBUG] ${label} - Points distribution: bottom (y>=69.5)=${pointsAtBottom}, middle=${pointsInMiddle}, top (y<=10.5)=${pointsAtTop}`);
-    
-    // Find some example points with different y values
-    const samplePoints = [
-      sortedPoints.find(p => p.y < 69.5),
-      sortedPoints.find(p => p.y < 60 && p.y > 50),
-      sortedPoints.find(p => p.y < 40 && p.y > 30),
-      sortedPoints.find(p => p.y < 20 && p.y > 10),
-    ].filter((p): p is { x: number; y: number } => p !== undefined).slice(0, 3);
-    if (samplePoints.length > 0) {
-      console.log(`[BROWSER DEBUG] ${label} - Sample points with varying y values:`, samplePoints.map(p => ({ x: p.x.toFixed(2), y: p.y.toFixed(2) })));
-    }
     
     if (smooth && sortedPoints.length >= 3) {
       // Use simple polyline for accurate representation
@@ -263,9 +388,7 @@ export default function Sidebar() {
       return sortedPoints.map((p, i) => (i === 0 ? `M${p.x},${p.y}` : `L${p.x},${p.y}`)).join(' ');
     } else {
       // Simple line path
-      const path = sortedPoints.map((p, i) => (i === 0 ? `M${p.x},${p.y}` : `L${p.x},${p.y}`)).join(' ');
-      console.log(`[BROWSER DEBUG] ${label} - Generated line path (first 200 chars):`, path.substring(0, 200));
-      return path;
+      return sortedPoints.map((p, i) => (i === 0 ? `M${p.x},${p.y}` : `L${p.x},${p.y}`)).join(' ');
     }
   };
 
@@ -367,7 +490,19 @@ export default function Sidebar() {
         >
           {activeTab === 'sentiment' && (
             <div>
-              <h4 className="text-sm font-semibold text-white mb-2">Emotional tone across timeline</h4>
+              <div className="flex items-center justify-between mb-2">
+                <h4 className="text-sm font-semibold text-white">Emotional tone across timeline</h4>
+                {(sentimentZoom.minX !== 0 || sentimentZoom.maxX !== 200) && (
+                  <button
+                    onClick={() => resetZoom('sentiment')}
+                    className="text-xs text-[#C8D5EA] hover:text-white flex items-center gap-1 transition-colors"
+                    title="Reset zoom"
+                  >
+                    <RotateCcw className="w-3 h-3" />
+                    Reset
+                  </button>
+                )}
+              </div>
               {dataRoomLoading ? (
                 <div className="h-32 bg-[#13243A] rounded flex items-center justify-center">
                   <span className="text-sm text-[#C8D5EA]">Loading sentiment data...</span>
@@ -378,49 +513,156 @@ export default function Sidebar() {
                 </div>
               ) : (
                 <>
-                  {console.log('[BROWSER DEBUG] Rendering sentiment visualization with', {
-                    tensionPoints: dataRoomData.sentiment.tension.length,
-                    warmthPoints: dataRoomData.sentiment.warmth.length,
-                    anxietyPoints: dataRoomData.sentiment.anxiety.length
-                  })}
-                  <div className="h-32 bg-[#13243A] rounded relative overflow-hidden p-3">
-                    <svg viewBox="0 0 200 80" className="w-full h-full">
-                      {/* Draw in reverse order so emotional_desolation (orange) is drawn first and appears behind others */}
-                      {/* Emotional Desolation line - drawn first so it appears behind */}
-                      <path 
-                        d={pointsToPath(dataRoomData.sentiment.anxiety, true, 'Emotional Desolation')} 
-                        fill="none" 
-                        stroke="#F59E0B" 
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      {/* Romantic Adoration line */}
-                      <path 
-                        d={pointsToPath(dataRoomData.sentiment.warmth, true, 'Romantic Adoration')} 
-                        fill="none" 
-                        stroke="#4A7C59" 
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      {/* Political Unburdening line - drawn last so it appears on top */}
-                      <path 
-                        d={pointsToPath(dataRoomData.sentiment.tension, true, 'Political Unburdening')} 
-                        fill="none" 
-                        stroke="#DC2626" 
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
+                  <div className="h-32 bg-[#13243A] rounded relative p-3">
+                    <svg 
+                      viewBox="0 0 200 80" 
+                      className="w-full h-full"
+                      preserveAspectRatio="none"
+                    >
+                      {/* Grid lines and ticks */}
+                      {(() => {
+                        const horizontalTicks = generateHorizontalTicks(sentimentZoom.minX, sentimentZoom.maxX, dataRoomData.sentiment.dateRange, 5);
+                        const verticalTicks = generateVerticalTicksSentiment(5);
+                        
+                        return (
+                          <>
+                            {/* Vertical grid lines and ticks */}
+                            {verticalTicks.map((tick, idx) => (
+                              <g key={`v-${idx}`}>
+                                <line 
+                                  x1="0" 
+                                  y1={tick.y} 
+                                  x2="200" 
+                                  y2={tick.y} 
+                                  stroke="#4A7C59" 
+                                  strokeWidth="0.5" 
+                                  opacity="0.2"
+                                  strokeDasharray="2,2"
+                                />
+                                <line 
+                                  x1="0" 
+                                  y1={tick.y} 
+                                  x2="5" 
+                                  y2={tick.y} 
+                                  stroke="#C8D5EA" 
+                                  strokeWidth="1"
+                                />
+                                <text 
+                                  x="8" 
+                                  y={tick.y} 
+                                  textAnchor="start" 
+                                  dominantBaseline="middle"
+                                  className="text-[8px] fill-[#C8D5EA]"
+                                >
+                                  {tick.value.toFixed(1)}
+                                </text>
+                              </g>
+                            ))}
+                            
+                            {/* Horizontal grid lines and ticks */}
+                            {horizontalTicks.map((tick, idx) => (
+                              <g key={`h-${idx}`}>
+                                <line 
+                                  x1={tick.x} 
+                                  y1="0" 
+                                  x2={tick.x} 
+                                  y2="80" 
+                                  stroke="#4A7C59" 
+                                  strokeWidth="0.5" 
+                                  opacity="0.2"
+                                  strokeDasharray="2,2"
+                                />
+                                <line 
+                                  x1={tick.x} 
+                                  y1="70" 
+                                  x2={tick.x} 
+                                  y2="80" 
+                                  stroke="#C8D5EA" 
+                                  strokeWidth="1"
+                                />
+                                <text 
+                                  x={tick.x} 
+                                  y="75" 
+                                  textAnchor="middle" 
+                                  dominantBaseline="middle"
+                                  className="text-[8px] fill-[#C8D5EA]"
+                                >
+                                  {tick.label}
+                                </text>
+                              </g>
+                            ))}
+                          </>
+                        );
+                      })()}
+                      
+                      {/* Transform points based on zoom */}
+                      {(() => {
+                        const transformedAnxiety = transformPoints(dataRoomData.sentiment.anxiety, sentimentZoom);
+                        const transformedWarmth = transformPoints(dataRoomData.sentiment.warmth, sentimentZoom);
+                        const transformedTension = transformPoints(dataRoomData.sentiment.tension, sentimentZoom);
+                        
+                        return (
+                          <>
+                            {/* Emotional Desolation line - drawn first so it appears behind */}
+                            <path 
+                              d={pointsToPath(transformedAnxiety, true, 'Emotional Desolation')} 
+                              fill="none" 
+                              stroke="#F59E0B" 
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            {/* Romantic Adoration line */}
+                            <path 
+                              d={pointsToPath(transformedWarmth, true, 'Romantic Adoration')} 
+                              fill="none" 
+                              stroke="#4A7C59" 
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            {/* Political Unburdening line - drawn last so it appears on top */}
+                            <path 
+                              d={pointsToPath(transformedTension, true, 'Political Unburdening')} 
+                              fill="none" 
+                              stroke="#DC2626" 
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </>
+                        );
+                      })()}
                     </svg>
-                    <div className="absolute bottom-2 left-3 text-xs text-[#C8D5EA] font-medium">
-                      {dataRoomData.sentiment.dateRange.start}
-                    </div>
-                    <div className="absolute bottom-2 right-3 text-xs text-[#C8D5EA] font-medium">
-                      {dataRoomData.sentiment.dateRange.end}
-                    </div>
                   </div>
+                  
+                  {/* Overview chart with brush selection */}
+                  <div className="h-6 bg-[#13243A] rounded mt-2 relative overflow-hidden">
+                    <svg 
+                      ref={brushRefs.sentiment}
+                      viewBox="0 0 200 20" 
+                      className="w-full h-full cursor-crosshair"
+                      onMouseDown={(e) => handleBrushMouseDown('sentiment', e)}
+                      onMouseMove={(e) => handleBrushMouseMove('sentiment', e)}
+                      onMouseUp={handleBrushMouseUp}
+                      onMouseLeave={handleBrushMouseUp}
+                    >
+                      {/* Full timeline background */}
+                      <line x1="0" y1="10" x2="200" y2="10" stroke="#4A7C59" strokeWidth="1" opacity="0.3" />
+                      
+                      {/* Highlighted zoom range */}
+                      <rect 
+                        x={sentimentZoom.minX} 
+                        y="0" 
+                        width={sentimentZoom.maxX - sentimentZoom.minX} 
+                        height="20" 
+                        fill="#4A7C59" 
+                        opacity="0.3"
+                      />
+                      
+                    </svg>
+                  </div>
+                  
                   <div className="flex gap-3 mt-3 text-xs">
                     <div className="flex items-center gap-2">
                       <div className="w-2.5 h-2.5 rounded-full bg-[#DC2626]" />
@@ -470,7 +712,19 @@ export default function Sidebar() {
 
           {activeTab === 'weekly-letter-count' && (
             <div>
-              <h4 className="text-sm font-semibold text-white mb-2">Number of letters per week over time</h4>
+              <div className="flex items-center justify-between mb-2">
+                <h4 className="text-sm font-semibold text-white">Number of letters per week over time</h4>
+                {(letterCountZoom.minX !== 0 || letterCountZoom.maxX !== 200) && (
+                  <button
+                    onClick={() => resetZoom('letterCount')}
+                    className="text-xs text-[#C8D5EA] hover:text-white flex items-center gap-1 transition-colors"
+                    title="Reset zoom"
+                  >
+                    <RotateCcw className="w-3 h-3" />
+                    Reset
+                  </button>
+                )}
+              </div>
               {dataRoomLoading ? (
                 <div className="h-28 bg-[#13243A] rounded flex items-center justify-center">
                   <span className="text-sm text-[#C8D5EA]">Loading letter count data...</span>
@@ -481,29 +735,135 @@ export default function Sidebar() {
                 </div>
               ) : (
                 <>
-                  <div className="h-28 bg-[#13243A] rounded relative overflow-hidden p-3">
-                    <svg viewBox="0 0 200 80" className="w-full h-full">
-                      <path 
-                        d={pointsToPath(dataRoomData.dailyLetterCount.data, false)} 
-                        fill="none" 
-                        stroke="#4A7C59" 
-                        strokeWidth="2"
-                      />
-                      {/* Highlight peak point - find the point with minimum y (highest on chart, most letters) */}
-                      {dataRoomData.dailyLetterCount.data.length > 0 && (() => {
+                  <div className="h-28 bg-[#13243A] rounded relative p-3">
+                    <svg 
+                      viewBox="0 0 200 80" 
+                      className="w-full h-full"
+                      preserveAspectRatio="none"
+                    >
+                      {(() => {
+                        const transformedData = transformPoints(dataRoomData.dailyLetterCount.data, letterCountZoom);
                         const peakPoint = dataRoomData.dailyLetterCount.data.reduce((min, p) => 
                           p.y < min.y ? p : min
                         );
-                        return <circle cx={peakPoint.x} cy={peakPoint.y} r="3" fill="#DC2626" />;
+                        const isPeakVisible = peakPoint.x >= letterCountZoom.minX && peakPoint.x <= letterCountZoom.maxX;
+                        const transformedPeak = isPeakVisible ? {
+                          x: ((peakPoint.x - letterCountZoom.minX) / (letterCountZoom.maxX - letterCountZoom.minX)) * 200,
+                          y: peakPoint.y
+                        } : null;
+                        
+                        const horizontalTicks = generateHorizontalTicks(letterCountZoom.minX, letterCountZoom.maxX, dataRoomData.dailyLetterCount.dateRange, 5);
+                        const verticalTicks = generateVerticalTicksLetterCount(transformedData, dataRoomData.dailyLetterCount.peak.count, 5);
+                        
+                        return (
+                          <>
+                            {/* Vertical grid lines and ticks */}
+                            {verticalTicks.map((tick, idx) => (
+                              <g key={`v-${idx}`}>
+                                <line 
+                                  x1="0" 
+                                  y1={tick.y} 
+                                  x2="200" 
+                                  y2={tick.y} 
+                                  stroke="#4A7C59" 
+                                  strokeWidth="0.5" 
+                                  opacity="0.2"
+                                  strokeDasharray="2,2"
+                                />
+                                <line 
+                                  x1="0" 
+                                  y1={tick.y} 
+                                  x2="5" 
+                                  y2={tick.y} 
+                                  stroke="#C8D5EA" 
+                                  strokeWidth="1"
+                                />
+                                <text 
+                                  x="8" 
+                                  y={tick.y} 
+                                  textAnchor="start" 
+                                  dominantBaseline="middle"
+                                  className="text-[8px] fill-[#C8D5EA]"
+                                >
+                                  {tick.value}
+                                </text>
+                              </g>
+                            ))}
+                            
+                            {/* Horizontal grid lines and ticks */}
+                            {horizontalTicks.map((tick, idx) => (
+                              <g key={`h-${idx}`}>
+                                <line 
+                                  x1={tick.x} 
+                                  y1="0" 
+                                  x2={tick.x} 
+                                  y2="80" 
+                                  stroke="#4A7C59" 
+                                  strokeWidth="0.5" 
+                                  opacity="0.2"
+                                  strokeDasharray="2,2"
+                                />
+                                <line 
+                                  x1={tick.x} 
+                                  y1="60" 
+                                  x2={tick.x} 
+                                  y2="80" 
+                                  stroke="#C8D5EA" 
+                                  strokeWidth="1"
+                                />
+                                <text 
+                                  x={tick.x} 
+                                  y="75" 
+                                  textAnchor="middle" 
+                                  dominantBaseline="middle"
+                                  className="text-[8px] fill-[#C8D5EA]"
+                                >
+                                  {tick.label}
+                                </text>
+                              </g>
+                            ))}
+                            
+                            <path 
+                              d={pointsToPath(transformedData, false)} 
+                              fill="none" 
+                              stroke="#4A7C59" 
+                              strokeWidth="2"
+                            />
+                            {transformedPeak && (
+                              <circle cx={transformedPeak.x} cy={transformedPeak.y} r="3" fill="#DC2626" />
+                            )}
+                          </>
+                        );
                       })()}
                     </svg>
-                    <div className="absolute bottom-2 left-3 text-xs text-[#C8D5EA] font-medium">
-                      {dataRoomData.dailyLetterCount.dateRange.start}
-                    </div>
-                    <div className="absolute bottom-2 right-3 text-xs text-[#C8D5EA] font-medium">
-                      {dataRoomData.dailyLetterCount.dateRange.end}
-                    </div>
                   </div>
+                  
+                  {/* Overview chart with brush selection */}
+                  <div className="h-6 bg-[#13243A] rounded mt-2 relative overflow-hidden">
+                    <svg 
+                      ref={brushRefs.letterCount}
+                      viewBox="0 0 200 20" 
+                      className="w-full h-full cursor-crosshair"
+                      onMouseDown={(e) => handleBrushMouseDown('letterCount', e)}
+                      onMouseMove={(e) => handleBrushMouseMove('letterCount', e)}
+                      onMouseUp={handleBrushMouseUp}
+                      onMouseLeave={handleBrushMouseUp}
+                    >
+                      {/* Full timeline background */}
+                      <line x1="0" y1="10" x2="200" y2="10" stroke="#4A7C59" strokeWidth="1" opacity="0.3" />
+                      
+                      {/* Highlighted zoom range */}
+                      <rect 
+                        x={letterCountZoom.minX} 
+                        y="0" 
+                        width={letterCountZoom.maxX - letterCountZoom.minX} 
+                        height="20" 
+                        fill="#4A7C59" 
+                        opacity="0.3"
+                      />
+                    </svg>
+                  </div>
+                  
                   <p className="text-sm text-[#C8D5EA] mt-3">
                     Peak correspondence: {dataRoomData.dailyLetterCount.peak.date} ({dataRoomData.dailyLetterCount.peak.count} letters/week)
                   </p>
@@ -537,7 +897,19 @@ export default function Sidebar() {
 
           {activeTab === 'meeting-dates' && (
             <div>
-              <h4 className="text-sm font-semibold text-white mb-3">Dates when they met</h4>
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="text-sm font-semibold text-white">Dates when they met</h4>
+                {(meetingDatesZoom.minX !== 0 || meetingDatesZoom.maxX !== 200) && (
+                  <button
+                    onClick={() => resetZoom('meetingDates')}
+                    className="text-xs text-[#C8D5EA] hover:text-white flex items-center gap-1 transition-colors"
+                    title="Reset zoom"
+                  >
+                    <RotateCcw className="w-3 h-3" />
+                    Reset
+                  </button>
+                )}
+              </div>
               {dataRoomLoading ? (
                 <div className="text-sm text-[#C8D5EA] p-3">Loading meeting dates data...</div>
               ) : !dataRoomData || !dataRoomData.meetingDates || dataRoomData.meetingDates.dates.length === 0 ? (
@@ -554,8 +926,53 @@ export default function Sidebar() {
                   </div>
                   
                   {/* Timeline Visualization */}
-                  <div className="h-32 bg-[#13243A] rounded relative overflow-hidden p-3 mb-3">
-                    <svg viewBox="0 0 200 80" className="w-full h-full">
+                  <div className="h-32 bg-[#13243A] rounded relative p-3 mb-3">
+                    <svg 
+                      viewBox="0 0 200 80" 
+                      className="w-full h-full"
+                      preserveAspectRatio="none"
+                    >
+                      {(() => {
+                        const horizontalTicks = generateHorizontalTicks(meetingDatesZoom.minX, meetingDatesZoom.maxX, dataRoomData.meetingDates.dateRange, 5);
+                        
+                        return (
+                          <>
+                            {/* Horizontal grid lines and ticks */}
+                            {horizontalTicks.map((tick, idx) => (
+                              <g key={`h-${idx}`}>
+                                <line 
+                                  x1={tick.x} 
+                                  y1="0" 
+                                  x2={tick.x} 
+                                  y2="80" 
+                                  stroke="#4A7C59" 
+                                  strokeWidth="0.5" 
+                                  opacity="0.2"
+                                  strokeDasharray="2,2"
+                                />
+                                <line 
+                                  x1={tick.x} 
+                                  y1="40" 
+                                  x2={tick.x} 
+                                  y2="50" 
+                                  stroke="#C8D5EA" 
+                                  strokeWidth="1"
+                                />
+                                <text 
+                                  x={tick.x} 
+                                  y="45" 
+                                  textAnchor="middle" 
+                                  dominantBaseline="middle"
+                                  className="text-[8px] fill-[#C8D5EA]"
+                                >
+                                  {tick.label}
+                                </text>
+                              </g>
+                            ))}
+                          </>
+                        );
+                      })()}
+                      
                       {/* Timeline line */}
                       <line 
                         x1="0" 
@@ -566,36 +983,66 @@ export default function Sidebar() {
                         strokeWidth="2"
                       />
                       
-                      {/* Meeting markers */}
-                      {dataRoomData.meetingDates.timeline.map((point, idx) => (
-                        <g key={idx}>
-                          {/* Vertical line from timeline */}
-                          <line 
-                            x1={point.x} 
-                            y1="35" 
-                            x2={point.x} 
-                            y2="45" 
-                            stroke="#4A7C59" 
-                            strokeWidth="1.5"
-                          />
-                          {/* Cameo icon marker - two heads side-by-side */}
-                          <g transform={`translate(${point.x - 6}, 20)`}>
-                            {/* Left head */}
-                            <circle cx="4" cy="6" r="4" stroke="#4A7C59" strokeWidth="1.5" fill="#13243A"/>
-                            <circle cx="4" cy="5" r="1.5" fill="#4A7C59"/>
-                            {/* Right head */}
-                            <circle cx="8" cy="6" r="4" stroke="#4A7C59" strokeWidth="1.5" fill="#13243A"/>
-                            <circle cx="8" cy="5" r="1.5" fill="#4A7C59"/>
-                          </g>
-                        </g>
-                      ))}
+                      {/* Meeting markers - filter and transform based on zoom */}
+                      {dataRoomData.meetingDates.timeline
+                        .filter(point => point.x >= meetingDatesZoom.minX && point.x <= meetingDatesZoom.maxX)
+                        .map((point, idx) => {
+                          const transformedX = ((point.x - meetingDatesZoom.minX) / (meetingDatesZoom.maxX - meetingDatesZoom.minX)) * 200;
+                          return (
+                            <g key={idx}>
+                              {/* Vertical line from timeline */}
+                              <line 
+                                x1={transformedX} 
+                                y1="35" 
+                                x2={transformedX} 
+                                y2="45" 
+                                stroke="#4A7C59" 
+                                strokeWidth="1.5"
+                              />
+                              {/* Cameo icon marker - two heads side-by-side */}
+                              <g transform={`translate(${transformedX - 6}, 20)`}>
+                                {/* Left head */}
+                                <circle cx="4" cy="6" r="4" stroke="#4A7C59" strokeWidth="1.5" fill="#13243A"/>
+                                <circle cx="4" cy="5" r="1.5" fill="#4A7C59"/>
+                                {/* Right head */}
+                                <circle cx="8" cy="6" r="4" stroke="#4A7C59" strokeWidth="1.5" fill="#13243A"/>
+                                <circle cx="8" cy="5" r="1.5" fill="#4A7C59"/>
+                              </g>
+                            </g>
+                          );
+                        })}
                     </svg>
-                    <div className="absolute bottom-2 left-3 text-xs text-[#C8D5EA] font-medium">
-                      {dataRoomData.meetingDates.dateRange.start}
-                    </div>
-                    <div className="absolute bottom-2 right-3 text-xs text-[#C8D5EA] font-medium">
-                      {dataRoomData.meetingDates.dateRange.end}
-                    </div>
+                  </div>
+                  
+                  {/* Overview chart with brush selection */}
+                  <div className="h-6 bg-[#13243A] rounded mb-3 relative overflow-hidden">
+                    <svg 
+                      ref={brushRefs.meetingDates}
+                      viewBox="0 0 200 20" 
+                      className="w-full h-full cursor-crosshair"
+                      onMouseDown={(e) => handleBrushMouseDown('meetingDates', e)}
+                      onMouseMove={(e) => handleBrushMouseMove('meetingDates', e)}
+                      onMouseUp={handleBrushMouseUp}
+                      onMouseLeave={handleBrushMouseUp}
+                    >
+                      {/* Full timeline background */}
+                      <line x1="0" y1="10" x2="200" y2="10" stroke="#4A7C59" strokeWidth="1" opacity="0.3" />
+                      
+                      {/* Meeting markers on overview */}
+                      {dataRoomData.meetingDates.timeline.map((point, idx) => (
+                        <circle key={idx} cx={point.x} cy="10" r="1.5" fill="#4A7C59" opacity="0.6" />
+                      ))}
+                      
+                      {/* Highlighted zoom range */}
+                      <rect 
+                        x={meetingDatesZoom.minX} 
+                        y="0" 
+                        width={meetingDatesZoom.maxX - meetingDatesZoom.minX} 
+                        height="20" 
+                        fill="#4A7C59" 
+                        opacity="0.3"
+                      />
+                    </svg>
                   </div>
                   
                   {/* Meeting frequency info */}

@@ -10,7 +10,7 @@ import ChatInterface from '@/components/chat/ChatInterface';
 
 const SIDEBAR_MIN_WIDTH = 250;
 const SIDEBAR_MAX_WIDTH = 800;
-const SIDEBAR_DEFAULT_WIDTH = 384; // w-96 equivalent
+const SIDEBAR_DEFAULT_WIDTH = 640; // w-96 equivalent
 
 const CHAT_MIN_WIDTH = 300;
 const CHAT_MAX_WIDTH = 600;
