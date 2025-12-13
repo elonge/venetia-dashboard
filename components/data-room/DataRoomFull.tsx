@@ -235,9 +235,9 @@ export default function DataRoomFull({
               <button
                 key={chart.id}
                 onClick={() => handleChartIndexChange(idx)}
-                className={`relative p-4 rounded-lg border-2 transition-all text-left group ${
+                className={`relative !p-4 rounded-lg border-2 transition-all text-left group ${
                   isActive
-                    ? 'bg-[#15263E] border-[#4A7C59] shadow-lg shadow-[#4A7C59]/30 ring-2 ring-[#4A7C59]/20'
+                    ? 'bg-[#15263E] border-[#4A7C59] shadow-[0_0_0_2px_rgba(74,124,89,0.2),0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)]'
                     : 'bg-[#0F1F34] border-[#1F3350] hover:bg-[#15263E] hover:border-[#23354D]'
                 }`}
               >
