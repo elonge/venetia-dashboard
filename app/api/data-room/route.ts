@@ -29,7 +29,7 @@ export interface PeopleData {
 }
 
 export interface MeetingDatesData {
-  dates: string[];
+  dates: Array<{ date: string; meeting_details: string }>;
   total: number;
   dateRange: { start: string; end: string };
   timeline: Array<{ x: number; date: string }>; // x coordinate and date for timeline visualization
@@ -632,16 +632,19 @@ export async function GET() {
         day.prime_minister?.meeting_with_venetia === true
       );
       
-      // Extract and sort dates
+      // Extract dates with meeting details and sort by date
       const meetingDates = meetingDays
-        .map(day => day.date_string)
-        .sort((a, b) => a.localeCompare(b));
+        .map(day => ({
+          date: day.date_string,
+          meeting_details: day.prime_minister?.meeting_details || ''
+        }))
+        .sort((a, b) => a.date.localeCompare(b.date));
       
       // Find date range
       const dateRange = meetingDates.length > 0
         ? {
-            start: meetingDates[0].split('-')[0], // Year only
-            end: meetingDates[meetingDates.length - 1].split('-')[0] // Year only
+            start: meetingDates[0].date.split('-')[0], // Year only
+            end: meetingDates[meetingDates.length - 1].date.split('-')[0] // Year only
           }
         : { start: '', end: '' };
       
@@ -652,8 +655,8 @@ export async function GET() {
       
       if (meetingDates.length > 0) {
         // Calculate date range for scaling
-        const firstDate = meetingDates[0];
-        const lastDate = meetingDates[meetingDates.length - 1];
+        const firstDate = meetingDates[0].date;
+        const lastDate = meetingDates[meetingDates.length - 1].date;
         
         const [startYear, startMonth, startDay] = firstDate.split('-').map(Number);
         const [endYear, endMonth, endDay] = lastDate.split('-').map(Number);
@@ -671,10 +674,10 @@ export async function GET() {
         };
         
         // Scale each meeting date to x coordinate
-        for (const date of meetingDates) {
-          const daysSinceStart = getDaysSinceStart(date);
+        for (const meeting of meetingDates) {
+          const daysSinceStart = getDaysSinceStart(meeting.date);
           const scaledX = totalDays > 0 ? (daysSinceStart / totalDays) * viewBoxWidth : 0;
-          timeline.push({ x: scaledX, date });
+          timeline.push({ x: scaledX, date: meeting.date });
         }
       }
       

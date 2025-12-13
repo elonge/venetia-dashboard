@@ -47,3 +47,53 @@ html {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* React-Chrono card text color overrides for DataRoom */
+.dataroom-chrono-wrapper [class*="card-title"],
+.dataroom-chrono-wrapper h3,
+.dataroom-chrono-wrapper [class*="title"] {
+  color: #FFFFFF !important;
+}
+
+.dataroom-chrono-wrapper [class*="card-details-text"],
+.dataroom-chrono-wrapper [class*="card-text"],
+.dataroom-chrono-wrapper p {
+  color: #C8D5EA !important;
+}
+
+.dataroom-chrono-wrapper [class*="card-subtitle"],
+.dataroom-chrono-wrapper [class*="subtitle"] {
+  color: #C8D5EA !important;
+}
+
+/* Fallback selectors for react-chrono */
+.dataroom-chrono-wrapper .react-chrono-card-title,
+.dataroom-chrono-wrapper .react-chrono-timeline-card-title {
+  color: #FFFFFF !important;
+}
+
+.dataroom-chrono-wrapper .react-chrono-card-details-text,
+.dataroom-chrono-wrapper .react-chrono-timeline-card-details-text {
+  color: #C8D5EA !important;
+}
+
+/* Fix scrolling issue - ensure last item is fully visible */
+.dataroom-chrono-scrollable [class*="react-chrono"] {
+  padding-bottom: 3rem !important;
+}
+
+.dataroom-chrono-scrollable [class*="timeline-wrapper"],
+.dataroom-chrono-scrollable [class*="vertical-timeline"],
+.dataroom-chrono-scrollable [class*="horizontal-timeline"] {
+  padding-bottom: 3rem !important;
+}
+
+/* Target the scrollable content area */
+.dataroom-chrono-scrollable [class*="scrollable"] {
+  padding-bottom: 3rem !important;
+}
+
+/* Ensure last card has margin */
+.dataroom-chrono-scrollable [class*="card"]:last-child {
+  margin-bottom: 2rem !important;
+}
