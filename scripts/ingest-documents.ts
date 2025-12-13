@@ -2,7 +2,7 @@
 // Using require() to ensure it runs before ES6 imports are hoisted
 require('dotenv').config({ path: require('path').resolve(process.cwd(), '.env.local') });
 
-import { readdir, readFile } from 'fs/promises';
+import { readdir, readFile, stat } from 'fs/promises';
 import { join } from 'path';
 import OpenAI from 'openai';
 import clientPromise from '../lib/mongodb';
@@ -101,6 +101,30 @@ function extractSourceName(filename: string): string {
     .toLowerCase();
 }
 
+// Recursively find all text files in directory and subdirectories
+async function findAllTextFiles(dir: string): Promise<Array<{ path: string; name: string }>> {
+  const textFiles: Array<{ path: string; name: string }> = [];
+  
+  async function walkDirectory(currentDir: string) {
+    const entries = await readdir(currentDir);
+    
+    for (const entry of entries) {
+      const fullPath = join(currentDir, entry);
+      const stats = await stat(fullPath);
+      
+      if (stats.isDirectory()) {
+        // Recursively process subdirectories
+        await walkDirectory(fullPath);
+      } else if (stats.isFile() && (entry.endsWith('.txt') || entry.endsWith('.md'))) {
+        textFiles.push({ path: fullPath, name: entry });
+      }
+    }
+  }
+  
+  await walkDirectory(dir);
+  return textFiles;
+}
+
 // Process a single document file
 async function processDocument(
   filePath: string,
@@ -178,22 +202,19 @@ async function ingestDocuments(documentsDir: string) {
   });
 
   try {
-    const files = await readdir(documentsDir);
-    const textFiles = files.filter(
-      f => f.endsWith('.txt') || f.endsWith('.md')
-    );
+    // Recursively find all text files in directory and subdirectories
+    const textFiles = await findAllTextFiles(documentsDir);
 
     if (textFiles.length === 0) {
       console.log('No text files found in directory');
       return;
     }
 
-    console.log(`Found ${textFiles.length} text files to process`);
+    console.log(`Found ${textFiles.length} text files to process (including subdirectories)`);
     
     let totalChunks = 0;
-    for (const file of textFiles) {
-      const filePath = join(documentsDir, file);
-      const chunks = await processDocument(filePath, file, openai, db);
+    for (const { path: filePath, name: fileName } of textFiles) {
+      const chunks = await processDocument(filePath, fileName, openai, db);
       totalChunks += chunks;
     }
 

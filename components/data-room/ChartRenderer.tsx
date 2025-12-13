@@ -161,12 +161,22 @@ export default function ChartRenderer({
 
   const renderTopics = () => {
     if (!dataRoomData || !dataRoomData.topics || dataRoomData.topics.length === 0) {
+      console.log('[DEBUG] Topics Rendering - No topics data available:', {
+        hasDataRoomData: !!dataRoomData,
+        hasTopics: !!dataRoomData?.topics,
+        topicsLength: dataRoomData?.topics?.length || 0
+      });
       return (
         <div className="h-32 bg-[#13243A] rounded flex items-center justify-center text-sm text-[#C8D5EA]">
           No topics data available
         </div>
       );
     }
+
+    console.log('[DEBUG] Topics Rendering - Rendering topics:', {
+      count: dataRoomData.topics.length,
+      topics: dataRoomData.topics.map(t => ({ topic: t.topic, value: t.value, color: t.color }))
+    });
 
     return (
       <div className={`${variant === 'modal' ? 'h-[320px]' : 'h-48'} bg-[#13243A] rounded p-4 overflow-y-auto`}>
@@ -184,7 +194,7 @@ export default function ChartRenderer({
                   style={{ width: `${item.value}%`, backgroundColor: item.color }}
                   onMouseMove={(e) =>
                     variant === 'modal' &&
-                    onShowTooltip(e, { title: item.topic, value: `${item.value}%`, subtitle: 'Share of letters', color: item.color })
+                    onShowTooltip(e, { title: item.topic, value: `${item.value}%`, subtitle: 'of letters contain this topic', color: item.color })
                   }
                   onMouseLeave={variant === 'modal' ? onHideTooltip : undefined}
                 />

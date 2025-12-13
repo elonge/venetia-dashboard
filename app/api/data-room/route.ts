@@ -384,33 +384,101 @@ export async function GET() {
 
     // Generate topics frequency data from timeline_days collection
     const generateTopicsData = async () => {
+      console.log('[DEBUG] Topics Data Generation - Starting...');
       const allDays = await getAllTimelineDays();
-      const topicFrequency = new Map<string, number>();
+      console.log('[DEBUG] Topics Data Generation - Total days fetched:', allDays.length);
+      
+      // Map to track how many letters contain each topic (not occurrences)
+      const topicLetterCount = new Map<string, number>();
+      let totalDaysProcessed = 0;
+      let daysWithLetters = 0;
+      let totalLettersProcessed = 0;
+      let lettersWithTopics = 0;
+      let totalTopicsExtracted = 0;
+      let emptyTopicsCount = 0;
+      let duplicateTopicsInLetter = 0;
       
       // Extract topics from all letters in all timeline days
+      // Count each topic once per letter (even if it appears multiple times in the same letter)
       for (const day of allDays) {
+        totalDaysProcessed++;
         const letters = day.prime_minister?.letters || [];
+        
+        if (letters.length > 0) {
+          daysWithLetters++;
+        }
+        
         for (const letter of letters) {
+          totalLettersProcessed++;
           const topics = letter.topics || [];
-          for (const topic of topics) {
-            if (topic && topic.trim()) {
-              const normalizedTopic = topic.trim();
-              topicFrequency.set(
-                normalizedTopic,
-                (topicFrequency.get(normalizedTopic) || 0) + 1
-              );
+          
+          if (topics.length > 0) {
+            lettersWithTopics++;
+            totalTopicsExtracted += topics.length;
+            
+            // Track unique topics in this letter (to count each topic once per letter)
+            const uniqueTopicsInLetter = new Set<string>();
+            
+            for (const topic of topics) {
+              if (topic && topic.trim()) {
+                const normalizedTopic = topic.trim();
+                
+                if (uniqueTopicsInLetter.has(normalizedTopic)) {
+                  duplicateTopicsInLetter++;
+                } else {
+                  uniqueTopicsInLetter.add(normalizedTopic);
+                  // Count this topic for this letter (increment letter count, not occurrence count)
+                  topicLetterCount.set(
+                    normalizedTopic,
+                    (topicLetterCount.get(normalizedTopic) || 0) + 1
+                  );
+                }
+              } else {
+                emptyTopicsCount++;
+              }
             }
           }
         }
       }
       
-      // Convert to array and sort by frequency (descending)
-      const topicsArray = Array.from(topicFrequency.entries())
+      console.log('[DEBUG] Topics Data Generation - Processing Summary:');
+      console.log('  Total days processed:', totalDaysProcessed);
+      console.log('  Days with letters:', daysWithLetters);
+      console.log('  Total letters processed:', totalLettersProcessed);
+      console.log('  Letters with topics:', lettersWithTopics);
+      console.log('  Total topics extracted:', totalTopicsExtracted);
+      console.log('  Empty/null topics skipped:', emptyTopicsCount);
+      console.log('  Duplicate topics within same letter:', duplicateTopicsInLetter);
+      console.log('  Unique topics found:', topicLetterCount.size);
+      
+      // Log sample of topic letter count map
+      if (topicLetterCount.size > 0) {
+        const sampleTopics = Array.from(topicLetterCount.entries()).slice(0, 10);
+        console.log('[DEBUG] Topics Data Generation - Sample topics (first 10):');
+        sampleTopics.forEach(([topic, count]) => {
+          console.log(`    "${topic}": appears in ${count} letter(s)`);
+        });
+      } else {
+        console.log('[DEBUG] Topics Data Generation - WARNING: No topics found in any letters!');
+      }
+      
+      // Convert to array and sort by letter count (descending)
+      const topicsArray = Array.from(topicLetterCount.entries())
         .map(([topic, count]) => ({ topic, count }))
         .sort((a, b) => b.count - a.count);
       
-      // Calculate total occurrences for percentage calculation
-      const totalOccurrences = topicsArray.reduce((sum, item) => sum + item.count, 0);
+      console.log('[DEBUG] Topics Data Generation - After sorting:');
+      console.log('  Total unique topics:', topicsArray.length);
+      if (topicsArray.length > 0) {
+        console.log('  Top 10 topics by letter count:');
+        topicsArray.slice(0, 10).forEach((item, idx) => {
+          console.log(`    ${idx + 1}. "${item.topic}": appears in ${item.count} letter(s)`);
+        });
+      }
+      
+      // Calculate percentage based on letters with topics (not total occurrences)
+      // This way percentages won't sum to 100% if letters have multiple topics
+      console.log('[DEBUG] Topics Data Generation - Total letters with topics:', lettersWithTopics);
       
       // Color palette for topics
       const colors = [
@@ -427,20 +495,64 @@ export async function GET() {
       ];
       
       // Convert to TopicData format with percentages
+      // Percentage = (letters with this topic / total letters with topics) * 100
+      // Note: Percentages may sum to more than 100% because letters can have multiple topics
       const topicsData: TopicData[] = topicsArray
         .slice(0, 10) // Top 10 topics
-        .map((item, index) => ({
-          topic: item.topic,
-          value: totalOccurrences > 0 
-            ? Math.round((item.count / totalOccurrences) * 100) 
-            : 0,
-          color: colors[index % colors.length],
-        }));
+        .map((item, index) => {
+          const percentage = lettersWithTopics > 0 
+            ? Math.round((item.count / lettersWithTopics) * 100) 
+            : 0;
+          return {
+            topic: item.topic,
+            value: percentage,
+            color: colors[index % colors.length],
+          };
+        });
+      
+      // Calculate sum of percentages for debugging
+      const sumOfPercentages = topicsData.reduce((sum, item) => sum + item.value, 0);
+      
+      console.log('[DEBUG] Topics Data Generation - Final output:');
+      console.log('  Topics to return:', topicsData.length);
+      console.log('  Total letters with topics:', lettersWithTopics);
+      console.log('  Sum of percentages (may be > 100% if letters have multiple topics):', sumOfPercentages + '%');
+      topicsData.forEach((item, idx) => {
+        console.log(`    ${idx + 1}. "${item.topic}": ${item.value}% (appears in ${topicsArray[idx].count} letter(s), color: ${item.color})`);
+      });
+      
+      // Debug: Check for potential issues
+      if (topicsData.length === 0) {
+        console.log('[DEBUG] Topics Data Generation - WARNING: No topics data to return!');
+        console.log('[DEBUG] Topics Data Generation - Debugging info:');
+        console.log('  - Check if letters have topics field');
+        console.log('  - Check if topics array is populated');
+        console.log('  - Check if topics are non-empty strings');
+      }
+      
+      // Debug: Sample a few days with letters to see structure
+      if (daysWithLetters > 0) {
+        const sampleDays = allDays.filter(day => (day.prime_minister?.letters || []).length > 0).slice(0, 3);
+        console.log('[DEBUG] Topics Data Generation - Sample days with letters (first 3):');
+        sampleDays.forEach((day, idx) => {
+          const letters = day.prime_minister?.letters || [];
+          console.log(`  Day ${idx + 1} (${day.date_string}):`);
+          console.log(`    Letters: ${letters.length}`);
+          letters.slice(0, 2).forEach((letter, letterIdx) => {
+            const topics = letter.topics || [];
+            console.log(`      Letter ${letterIdx + 1}: ${topics.length} topic(s)`, topics);
+          });
+        });
+      }
       
       return topicsData;
     };
     
     const topicsData = await generateTopicsData();
+    console.log('[DEBUG] Topics data generated successfully:', {
+      count: topicsData.length,
+      topics: topicsData.map(t => ({ topic: t.topic, value: t.value, color: t.color }))
+    });
 
     // Generate weekly letter count data from timeline_days collection
     // Each data point represents a week with total letter count

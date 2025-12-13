@@ -70,9 +70,16 @@ export default function DataRoomFull({
   useEffect(() => {
     async function fetchDataRoom() {
       try {
+        console.log('[DEBUG] DataRoomFull - Fetching data room...');
         const response = await fetch('/api/data-room');
         if (response.ok) {
           const data = await response.json();
+          console.log('[DEBUG] DataRoomFull - Data received:', {
+            hasSentiment: !!data.sentiment,
+            hasTopics: !!data.topics,
+            topicsCount: data.topics?.length || 0,
+            topics: data.topics || []
+          });
           setDataRoomData(data);
         } else {
           console.error('Error fetching data room: HTTP', response.status, await response.text());
