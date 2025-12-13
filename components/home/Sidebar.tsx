@@ -141,7 +141,7 @@ export default function Sidebar() {
                       : 'bg-[#EEE6D8] hover:bg-[#E6DBC9]'
                   }`}
                 >
-                  <span className="text-lg">{q.Question}</span>
+                  <span className="text-lg text-[#1A2A40]">{q.Question}</span>
                   <ChevronRight className="w-4 h-4 text-[#3E4A60]" />
                 </Link>
               ))}

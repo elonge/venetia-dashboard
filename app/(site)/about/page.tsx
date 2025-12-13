@@ -3,8 +3,11 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+import { useChatVisibility } from '@/components/chat/useChatVisibility';
 
 export default function AboutPage() {
+  useChatVisibility(false);
+
   return (
     <div className="min-h-screen bg-[#E8E4DC]">
       {/* Header */}
@@ -185,4 +188,3 @@ export default function AboutPage() {
     </div>
   );
 }
-

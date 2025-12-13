@@ -2,6 +2,9 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, Maximize2, RotateCcw, X } from 'lucide-react';
+import { Chrono } from 'react-chrono';
+import 'react-chrono/dist/style.css';
+import { transformMeetingDatesToTimelineItems } from '@/lib/react-chrono-transformers';
 
 type ChartId = 'sentiment' | 'topics' | 'weekly-letter-count' | 'people' | 'meeting-dates';
 
@@ -68,6 +71,16 @@ const zoomDefaults: Record<ZoomKey, ZoomState> = {
   sentiment: { minX: 0, maxX: 200 },
   letterCount: { minX: 0, maxX: 200 },
   meetingDates: { minX: 0, maxX: 200 },
+};
+
+// React-Chrono theme configuration to match DataRoom dark theme
+const chronoTheme = {
+  primary: '#4A7C59',           // Accent green color
+  secondary: '#C8D5EA',          // Text color
+  cardBgColor: '#13243A',        // Chart background
+  cardForeColor: '#EAF2FF',      // Card text
+  titleColor: '#FFFFFF',         // Title color
+  titleColorActive: '#4A7C59',   // Active title color
 };
 
 export default function DataRoom() {
@@ -295,7 +308,7 @@ export default function DataRoom() {
   const chartZoomKey: Record<ChartId, ZoomKey | null> = {
     sentiment: 'sentiment',
     'weekly-letter-count': 'letterCount',
-    'meeting-dates': 'meetingDates',
+    'meeting-dates': null, // Using react-chrono navigation instead
     topics: null,
     people: null,
   };
@@ -416,7 +429,9 @@ export default function DataRoom() {
         {variant === 'modal' && (
           <div className="h-6 bg-[#0F1F34] rounded mt-3 relative overflow-hidden">
             <svg
-              ref={(el) => (brushRefs.current.sentiment = el)}
+              ref={(el) => {
+                brushRefs.current.sentiment = el;
+              }}
               viewBox="0 0 200 20"
               className="w-full h-full cursor-crosshair"
               onMouseDown={(e) => handleBrushMouseDown('sentiment', e)}
@@ -577,7 +592,9 @@ export default function DataRoom() {
         {variant === 'modal' && (
           <div className="h-6 bg-[#0F1F34] rounded mt-2 relative overflow-hidden">
             <svg
-              ref={(el) => (brushRefs.current.letterCount = el)}
+              ref={(el) => {
+                brushRefs.current.letterCount = el;
+              }}
               viewBox="0 0 200 20"
               className="w-full h-full cursor-crosshair"
               onMouseDown={(e) => handleBrushMouseDown('letterCount', e)}
@@ -638,124 +655,69 @@ export default function DataRoom() {
       );
     }
 
-    const zoom = zoomStates.meetingDates;
-    const horizontalTicks = generateHorizontalTicks(zoom.minX, zoom.maxX, dataRoomData.meetingDates.dateRange, variant === 'modal' ? 9 : 5);
+    const timelineItems = transformMeetingDatesToTimelineItems(dataRoomData.meetingDates);
+    
+    // Calculate average interval between meetings for summary
+    const dates = dataRoomData.meetingDates.dates.map((d) => {
+      const [y, m, day] = d.split('-').map(Number);
+      return new Date(y, m - 1, day);
+    });
+    const intervals: number[] = [];
+    for (let i = 1; i < dates.length; i++) {
+      const diff = Math.floor((dates[i].getTime() - dates[i - 1].getTime()) / (1000 * 60 * 60 * 24));
+      intervals.push(diff);
+    }
+    const avgInterval = intervals.length > 0 ? Math.round(intervals.reduce((a, b) => a + b, 0) / intervals.length) : 0;
 
     return (
-      <div className={`${variant === 'modal' ? 'h-[340px]' : 'h-48'} bg-[#13243A] rounded p-4`}>
-        <div className="flex items-center justify-between mb-3">
-          <h4 className="text-sm font-semibold text-white">Dates when they met</h4>
-          {(zoom.minX !== 0 || zoom.maxX !== 200) && (
-            <button
-              onClick={() => resetZoom('meetingDates')}
-              className="text-xs text-[#C8D5EA] hover:text-white flex items-center gap-1 transition-colors"
-              title="Reset zoom"
-            >
-              <RotateCcw className="w-3 h-3" />
-              Reset
-            </button>
-          )}
-        </div>
-        <div className="mb-3 text-sm text-[#C8D5EA]">
-          <span className="text-white font-semibold">{dataRoomData.meetingDates.total}</span> meeting
-          {dataRoomData.meetingDates.total !== 1 ? 's' : ''} recorded
-          {dataRoomData.meetingDates.dateRange.start && dataRoomData.meetingDates.dateRange.end && (
-            <span className="block mt-1 text-xs">
-              {dataRoomData.meetingDates.dateRange.start} - {dataRoomData.meetingDates.dateRange.end}
-            </span>
-          )}
-        </div>
-
-        <div className="h-32 bg-[#0F1F34] rounded relative p-3 mb-3">
-          <svg viewBox="0 0 200 80" className="w-full h-full" preserveAspectRatio="none">
-            {horizontalTicks.map((tick, idx) => (
-              <g key={`h-${idx}`}>
-                <line x1={tick.x} y1="0" x2={tick.x} y2="80" stroke="#4A7C59" strokeWidth="0.5" opacity="0.2" strokeDasharray="2,2" />
-                <line x1={tick.x} y1="40" x2={tick.x} y2="50" stroke="#C8D5EA" strokeWidth="1" />
-                <text x={tick.x} y="45" textAnchor="middle" dominantBaseline="middle" className="text-[8px] fill-[#C8D5EA]">
-                  {tick.label}
-                </text>
-              </g>
-            ))}
-
-            <line x1="0" y1="40" x2="200" y2="40" stroke="#4A7C59" strokeWidth="2" />
-
-            {dataRoomData.meetingDates.timeline
-              .filter((point) => point.x >= zoom.minX && point.x <= zoom.maxX)
-              .map((point, idx) => {
-                const transformedX = ((point.x - zoom.minX) / (zoom.maxX - zoom.minX || 1)) * 200;
-                return (
-                  <g key={idx}>
-                    <line x1={transformedX} y1="35" x2={transformedX} y2="45" stroke="#4A7C59" strokeWidth="1.5" />
-                    <g transform={`translate(${transformedX - 6}, 20)`}>
-                      <circle
-                        cx="4"
-                        cy="6"
-                        r="4"
-                        stroke="#4A7C59"
-                        strokeWidth="1.5"
-                        fill="#0F1F34"
-                        onMouseMove={(e) =>
-                          showTooltip(e, { title: 'Meeting recorded', subtitle: point.date, value: 'Seen together' })
-                        }
-                        onMouseLeave={hideTooltip}
-                      />
-                      <circle cx="4" cy="5" r="1.5" fill="#4A7C59" />
-                      <circle
-                        cx="8"
-                        cy="6"
-                        r="4"
-                        stroke="#4A7C59"
-                        strokeWidth="1.5"
-                        fill="#0F1F34"
-                        onMouseMove={(e) =>
-                          showTooltip(e, { title: 'Meeting recorded', subtitle: point.date, value: 'Seen together' })
-                        }
-                        onMouseLeave={hideTooltip}
-                      />
-                      <circle cx="8" cy="5" r="1.5" fill="#4A7C59" />
-                    </g>
-                  </g>
-                );
-              })}
-          </svg>
-        </div>
-
-        {variant === 'modal' && (
-          <div className="h-6 bg-[#0F1F34] rounded mb-3 relative overflow-hidden">
-            <svg
-              ref={(el) => (brushRefs.current.meetingDates = el)}
-              viewBox="0 0 200 20"
-              className="w-full h-full cursor-crosshair"
-              onMouseDown={(e) => handleBrushMouseDown('meetingDates', e)}
-              onMouseMove={(e) => handleBrushMouseMove('meetingDates', e)}
-              onMouseUp={handleBrushMouseUp}
-              onMouseLeave={handleBrushMouseUp}
-            >
-              <line x1="0" y1="10" x2="200" y2="10" stroke="#4A7C59" strokeWidth="1" opacity="0.3" />
-              {dataRoomData.meetingDates.timeline.map((point, idx) => (
-                <circle key={idx} cx={point.x} cy="10" r="1.5" fill="#4A7C59" opacity="0.6" />
-              ))}
-              <rect x={zoom.minX} y="0" width={zoom.maxX - zoom.minX} height="20" fill="#4A7C59" opacity="0.3" />
-            </svg>
+      <div className={`${variant === 'modal' ? 'h-[500px]' : 'h-[400px]'} bg-[#13243A] rounded p-4 flex flex-col`}>
+        <div className="mb-3">
+          <h4 className="text-sm font-semibold text-white mb-1">Dates when they met</h4>
+          <div className="text-sm text-[#C8D5EA]">
+            <span className="text-white font-semibold">{dataRoomData.meetingDates.total}</span> meeting
+            {dataRoomData.meetingDates.total !== 1 ? 's' : ''} recorded
+            {dataRoomData.meetingDates.dateRange.start && dataRoomData.meetingDates.dateRange.end && (
+              <span className="block mt-1 text-xs">
+                {dataRoomData.meetingDates.dateRange.start} - {dataRoomData.meetingDates.dateRange.end}
+              </span>
+            )}
+            {avgInterval > 0 && (
+              <span className="block mt-1 text-xs">Average: {avgInterval} days between meetings</span>
+            )}
           </div>
-        )}
-        <div className="text-xs text-[#C8D5EA] space-y-1">
-          {(() => {
-            const dates = dataRoomData.meetingDates.dates.map((d) => {
-              const [y, m, day] = d.split('-').map(Number);
-              return new Date(y, m - 1, day);
-            });
-
-            const intervals: number[] = [];
-            for (let i = 1; i < dates.length; i++) {
-              const diff = Math.floor((dates[i].getTime() - dates[i - 1].getTime()) / (1000 * 60 * 60 * 24));
-              intervals.push(diff);
-            }
-
-            const avgInterval = intervals.length > 0 ? Math.round(intervals.reduce((a, b) => a + b, 0) / intervals.length) : 0;
-            return avgInterval > 0 ? <span>Average: {avgInterval} days between meetings</span> : null;
-          })()}
+        </div>
+        
+        <div className="flex-1 overflow-hidden">
+          <Chrono
+            items={timelineItems}
+            mode={variant === 'modal' ? 'vertical' : 'horizontal'}
+            theme={chronoTheme}
+            fontSizes={{
+              cardSubtitle: '0.875rem',
+              cardText: '0.875rem',
+              cardTitle: '1rem',
+              title: '0.9rem'
+            }}
+            layout={{
+              cardHeight: variant === 'modal' ? 120 : 100,
+              itemWidth: variant === 'modal' ? 250 : 200,
+            }}
+            style={{
+              classNames: {
+                card: 'bg-[#0F1F34] border border-[#23354D]',
+                cardMedia: 'bg-[#13243A]',
+                cardSubTitle: 'text-[#C8D5EA]',
+                cardText: 'text-[#C8D5EA]',
+                cardTitle: 'text-white',
+                controls: 'text-[#C8D5EA]',
+                title: 'text-[#4A7C59]',
+              }
+            }}
+            display={{ 
+              toolbar: { enabled: false } 
+            }}
+            scrollable={variant === 'modal' ? { scrollbar: true } : false}
+          />
         </div>
       </div>
     );

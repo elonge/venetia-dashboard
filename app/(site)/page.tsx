@@ -1,29 +1,25 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback, Suspense } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import HeroSection from '@/components/home/HeroSection';
 import DayNavigation from '@/components/home/DayNavigation';
 import DayContent from '@/components/home/DayContent';
 import Sidebar from '@/components/home/Sidebar';
-import ChatInterface from '@/components/chat/ChatInterface';
+import { useChatVisibility } from '@/components/chat/useChatVisibility';
 
 const SIDEBAR_MIN_WIDTH = 250;
 const SIDEBAR_MAX_WIDTH = 800;
 const SIDEBAR_DEFAULT_WIDTH = 640; // w-96 equivalent
 
-const CHAT_MIN_WIDTH = 300;
-const CHAT_MAX_WIDTH = 600;
-const CHAT_DEFAULT_WIDTH = 400;
-
 export default function Home() {
   const [currentDate, setCurrentDate] = useState('July 28, 1914');
   const [sidebarWidth, setSidebarWidth] = useState(SIDEBAR_DEFAULT_WIDTH);
-  const [chatWidth, setChatWidth] = useState(CHAT_DEFAULT_WIDTH);
   const [isResizingSidebar, setIsResizingSidebar] = useState(false);
-  const [isResizingChat, setIsResizingChat] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
-  const chatRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useChatVisibility(true);
 
   // Load widths from localStorage on mount
   useEffect(() => {
@@ -32,13 +28,6 @@ export default function Home() {
       const width = parseInt(savedSidebarWidth, 10);
       if (width >= SIDEBAR_MIN_WIDTH && width <= SIDEBAR_MAX_WIDTH) {
         setSidebarWidth(width);
-      }
-    }
-    const savedChatWidth = localStorage.getItem('chatWidth');
-    if (savedChatWidth) {
-      const width = parseInt(savedChatWidth, 10);
-      if (width >= CHAT_MIN_WIDTH && width <= CHAT_MAX_WIDTH) {
-        setChatWidth(width);
       }
     }
   }, []);
@@ -50,47 +39,31 @@ export default function Home() {
     }
   }, [sidebarWidth]);
 
-  useEffect(() => {
-    if (chatWidth !== CHAT_DEFAULT_WIDTH) {
-      localStorage.setItem('chatWidth', chatWidth.toString());
-    }
-  }, [chatWidth]);
-
   const handleSidebarResizeStart = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
     setIsResizingSidebar(true);
   }, []);
 
-  const handleChatResizeStart = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsResizingChat(true);
-  }, []);
-
   const handleMouseMove = useCallback((e: MouseEvent) => {
     if (isResizingSidebar) {
-      const newWidth = window.innerWidth - e.clientX - chatWidth;
+      const contentRect = contentRef.current?.getBoundingClientRect();
+      if (!contentRect) return;
+
+      const newWidth = contentRect.right - e.clientX;
       const clampedWidth = Math.max(
         SIDEBAR_MIN_WIDTH,
         Math.min(SIDEBAR_MAX_WIDTH, newWidth)
       );
       setSidebarWidth(clampedWidth);
-    } else if (isResizingChat) {
-      const newWidth = window.innerWidth - e.clientX;
-      const clampedWidth = Math.max(
-        CHAT_MIN_WIDTH,
-        Math.min(CHAT_MAX_WIDTH, newWidth)
-      );
-      setChatWidth(clampedWidth);
     }
-  }, [isResizingSidebar, isResizingChat, chatWidth]);
+  }, [isResizingSidebar]);
 
   const handleMouseUp = useCallback(() => {
     setIsResizingSidebar(false);
-    setIsResizingChat(false);
   }, []);
 
   useEffect(() => {
-    if (isResizingSidebar || isResizingChat) {
+    if (isResizingSidebar) {
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
       document.body.style.cursor = 'col-resize';
@@ -108,7 +81,7 @@ export default function Home() {
       document.body.style.cursor = '';
       document.body.style.userSelect = '';
     };
-  }, [isResizingSidebar, isResizingChat, handleMouseMove, handleMouseUp]);
+  }, [isResizingSidebar, handleMouseMove, handleMouseUp]);
 
   return (
     <div className="min-h-screen bg-[#E8E4DC]">
@@ -129,14 +102,10 @@ export default function Home() {
         </div>
       </header>
 
-      <div className="flex relative h-[calc(100vh-73px)]">
+      <div className="flex relative h-[calc(100vh-73px)]" ref={contentRef}>
         {/* Left Column: Hero + Day Content */}
         <main 
-          className="p-4 transition-all overflow-y-auto flex-shrink"
-          style={{ 
-            width: `calc(100% - ${sidebarWidth}px - ${chatWidth}px)`,
-            minWidth: '300px'
-          }}
+          className="p-4 transition-all overflow-y-auto flex-1 min-w-[300px]"
         >
           <HeroSection />
           <DayNavigation currentDate={currentDate} setCurrentDate={setCurrentDate} />
@@ -149,7 +118,7 @@ export default function Home() {
             isResizingSidebar ? 'bg-[#4A7C59]' : ''
           }`}
           style={{ 
-            left: `calc(100% - ${sidebarWidth}px - ${chatWidth}px - 0.5px)`
+            left: `calc(100% - ${sidebarWidth}px - 0.5px)`
           }}
           onMouseDown={handleSidebarResizeStart}
         >
@@ -163,36 +132,6 @@ export default function Home() {
           style={{ width: `${sidebarWidth}px`, minWidth: `${SIDEBAR_MIN_WIDTH}px` }}
         >
           <Sidebar />
-        </div>
-
-        {/* Resize Handle between Middle and Right */}
-        <div
-          className={`absolute top-0 bottom-0 w-1 bg-[#D4CFC4] hover:bg-[#4A7C59] cursor-col-resize transition-colors z-10 ${
-            isResizingChat ? 'bg-[#4A7C59]' : ''
-          }`}
-          style={{ 
-            left: `calc(100% - ${chatWidth}px - 0.5px)`
-          }}
-          onMouseDown={handleChatResizeStart}
-        >
-          <div className="absolute inset-y-0 -left-1 -right-1" />
-        </div>
-
-        {/* Right Column: Chat */}
-        <div
-          ref={chatRef}
-          className="flex-shrink-0 bg-[#E8E4DC] h-full"
-          style={{ width: `${chatWidth}px`, minWidth: `${CHAT_MIN_WIDTH}px` }}
-        >
-          <Suspense fallback={
-            <div className="flex items-center justify-center h-full">
-              <div className="text-center">
-                <p className="text-[#6B7280]">Loading chat...</p>
-              </div>
-            </div>
-          }>
-            <ChatInterface />
-          </Suspense>
         </div>
       </div>
     </div>
