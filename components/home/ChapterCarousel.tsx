@@ -198,7 +198,7 @@ export default function ChapterCarousel({ chapters, loading }: ChapterCarouselPr
           <Link
             key={chapter._id}
             href={`/chapter?chapter_id=${encodeURIComponent(chapter.chapter_id)}`}
-            className="flex-shrink-0 w-64 bg-[#F5F0E8] text-[#1A2A40] rounded-lg p-4 cursor-pointer hover:bg-[#E8E4DC] transition-all hover:shadow-md group"
+            className="flex-shrink-0 w-80 bg-[#F5F0E8] text-[#1A2A40] rounded-lg p-4 cursor-pointer hover:bg-[#E8E4DC] transition-all hover:shadow-md group"
             onClick={(e) => {
               // Prevent navigation if user was dragging
               if (isDragging) {
@@ -206,18 +206,18 @@ export default function ChapterCarousel({ chapters, loading }: ChapterCarouselPr
               }
             }}
           >
-            <h4 className="font-serif text-sm font-medium leading-tight mb-2 group-hover:text-[#4A7C59] transition-colors">
+            <h4 className="font-serif text-base font-medium leading-tight mb-2 group-hover:text-[#4A7C59] transition-colors">
               {chapter.chapter_title}
             </h4>
             {chapter.main_story && (
-              <p className="text-xs text-[#2D3648] line-clamp-3 leading-relaxed">
+              <p className="text-sm text-[#2D3648] line-clamp-3 leading-relaxed">
                 {chapter.main_story.substring(0, 150)}
                 {chapter.main_story.length > 150 ? '...' : ''}
               </p>
             )}
             <div className="mt-3 pt-3 border-t border-[#D4CFC4]">
-              <span className="text-[10px] text-[#3E4A60] uppercase tracking-wider">
-                Read Chapter →
+              <span className="text-xs text-[#3E4A60] uppercase tracking-wider">
+                Listen & Read More →
               </span>
             </div>
           </Link>

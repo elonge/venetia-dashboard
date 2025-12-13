@@ -24,7 +24,7 @@ export async function getAllQuestions(): Promise<Question[]> {
     const db = client.db(DB_NAME);
     const collection = db.collection(COLLECTION_NAME);
     
-    const questions = await collection.find({}).toArray();
+    const questions = await collection.find({}).sort({ order_index: 1 }).toArray();
     
     return questions.map((q) => ({
       _id: q._id.toString(),
