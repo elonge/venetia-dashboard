@@ -1,9 +1,9 @@
 export type ChartId = 'sentiment' | 'topics' | 'weekly-letter-count' | 'people' | 'meeting-dates';
 
 export interface SentimentData {
-  tension: Array<{ x: number; y: number }>;
-  warmth: Array<{ x: number; y: number }>;
-  anxiety: Array<{ x: number; y: number }>;
+  tension: Array<{ x: number; y: number; date?: string }>;
+  warmth: Array<{ x: number; y: number; date?: string }>;
+  anxiety: Array<{ x: number; y: number; date?: string }>;
   dateRange: { start: string; end: string };
 }
 
@@ -17,6 +17,7 @@ export interface DailyLetterCountData {
   data: Array<{ x: number; y: number }>;
   peak: { date: string; count: number };
   dateRange: { start: string; end: string };
+  weeks: Array<{ weekStartDate: string; letterCount: number }>; // Weekly data with dates for react-chrono
 }
 
 export interface PeopleData {
@@ -52,11 +53,11 @@ export interface TooltipState {
 }
 
 export const chartDefinitions: Array<{ id: ChartId; label: string; description: string }> = [
+  { id: 'meeting-dates', label: 'Meeting Dates', description: 'When they met face to face' },
   { id: 'sentiment', label: 'Sentiment Over Time', description: 'Emotional tone across the correspondence' },
   { id: 'topics', label: 'Topic Frequency', description: 'Dominant themes bubbling up' },
   { id: 'weekly-letter-count', label: 'Weekly Letter Count', description: 'Rhythm of their correspondence' },
   { id: 'people', label: 'People Mentioned', description: 'Most cited figures in the archive' },
-  { id: 'meeting-dates', label: 'Meeting Dates', description: 'When they met face to face' },
 ];
 
 export const zoomDefaults: Record<ZoomKey, ZoomState> = {

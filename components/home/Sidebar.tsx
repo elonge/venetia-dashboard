@@ -148,7 +148,7 @@ export default function Sidebar() {
               {hasMoreQuestions && (
                 <button
                   onClick={() => setShowAllQuestions(!showAllQuestions)}
-                  className="w-full bg-[#F5F0E8] text-[#1A2A40] rounded p-2 flex items-center justify-center gap-2 hover:bg-[#E8E4DC] transition-colors text-sm font-medium"
+                  className="w-full bg-[#F5F0E8] text-white rounded p-2 flex items-center justify-center gap-2 hover:bg-[#E8E4DC] transition-colors text-sm font-medium"
                 >
                   {showAllQuestions ? (
                     <>

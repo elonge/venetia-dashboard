@@ -11,18 +11,23 @@
     "clear-chunks": "tsx scripts/clear-document-chunks.ts"
   },
   "dependencies": {
+    "@babel/runtime": "^7.28.4",
     "@types/leaflet": "^1.9.21",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "immutable": "^5.1.4",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.561.0",
     "mongodb": "^7.0.0",
     "next": "16.0.8",
     "openai": "^4.20.0",
+    "pondjs": "^0.9.0",
     "react": "19.2.1",
     "react-chrono": "^3.3.2",
     "react-dom": "19.2.1",
     "react-leaflet": "^5.0.0",
+    "react-timeseries-charts": "^0.16.1",
+    "recharts": "^3.5.1",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {

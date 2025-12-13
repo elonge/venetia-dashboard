@@ -36,7 +36,7 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-4`}>
       {hasStructuredAnswers ? (
         // Render structured QuestionAnswer format exactly like QA page
-        <div className="max-w-[80%] w-full">
+        <div className="max-w-[90%] w-full">
           <section className="bg-[#F5F0E8] rounded-lg p-6 mb-6 border-l-4 border-[#6B2D3C]">
             <h2 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider mb-4">
               Answer

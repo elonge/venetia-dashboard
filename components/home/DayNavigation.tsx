@@ -140,7 +140,7 @@ export default function DayNavigation({ currentDate, setCurrentDate }: DayNaviga
       </Button>
 
       <div className="flex items-center gap-4">
-        <h2 className="text-[#1A2A40] text-xl font-serif tracking-wide">
+        <h2 className="text-[#1A2A40] text-lg font-serif tracking-wide">
           A DAY IN HISTORY: <span className="font-bold">{currentDate}</span>
         </h2>
         <div className="flex flex-col items-end gap-1">

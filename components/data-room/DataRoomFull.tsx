@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { X, Calendar, TrendingUp, BarChart3, Mail, Users } from 'lucide-react';
 import { DataRoomData, chartDefinitions, zoomDefaults, ChartId, ZoomKey, ZoomState, TooltipState } from './dataRoomTypes';
 import ChartRenderer from './ChartRenderer';
 
@@ -164,17 +164,6 @@ export default function DataRoomFull({
     handleZoomStatesChange((prev) => ({ ...prev, [key]: zoomDefaults[key] }));
   };
 
-  const handlePrevChart = () => {
-    const newIndex = activeChartIndex === 0 ? chartDefinitions.length - 1 : activeChartIndex - 1;
-    handleChartIndexChange(newIndex);
-    setTooltip(null);
-  };
-
-  const handleNextChart = () => {
-    const newIndex = activeChartIndex === chartDefinitions.length - 1 ? 0 : activeChartIndex + 1;
-    handleChartIndexChange(newIndex);
-    setTooltip(null);
-  };
 
   const showTooltip = (e: React.MouseEvent<SVGElement | HTMLDivElement>, payload: Omit<TooltipState, 'x' | 'y'>) => {
     if (!modalChartRef.current) return;
@@ -212,42 +201,69 @@ export default function DataRoomFull({
     people: null,
   };
 
+  const chartIcons: Record<ChartId, React.ReactNode> = {
+    'meeting-dates': <Calendar className="w-6 h-6" />,
+    'sentiment': <TrendingUp className="w-6 h-6" />,
+    'topics': <BarChart3 className="w-6 h-6" />,
+    'weekly-letter-count': <Mail className="w-6 h-6" />,
+    'people': <Users className="w-6 h-6" />,
+  };
+
   return (
-    <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center px-6 py-10">
-      <div className="relative w-[80vw] max-w-7xl h-[80vh] bg-[#0D1B2A] text-white rounded-2xl shadow-2xl p-6 flex flex-col gap-4">
+    <div className="fixed inset-0 z-[9999] bg-black/70 flex items-center justify-center px-6 py-10" style={{ zIndex: 9999 }}>
+      <div className="relative w-[80vw] max-w-7xl h-[80vh] bg-[#0D1B2A] text-white rounded-2xl shadow-2xl p-6 flex flex-col gap-4" style={{ zIndex: 10000 }}>
         <div className="flex items-center justify-between">
-          <div>
-            <div className="text-xs uppercase tracking-wide text-[#9AAFD0]">Data Room Navigator</div>
+          <div className="relative z-10">
+            <div className="text-xs uppercase tracking-wide text-[#9AAFD0] mb-1">Data Room Navigator</div>
             <div className="text-2xl font-semibold text-white">{activeChart.label}</div>
-            <div className="text-sm text-[#C8D5EA]">{activeChart.description}</div>
+            <div className="relative z-10 text-sm text-[#C8D5EA]">{activeChart.description}</div>
           </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handlePrevChart}
-              className="p-2 rounded-full bg-[#15263E] hover:bg-[#1F3350] border border-[#1F3350] transition-colors"
-              aria-label="Previous chart"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={handleNextChart}
-              className="p-2 rounded-full bg-[#15263E] hover:bg-[#1F3350] border border-[#1F3350] transition-colors"
-              aria-label="Next chart"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-            <button
-              onClick={onClose}
-              className="p-2 rounded-full bg-[#4A7C59] hover:bg-[#5A8C69] transition-colors"
-              aria-label="Close"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
+          <button
+            onClick={onClose}
+            className="p-2 rounded-full bg-[#4A7C59] hover:bg-[#5A8C69] transition-colors"
+            aria-label="Close"
+          >
+            <X className="w-4 h-4" />
+          </button>
         </div>
 
-        <div className="flex-1 grid grid-cols-[minmax(0,3fr),minmax(320px,1fr)] gap-4">
-          <div ref={modalChartRef} className="relative bg-[#101C2D] border border-[#1F3350] rounded-xl p-4 overflow-hidden">
+        {/* Navigation Cards */}
+        <div className="grid grid-cols-3 gap-3">
+          {chartDefinitions.map((chart, idx) => {
+            const isActive = idx === activeChartIndex;
+            return (
+              <button
+                key={chart.id}
+                onClick={() => handleChartIndexChange(idx)}
+                className={`relative p-4 rounded-lg border-2 transition-all text-left group ${
+                  isActive
+                    ? 'bg-[#15263E] border-[#4A7C59] shadow-lg shadow-[#4A7C59]/30 ring-2 ring-[#4A7C59]/20'
+                    : 'bg-[#0F1F34] border-[#1F3350] hover:bg-[#15263E] hover:border-[#23354D]'
+                }`}
+              >
+                <div className="flex items-start gap-3">
+                  <div className={`flex-shrink-0 transition-colors ${
+                    isActive ? 'text-[#4A7C59]' : 'text-[#4A7C59] group-hover:text-[#5A8C69]'
+                  }`}>
+                    {chartIcons[chart.id]}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-semibold text-sm mb-1 text-white">
+                      {chart.label}
+                    </div>
+                    <div className="text-xs text-[#9AAFD0] line-clamp-2">
+                      {chart.description}
+                    </div>
+                  </div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Chart Display */}
+        <div className="flex-1 min-h-0">
+          <div ref={modalChartRef} className="relative w-full h-full bg-[#101C2D] border border-[#1F3350] rounded-xl p-4 overflow-hidden">
             {loading ? (
               <div className="w-full h-full flex items-center justify-center text-[#C8D5EA]">Loading data...</div>
             ) : (
@@ -266,39 +282,6 @@ export default function DataRoomFull({
               />
             )}
             {renderTooltip()}
-          </div>
-
-          <aside className="bg-[#0F1F34] border border-[#1F3350] rounded-xl p-4 flex flex-col gap-4">
-            <div>
-              <div className="text-xs uppercase tracking-wide text-[#9AAFD0] mb-2">Jump between charts</div>
-              <div className="grid grid-cols-2 gap-2">
-                {chartDefinitions.map((chart, idx) => (
-                  <button
-                    key={chart.id}
-                    onClick={() => handleChartIndexChange(idx)}
-                    className={`text-xs px-2 py-2 rounded-md text-left border transition-colors ${
-                      idx === activeChartIndex
-                        ? 'bg-[#4A7C59] border-[#4A7C59] text-white'
-                        : 'bg-[#101C2D] border-[#1F3350] text-[#C8D5EA] hover:bg-[#15263E]'
-                    }`}
-                  >
-                    <div className="font-semibold">{chart.label}</div>
-                    <div className="text-[11px] text-[#9AAFD0] line-clamp-1">{chart.description}</div>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </aside>
-        </div>
-
-        <div className="flex items-center justify-between text-xs text-[#C8D5EA]">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#4A7C59]" />
-            Drag the mini-map to zoom; hover for tooltips in this view.
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#23354D]" />
-            {chartZoomKey[activeChart.id] ? 'Zoom persists as you change charts.' : 'No zoom controls for this chart.'}
           </div>
         </div>
       </div>

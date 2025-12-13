@@ -1,10 +1,18 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { RotateCcw } from 'lucide-react';
 import { Chrono } from 'react-chrono';
 import 'react-chrono/dist/style.css';
-import { transformMeetingDatesToTimelineItems } from '@/lib/react-chrono-transformers';
+import { transformMeetingDatesToTimelineItems, transformWeeklyLetterCountToTimelineItems } from '@/lib/react-chrono-transformers';
+import { TimeSeries, TimeRange } from 'pondjs';
+import dynamic from 'next/dynamic';
+
+// Dynamically import the TimeSeriesChart component to avoid SSR issues with react-timeseries-charts
+const TimeSeriesChart = dynamic(
+  () => import('./TimeSeriesChart'),
+  { ssr: false }
+);
 import {
   DataRoomData,
   ChartId,
@@ -13,13 +21,8 @@ import {
   chronoTheme,
 } from './dataRoomTypes';
 import {
-  transformPoints,
-  getDateFromX,
-  getYValueFromY,
-  generateHorizontalTicks,
-  generateVerticalTicksSentiment,
-  generateVerticalTicksLetterCount,
-  pointsToPath,
+  transformSentimentToTimeSeries,
+  transformLetterCountToTimeSeries,
 } from './dataRoomUtils';
 
 interface ChartRendererProps {
@@ -57,6 +60,18 @@ export default function ChartRenderer({
   onBrushMouseMove,
   onBrushMouseUp,
 }: ChartRendererProps) {
+  // Transform sentiment data to TimeSeries (memoized at component level)
+  const sentimentTimeSeries = useMemo(() => {
+    if (!dataRoomData) return null;
+    return transformSentimentToTimeSeries(dataRoomData.sentiment);
+  }, [dataRoomData]);
+
+  // Transform letter count data to TimeSeries (memoized at component level)
+  const letterCountTimeSeries = useMemo(() => {
+    if (!dataRoomData?.dailyLetterCount) return null;
+    return transformLetterCountToTimeSeries(dataRoomData.dailyLetterCount);
+  }, [dataRoomData]);
+
   const renderSentiment = () => {
     if (!dataRoomData) {
       return (
@@ -66,77 +81,65 @@ export default function ChartRenderer({
       );
     }
 
-    const zoom = zoomStates.sentiment;
-    const transformedAnxiety = transformPoints(dataRoomData.sentiment.anxiety, zoom);
-    const transformedWarmth = transformPoints(dataRoomData.sentiment.warmth, zoom);
-    const transformedTension = transformPoints(dataRoomData.sentiment.tension, zoom);
-    const horizontalTicks = generateHorizontalTicks(zoom.minX, zoom.maxX, dataRoomData.sentiment.dateRange, variant === 'modal' ? 9 : 5);
-    const verticalTicks = generateVerticalTicksSentiment(variant === 'modal' ? 7 : 5);
+    // Get or transform sentiment data
+    let transformed = sentimentTimeSeries;
+    if (!transformed) {
+      transformed = transformSentimentToTimeSeries(dataRoomData.sentiment);
+    }
 
-    const showPoints = variant === 'modal';
+    if (!transformed) {
+      return (
+        <div className="h-32 bg-[#13243A] rounded flex items-center justify-center text-sm text-[#C8D5EA]">
+          No sentiment data available
+        </div>
+      );
+    }
+
+    const { tensionSeries, warmthSeries, anxietySeries } = transformed;
+
+    if (!tensionSeries && !warmthSeries && !anxietySeries) {
+      return (
+        <div className="h-32 bg-[#13243A] rounded flex items-center justify-center text-sm text-[#C8D5EA]">
+          No sentiment data available
+        </div>
+      );
+    }
+
+    // Determine time range from the series
+    const seriesArray = [tensionSeries, warmthSeries, anxietySeries].filter(Boolean) as TimeSeries[];
+    let timerange: TimeRange | null = null;
+    
+    if (seriesArray.length > 0) {
+      // Get all timeranges and find the min and max
+      const ranges = seriesArray.map(s => s.timerange());
+      const minTime = Math.min(...ranges.map(r => r.begin().getTime()));
+      const maxTime = Math.max(...ranges.map(r => r.end().getTime()));
+      timerange = new TimeRange(new Date(minTime), new Date(maxTime));
+    }
+
+    if (!timerange) {
+      return (
+        <div className="h-32 bg-[#13243A] rounded flex items-center justify-center text-sm text-[#C8D5EA]">
+          No sentiment data available
+        </div>
+      );
+    }
+
+    const chartHeight = variant === 'modal' ? 280 : 200;
 
     return (
-      <div className={`${variant === 'modal' ? 'h-[360px]' : 'h-48'} bg-[#13243A] rounded relative p-4`}>
+      <div className={`${variant === 'modal' ? 'h-[360px]' : 'h-48'} bg-[#13243A] rounded relative p-4 flex flex-col`}>
         <div className="flex items-center justify-between mb-2">
           <h4 className="text-sm font-semibold text-white">Emotional tone across timeline</h4>
-          {(zoom.minX !== 0 || zoom.maxX !== 200) && (
-            <button
-              onClick={() => onResetZoom('sentiment')}
-              className="text-xs text-[#C8D5EA] hover:text-white flex items-center gap-1 transition-colors"
-              title="Reset zoom"
-            >
-              <RotateCcw className="w-3 h-3" />
-              Reset
-            </button>
-          )}
         </div>
-        <div className="w-full h-[calc(100%-64px)]">
-          <svg viewBox="0 0 200 80" className="w-full h-full" preserveAspectRatio="none">
-            {verticalTicks.map((tick, idx) => (
-              <g key={`v-${idx}`}>
-                <line x1="0" y1={tick.y} x2="200" y2={tick.y} stroke="#4A7C59" strokeWidth="0.5" opacity="0.2" strokeDasharray="2,2" />
-                <line x1="0" y1={tick.y} x2="5" y2={tick.y} stroke="#C8D5EA" strokeWidth="1" />
-                <text x="8" y={tick.y} textAnchor="start" dominantBaseline="middle" className="text-[8px] fill-[#C8D5EA]">
-                  {tick.value.toFixed(1)}
-                </text>
-              </g>
-            ))}
-            {horizontalTicks.map((tick, idx) => (
-              <g key={`h-${idx}`}>
-                <line x1={tick.x} y1="0" x2={tick.x} y2="80" stroke="#4A7C59" strokeWidth="0.5" opacity="0.2" strokeDasharray="2,2" />
-                <line x1={tick.x} y1="70" x2={tick.x} y2="80" stroke="#C8D5EA" strokeWidth="1" />
-                <text x={tick.x} y="75" textAnchor="middle" dominantBaseline="middle" className="text-[8px] fill-[#C8D5EA]">
-                  {tick.label}
-                </text>
-              </g>
-            ))}
-
-            <path d={pointsToPath(transformedAnxiety)} fill="none" stroke="#F59E0B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d={pointsToPath(transformedWarmth)} fill="none" stroke="#4A7C59" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d={pointsToPath(transformedTension)} fill="none" stroke="#DC2626" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-
-            {showPoints &&
-              [...transformedAnxiety.map((p) => ({ ...p, label: 'Emotional Desolation', color: '#F59E0B' })), ...transformedWarmth.map((p) => ({ ...p, label: 'Romantic Adoration', color: '#4A7C59' })), ...transformedTension.map((p) => ({ ...p, label: 'Political Unburdening', color: '#DC2626' }))]
-                .map((p, idx) => (
-                  <circle
-                    key={idx}
-                    cx={p.x}
-                    cy={p.y}
-                    r="3"
-                    fill={p.color}
-                    opacity={0.9}
-                    onMouseMove={(e) =>
-                      onShowTooltip(e, {
-                        title: p.label,
-                        value: getYValueFromY(p.y).toFixed(2),
-                        subtitle: getDateFromX(p.originalX, dataRoomData.sentiment.dateRange),
-                        color: p.color,
-                      })
-                    }
-                    onMouseLeave={onHideTooltip}
-                  />
-                ))}
-          </svg>
+        <div className="flex-1" style={{ minHeight: 0 }}>
+          <TimeSeriesChart
+            timerange={timerange}
+            series={{ tensionSeries, warmthSeries, anxietySeries }}
+            variant="sentiment"
+            height={chartHeight}
+            rawData={{ sentiment: dataRoomData.sentiment }}
+          />
         </div>
         <div className="flex gap-3 mt-3 text-xs">
           <div className="flex items-center gap-2">
@@ -152,24 +155,6 @@ export default function ChartRenderer({
             <span className="text-[#EAF2FF]">Emotional Desolation</span>
           </div>
         </div>
-        {variant === 'modal' && brushRefs && onBrushMouseDown && onBrushMouseMove && onBrushMouseUp && (
-          <div className="h-6 bg-[#0F1F34] rounded mt-3 relative overflow-hidden">
-            <svg
-              ref={(el) => {
-                if (brushRefs) brushRefs.sentiment = el;
-              }}
-              viewBox="0 0 200 20"
-              className="w-full h-full cursor-crosshair"
-              onMouseDown={(e) => onBrushMouseDown('sentiment', e)}
-              onMouseMove={(e) => onBrushMouseMove('sentiment', e)}
-              onMouseUp={onBrushMouseUp}
-              onMouseLeave={onBrushMouseUp}
-            >
-              <line x1="0" y1="10" x2="200" y2="10" stroke="#4A7C59" strokeWidth="1" opacity="0.3" />
-              <rect x={zoom.minX} y="0" width={zoom.maxX - zoom.minX} height="20" fill="#4A7C59" opacity="0.3" />
-            </svg>
-          </div>
-        )}
       </div>
     );
   };
@@ -220,119 +205,57 @@ export default function ChartRenderer({
       );
     }
 
-    const zoom = zoomStates.letterCount;
-    const transformedData = transformPoints(dataRoomData.dailyLetterCount.data, zoom);
-    const peakPoint = dataRoomData.dailyLetterCount.data.reduce((min, p) => (p.y < min.y ? p : min));
-    const isPeakVisible = peakPoint.x >= zoom.minX && peakPoint.x <= zoom.maxX;
-    const transformedPeak = isPeakVisible
-      ? {
-          x: ((peakPoint.x - zoom.minX) / (zoom.maxX - zoom.minX || 1)) * 200,
-          y: peakPoint.y,
-          originalX: peakPoint.x,
-        }
-      : null;
+    let letterCountSeries = letterCountTimeSeries;
 
-    const horizontalTicks = generateHorizontalTicks(zoom.minX, zoom.maxX, dataRoomData.dailyLetterCount.dateRange, variant === 'modal' ? 9 : 5);
-    const verticalTicks = generateVerticalTicksLetterCount(dataRoomData.dailyLetterCount.peak.count, variant === 'modal' ? 7 : 5);
-    const showPoints = variant === 'modal';
+    // Try to transform the data if it hasn't been transformed yet
+    if (!letterCountSeries) {
+      letterCountSeries = transformLetterCountToTimeSeries(dataRoomData.dailyLetterCount);
+      if (!letterCountSeries) {
+        return (
+          <div className="h-32 bg-[#13243A] rounded flex items-center justify-center text-sm text-[#C8D5EA]">
+            No letter count data available
+          </div>
+        );
+      }
+    }
+
+    const timerange = letterCountSeries.timerange();
+    const maxCount = letterCountSeries.max('count') || 0;
+    const chartHeight = variant === 'modal' ? 400 : 300;
 
     return (
-      <div className={`${variant === 'modal' ? 'h-[340px]' : 'h-48'} bg-[#13243A] rounded p-4`}>
-        <div className="flex items-center justify-between mb-2">
-          <h4 className="text-sm font-semibold text-white">Number of letters per week over time</h4>
-          {(zoom.minX !== 0 || zoom.maxX !== 200) && (
-            <button
-              onClick={() => onResetZoom('letterCount')}
-              className="text-xs text-[#C8D5EA] hover:text-white flex items-center gap-1 transition-colors"
-              title="Reset zoom"
-            >
-              <RotateCcw className="w-3 h-3" />
-              Reset
-            </button>
-          )}
-        </div>
-        <div className="w-full h-[calc(100%-64px)]">
-          <svg viewBox="0 0 200 80" className="w-full h-full" preserveAspectRatio="none">
-            {verticalTicks.map((tick, idx) => (
-              <g key={`v-${idx}`}>
-                <line x1="0" y1={tick.y} x2="200" y2={tick.y} stroke="#4A7C59" strokeWidth="0.5" opacity="0.2" strokeDasharray="2,2" />
-                <line x1="0" y1={tick.y} x2="5" y2={tick.y} stroke="#C8D5EA" strokeWidth="1" />
-                <text x="8" y={tick.y} textAnchor="start" dominantBaseline="middle" className="text-[8px] fill-[#C8D5EA]">
-                  {tick.value}
-                </text>
-              </g>
-            ))}
-            {horizontalTicks.map((tick, idx) => (
-              <g key={`h-${idx}`}>
-                <line x1={tick.x} y1="0" x2={tick.x} y2="80" stroke="#4A7C59" strokeWidth="0.5" opacity="0.2" strokeDasharray="2,2" />
-                <line x1={tick.x} y1="60" x2={tick.x} y2="80" stroke="#C8D5EA" strokeWidth="1" />
-                <text x={tick.x} y="75" textAnchor="middle" dominantBaseline="middle" className="text-[8px] fill-[#C8D5EA]">
-                  {tick.label}
-                </text>
-              </g>
-            ))}
-
-            <path d={pointsToPath(transformedData)} fill="none" stroke="#4A7C59" strokeWidth="2" />
-            {transformedPeak && (
-              <circle
-                cx={transformedPeak.x}
-                cy={transformedPeak.y}
-                r="3"
-                fill="#DC2626"
-                onMouseMove={(e) =>
-                  onShowTooltip(e, {
-                    title: 'Peak correspondence',
-                    value: `${dataRoomData.dailyLetterCount.peak.count} letters/week`,
-                    subtitle: dataRoomData.dailyLetterCount.peak.date,
-                    color: '#DC2626',
-                  })
-                }
-                onMouseLeave={onHideTooltip}
-              />
+      <div className={`${variant === 'modal' ? 'h-[500px]' : 'h-[400px]'} bg-[#13243A] rounded p-4 flex flex-col`}>
+        <div className="mb-3">
+          <h4 className="text-sm font-semibold text-white mb-1">Number of letters per week over time</h4>
+          <div className="text-sm text-[#C8D5EA]">
+            {dataRoomData.dailyLetterCount.weeks.length > 0 && (
+              <>
+                <span className="text-white font-semibold">{dataRoomData.dailyLetterCount.weeks.length}</span> weeks with letters recorded
+                {dataRoomData.dailyLetterCount.dateRange.start && dataRoomData.dailyLetterCount.dateRange.end && (
+                  <span className="block mt-1 text-xs">
+                    {dataRoomData.dailyLetterCount.dateRange.start} - {dataRoomData.dailyLetterCount.dateRange.end}
+                  </span>
+                )}
+                {dataRoomData.dailyLetterCount.peak.count > 0 && (
+                  <span className="block mt-1 text-xs">
+                    Peak: {dataRoomData.dailyLetterCount.peak.date} ({dataRoomData.dailyLetterCount.peak.count} letters/week)
+                  </span>
+                )}
+              </>
             )}
-            {showPoints &&
-              transformedData.map((p, idx) => (
-                <circle
-                  key={idx}
-                  cx={p.x}
-                  cy={p.y}
-                  r="3"
-                  fill="#4A7C59"
-                  opacity={0.9}
-                  onMouseMove={(e) =>
-                    onShowTooltip(e, {
-                      title: 'Letters per week',
-                      value: getYValueFromY(p.y, 0, dataRoomData.dailyLetterCount.peak.count).toFixed(1),
-                      subtitle: getDateFromX(p.originalX, dataRoomData.dailyLetterCount.dateRange),
-                      color: '#4A7C59',
-                    })
-                  }
-                  onMouseLeave={onHideTooltip}
-                />
-              ))}
-          </svg>
-        </div>
-        <p className="text-sm text-[#C8D5EA] mt-3">
-          Peak correspondence: {dataRoomData.dailyLetterCount.peak.date} ({dataRoomData.dailyLetterCount.peak.count} letters/week)
-        </p>
-        {variant === 'modal' && brushRefs && onBrushMouseDown && onBrushMouseMove && onBrushMouseUp && (
-          <div className="h-6 bg-[#0F1F34] rounded mt-2 relative overflow-hidden">
-            <svg
-              ref={(el) => {
-                if (brushRefs) brushRefs.letterCount = el;
-              }}
-              viewBox="0 0 200 20"
-              className="w-full h-full cursor-crosshair"
-              onMouseDown={(e) => onBrushMouseDown('letterCount', e)}
-              onMouseMove={(e) => onBrushMouseMove('letterCount', e)}
-              onMouseUp={onBrushMouseUp}
-              onMouseLeave={onBrushMouseUp}
-            >
-              <line x1="0" y1="10" x2="200" y2="10" stroke="#4A7C59" strokeWidth="1" opacity="0.3" />
-              <rect x={zoom.minX} y="0" width={zoom.maxX - zoom.minX} height="20" fill="#4A7C59" opacity="0.3" />
-            </svg>
           </div>
-        )}
+        </div>
+        
+        <div className="flex-1" style={{ minHeight: 0 }}>
+          <TimeSeriesChart
+            timerange={timerange}
+            series={{ letterCountSeries }}
+            variant="letterCount"
+            height={chartHeight}
+            maxValue={maxCount}
+            rawData={{ letterCount: dataRoomData.dailyLetterCount }}
+          />
+        </div>
       </div>
     );
   };

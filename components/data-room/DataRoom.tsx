@@ -26,11 +26,11 @@ export default function DataRoom() {
         onChartIndexChange={setActiveChartIndex}
         zoomStates={zoomStates}
         onZoomStatesChange={setZoomStates}
-      />
+            />
       {isModalOpen && (
         <DataRoomFull
           onClose={handleCloseFull}
-          initialChartIndex={2}
+          initialChartIndex={activeChartIndex}
           initialZoomStates={zoomStates}
           onChartIndexChange={setActiveChartIndex}
           onZoomStatesChange={setZoomStates}

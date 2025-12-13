@@ -5,9 +5,9 @@ import { getAllTimelineDays } from '@/lib/timeline_days';
 // TODO: Replace with actual database queries later
 
 export interface SentimentData {
-  tension: Array<{ x: number; y: number }>;
-  warmth: Array<{ x: number; y: number }>;
-  anxiety: Array<{ x: number; y: number }>;
+  tension: Array<{ x: number; y: number; date?: string }>;
+  warmth: Array<{ x: number; y: number; date?: string }>;
+  anxiety: Array<{ x: number; y: number; date?: string }>;
   dateRange: { start: string; end: string };
 }
 
@@ -21,6 +21,7 @@ export interface DailyLetterCountData {
   data: Array<{ x: number; y: number }>;
   peak: { date: string; count: number };
   dateRange: { start: string; end: string };
+  weeks: Array<{ weekStartDate: string; letterCount: number }>; // Weekly data with dates for react-chrono
 }
 
 export interface PeopleData {
@@ -228,9 +229,9 @@ export async function GET() {
       };
       
       // Build data points for each sentiment
-      const tensionPoints: Array<{ x: number; y: number }> = [];
-      const warmthPoints: Array<{ x: number; y: number }> = [];
-      const anxietyPoints: Array<{ x: number; y: number }> = [];
+      const tensionPoints: Array<{ x: number; y: number; date?: string }> = [];
+      const warmthPoints: Array<{ x: number; y: number; date?: string }> = [];
+      const anxietyPoints: Array<{ x: number; y: number; date?: string }> = [];
       
       // Store points with metadata for debugging
       const tensionPointsWithScores: Array<{ x: number; y: number; score: number; date: string }> = [];
@@ -255,7 +256,7 @@ export async function GET() {
         // Tension (political_unburdening)
         if (scores.political_unburdening !== undefined) {
           const scaledY = scaleScore(scores.political_unburdening);
-          tensionPoints.push({ x: scaledX, y: scaledY });
+          tensionPoints.push({ x: scaledX, y: scaledY, date: day.date_string });
           tensionPointsWithScores.push({ x: scaledX, y: scaledY, score: scores.political_unburdening, date: day.date_string });
           daysWithTension++;
         }
@@ -263,7 +264,7 @@ export async function GET() {
         // Warmth (romantic_adoration)
         if (scores.romantic_adoration !== undefined) {
           const scaledY = scaleScore(scores.romantic_adoration);
-          warmthPoints.push({ x: scaledX, y: scaledY });
+          warmthPoints.push({ x: scaledX, y: scaledY, date: day.date_string });
           warmthPointsWithScores.push({ x: scaledX, y: scaledY, score: scores.romantic_adoration, date: day.date_string });
           daysWithWarmth++;
         }
@@ -271,7 +272,7 @@ export async function GET() {
         // Anxiety (emotional_desolation)
         if (scores.emotional_desolation !== undefined) {
           const scaledY = scaleScore(scores.emotional_desolation);
-          anxietyPoints.push({ x: scaledX, y: scaledY });
+          anxietyPoints.push({ x: scaledX, y: scaledY, date: day.date_string });
           anxietyPointsWithScores.push({ x: scaledX, y: scaledY, score: scores.emotional_desolation, date: day.date_string });
           daysWithAnxiety++;
         }
@@ -461,7 +462,8 @@ export async function GET() {
         return {
           data: [],
           peak: { date: '', count: 0 },
-          dateRange: { start: '1912', end: '1915' }
+          dateRange: { start: '1912', end: '1915' },
+          weeks: []
         };
       }
       
@@ -576,6 +578,22 @@ export async function GET() {
         return { x: scaledX, y: scaledY };
       });
       
+      // Create weekly data array with dates for react-chrono
+      const weeks: Array<{ weekStartDate: string; letterCount: number }> = [];
+      for (let weekNumber = 0; weekNumber <= totalWeeks; weekNumber++) {
+        const weekData = weeklyData.get(weekNumber);
+        const letterCount = weekData?.totalLetters || 0;
+        const weekStartDate = weekData?.weekStartDate || '';
+        
+        // Only include weeks with letters for the timeline
+        if (letterCount > 0 && weekStartDate) {
+          weeks.push({
+            weekStartDate,
+            letterCount
+          });
+        }
+      }
+      
       const result = {
         data: scaledData,
         peak: {
@@ -585,7 +603,8 @@ export async function GET() {
         dateRange: {
           start: '1912',
           end: '1915'
-        }
+        },
+        weeks
       };
       
       return result;
@@ -616,7 +635,7 @@ export async function GET() {
       const peopleArray = Array.from(peopleFrequency.entries())
         .map(([name, count]) => ({ name, count }))
         .sort((a, b) => b.count - a.count)
-        .slice(0, 10); // Return only top 10
+        .slice(0, 50); // Return top 50 for modal view
       
       return peopleArray;
     };

@@ -22,6 +22,12 @@ function formatDateLong(dateString: string): string {
   return `${monthName} ${day}, ${year}`;
 }
 
+interface WeeklyLetterCountData {
+  weeks: Array<{ weekStartDate: string; letterCount: number }>;
+  peak: { date: string; count: number };
+  dateRange: { start: string; end: string };
+}
+
 /**
  * Transform meeting dates data into react-chrono TimelineItem format
  */
@@ -34,6 +40,23 @@ export function transformMeetingDatesToTimelineItems(
     return {
       cardTitle: longDate,
       cardDetailedText: meeting.meeting_details || '',
+    };
+  });
+}
+
+/**
+ * Transform weekly letter count data into react-chrono TimelineItem format
+ */
+export function transformWeeklyLetterCountToTimelineItems(
+  letterCountData: WeeklyLetterCountData
+): TimelineItem[] {
+  return letterCountData.weeks.map((week) => {
+    const longDate = formatDateLong(week.weekStartDate);
+    const letterText = week.letterCount === 1 ? 'letter' : 'letters';
+    
+    return {
+      cardTitle: longDate,
+      cardDetailedText: `${week.letterCount} ${letterText} this week`,
     };
   });
 }

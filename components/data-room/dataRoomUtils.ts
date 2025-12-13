@@ -1,4 +1,5 @@
-import { ZoomState, ZoomKey, DataRoomData } from './dataRoomTypes';
+import { ZoomState, ZoomKey, DataRoomData, SentimentData, DailyLetterCountData } from './dataRoomTypes';
+import { TimeSeries, TimeRange, TimeRangeEvent } from 'pondjs';
 
 export const transformPoints = (
   points: Array<{ x: number; y: number }>,
@@ -83,5 +84,101 @@ export const pointsToPath = (points: Array<{ x: number; y: number }>) => {
   if (points.length === 1) return `M${points[0].x},${points[0].y}`;
   const sortedPoints = [...points].sort((a, b) => a.x - b.x);
   return sortedPoints.map((p, i) => (i === 0 ? `M${p.x},${p.y}` : `L${p.x},${p.y}`)).join(' ');
+};
+
+// Transform sentiment data to TimeSeries format for react-timeseries-charts
+export const transformSentimentToTimeSeries = (sentimentData: SentimentData) => {
+  // Helper to convert date string to Date
+  const dateStringToDate = (dateString: string): Date => {
+    const [year, month, day] = dateString.split('-').map(Number);
+    return new Date(year, month - 1, day);
+  };
+
+  // Reverse the y coordinate scaling to get back original score (0-10)
+  // Original scaling: score 0 -> yBottom (70), score 10 -> yTop (10)
+  // y = yBottom - (score/10) * (yBottom - yTop)
+  // So: score = ((yBottom - y) / (yBottom - yTop)) * 10
+  const yToScore = (y: number): number => {
+    const yTop = 10;
+    const yBottom = 70;
+    const normalized = (yBottom - y) / (yBottom - yTop);
+    return Math.max(0, Math.min(10, normalized * 10));
+  };
+
+  // Transform each sentiment type - only use points with dates
+  const tensionEvents = sentimentData.tension
+    .filter(p => p.date)
+    .map(p => ({
+      timestamp: dateStringToDate(p.date!),
+      value: yToScore(p.y),
+    }))
+    .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+
+  const warmthEvents = sentimentData.warmth
+    .filter(p => p.date)
+    .map(p => ({
+      timestamp: dateStringToDate(p.date!),
+      value: yToScore(p.y),
+    }))
+    .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+
+  const anxietyEvents = sentimentData.anxiety
+    .filter(p => p.date)
+    .map(p => ({
+      timestamp: dateStringToDate(p.date!),
+      value: yToScore(p.y),
+    }))
+    .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+
+  // Create TimeSeries for each sentiment
+  const tensionSeries = tensionEvents.length > 0
+    ? new TimeSeries({
+        name: 'tension',
+        columns: ['time', 'tension'],
+        points: tensionEvents.map(e => [e.timestamp.getTime(), e.value]),
+      })
+    : null;
+
+  const warmthSeries = warmthEvents.length > 0
+    ? new TimeSeries({
+        name: 'warmth',
+        columns: ['time', 'warmth'],
+        points: warmthEvents.map(e => [e.timestamp.getTime(), e.value]),
+      })
+    : null;
+
+  const anxietySeries = anxietyEvents.length > 0
+    ? new TimeSeries({
+        name: 'anxiety',
+        columns: ['time', 'anxiety'],
+        points: anxietyEvents.map(e => [e.timestamp.getTime(), e.value]),
+      })
+    : null;
+
+  return { tensionSeries, warmthSeries, anxietySeries };
+};
+
+// Transform weekly letter count data to TimeSeries format
+export const transformLetterCountToTimeSeries = (letterCountData: DailyLetterCountData) => {
+  // Convert weekStartDate to timestamp and use letterCount as value
+  const events = letterCountData.weeks
+    .map(week => {
+      const [year, month, day] = week.weekStartDate.split('-').map(Number);
+      return {
+        timestamp: new Date(year, month - 1, day),
+        count: week.letterCount,
+      };
+    })
+    .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+
+  if (events.length === 0) {
+    return null;
+  }
+
+  return new TimeSeries({
+    name: 'letterCount',
+    columns: ['time', 'count'],
+    points: events.map(e => [e.timestamp.getTime(), e.count]),
+  });
 };
 

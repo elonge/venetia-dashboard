@@ -10,7 +10,7 @@ import { useChatVisibility } from '@/components/chat/useChatVisibility';
 
 const SIDEBAR_MIN_WIDTH = 250;
 const SIDEBAR_MAX_WIDTH = 800;
-const SIDEBAR_DEFAULT_WIDTH = 640; // w-96 equivalent
+const SIDEBAR_DEFAULT_WIDTH = 560; // w-96 equivalent
 
 export default function Home() {
   const [currentDate, setCurrentDate] = useState('July 28, 1914');

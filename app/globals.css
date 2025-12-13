@@ -6,8 +6,8 @@
   --page-bg: #f4f0e6;
   --ink: #241b15;
   --font-serif: var(--font-playfair, "Playfair Display");
-  --font-size-base: clamp(17px, 0.35vw + 14px, 19px);
-  --line-height-base: 1.7;
+  --font-size-base: clamp(13px, 0.30vw + 11px, 15px);
+  --line-height-base: 1.6;
 }
 
 @theme inline {
@@ -96,4 +96,124 @@ html {
 /* Ensure last card has margin */
 .dataroom-chrono-scrollable [class*="card"]:last-child {
   margin-bottom: 2rem !important;
+}
+
+/* Prevent react-chrono timeline lines from appearing outside the wrapper */
+/* Only allow timeline lines within dataroom-chrono-wrapper */
+:not(.dataroom-chrono-wrapper) [class*="react-chrono-timeline"]::before,
+:not(.dataroom-chrono-wrapper) [class*="react-chrono-timeline"]::after,
+:not(.dataroom-chrono-wrapper) [class*="timeline-line"],
+:not(.dataroom-chrono-wrapper) div[class*="react-chrono"]::before,
+:not(.dataroom-chrono-wrapper) div[class*="react-chrono"]::after {
+  display: none !important;
+}
+
+/* Hide any timeline lines that might appear globally except in wrapper */
+[class*="timeline-line"]:not(.dataroom-chrono-wrapper [class*="timeline-line"]),
+:not(.dataroom-chrono-wrapper) [class*="vertical-timeline"]::before,
+:not(.dataroom-chrono-wrapper) [class*="vertical-timeline"]::after,
+:not(.dataroom-chrono-wrapper) [class*="horizontal-timeline"]::before,
+:not(.dataroom-chrono-wrapper) [class*="horizontal-timeline"]::after {
+  display: none !important;
+}
+
+/* Target any stray timeline connector lines */
+[class*="react-chrono"][class*="line"],
+[class*="react-chrono"][class*="connector"],
+:not(.dataroom-chrono-wrapper) > [class*="react-chrono"] [class*="line"] {
+  display: none !important;
+}
+
+/* Isolate DataRoom modal from react-chrono styles */
+.fixed.z-50 > div {
+  isolation: isolate;
+  position: relative;
+}
+
+/* Ensure text content in DataRoom is above any potential timeline lines */
+.fixed.z-50 [class*="text-"],
+.fixed.z-\[9999\] [class*="text-"] {
+  position: relative;
+  z-index: 1;
+}
+
+/* Ensure DataRoom modal appears above Leaflet maps */
+.fixed.z-\[9999\] {
+  z-index: 9999 !important;
+}
+
+/* Lower Leaflet map z-index when DataRoom modal is open */
+/* Leaflet typically uses z-index values like 400, 500, 600, etc. */
+body:has(.fixed.z-\[9999\]) .leaflet-container,
+body:has(.fixed.z-\[9999\]) .leaflet-pane,
+body:has(.fixed.z-\[9999\]) .leaflet-map-pane,
+body:has(.fixed.z-\[9999\]) .leaflet-tile-pane,
+body:has(.fixed.z-\[9999\]) .leaflet-overlay-pane,
+body:has(.fixed.z-\[9999\]) .leaflet-shadow-pane,
+body:has(.fixed.z-\[9999\]) .leaflet-marker-pane,
+body:has(.fixed.z-\[9999\]) .leaflet-tooltip-pane,
+body:has(.fixed.z-\[9999\]) .leaflet-popup-pane {
+  z-index: 1 !important;
+}
+
+/* DataRoom Preview Animations */
+@keyframes wave {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-10px); }
+}
+
+@keyframes waveReverse {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(10px); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.1); }
+}
+
+@keyframes slideArrow {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+
+.dataroom-wave-1 {
+  animation: wave 2s ease-in-out infinite;
+}
+
+.dataroom-wave-2 {
+  animation: waveReverse 2.5s ease-in-out infinite;
+}
+
+.dataroom-wave-3 {
+  animation: wave 3s ease-in-out infinite;
+}
+
+.dataroom-preview:hover .dataroom-wave-1 {
+  animation-duration: 1s;
+}
+
+.dataroom-preview:hover .dataroom-wave-2 {
+  animation-duration: 1.2s;
+}
+
+.dataroom-preview:hover .dataroom-wave-3 {
+  animation-duration: 1.5s;
+}
+
+.dataroom-star {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.dataroom-preview:hover .dataroom-star {
+  animation-duration: 1.5s;
+}
+
+.dataroom-arrow {
+  display: inline-block;
+}
+
+.dataroom-preview:hover .dataroom-arrow {
+  animation: slideArrow 1s ease-in-out infinite;
 }
