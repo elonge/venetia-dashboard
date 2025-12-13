@@ -8,7 +8,7 @@ import { transformMeetingDatesToTimelineItems, transformWeeklyLetterCountToTimel
 import { TimeSeries, TimeRange } from 'pondjs';
 import dynamic from 'next/dynamic';
 
-// Dynamically import the TimeSeriesChart component to avoid SSR issues with react-timeseries-charts
+// Dynamically import the TimeSeriesChart component to avoid SSR issues
 const TimeSeriesChart = dynamic(
   () => import('./TimeSeriesChart'),
   { ssr: false }

@@ -86,7 +86,7 @@ export const pointsToPath = (points: Array<{ x: number; y: number }>) => {
   return sortedPoints.map((p, i) => (i === 0 ? `M${p.x},${p.y}` : `L${p.x},${p.y}`)).join(' ');
 };
 
-// Transform sentiment data to TimeSeries format for react-timeseries-charts
+// Transform sentiment data to TimeSeries format
 export const transformSentimentToTimeSeries = (sentimentData: SentimentData) => {
   // Helper to convert date string to Date
   const dateStringToDate = (dateString: string): Date => {
