@@ -331,7 +331,7 @@ export default function DataRoom() {
     const transformedAnxiety = transformPoints(dataRoomData.sentiment.anxiety, zoom);
     const transformedWarmth = transformPoints(dataRoomData.sentiment.warmth, zoom);
     const transformedTension = transformPoints(dataRoomData.sentiment.tension, zoom);
-    const horizontalTicks = generateHorizontalTicks(zoom.minX, zoom.maxX, dataRoomData.sentiment.dateRange, variant === 'modal' ? 7 : 5);
+    const horizontalTicks = generateHorizontalTicks(zoom.minX, zoom.maxX, dataRoomData.sentiment.dateRange, variant === 'modal' ? 9 : 5);
     const verticalTicks = generateVerticalTicksSentiment(variant === 'modal' ? 7 : 5);
 
     const showPoints = variant === 'modal';
@@ -491,7 +491,7 @@ export default function DataRoom() {
         }
       : null;
 
-    const horizontalTicks = generateHorizontalTicks(zoom.minX, zoom.maxX, dataRoomData.dailyLetterCount.dateRange, variant === 'modal' ? 7 : 5);
+    const horizontalTicks = generateHorizontalTicks(zoom.minX, zoom.maxX, dataRoomData.dailyLetterCount.dateRange, variant === 'modal' ? 9 : 5);
     const verticalTicks = generateVerticalTicksLetterCount(dataRoomData.dailyLetterCount.peak.count, variant === 'modal' ? 7 : 5);
     const showPoints = variant === 'modal';
 
@@ -639,7 +639,7 @@ export default function DataRoom() {
     }
 
     const zoom = zoomStates.meetingDates;
-    const horizontalTicks = generateHorizontalTicks(zoom.minX, zoom.maxX, dataRoomData.meetingDates.dateRange, variant === 'modal' ? 7 : 5);
+    const horizontalTicks = generateHorizontalTicks(zoom.minX, zoom.maxX, dataRoomData.meetingDates.dateRange, variant === 'modal' ? 9 : 5);
 
     return (
       <div className={`${variant === 'modal' ? 'h-[340px]' : 'h-48'} bg-[#13243A] rounded p-4`}>
@@ -778,6 +778,51 @@ export default function DataRoom() {
     }
   };
 
+  const legendItems: Record<ChartId, Array<{ label: string; color?: string; tone?: 'muted' | 'strong' }>> = {
+    sentiment: [
+      { label: 'Political Unburdening', color: '#DC2626' },
+      { label: 'Romantic Adoration', color: '#4A7C59' },
+      { label: 'Emotional Desolation', color: '#F59E0B' },
+    ],
+    topics: [{ label: 'Hover bars to see share', tone: 'muted' }],
+    'weekly-letter-count': [
+      { label: 'Weekly letters', color: '#4A7C59' },
+      { label: 'Peak week', color: '#DC2626' },
+    ],
+    people: [{ label: 'Ranking by total mentions', tone: 'muted' }],
+    'meeting-dates': [
+      { label: 'Each marker = a meeting date', color: '#4A7C59' },
+      { label: 'Brush the mini-map to zoom', tone: 'muted' },
+    ],
+  };
+
+  const highlights = (): string[] => {
+    if (!dataRoomData) return ['Load data to see quick highlights.'];
+    switch (activeChart.id) {
+      case 'weekly-letter-count':
+        return [
+          `Peak correspondence: ${dataRoomData.dailyLetterCount.peak.date} (${dataRoomData.dailyLetterCount.peak.count} letters/week)`,
+          `Timeline: ${dataRoomData.dailyLetterCount.dateRange.start} – ${dataRoomData.dailyLetterCount.dateRange.end}`,
+        ];
+      case 'sentiment':
+        return [
+          'Three emotional lines shown together',
+          `Range: ${dataRoomData.sentiment.dateRange.start} – ${dataRoomData.sentiment.dateRange.end}`,
+        ];
+      case 'people':
+        return dataRoomData.people.slice(0, 3).map((p, idx) => `#${idx + 1} ${p.name} — ${p.count} mentions`);
+      case 'topics':
+        return dataRoomData.topics.slice(0, 3).map((t, idx) => `Top ${idx + 1}: ${t.topic} (${t.value}%)`);
+      case 'meeting-dates':
+        return [
+          `${dataRoomData.meetingDates.total} meetings recorded`,
+          `${dataRoomData.meetingDates.dateRange.start} – ${dataRoomData.meetingDates.dateRange.end}`,
+        ];
+      default:
+        return [];
+    }
+  };
+
   const renderCarouselContent = () => {
     if (loading) {
       return <div className="h-48 bg-[#13243A] rounded flex items-center justify-center text-sm text-[#C8D5EA]">Loading data...</div>;
@@ -844,8 +889,8 @@ export default function DataRoom() {
 
       {isModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center px-6 py-10">
-          <div className="relative w-[75vw] max-w-6xl h-[75vh] bg-[#0D1B2A] text-white rounded-2xl shadow-2xl p-6 flex flex-col">
-            <div className="flex items-center justify-between mb-4">
+          <div className="relative w-[80vw] max-w-7xl h-[80vh] bg-[#0D1B2A] text-white rounded-2xl shadow-2xl p-6 flex flex-col gap-4">
+            <div className="flex items-center justify-between">
               <div>
                 <div className="text-xs uppercase tracking-wide text-[#9AAFD0]">Data Room Navigator</div>
                 <div className="text-2xl font-semibold text-white">{activeChart.label}</div>
@@ -876,16 +921,40 @@ export default function DataRoom() {
               </div>
             </div>
 
-            <div ref={modalChartRef} className="relative flex-1 overflow-hidden rounded-xl border border-[#1F3350] bg-[#101C2D] p-4">
-              {loading ? (
-                <div className="w-full h-full flex items-center justify-center text-[#C8D5EA]">Loading data...</div>
-              ) : (
-                renderActiveChart('modal')
-              )}
-              {renderTooltip()}
+            <div className="flex-1 grid grid-cols-[minmax(0,3fr),minmax(320px,1fr)] gap-4">
+              <div ref={modalChartRef} className="relative bg-[#101C2D] border border-[#1F3350] rounded-xl p-4 overflow-hidden">
+                {loading ? (
+                  <div className="w-full h-full flex items-center justify-center text-[#C8D5EA]">Loading data...</div>
+                ) : (
+                  renderActiveChart('modal')
+                )}
+                {renderTooltip()}
+              </div>
+
+              <aside className="bg-[#0F1F34] border border-[#1F3350] rounded-xl p-4 flex flex-col gap-4">
+                <div>
+                  <div className="text-xs uppercase tracking-wide text-[#9AAFD0] mb-2">Jump between charts</div>
+                  <div className="grid grid-cols-2 gap-2">
+                    {chartDefinitions.map((chart, idx) => (
+                      <button
+                        key={chart.id}
+                        onClick={() => setActiveChartIndex(idx)}
+                        className={`text-xs px-2 py-2 rounded-md text-left border transition-colors ${
+                          idx === activeChartIndex
+                            ? 'bg-[#4A7C59] border-[#4A7C59] text-white'
+                            : 'bg-[#101C2D] border-[#1F3350] text-[#C8D5EA] hover:bg-[#15263E]'
+                        }`}
+                      >
+                        <div className="font-semibold">{chart.label}</div>
+                        <div className="text-[11px] text-[#9AAFD0] line-clamp-1">{chart.description}</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </aside>
             </div>
 
-            <div className="flex items-center justify-between text-xs text-[#C8D5EA] mt-3">
+            <div className="flex items-center justify-between text-xs text-[#C8D5EA]">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-[#4A7C59]" />
                 Drag the mini-map to zoom; hover for tooltips in this view.

@@ -6,6 +6,7 @@ import { Send, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import MessageBubble, { Message } from './MessageBubble';
+import { QuestionAnswer } from '@/lib/questions';
 
 const CHAT_STORAGE_KEY = 'chatMessages';
 
@@ -39,6 +40,7 @@ export default function ChatInterface() {
               role: msg.role === 'assistant' ? 'assistant' : 'user',
               content: msg.content,
               sources: msg.sources,
+              answers: msg.answers,
               isStreaming: msg.isStreaming,
             }));
           if (sanitizedMessages.length > 0) {
@@ -123,6 +125,7 @@ export default function ChatInterface() {
         chunkIndex: number;
         score: number;
       }> = [];
+      let answers: QuestionAnswer[] | undefined = undefined;
 
       if (!reader) {
         throw new Error('No response body');
@@ -134,20 +137,30 @@ export default function ChatInterface() {
       let pendingUpdate: number | null = null;
       const UPDATE_THROTTLE_MS = 50; // Update at most every 50ms to reduce flickering
 
-      const updateMessage = (content: string, isDone: boolean, finalSources?: typeof sources) => {
+      const updateMessage = (
+        content: string, 
+        isDone: boolean, 
+        finalSources?: typeof sources,
+        finalAnswers?: QuestionAnswer[]
+      ) => {
         setMessages((prev) => {
           const newMessages = [...prev];
           const lastMessage = newMessages[newMessages.length - 1];
           if (lastMessage.role === 'assistant') {
             lastMessage.content = content;
             lastMessage.isStreaming = !isDone;
-            if (isDone && finalSources) {
-              lastMessage.sources = finalSources.map((s) => ({
-                source: s.source,
-                documentTitle: s.documentTitle,
-                chunkIndex: s.chunkIndex,
-                score: s.score,
-              }));
+            if (isDone) {
+              if (finalSources) {
+                lastMessage.sources = finalSources.map((s) => ({
+                  source: s.source,
+                  documentTitle: s.documentTitle,
+                  chunkIndex: s.chunkIndex,
+                  score: s.score,
+                }));
+              }
+              if (finalAnswers) {
+                lastMessage.answers = finalAnswers;
+              }
             }
           }
           return newMessages;
@@ -167,43 +180,55 @@ export default function ChatInterface() {
             try {
               const data = JSON.parse(line.slice(6));
               
-              if (data.content) {
-                fullContent += data.content;
-                
-                // If done, update immediately with all data
-                if (data.done) {
+              // Handle loading state during JSON streaming
+              if (data.loading && !data.done) {
+                // Show loading message during streaming
+                const displayContent = 'Generating answer...';
+                const now = Date.now();
+                if (now - lastUpdateTime >= UPDATE_THROTTLE_MS) {
                   if (pendingUpdate) {
                     cancelAnimationFrame(pendingUpdate);
                     pendingUpdate = null;
                   }
-                  if (data.sources) {
-                    sources = data.sources;
-                  }
-                  updateMessage(fullContent, true, sources);
-                } else {
-                  // Throttle updates during streaming
-                  const now = Date.now();
-                  if (now - lastUpdateTime >= UPDATE_THROTTLE_MS) {
-                    // Update immediately if enough time has passed
-                    if (pendingUpdate) {
-                      cancelAnimationFrame(pendingUpdate);
-                      pendingUpdate = null;
-                    }
-                    updateMessage(fullContent, false);
-                    lastUpdateTime = now;
-                  } else if (!pendingUpdate) {
-                    // Schedule an update if we haven't updated recently
-                    pendingUpdate = requestAnimationFrame(() => {
-                      updateMessage(fullContent, false);
-                      lastUpdateTime = Date.now();
-                      pendingUpdate = null;
-                    });
-                  }
+                  updateMessage(displayContent, false);
+                  lastUpdateTime = now;
+                } else if (!pendingUpdate) {
+                  pendingUpdate = requestAnimationFrame(() => {
+                    updateMessage(displayContent, false);
+                    lastUpdateTime = Date.now();
+                    pendingUpdate = null;
+                  });
                 }
+              }
+              
+              // Handle content (for backward compatibility with non-JSON responses)
+              if (data.content && !data.loading) {
+                fullContent += data.content;
+              }
+              
+              // If done, update immediately with all data
+              if (data.done) {
+                if (pendingUpdate) {
+                  cancelAnimationFrame(pendingUpdate);
+                  pendingUpdate = null;
+                }
+                if (data.sources) {
+                  sources = data.sources;
+                }
+                if (data.answers && Array.isArray(data.answers)) {
+                  answers = data.answers;
+                }
+                // When done, clear content if we have structured answers
+                const finalContent = answers && answers.length > 0 ? '' : fullContent;
+                updateMessage(finalContent, true, sources, answers);
               }
 
               if (data.sources && !data.done) {
                 sources = data.sources;
+              }
+              
+              if (data.answers && !data.done && Array.isArray(data.answers)) {
+                answers = data.answers;
               }
             } catch (e) {
               // Ignore JSON parse errors for incomplete chunks
@@ -216,7 +241,9 @@ export default function ChatInterface() {
       if (pendingUpdate) {
         cancelAnimationFrame(pendingUpdate);
       }
-      updateMessage(fullContent, true, sources);
+      // When done, clear the content if we have structured answers (they will be displayed instead)
+      const finalContent = answers && answers.length > 0 ? '' : fullContent;
+      updateMessage(finalContent, true, sources, answers);
     } catch (error) {
       console.error('Error sending message:', error);
       setMessages((prev) => {

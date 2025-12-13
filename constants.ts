@@ -124,3 +124,32 @@ export const PODCASTS = [
       }
     
     ]
+    export const sourceNameMapping: Record<string, string> = {
+        // Asquith & Family
+        "asquith-letters-full.txt": "Asquith Letters",
+        "The_Asquiths_Book-full.txt": "The Asquiths Book",
+        "violet-full.txt": "Violet Asquith Diaries",
+      
+        // Venetia Stanley & Montagu
+        "venetia_edwin_letters.txt": "Venetia & Edwin Letters",
+        
+        // Historical Figures & Diaries
+        "Charles_Lister_Letters-full.txt": "Charles Lister Letters",
+        "cynthia-diaries-full.txt": "Cynthia Diaries",
+        "Diana_Cooper-full.txt": "Diana Cooper",
+        "naomi_levine-full.txt": "Naomi Levine",
+      
+        // Official Records & Churchill
+        "The Annual Register 1914.txt": "The Annual Register (1914)",
+        "Winston_Churchill_CAB_Part_2.3_1911_1914-full.txt": "Churchill Cabinet Papers (1911–1914)",
+        "Winston_Churchill_CAB_Part_3.1_1914_1915-full.txt": "Churchill Cabinet Papers (1914–1915)",
+        "Winston_Churchill_CAB_Part_3.2_1915_1916-full.txt": "Churchill Cabinet Papers (1915–1916)",
+        
+        // Data Folders (if needed)
+        "hansard_data_notebooklm_ready": "Hansard Data Records"
+      };
+      
+      // Helper function to safely get the name
+export const getRealSourceName = (filename: string): string => {
+    return sourceNameMapping[filename] || filename; // Fallback to filename if not found
+};

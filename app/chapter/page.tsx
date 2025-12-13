@@ -7,7 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import { ArrowLeft, Play, Headphones, ExternalLink, Send, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { PEOPLE_IMAGES, PODCASTS } from '@/constants';
+import { PEOPLE_IMAGES, PODCASTS, getRealSourceName } from '@/constants';
 import ChatInterface from '@/components/chat/ChatInterface';
 
 // Dynamically import SicilyMap with SSR disabled to prevent window is not defined error
@@ -422,7 +422,7 @@ function ChapterContent() {
                     <ul className="space-y-1">
                       {chapterData.sources.map((source, idx) => (
                         <li key={idx} className="text-sm text-[#4B5563]">
-                          • {source}
+                          • {getRealSourceName(source)}
                         </li>
                       ))}
                     </ul>

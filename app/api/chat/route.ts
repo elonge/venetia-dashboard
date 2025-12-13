@@ -1,12 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { searchSimilarChunks, SearchResult } from '@/lib/vector-search';
+import { QuestionAnswer } from '@/lib/questions';
 
 const SYSTEM_PROMPT = `You are an expert historian specializing in early 20th century British politics, particularly the Asquith government, World War I, and the relationships between Venetia Stanley, H.H. Asquith, and Edwin Montagu. 
 
 Answer questions based on the provided context from primary sources. When citing information, reference the specific source documents. Be precise and accurate, and if information is not available in the context, say so clearly.
 
-Format your responses naturally, and when referencing specific documents or sources, mention them by name (e.g., "According to Asquith's memoir..." or "In Venetia's letters...").`;
+IMPORTANT: You must respond with a valid JSON object in the following format:
+{
+  "answers": [
+    {
+      "text": "First paragraph of your answer here. Reference sources naturally within the text.",
+      "link": "source_document_name_or_identifier"
+    },
+    {
+      "text": "Second paragraph of your answer here.",
+      "link": "source_document_name_or_identifier"
+    }
+  ]
+}
+
+Each answer should be a distinct paragraph or section. The "link" field should reference the source document name (from the context provided). If multiple sources are relevant, use the primary source. Format your responses naturally, and when referencing specific documents or sources, mention them by name (e.g., "According to Asquith's memoir..." or "In Venetia's letters...").`;
 
 interface Message {
   role: 'user' | 'assistant' | 'system';
@@ -146,6 +161,7 @@ export async function POST(request: NextRequest) {
       messages: messages as any,
       stream: true,
       max_completion_tokens: 2000,
+      response_format: { type: 'json_object' },
     });
 
     // Create a readable stream for the response
@@ -153,19 +169,64 @@ export async function POST(request: NextRequest) {
     const readable = new ReadableStream({
       async start(controller) {
         let fullResponse = '';
+        let parsedAnswers: QuestionAnswer[] | null = null;
         
         try {
           for await (const chunk of stream) {
             const content = chunk.choices[0]?.delta?.content || '';
             if (content) {
               fullResponse += content;
-              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content })}\n\n`));
+              // Don't stream raw JSON - just send a loading indicator
+              // The structured format will be sent at the end
+              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content: '', loading: true })}\n\n`));
             }
           }
           
-          // Send sources at the end
+          // Parse the complete JSON response
+          try {
+            const jsonResponse = JSON.parse(fullResponse);
+            if (jsonResponse.answers && Array.isArray(jsonResponse.answers)) {
+              // Map the answers and assign sources
+              parsedAnswers = jsonResponse.answers.map((answer: any) => {
+                // If link is provided, use it; otherwise find matching source from searchResults
+                let link = answer.link || '';
+                
+                if (!link && searchResults.length > 0) {
+                  // Try to match by document title or source name
+                  const matchingSource = searchResults.find(
+                    (result) =>
+                      result.metadata.documentTitle === answer.link ||
+                      result.source === answer.link ||
+                      result.metadata.documentTitle?.toLowerCase().includes(answer.link?.toLowerCase() || '')
+                  );
+                  
+                  if (matchingSource) {
+                    link = matchingSource.metadata.documentTitle || matchingSource.source;
+                  } else {
+                    // Fallback to first source
+                    link = searchResults[0].metadata.documentTitle || searchResults[0].source;
+                  }
+                }
+                
+                return {
+                  text: answer.text || '',
+                  link: link || (searchResults[0]?.metadata.documentTitle || searchResults[0]?.source || ''),
+                };
+              });
+            }
+          } catch (parseError) {
+            console.error('Failed to parse JSON response:', parseError);
+            console.log('Raw response:', fullResponse);
+            // Fall back to plain text - will be handled by frontend
+          }
+          
+          // Send sources and structured answers at the end
           const sources = formatSources(searchResults);
-          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ sources, done: true })}\n\n`));
+          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ 
+            sources, 
+            answers: parsedAnswers,
+            done: true 
+          })}\n\n`));
           controller.close();
         } catch (error) {
           console.error('Streaming error:', error);

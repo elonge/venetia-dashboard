@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { FileText } from 'lucide-react';
+import { getRealSourceName } from '@/constants';
 
 export interface SourceCitationProps {
   source: string;
@@ -16,7 +17,7 @@ export default function SourceCitation({
   chunkIndex,
   score,
 }: SourceCitationProps) {
-  const displayName = documentTitle || source;
+  const displayName = getRealSourceName(documentTitle || source);
   
   return (
     <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-[#F5F0E8] border border-[#D4CFC4] text-xs text-[#2D3648]">

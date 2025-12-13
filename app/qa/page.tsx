@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import { ArrowLeft, ExternalLink, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ChatInterface from '@/components/chat/ChatInterface';
+import { getRealSourceName } from '@/constants';
 
 interface QuestionAnswer {
   text: string;
@@ -206,7 +207,7 @@ function QAContent() {
               <div key={idx} className="text-[#1A2A40] leading-relaxed">
                 <p className="text-lg mb-1">{answer.text}</p>
                 {answer.link && (
-                  <p className="text-sm text-[#6B7280] italic">Source: {answer.link}</p>
+                  <p className="text-sm text-[#6B7280] italic">Source: {getRealSourceName(answer.link)}</p>
                 )}
               </div>
             ))}
@@ -226,7 +227,7 @@ function QAContent() {
                   {sources.map((source, idx) => (
                     <li key={idx} className="text-sm text-[#4B5563] hover:text-[#1A2A40] cursor-pointer flex items-start gap-2">
                       <span className="text-[#6B2D3C] font-bold">•</span>
-                      <span>{source}</span>
+                      <span>{getRealSourceName(source)}</span>
                     </li>
                   ))}
                 </ul>
