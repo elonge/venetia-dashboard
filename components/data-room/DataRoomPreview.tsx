@@ -40,7 +40,7 @@ export default function DataRoomPreview({
             <p className="text-sm text-[#9AAFD0] mb-4 group-hover:text-[#C8D5EA] transition-colors">
               Explore correspondence patterns.
             </p>
-            <div className="inline-flex items-center gap-1 text-[#4A7C59] font-semibold group-hover:text-[#5A8C69] transition-colors">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#4A7C59]/20 border border-[#4A7C59]/40 rounded-md text-white font-semibold group-hover:bg-[#4A7C59]/30 group-hover:border-[#4A7C59]/60 group-hover:text-[#EAF2FF] transition-all shadow-sm group-hover:shadow-[0_0_12px_rgba(74,124,89,0.4)]">
               <span>Open</span>
               <span className="text-lg dataroom-arrow">&gt;</span>
             </div>

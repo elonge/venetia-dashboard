@@ -198,7 +198,7 @@ export default function ChapterCarousel({ chapters, loading }: ChapterCarouselPr
           <Link
             key={chapter._id}
             href={`/chapter?chapter_id=${encodeURIComponent(chapter.chapter_id)}`}
-            className="shrink-0 w-80 bg-[#F5F0E8] text-[#1A2A40] rounded-lg p-4 cursor-pointer hover:bg-[#E8E4DC] transition-all hover:shadow-md group"
+            className="shrink-0 w-80 bg-[#F5F0E8] text-[#1A2A40] rounded-lg p-4 cursor-pointer hover:bg-[#E8E4DC] transition-all hover:shadow-md group hover:no-underline"
             onClick={(e) => {
               // Prevent navigation if user was dragging
               if (isDragging) {
