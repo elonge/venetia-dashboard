@@ -1,0 +1,483 @@
+[
+    {
+        "date": datetime(1913, 1, 15),
+        "letters": [
+            {
+                "summary": "Asquith writes from Syracuse, marveling at the Greek ruins but complaining about the stifling heat and the constant presence of their travel companions preventing private conversation.",
+                "excerpt": "The columns of the temple stand like ghosts against this relentless blue sky. I would give all of antiquity for one hour alone with you.",
+                "topics": ["Travel", "Antiquity", "Frustration"],
+                "letter_number": 1,
+                "time_of_day": "Evening",
+                "people_mentioned": ["Violet Asquith", "Edwin Montagu"],
+                "scores": {
+                    "romantic_adoration": 8,
+                    "political_unburdening": 1,
+                    "emotional_desolation": 3
+                }
+            }
+        ],
+        "pm_activities": "Touring the Greek Theatre in Syracuse; lunch with the Violet and the party.",
+        "pm_location": "Syracuse, Sicily",
+        "venetia_activities": "Sightseeing with the group; sketching ruins.",
+        "venetia_location": "Syracuse, Sicily",
+        "meeting_reference": "Yes, shared a carriage during the drive to the ruins.",
+        "politics": {
+            "parliament": "Recess",
+            "cabinet": "No meeting (PM abroad)"
+        },
+        "pm_mood_witness": "Violet noted he seemed distracted and eager to escape the formal itinerary.",
+        "diaries_summary": [
+            {
+                "writer": "Violet Asquith",
+                "excerpt": "Father is complaining about the dust, but I suspect he is just bored of the history lectures. Venetia looks splendid in white."
+            }
+        ],
+        "weather": "Hot"
+    },
+
+    {
+        "date": datetime(1913, 6, 12),
+        "letters": [
+            {
+                "summary": "The PM vents his fury regarding the 'Marconi shares' folly committed by Lloyd George and Rufus Isaacs, fearing it may bring down the government.",
+                "excerpt": "They have been incredibly foolish. LG and Rufus are in a state of panic, and I am left to hold the umbrella over their heads while the storm breaks.",
+                "topics": ["Marconi Scandal", "Corruption", "Cabinet Crisis"],
+                "letter_number": 2,
+                "time_of_day": "Morning",
+                "people_mentioned": ["Lloyd George", "Rufus Isaacs"],
+                "scores": {
+                    "romantic_adoration": 3,
+                    "political_unburdening": 10,
+                    "emotional_desolation": 6
+                }
+            }
+        ],
+        "pm_activities": "Drafting defense speeches; meeting with the Chief Whip.",
+        "pm_location": "10 Downing Street",
+        "venetia_activities": "Lunching with friends; shopping in Bond Street.",
+        "venetia_location": "London",
+        "meeting_reference": "No meeting referenced.",
+        "politics": {
+            "parliament": "Debate on the Select Committee Report regarding Marconi.",
+            "cabinet": "Emergency discussion on how to handle the Opposition's vote of censure."
+        },
+        "pm_mood_witness": "Frances Stevenson (LG's diary): The PM was stern but surprisingly calm, unlike LG who is a nervous wreck.",
+        "diaries_summary": [
+            {
+                "writer": "Lord Riddell",
+                "excerpt": "LG thinks Asquith will stand by him, but the atmosphere is toxic. The Tories smell blood."
+            },
+            {
+                "writer": "Frances Stevenson",
+                "excerpt": "LG is terrified the PM will throw him to the wolves."
+            }
+        ],
+        "weather": "Cloudy"
+    },
+    {
+        "date": datetime(1913, 9, 5),
+        "letters": [
+            {
+                "summary": "A brief logistical note confirming the car is ready for their weekly Friday drive, expressing relief at the prospect of escaping London.",
+                "excerpt": "The motor will be at the back gate at 4:30. For two hours, the world can look after itself and I shall be happy.",
+                "topics": ["Leisure", "Escapism"],
+                "letter_number": 3,
+                "time_of_day": "Afternoon",
+                "people_mentioned": ["Chauffeur"],
+                "scores": {
+                    "romantic_adoration": 7,
+                    "political_unburdening": 2,
+                    "emotional_desolation": 1
+                }
+            }
+        ],
+        "pm_activities": "Morning work at the War Office; afternoon drive to the country.",
+        "pm_location": "London / Countryside",
+        "venetia_activities": "Preparing for the drive.",
+        "venetia_location": "London",
+        "meeting_reference": "Yes, 4:30 PM car ride.",
+        "politics": {
+            "parliament": "Session on Scottish Land Bill.",
+            "cabinet": "No meeting."
+        },
+        "pm_mood_witness": "Margot Asquith: Henry left early for his drive; he seems to live for these Friday excursions.",
+        "diaries_summary": [
+            {
+                "writer": "Margot Asquith",
+                "excerpt": "I do not ask who he goes with, but he always returns looking refreshed."
+            }
+        ],
+        "weather": "Clear"
+    },
+
+    {
+        "date": datetime(1913, 11, 10),
+        "letters": [
+            {
+                "summary": "Asquith describes a chaotic scene where a suffragette threw a bag of flour at him during a public appearance.",
+                "excerpt": "A wild-eyed creature lunged at me with a bag of flour. I am quite unharmed, but dignity is a little harder to recover when one looks like a baker.",
+                "topics": ["Suffragettes", "Public Disorder", "Humor"],
+                "letter_number": 4,
+                "time_of_day": "Afternoon",
+                "people_mentioned": ["Suffragettes", "Police"],
+                "scores": {
+                    "romantic_adoration": 4,
+                    "political_unburdening": 3,
+                    "emotional_desolation": 2
+                }
+            },
+            {
+                "summary": "A late-night follow-up expressing his weariness with the constant security threats and his longing for peace.",
+                "excerpt": "The flour is washed off, but the weariness remains. These women are relentless. I only wish for a quiet room and your voice.",
+                "topics": ["Weariness", "Security", "Longing"],
+                "letter_number": 5,
+                "time_of_day": "Late Night",
+                "people_mentioned": ["McKenna"],
+                "scores": {
+                    "romantic_adoration": 8,
+                    "political_unburdening": 5,
+                    "emotional_desolation": 6
+                }
+            }
+        ],
+        "pm_activities": "Public speech at the Guildhall; meeting with Home Secretary regarding security.",
+        "pm_location": "London (Guildhall / Downing St)",
+        "venetia_activities": "Lunch with Edwin Montagu.",
+        "venetia_location": "London",
+        "meeting_reference": "No meeting.",
+        "politics": {
+            "parliament": "Questions on Women's Suffrage.",
+            "cabinet": "McKenna reports on militant activities."
+        },
+        "pm_mood_witness": "McKenna: The PM took the assault with good humor, but was clearly shaken later.",
+        "diaries_summary": [
+            {
+                "writer": "Cynthia Asquith",
+                "excerpt": "Papa came home covered in white dust. He made a joke of it, but it's getting dangerous."
+            }
+        ],
+        "weather": "Windy"
+    },
+
+    {
+        "date": datetime(1914, 1, 20),
+        "letters": [
+            {
+                "summary": "Asquith asks for gossip from the 'Coterie' party at Stanway, feeling old and detached from the younger generation's hedonism.",
+                "excerpt": "Tell me what the 'Corrupt Coterie' is plotting. I feel like a ghost at the feast when I hear of your high spirits.",
+                "topics": ["Social Gossip", "Aging", "Jealousy"],
+                "letter_number": 6,
+                "time_of_day": "Night",
+                "people_mentioned": ["Diana Cooper", "Patrick Shaw Stewart"],
+                "scores": {
+                    "romantic_adoration": 6,
+                    "political_unburdening": 2,
+                    "emotional_desolation": 7
+                }
+            }
+        ],
+        "pm_activities": "Reading classics; quiet dinner alone.",
+        "pm_location": "The Wharf (Sutton Courtney)",
+        "venetia_activities": "Attending a costume party with The Coterie.",
+        "venetia_location": "Stanway House",
+        "meeting_reference": "No, Venetia is away at Stanway.",
+        "politics": {
+            "parliament": "Recess",
+            "cabinet": "Circulation of Naval Estimates papers."
+        },
+        "pm_mood_witness": "Cynthia Asquith: The PM was asking many questions about who was at Stanway.",
+        "diaries_summary": [
+            {
+                "writer": "Cynthia Asquith",
+                "excerpt": "The Coterie was in full swing. We played charades until 3am. Venetia was the center of attention."
+            }
+        ],
+        "weather": "Snow"
+    },
+
+    {
+        "date": datetime(1914, 3, 20),
+        "letters": [
+            {
+                "summary": "The Curragh Mutiny is unfolding. Asquith writes frantically about the recalcitrant generals and the threat of civil war in Ulster.",
+                "excerpt": "Seely has blundered. The Generals are threatening resignation. It is the gravest situation yet; the Army is asserting itself against Parliament.",
+                "topics": ["Ireland", "Curragh Mutiny", "Military Crisis"],
+                "letter_number": 7,
+                "time_of_day": "Late Night",
+                "people_mentioned": ["Seely", "General Gough", "Carson"],
+                "scores": {
+                    "romantic_adoration": 2,
+                    "political_unburdening": 10,
+                    "emotional_desolation": 8
+                }
+            }
+        ],
+        "pm_activities": "Emergency meetings with Seely and French; managing the King's anxiety.",
+        "pm_location": "10 Downing Street",
+        "venetia_activities": "Hosting a dinner party.",
+        "venetia_location": "London",
+        "meeting_reference": "No meeting.",
+        "politics": {
+            "parliament": "Explosive questions regarding Army movements in Ulster.",
+            "cabinet": "Emergency Cabinet on the resignation of officers."
+        },
+        "pm_mood_witness": "Maurice Hankey: The PM is showing strain for the first time; his hands shook slightly holding the papers.",
+        "diaries_summary": [
+            {
+                "writer": "Maurice Hankey",
+                "excerpt": "The Army vs. The People. Asquith is trying to bridge a gap that looks unbridgeable."
+            }
+        ],
+        "weather": "Rain"
+    },
+
+    {
+        "date": datetime(1914, 4, 25),
+        "letters": [
+            {
+                "summary": "Morning note reporting the shocking news of the Larne gun-running incident where Ulster volunteers landed thousands of rifles.",
+                "excerpt": "They have landed 25,000 rifles at Larne. The police stood by and watched. It is open rebellion.",
+                "topics": ["Ireland", "Gun Running", "Rebellion"],
+                "letter_number": 8,
+                "time_of_day": "Morning",
+                "people_mentioned": ["Carson", "Birrell"],
+                "scores": {
+                    "romantic_adoration": 1,
+                    "political_unburdening": 10,
+                    "emotional_desolation": 5
+                }
+            },
+            {
+                "summary": "Mid-day letter venting frustration at the King's potential interference and the passivity of the Irish administration.",
+                "excerpt": "The King is agitated. Birrell is wringing his hands. I need to find a way to enforce the law without starting a civil war.",
+                "topics": ["King George V", "Leadership", "Frustration"],
+                "letter_number": 9,
+                "time_of_day": "Afternoon",
+                "people_mentioned": ["King George V", "Birrell"],
+                "scores": {
+                    "romantic_adoration": 3,
+                    "political_unburdening": 9,
+                    "emotional_desolation": 7
+                }
+            },
+            {
+                "summary": "Late night note seeking solace after an exhausting day of crisis management.",
+                "excerpt": "The day has been a nightmare of telegrams and panic. I turn to you as the only calm point in a turning world.",
+                "topics": ["Solace", "Exhaustion", "Love"],
+                "letter_number": 10,
+                "time_of_day": "Late Night",
+                "people_mentioned": [],
+                "scores": {
+                    "romantic_adoration": 9,
+                    "political_unburdening": 4,
+                    "emotional_desolation": 8
+                }
+            }
+        ],
+        "pm_activities": "Crisis meetings all day; audience with the King.",
+        "pm_location": "10 Downing Street",
+        "venetia_activities": "Playing golf at Alderley.",
+        "venetia_location": "Alderley",
+        "meeting_reference": "No meeting.",
+        "politics": {
+            "parliament": "Saturday sitting rumors; emergency questions.",
+            "cabinet": "Informal gathering of key ministers."
+        },
+        "pm_mood_witness": "Violet Asquith: Father is furiously angry with the Irish administration for letting this happen.",
+        "diaries_summary": [
+            {
+                "writer": "Violet Asquith",
+                "excerpt": "The Larne news is catastrophic. Father says it makes the government look impotent."
+            }
+        ],
+        "weather": "Stormy"
+    },
+
+    {
+        "date": datetime(1914, 8, 4),
+        "letters": [
+            {
+                "summary": "Asquith describes the expiration of the ultimatum to Germany, the silence in the Cabinet room, and the chiming of Big Ben signaling the start of the war.",
+                "excerpt": "It is all over. We are at war. The clock struck eleven and we sat in silence. I can only pray that we have done the right thing.",
+                "topics": ["War", "Destiny", "History"],
+                "letter_number": 11,
+                "time_of_day": "Midnight",
+                "people_mentioned": ["Grey", "King George V", "Winston Churchill"],
+                "scores": {
+                    "romantic_adoration": 5,
+                    "political_unburdening": 9,
+                    "emotional_desolation": 9
+                }
+            }
+        ],
+        "pm_activities": "Waiting for the German reply; issuing orders for mobilization.",
+        "pm_location": "Cabinet Room, 10 Downing Street",
+        "venetia_activities": "Waiting for news at Downing Street (in the drawing room).",
+        "venetia_location": "10 Downing Street",
+        "meeting_reference": "Yes, Venetia was present in the house during the countdown.",
+        "politics": {
+            "parliament": "Statement on Belgium Neutrality.",
+            "cabinet": "Continuous session awaiting the ultimatum expiry."
+        },
+        "pm_mood_witness": "Margot Asquith: Henry sat staring out the window with tears in his eyes.",
+        "diaries_summary": [
+            {
+                "writer": "Lord Riddell",
+                "excerpt": "The die is cast. Winston is happy, the PM is grave, Lloyd George is silent."
+            },
+            {
+                "writer": "Margot Asquith",
+                "excerpt": "I looked at Henry and saw the weight of the world settle upon him."
+            }
+        ],
+        "weather": "Hot"
+    },
+
+    {
+        "date": datetime(1915, 1, 28),
+        "letters": [
+            {
+                "summary": "Asquith details the explosive conflict between Fisher and Churchill regarding the Dardanelles, feeling like a referee in a boxing match.",
+                "excerpt": "Fisher is sulking and threatens to leave; Winston is manic and pushing for the Dardanelles. I have to keep the peace between the old man and the young eagle.",
+                "topics": ["War Council", "Fisher vs Churchill", "Dardanelles"],
+                "letter_number": 12,
+                "time_of_day": "Evening",
+                "people_mentioned": ["Jacky Fisher", "Winston Churchill"],
+                "scores": {
+                    "romantic_adoration": 4,
+                    "political_unburdening": 10,
+                    "emotional_desolation": 5
+                }
+            }
+        ],
+        "pm_activities": "War Council meeting; private mediation between Fisher and Churchill.",
+        "pm_location": "10 Downing Street",
+        "venetia_activities": "Writing to Edwin Montagu.",
+        "venetia_location": "Alderley",
+        "meeting_reference": "No meeting.",
+        "politics": {
+            "parliament": "Questions on Naval strategy.",
+            "cabinet": "War Council: Decision taken to bombard the Dardanelles."
+        },
+        "pm_mood_witness": "Hankey: The PM was exhausted by the personalities involved.",
+        "diaries_summary": [
+            {
+                "writer": "Edwin Montagu (Letter to Venetia)",
+                "excerpt": "Venetia writes to Edwin asking if Winston is really as mad as people say."
+            }
+        ],
+        "weather": "Fog"
+    },
+
+    {
+        "date": datetime(1915, 2, 14),
+        "letters": [
+            {
+                "summary": "Asquith expresses his horror and fear at the idea of Venetia wearing a uniform and being exposed to disease and 'unsightly things' at the hospital.",
+                "excerpt": "I cannot bear to think of you scrubbing floors or tending to wounds. It is not your place. You are made for beauty, not for the gore of the ward.",
+                "topics": ["Nursing", "Jealousy", "Fear"],
+                "letter_number": 13,
+                "time_of_day": "Morning",
+                "people_mentioned": ["The Matron"],
+                "scores": {
+                    "romantic_adoration": 9,
+                    "political_unburdening": 1,
+                    "emotional_desolation": 7
+                }
+            }
+        ],
+        "pm_activities": "Reviewing Army estimates; lunch with Margot.",
+        "pm_location": "London",
+        "venetia_activities": "Attending nursing training course at London Hospital.",
+        "venetia_location": "London Hospital",
+        "meeting_reference": "No meeting.",
+        "politics": {
+            "parliament": "Discussion on Army Supply.",
+            "cabinet": "Discussion on manpower."
+        },
+        "pm_mood_witness": "Violet: Father is very irritable about Venetia's new 'hobby'.",
+        "diaries_summary": [
+            {
+                "writer": "Cynthia Asquith",
+                "excerpt": "Venetia is taking this nursing very seriously. Papa thinks it's a fad, but I think she wants to be useful."
+            }
+        ],
+        "weather": "Light rain"
+    },
+
+    {
+        "date": datetime(1915, 5, 14),
+        "letters": [
+            {
+                "summary": "The Times has attacked the government over the lack of shells. Asquith suspects Sir John French is feeding the press to cover his own failures.",
+                "excerpt": "Northcliffe is out for blood. The headlines are screaming that our men are dying for lack of high explosives. It is a calculated blow.",
+                "topics": ["Shells Scandal", "Press War", "Betrayal"],
+                "letter_number": 14,
+                "time_of_day": "Afternoon",
+                "people_mentioned": ["Northcliffe", "Kitchener", "Sir John French"],
+                "scores": {
+                    "romantic_adoration": 5,
+                    "political_unburdening": 10,
+                    "emotional_desolation": 9
+                }
+            }
+        ],
+        "pm_activities": "Crisis meeting with Kitchener; drafting rebuttal to the press.",
+        "pm_location": "10 Downing Street",
+        "venetia_activities": "Secretly meeting Edwin Montagu to discuss engagement.",
+        "venetia_location": "London",
+        "meeting_reference": "No meeting.",
+        "politics": {
+            "parliament": "Uproar over the 'Shells' headlines.",
+            "cabinet": "Kitchener defends the War Office supply lines."
+        },
+        "pm_mood_witness": "Frances Stevenson: LG is very quiet, watching the PM struggle with the Northcliffe press.",
+        "diaries_summary": [
+            {
+                "writer": "Lord Riddell",
+                "excerpt": "The government is shaking. The Shells issue might be the final straw."
+            }
+        ],
+        "weather": "Cloudy"
+    },
+
+    {
+        "date": datetime(1915, 5, 17),
+        "letters": [
+            {
+                "summary": "The devastating letter where Asquith reacts to the news that Venetia is marrying Edwin Montagu. He declares he is 'quite alone'.",
+                "excerpt": "This is the end. To think that you, of all people, would leave me for him. I am quite alone. The world has gone black.",
+                "topics": ["Heartbreak", "Betrayal", "The End"],
+                "letter_number": 15,
+                "time_of_day": "Morning",
+                "people_mentioned": ["Edwin Montagu"],
+                "scores": {
+                    "romantic_adoration": 10,
+                    "political_unburdening": 0,
+                    "emotional_desolation": 10
+                }
+            }
+        ],
+        "pm_activities": "Reading the breakup letter; sitting alone in the Cabinet room.",
+        "pm_location": "10 Downing Street",
+        "venetia_activities": "Announcing engagement to family.",
+        "venetia_location": "London",
+        "meeting_reference": "No meeting.",
+        "politics": {
+            "parliament": "Rumors of Coalition formation.",
+            "cabinet": "Resignation of Fisher; Churchill leaving Admiralty."
+        },
+        "pm_mood_witness": "Margot: Henry looks like a man who has been shot. He can barely speak.",
+        "diaries_summary": [
+            {
+                "writer": "Edwin Montagu",
+                "excerpt": "We have done it. He knows."
+            },
+            {
+                "writer": "Margot Asquith",
+                "excerpt": "I found him with the letter in his hand. He said nothing, but I knew it was over."
+            }
+        ],
+        "weather": "Heavy Rain"
+    }
+]

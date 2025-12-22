@@ -4,9 +4,9 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import HeroSection from '@/components/home/HeroSection';
 import DayNavigation from '@/components/home/DayNavigation';
-import DayContent from '@/components/home/DayContent';
 import Sidebar from '@/components/home/Sidebar';
 import { useChatVisibility } from '@/components/chat/useChatVisibility';
+import { DailyWidget, DailyPopup, DayData, getDayByDate, getNextDay, getPreviousDay } from '@/components/daily';
 
 const SIDEBAR_MIN_WIDTH = 250;
 const SIDEBAR_MAX_WIDTH = 800;
@@ -18,8 +18,47 @@ export default function Home() {
   const [isResizingSidebar, setIsResizingSidebar] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  
+  // Daily widget and popup state
+  const [allDays, setAllDays] = useState<DayData[]>([]);
+  const [selectedDay, setSelectedDay] = useState<DayData | null>(null);
+  const [todayIn1914, setTodayIn1914] = useState<DayData | null>(null);
+  const [loadingDays, setLoadingDays] = useState(true);
 
   useChatVisibility(true);
+
+  // Calculate today's date in 1914 and load days
+  useEffect(() => {
+    async function loadDays() {
+      try {
+        const response = await fetch('/api/mock_days');
+        if (!response.ok) {
+          throw new Error('Failed to load mock days');
+        }
+        const data = await response.json();
+        setAllDays(data as DayData[]);
+        
+        // Get today's date in 1914
+        const today = new Date();
+        const month = 5 // today.getMonth() + 1; // 1-12
+        const day = 17 // today.getDate();
+        const year = 1915;
+        
+        // Format as YYYY-MM-DD
+        const todayDateString = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const todayDay = getDayByDate(data, todayDateString);
+        console.log('todayDay', todayDay);
+        
+        setTodayIn1914(todayDay);
+      } catch (error) {
+        console.error('Error loading days:', error);
+      } finally {
+        setLoadingDays(false);
+      }
+    }
+    
+    loadDays();
+  }, []);
 
   // Load widths from localStorage on mount
   useEffect(() => {
@@ -109,7 +148,24 @@ export default function Home() {
         >
           <HeroSection />
           <DayNavigation currentDate={currentDate} setCurrentDate={setCurrentDate} />
-          <DayContent currentDate={currentDate} />
+          
+          {/* Daily Widget - Today in 1914 */}
+          <div className="mt-4">
+            {loadingDays ? (
+              <div className="bg-[#F5F0E8] rounded-lg p-4 text-center text-[#2D3648]">
+                Loading today's date in 1914...
+              </div>
+            ) : todayIn1914 ? (
+              <DailyWidget 
+                day={todayIn1914} 
+                onClick={() => setSelectedDay(todayIn1914)} 
+              />
+            ) : (
+              <div className="bg-[#F5F0E8] rounded-lg p-4 text-center text-[#2D3648]">
+                No data available for today's date in 1914.
+              </div>
+            )}
+          </div>
         </main>
 
         {/* Resize Handle between Left and Middle */}
@@ -134,6 +190,29 @@ export default function Home() {
           <Sidebar />
         </div>
       </div>
+
+      {/* Daily Popup */}
+      {selectedDay && (
+        <DailyPopup
+          day={selectedDay}
+          onClose={() => setSelectedDay(null)}
+          allDays={allDays}
+          getNextDay={async (date) => {
+            const next = getNextDay(allDays, date);
+            return next ? Promise.resolve(next) : Promise.resolve(null);
+          }}
+          getPreviousDay={async (date) => {
+            const prev = getPreviousDay(allDays, date);
+            return prev ? Promise.resolve(prev) : Promise.resolve(null);
+          }}
+          onNavigateToDay={(date) => {
+            const day = getDayByDate(allDays, date);
+            if (day) {
+              setSelectedDay(day);
+            }
+          }}
+        />
+      )}
     </div>
   );
 }
