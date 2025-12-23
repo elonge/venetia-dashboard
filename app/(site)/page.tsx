@@ -150,7 +150,7 @@ export default function Home() {
             <DataRoom previewVariant="compact" />
 
             <Link
-              href="/"
+              href="/lab"
               className="block min-h-[170px] rounded-2xl border border-[#1F3350] bg-[#18324E] p-5 shadow-[0_14px_34px_rgba(0,0,0,0.10)] hover:-translate-y-[1px] hover:shadow-[0_18px_44px_rgba(0,0,0,0.14)] transition-all relative overflow-hidden group"
               style={{
                 backgroundImage:

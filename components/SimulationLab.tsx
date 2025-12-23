@@ -5,6 +5,14 @@ const VenetiaSimulationLab = () => {
   // Historical Correspondence Data
   const correspondenceData = [
     {
+      id: 31,
+      venetiaHeader: "Alderley Park, Chelford, Cheshire — Feb 4th 1914",
+      venetia: "My dearest H. Thank you for your letter. It sounds as if you are having a fierce time with the Cabinet and the King. I must say I envy you, I should like to be you with your 'crowded hours' and excitement, instead of staying here where nothing happens and one day is exactly like another. I was wondering what had happened to the paragraph, the one you wrote when you were here. Has it gone in? I suppose I ought to have asked to see it, but I didn’t like to bother you. I am going to hunt tomorrow if it is fine. I hope you are winning at Bridge. Yrs Venetia",
+      asquithHeader: "10 Downing Street, Whitehall — Feb 5th 1914",
+      asquith: "My darling Venetia, Thank you for your 'very dear letter' received this morning. When you say you would like to be me, with 'crowded hours' &c, I wonder if you realise what it means... to have to tackle (1) your Cabinet (2) your deep-sea fishes (3) your Sovereign.",
+      date: "Feb 5, 1914"
+    },
+    {
       id: 126,
       venetiaHeader: "Penrhos, Holyhead — Aug 19th 1914",
       venetia: "My darling, Thank you for your letter. You ask what I am doing. It seems very peaceful here compared to your life. I have been yawning up to the waist all the morning, and this afternoon I rode my unbroken horse. Now I am sitting in the little square garden writing my letters. I have just been reading over your letters, and I do not find them too long! They are a great joy to me. Yrs Venetia",
@@ -13,28 +21,38 @@ const VenetiaSimulationLab = () => {
       date: "Aug 20, 1914"
     },
     {
-      id: 31,
-      venetiaHeader: "Alderley Park, Chelford, Cheshire — Feb 4th 1914",
-      venetia: "My dearest H. Thank you for your letter. It sounds as if you are having a fierce time with the Cabinet and the King. I must say I envy you, I should like to be you with your 'crowded hours' and excitement, instead of staying here where nothing happens and one day is exactly like another. I was wondering what had happened to the paragraph... Has it gone in? I am going to hunt tomorrow if it is fine. I hope you are winning at Bridge. Yrs Venetia",
-      asquithHeader: "10 Downing Street, Whitehall — Feb 5th 1914",
-      asquith: "My darling Venetia, Thank you for your 'very dear letter' received this morning. When you say you would like to be me, with 'crowded hours' &c, I wonder if you realise what it means... to have to tackle (1) your Cabinet (2) your deep-sea fishes (3) your Sovereign.",
-      date: "Feb 5, 1914"
+      id: 140,
+      venetiaHeader: "Penrhos, Holyhead — Sunday [Aug 30th 1914]",
+      venetia: "My dearest H. Thank you for your letter. I feel very far away from the centre of things here. While you are living through such great events, I feel I am doing nothing of any use. I seem to be reduced to running a crèche for the children. I even went to Church this morning! That shows you how desperate I am for occupation. I long to see you. Yrs Venetia",
+      asquithHeader: "10 Downing Street, Whitehall — Aug 31st 1914",
+      asquith: "My darling Venetia, Thank you for your letter. It is sad to think that in these soul-stirring days you are reduced to running a crèche. And you have even taken to Church-going!",
+      date: "Aug 31, 1914"
     }
   ];
 
-  // Instagram Feed Mock Data updated for the August post
+  // Instagram Feed Mock Data
   const instagramPosts = [
     {
-      id: 1,
+      id: 3,
       user: "venetia_official",
-      image: "https://images.unsplash.com/photo-1599908608021-b5d299ca2ef1?auto=format&fit=crop&q=80&w=400",
-      caption: "A peaceful afternoon in the little square garden at Penrhos. 🌿 Spent the morning yawning, but finally got around to my unbroken horse. Writing back to London now. #Penrhos #Correspondence",
-      likes: 92,
+      image: "/lab_instagram/venetia_sitting_bored.jpg",
+      caption: "Yawning up to the waist all morning in the garden. 🥱 The Prime has written three times before breakfast with all the Cabinet secrets—it is rather nice to be the pole-star, I suppose, but honestly, I’d rather be playing poker. ♠️♦️#countrylife #correspondence #politics #bored #volcanicallydull",
+      likes: 112,
       comments: [
-        { user: "hh_asquith", text: "A most delicious update to receive at Downing Street. I can almost see the garden from here." },
-        { user: "violet_abc", text: "Be careful with that horse, Venetia!" }
+        { user: "hh_asquith", text: "Church-going, Venetia? You truly are desperate for distraction!" },
+        { user: "violet_abc", text: "A crèche! I can't quite imagine it, darling." }
       ]
-    }
+    },
+    {
+        id: 2,
+        user: "venetia_official",
+        image: "/lab_instagram/venetia_shopping_penguin.jpg",
+        caption: "Went shopping for a bear cub today but they were out of stock, so I consoled myself with this penguin. 🐧 He is moderately nice, but still very shy. Now off to the casino—I intend to have fun. 💸🥂 #retailtherapy #penguin #newpet #glamour #fun",
+        likes: 95,
+        comments: [
+          { user: "hh_asquith", text: "I can see you there so clearly." }
+        ]
+      }
   ];
 
   return (
@@ -45,10 +63,10 @@ const VenetiaSimulationLab = () => {
           <p className="text-[#4A7C59] font-black uppercase tracking-[0.3em] text-[10px] mb-2">The Venetia Project Simulation Lab</p>
           <h1 className="text-4xl font-bold text-[#1A2A40] mb-2 tracking-tight">Generative Correspondence</h1>
           <div className="h-1 w-24 bg-[#4A7C59]"></div>
-          <p className="mt-4 text-sm italic text-[#6B7280]">Historical Reconstruction: Mapping the precursors to Asquith's verified archives.</p>
+          <p className="mt-4 text-sm italic text-[#6B7280]">Chronicle Displacement: Reconstructing the dialogue between Venetia Stanley and the Prime Minister.</p>
         </header>
 
-        <div className="space-y-24 pb-20">
+        <div className="space-y-24 pb-32">
           {correspondenceData.map((pair) => (
             <div key={pair.id} className="grid grid-cols-1 md:grid-cols-2 gap-8 relative items-start">
               {/* Venetia Simulated Letter */}
@@ -102,9 +120,6 @@ const VenetiaSimulationLab = () => {
                 <Play className="text-white fill-current translate-x-0.5" size={28} />
               </button>
             </div>
-            <div className="absolute bottom-10 w-full text-center">
-               <p className="text-white text-[9px] uppercase font-black tracking-[0.3em] drop-shadow-md">May 12, 1915</p>
-            </div>
           </div>
           <p className="text-center mt-6 text-[#1A2A40] font-serif italic text-sm font-bold leading-tight px-4">
             "Engagement Day Message" <br/>
@@ -125,7 +140,7 @@ const VenetiaSimulationLab = () => {
                 </div>
                 <div className="flex flex-col">
                   <span className="text-xs font-bold font-sans tracking-tight">venetia_official</span>
-                  <span className="text-[9px] text-gray-400 font-sans font-medium uppercase tracking-tighter">Holyhead, Wales</span>
+                  <span className="text-[9px] text-gray-400 font-sans font-medium uppercase tracking-tighter">Simulation Feed</span>
                 </div>
               </div>
               <MoreHorizontal size={18} className="text-gray-400" />
