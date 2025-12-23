@@ -123,10 +123,11 @@ export async function expandConceptOnce(
       { role: 'user', content: prompt },
     ],
     response_format: { type: 'json_object' },
-    max_completion_tokens: 600,
+    max_completion_tokens: 2000,
   });
 
   const content = resp.choices[0]?.message?.content || '';
+  console.log('Concept expansion response:', content);
   const parsed = JSON.parse(content);
 
   const expansion: ConceptExpansion = {
