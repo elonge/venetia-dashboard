@@ -6,7 +6,8 @@ import { useRouter } from 'next/navigation';
 import { ArrowRight, Cog, Shuffle } from 'lucide-react';
 import HeroSection from '@/components/home/HeroSection';
 import { useChatVisibility } from '@/components/chat/useChatVisibility';
-import { DailyWidget, DayData, getDayByDate, normalizeDayDate } from '@/components/daily';
+import { DailyWidget, getDayByDate, normalizeDayDate } from '@/components/daily';
+import type { DayData } from '@/components/daily';
 import DataRoom from '@/components/data-room/DataRoom';
 import ChaptersGrid from '@/components/home/ChaptersGrid';
 
@@ -27,22 +28,30 @@ export default function Home() {
   useEffect(() => {
     async function loadDays() {
       try {
-        const response = await fetch('/api/mock_days');
-        if (!response.ok) {
-          throw new Error('Failed to load mock days');
-        }
-        const data = await response.json();
-        
-        // Get today's date in 1914
         const month = 5 // today.getMonth() + 1; // 1-12
         const day = 17 // today.getDate();
         const year = 1915;
         
         // Format as YYYY-MM-DD
         const todayDateString = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        const todayDay = getDayByDate(data, todayDateString);
-        
-        setTodayIn1914(todayDay);
+
+        const directResponse = await fetch(`/api/daily_records/${encodeURIComponent(todayDateString)}`);
+        if (directResponse.ok) {
+          setTodayIn1914((await directResponse.json()) as DayData);
+          return;
+        }
+
+        const listResponse = await fetch('/api/daily_records');
+        if (listResponse.ok) {
+          const list = (await listResponse.json()) as DayData[];
+          setTodayIn1914(getDayByDate(list, todayDateString));
+          return;
+        }
+
+        const fallbackResponse = await fetch('/api/mock_days');
+        if (!fallbackResponse.ok) throw new Error('Failed to load daily records');
+        const fallbackList = (await fallbackResponse.json()) as DayData[];
+        setTodayIn1914(getDayByDate(fallbackList, todayDateString));
       } catch (error) {
         console.error('Error loading days:', error);
       } finally {

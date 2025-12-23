@@ -72,3 +72,71 @@ export interface TimelineDayDocument {
   people_mentioned?: string[];
   scores: Scores;
 }
+
+export interface DailyRecordLocation {
+  full_string?: string | null;
+  venue?: string | null;
+  area?: string | null;
+  context?: string | null;
+}
+
+export interface DailyRecordLetterPerson {
+  name?: string | null;
+  note_or_realname?: string | null;
+}
+
+export interface DailyRecordLetter {
+  letter_summary?: string | null;
+  letter_excerpt?: string | null;
+  topics_mentioned?: string[] | null;
+  scores?: Scores | null;
+  letter_id?: {
+    sequence_id?: number | null;
+    type?: string | null;
+  } | null;
+  time_data?: {
+    part_of_day?: string | null;
+    exact_time?: string | null;
+    context?: string | null;
+  } | null;
+  people_mentioned?: DailyRecordLetterPerson[] | null;
+}
+
+export interface DailyRecordPolitics {
+  parliament?: {
+    session?: boolean | null;
+    topics_discussed?: string[] | null;
+  } | null;
+  cabinet?: {
+    meeting?: boolean | null;
+    topics_discussed?: string[] | null;
+  } | null;
+}
+
+export interface DailyRecordDiary {
+  writer?: string | null;
+  recipient?: string | null;
+  summary?: string | null;
+  excerpt?: string | null;
+}
+
+export interface DailyRecordWeatherShort {
+  oxford?: string | null;
+  london?: string | null;
+}
+
+export interface DailyRecordDocument {
+  _id?: ObjectId;
+  date?: string | Date | null;
+  date_string?: string | null;
+  pm_activities?: string[] | null;
+  venetia_activities?: string[] | null;
+  pm_location?: DailyRecordLocation | null;
+  venetia_location?: DailyRecordLocation | null;
+  meeting_reference?: string | null;
+  letters?: DailyRecordLetter[] | null;
+  politics?: DailyRecordPolitics | null;
+  diaries?: DailyRecordDiary[] | null;
+  weather_short?: DailyRecordWeatherShort | null;
+  weather?: string | null;
+}

@@ -10,7 +10,7 @@ export const PEOPLE_IMAGES = {
     "Cynthia Asquith": "https://commons.wikimedia.org/wiki/Special:FilePath/Lady-Cynthia-Mary-Evelyn-Asquith-ne-Charteris.jpg",
     "Cynthia": "https://commons.wikimedia.org/wiki/Special:FilePath/Lady-Cynthia-Mary-Evelyn-Asquith-ne-Charteris.jpg",
     "David Lloyd George": "https://commons.wikimedia.org/wiki/Special:FilePath/David_Lloyd_George_c1911.jpg",
-    "Diana Cooper": "https://upload.wikimedia.org/wikipedia/commons/2/27/Lady_Diana_Manners_1.jpg",
+    "Diana Cooper": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Lady_Diane_Manners_1900_Bain.jpg/250px-Lady_Diane_Manners_1900_Bain.jpg",
     "Duff Cooper": "https://commons.wikimedia.org/wiki/Special:FilePath/Alfred_Duff_Cooper.jpg",
     "Edwin Montagu": "https://en.wikipedia.org/wiki/Special:FilePath/Edwin_Montagu.jpg",
     "Edwin": "https://en.wikipedia.org/wiki/Special:FilePath/Edwin_Montagu.jpg",
@@ -42,7 +42,9 @@ export const PEOPLE_IMAGES = {
     "Venetia Stanley": "https://en.wikipedia.org/wiki/Special:FilePath/Venetia_Stanley.jpg",
     "Violet Asquith": "https://commons.wikimedia.org/wiki/Special:FilePath/Violet_Bonham_Carter_1915.jpg",
     "Violet": "https://commons.wikimedia.org/wiki/Special:FilePath/Violet_Bonham_Carter_1915.jpg",
-    "Winston Churchill": "https://commons.wikimedia.org/wiki/Special:FilePath/Churchill_in_Oxford_Yeomanry_uniform_1915.jpg"
+    "Winston Churchill": "https://commons.wikimedia.org/wiki/Special:FilePath/Churchill_in_Oxford_Yeomanry_uniform_1915.jpg",
+    "Sir Lawrence Jones": "https://upload.wikimedia.org/wikipedia/en/1/18/Sir-Lawrence-Jones-1955.png",
+    "The Observers": "venetia-observers.png"
   }
 
 export const PODCASTS = [

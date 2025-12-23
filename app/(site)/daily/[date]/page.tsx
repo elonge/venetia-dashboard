@@ -4,7 +4,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
-import { DailyPopup, DayData, getDayByDate, getNextDay, getPreviousDay, normalizeDayDate } from '@/components/daily';
+import { DailyPopup, getDayByDate, getNextDay, getPreviousDay, normalizeDayDate } from '@/components/daily';
+import type { DayData } from '@/components/daily';
 import { useChatVisibility } from '@/components/chat/useChatVisibility';
 
 export default function DailyPage() {
@@ -22,9 +23,13 @@ export default function DailyPage() {
 
     async function loadDays() {
       try {
-        const response = await fetch('/api/mock_days');
-        if (!response.ok) throw new Error('Failed to load mock days');
-        const data = (await response.json()) as DayData[];
+        const response = await fetch('/api/daily_records');
+        const fallbackResponse = response.ok ? null : await fetch('/api/mock_days');
+
+        const okResponse = response.ok ? response : fallbackResponse;
+        if (!okResponse || !okResponse.ok) throw new Error('Failed to load daily records');
+
+        const data = (await okResponse.json()) as DayData[];
         if (!cancelled) setAllDays(data);
       } catch (error) {
         console.error('Error loading days:', error);

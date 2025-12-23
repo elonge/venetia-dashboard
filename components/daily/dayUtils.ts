@@ -1,4 +1,4 @@
-import { DayData } from './DailyWidget';
+import type { DayData } from './types';
 
 // Helper to normalize date strings to YYYY-MM-DD when possible.
 export function normalizeDayDate(dateStr: string): string {

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import { DayData } from '@/components/daily/DailyWidget';
+import type { DayData } from '@/components/daily/types';
 
 /**
  * API endpoint to serve mock_days.json with proper date formatting
@@ -33,4 +33,3 @@ export async function GET() {
     );
   }
 }
-

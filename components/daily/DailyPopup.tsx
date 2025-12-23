@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight, Calendar, MapPin, Mail, Users, Cloud, BookOpen, MessageSquare } from 'lucide-react';
 import { format } from 'date-fns';
-import { DayData } from './DailyWidget';
+import type { DayData } from './types';
 import { PEOPLE_IMAGES } from '@/constants';
 import { getDayByDate } from './dayUtils';
 
