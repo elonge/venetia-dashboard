@@ -246,8 +246,54 @@ export async function getDailyRecordByDate(dateString: string): Promise<DayData 
         diaries: 1,
         weather: 1,
         weather_short: 1,
+        met_venetia: 1,
       },
     }
+  );
+
+  if (!doc) return null;
+  return mapDailyRecordToDayData(doc);
+}
+
+const DAILY_RECORD_PROJECTION = {
+  _id: 0,
+  date: 1,
+  date_string: 1,
+  pm_activities: 1,
+  venetia_activities: 1,
+  pm_location: 1,
+  venetia_location: 1,
+  meeting_reference: 1,
+  letters: 1,
+  politics: 1,
+  diaries: 1,
+  weather: 1,
+  weather_short: 1,
+  met_venetia: 1,
+} as const;
+
+export async function getNextDailyRecordByDate(dateString: string): Promise<DayData | null> {
+  const client = await clientPromise;
+  const db = client.db(DB_NAME);
+  const col = db.collection<DailyRecordDocument>(COLLECTION_NAME);
+
+  const doc = await col.findOne(
+    { date_string: { $gt: dateString } },
+    { sort: { date_string: 1 }, projection: DAILY_RECORD_PROJECTION }
+  );
+
+  if (!doc) return null;
+  return mapDailyRecordToDayData(doc);
+}
+
+export async function getPreviousDailyRecordByDate(dateString: string): Promise<DayData | null> {
+  const client = await clientPromise;
+  const db = client.db(DB_NAME);
+  const col = db.collection<DailyRecordDocument>(COLLECTION_NAME);
+
+  const doc = await col.findOne(
+    { date_string: { $lt: dateString } },
+    { sort: { date_string: -1 }, projection: DAILY_RECORD_PROJECTION }
   );
 
   if (!doc) return null;

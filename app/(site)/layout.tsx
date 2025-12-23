@@ -20,6 +20,7 @@ function getHeaderSubtitle(pathname: string): string {
   if (pathname === '/data-room') return 'Data Room';
   if (pathname.startsWith('/daily/')) return 'Daily View';
   if (pathname === '/venetia') return 'Venetia Stanley';
+  if (pathname === '/lab') return 'Simulation Lab';
   return 'The Venetia Project';
 }
 

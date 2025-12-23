@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { ArrowRight, Cog, Shuffle } from 'lucide-react';
 import HeroSection from '@/components/home/HeroSection';
 import { useChatVisibility } from '@/components/chat/useChatVisibility';
-import { DailyWidget, getDayByDate, normalizeDayDate } from '@/components/daily';
+import { DailyWidget, getDayByDate, isInterestingDay, normalizeDayDate } from '@/components/daily';
 import type { DayData } from '@/components/daily';
 import DataRoom from '@/components/data-room/DataRoom';
 import ChaptersGrid from '@/components/home/ChaptersGrid';
@@ -15,7 +15,7 @@ export default function Home() {
   const router = useRouter();
 
   // Daily widget state
-  const [todayIn1914, setTodayIn1914] = useState<DayData | null>(null);
+  const [todayInHistory, setTodayInHistory] = useState<DayData | null>(null);
   const [loadingDays, setLoadingDays] = useState(true);
 
   const [funFacts, setFunFacts] = useState<Array<{ _id: string; fact: string }> | null>(null);
@@ -24,34 +24,54 @@ export default function Home() {
 
   useChatVisibility(true);
 
-  // Calculate today's date in 1914 and load days
+  // Find an "interesting" day matching today's month/day in priority years.
   useEffect(() => {
     async function loadDays() {
       try {
-        const month = 5 // today.getMonth() + 1; // 1-12
-        const day = 17 // today.getDate();
-        const year = 1915;
-        
-        // Format as YYYY-MM-DD
-        const todayDateString = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const today = new Date();
+        const month = today.getMonth() + 1; // 1-12
+        const day = today.getDate();
+        const yearsByPriority = [1914, 1915, 1913, 1912] as const;
 
-        const directResponse = await fetch(`/api/daily_records/${encodeURIComponent(todayDateString)}`);
-        if (directResponse.ok) {
-          setTodayIn1914((await directResponse.json()) as DayData);
-          return;
+        const candidateDateStrings = yearsByPriority.map(
+          (year) => `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+        );
+
+        for (const candidate of candidateDateStrings) {
+          const directResponse = await fetch(
+            `/api/daily_records/${encodeURIComponent(candidate)}`
+          );
+          if (!directResponse.ok) continue;
+
+          const dayData = (await directResponse.json()) as DayData;
+          if (isInterestingDay(dayData)) {
+            setTodayInHistory(dayData);
+            return;
+          }
         }
 
         const listResponse = await fetch('/api/daily_records');
         if (listResponse.ok) {
           const list = (await listResponse.json()) as DayData[];
-          setTodayIn1914(getDayByDate(list, todayDateString));
-          return;
+          for (const candidate of candidateDateStrings) {
+            const dayData = getDayByDate(list, candidate);
+            if (isInterestingDay(dayData)) {
+              setTodayInHistory(dayData);
+              return;
+            }
+          }
         }
 
         const fallbackResponse = await fetch('/api/mock_days');
         if (!fallbackResponse.ok) throw new Error('Failed to load daily records');
         const fallbackList = (await fallbackResponse.json()) as DayData[];
-        setTodayIn1914(getDayByDate(fallbackList, todayDateString));
+        for (const candidate of candidateDateStrings) {
+          const dayData = getDayByDate(fallbackList, candidate);
+          if (isInterestingDay(dayData)) {
+            setTodayInHistory(dayData);
+            return;
+          }
+        }
       } catch (error) {
         console.error('Error loading days:', error);
       } finally {
@@ -109,18 +129,18 @@ export default function Home() {
           <section className="min-w-0">
             {loadingDays ? (
               <div className="bg-[#F5F0E8] rounded-2xl p-6 text-center text-[#2D3648] border border-[#D4CFC4] min-h-[250px] flex items-center justify-center shadow-[0_14px_34px_rgba(0,0,0,0.08)]">
-                Loading today’s date in 1914...
+                Loading today’s date in 1912–1915...
               </div>
-            ) : todayIn1914 ? (
+            ) : todayInHistory ? (
               <DailyWidget
-                day={todayIn1914}
+                day={todayInHistory}
                 onClick={() =>
-                  router.push(`/daily/${normalizeDayDate(todayIn1914.date)}`)
+                  router.push(`/daily/${normalizeDayDate(todayInHistory.date)}`)
                 }
               />
             ) : (
               <div className="bg-[#F5F0E8] rounded-2xl p-6 text-center text-[#2D3648] border border-[#D4CFC4] min-h-[250px] flex items-center justify-center shadow-[0_14px_34px_rgba(0,0,0,0.08)]">
-                No data available for today’s date in 1914.
+                No interesting day found for today’s date in 1912–1915.
               </div>
             )}
           </section>

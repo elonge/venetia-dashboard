@@ -90,7 +90,7 @@ export default function DailyPopup({
   const date = parseDate(currentDay.date);
   const formattedDate = date ? format(date, "MMMM d, yyyy") : currentDay.date;
   const dateString = formatDateString(currentDay.date);
-  const hasMeeting = currentDay.met_venetia
+  const hasMeeting = currentDay.met_venetia;
   const letters = currentDay.letters ?? [];
   const hasLetters = letters.length > 0;
 
@@ -163,28 +163,49 @@ export default function DailyPopup({
   }, [onClose, showDatePicker]);
 
   // Handle date change from calendar picker
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDateChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedDate = e.target.value;
+    setDateInput(selectedDate);
+    setDatePickerError(null);
     if (!selectedDate) {
       setDatePickerError("Please select a date");
       return;
     }
 
-    if (allDays.length > 0) {
-      const foundDay = getDayByDate(allDays, selectedDate);
-      if (foundDay) {
-        setCurrentDay(foundDay);
-        if (onNavigateToDay) {
-          onNavigateToDay(foundDay.date);
+    setLoading(true);
+    try {
+      if (allDays.length > 0) {
+        const foundDay = getDayByDate(allDays, selectedDate);
+        if (!foundDay) {
+          setDatePickerError("No data available for this date");
+          return;
         }
+
+        setCurrentDay(foundDay);
+        onNavigateToDay?.(foundDay.date);
         setShowDatePicker(false);
         setDateInput("");
         setDatePickerError(null);
-      } else {
-        setDatePickerError("No data available for this date");
+        return;
       }
-    } else {
-      setDatePickerError("Day data not loaded");
+
+      const response = await fetch(`/api/daily_records/${encodeURIComponent(selectedDate)}`);
+      if (!response.ok) {
+        setDatePickerError("No data available for this date");
+        return;
+      }
+
+      const fetchedDay = (await response.json()) as DayData;
+      setCurrentDay(fetchedDay);
+      onNavigateToDay?.(fetchedDay.date);
+      setShowDatePicker(false);
+      setDateInput("");
+      setDatePickerError(null);
+    } catch (error) {
+      console.error("Error fetching day:", error);
+      setDatePickerError("Error fetching date");
+    } finally {
+      setLoading(false);
     }
   };
 

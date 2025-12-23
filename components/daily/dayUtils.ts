@@ -1,5 +1,17 @@
 import type { DayData } from './types';
 
+export function isInterestingDay(day: DayData | null | undefined): day is DayData {
+  if (!day) return false;
+  if (day.letters && day.letters.length > 0) return true;
+  if (day.diaries_summary && day.diaries_summary.length > 0) return true;
+  if (day.politics?.parliament || day.politics?.cabinet) return true;
+  if (day.pm_activities || day.venetia_activities) return true;
+  if (day.pm_location || day.venetia_location) return true;
+  if (day.weather) return true;
+  if (typeof day.met_venetia === 'boolean') return true;
+  return false;
+}
+
 // Helper to normalize date strings to YYYY-MM-DD when possible.
 export function normalizeDayDate(dateStr: string): string {
   // Handle datetime(1913, 1, 15) format
