@@ -10,6 +10,7 @@ import { getDayByDate } from './dayUtils';
 interface DailyPopupProps {
   day: DayData;
   onClose: () => void;
+  mode?: 'modal' | 'page';
   onNavigateToDay?: (date: string) => void;
   getNextDay?: (currentDate: string) => Promise<DayData | null>;
   getPreviousDay?: (currentDate: string) => Promise<DayData | null>;
@@ -48,6 +49,7 @@ function formatDateString(dateStr: string): string {
 export default function DailyPopup({ 
   day, 
   onClose, 
+  mode = 'modal',
   onNavigateToDay,
   getNextDay,
   getPreviousDay,
@@ -206,19 +208,31 @@ export default function DailyPopup({
     setCurrentDay(day);
   }, [day]);
 
+  const isModal = mode === 'modal';
+  const containerClassName = isModal
+    ? 'fixed inset-0 z-[9999] bg-black/70 flex items-center justify-center px-4 py-6'
+    : 'w-full flex justify-center';
+  const cardClassName = isModal
+    ? 'relative w-full max-w-[95vw] max-h-[90vh] bg-[#F5F0E8] rounded-2xl shadow-2xl overflow-hidden flex flex-col'
+    : 'relative w-full max-w-5xl bg-[#F5F0E8] rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-[#D4CFC4]';
+
   return (
     <div 
-      className="fixed inset-0 z-[9999] bg-black/70 flex items-center justify-center px-4 py-6"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) {
-          onClose();
-        }
-      }}
+      className={containerClassName}
+      onClick={
+        isModal
+          ? (e) => {
+              if (e.target === e.currentTarget) {
+                onClose();
+              }
+            }
+          : undefined
+      }
     >
 
       <div 
-        className="relative w-full max-w-[95vw] max-h-[90vh] bg-[#F5F0E8] rounded-2xl shadow-2xl overflow-hidden flex flex-col"
-        onClick={(e) => e.stopPropagation()}
+        className={cardClassName}
+        onClick={isModal ? (e) => e.stopPropagation() : undefined}
       >
 
         {/* Header */}

@@ -1,7 +1,7 @@
 import { DayData } from './DailyWidget';
 
-// Helper to parse date from datetime() format
-function parseDateFromString(dateStr: string): string {
+// Helper to normalize date strings to YYYY-MM-DD when possible.
+export function normalizeDayDate(dateStr: string): string {
   // Handle datetime(1913, 1, 15) format
   const datetimeMatch = dateStr.match(/datetime\((\d+),\s*(\d+),\s*(\d+)\)/);
   if (datetimeMatch) {
@@ -19,8 +19,8 @@ function parseDateFromString(dateStr: string): string {
 
 // Helper to compare dates
 function compareDates(date1: string, date2: string): number {
-  const d1 = parseDateFromString(date1);
-  const d2 = parseDateFromString(date2);
+  const d1 = normalizeDayDate(date1);
+  const d2 = normalizeDayDate(date2);
   return d1.localeCompare(d2);
 }
 
@@ -28,9 +28,8 @@ function compareDates(date1: string, date2: string): number {
  * Get a day by date from an array of days
  */
 export function getDayByDate(days: DayData[], date: string): DayData | null {
-  const normalizedDate = parseDateFromString(date);
-  console.log('normalizedDate', normalizedDate, days);
-  return days.find(day => parseDateFromString(day.date) === normalizedDate) || null;
+  const normalizedDate = normalizeDayDate(date);
+  return days.find(day => normalizeDayDate(day.date) === normalizedDate) || null;
 }
 
 /**
@@ -38,7 +37,9 @@ export function getDayByDate(days: DayData[], date: string): DayData | null {
  */
 export function getNextDay(days: DayData[], currentDate: string): DayData | null {
   const sortedDays = [...days].sort((a, b) => compareDates(a.date, b.date));
-  const currentIndex = sortedDays.findIndex(day => parseDateFromString(day.date) === parseDateFromString(currentDate));
+  const currentIndex = sortedDays.findIndex(
+    (day) => normalizeDayDate(day.date) === normalizeDayDate(currentDate)
+  );
   
   if (currentIndex === -1 || currentIndex === sortedDays.length - 1) {
     return null;
@@ -52,7 +53,9 @@ export function getNextDay(days: DayData[], currentDate: string): DayData | null
  */
 export function getPreviousDay(days: DayData[], currentDate: string): DayData | null {
   const sortedDays = [...days].sort((a, b) => compareDates(a.date, b.date));
-  const currentIndex = sortedDays.findIndex(day => parseDateFromString(day.date) === parseDateFromString(currentDate));
+  const currentIndex = sortedDays.findIndex(
+    (day) => normalizeDayDate(day.date) === normalizeDayDate(currentDate)
+  );
   
   if (currentIndex === -1 || currentIndex === 0) {
     return null;
@@ -78,4 +81,3 @@ export async function loadDaysFromMock(): Promise<DayData[]> {
     return [];
   }
 }
-

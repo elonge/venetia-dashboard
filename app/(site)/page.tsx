@@ -2,17 +2,18 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ArrowRight, Cog, Shuffle } from 'lucide-react';
 import HeroSection from '@/components/home/HeroSection';
 import { useChatVisibility } from '@/components/chat/useChatVisibility';
-import { DailyWidget, DailyPopup, DayData, getDayByDate, getNextDay, getPreviousDay } from '@/components/daily';
+import { DailyWidget, DayData, getDayByDate, normalizeDayDate } from '@/components/daily';
 import DataRoom from '@/components/data-room/DataRoom';
 import ChaptersGrid from '@/components/home/ChaptersGrid';
 
 export default function Home() {
-  // Daily widget and popup state
-  const [allDays, setAllDays] = useState<DayData[]>([]);
-  const [selectedDay, setSelectedDay] = useState<DayData | null>(null);
+  const router = useRouter();
+
+  // Daily widget state
   const [todayIn1914, setTodayIn1914] = useState<DayData | null>(null);
   const [loadingDays, setLoadingDays] = useState(true);
 
@@ -31,7 +32,6 @@ export default function Home() {
           throw new Error('Failed to load mock days');
         }
         const data = await response.json();
-        setAllDays(data as DayData[]);
         
         // Get today's date in 1914
         const month = 5 // today.getMonth() + 1; // 1-12
@@ -41,7 +41,6 @@ export default function Home() {
         // Format as YYYY-MM-DD
         const todayDateString = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         const todayDay = getDayByDate(data, todayDateString);
-        console.log('todayDay', todayDay);
         
         setTodayIn1914(todayDay);
       } catch (error) {
@@ -121,7 +120,10 @@ export default function Home() {
                 Loading today’s date in 1914...
               </div>
             ) : todayIn1914 ? (
-              <DailyWidget day={todayIn1914} onClick={() => setSelectedDay(todayIn1914)} />
+              <DailyWidget
+                day={todayIn1914}
+                onClick={() => router.push(`/daily/${normalizeDayDate(todayIn1914.date)}`)}
+              />
             ) : (
               <div className="bg-[#F5F0E8] rounded-2xl p-6 text-center text-[#2D3648] border border-[#D4CFC4] min-h-[250px] flex items-center justify-center shadow-[0_14px_34px_rgba(0,0,0,0.08)]">
                 No data available for today’s date in 1914.
@@ -270,28 +272,6 @@ export default function Home() {
         </main>
       </div>
 
-      {/* Daily Popup */}
-      {selectedDay && (
-        <DailyPopup
-          day={selectedDay}
-          onClose={() => setSelectedDay(null)}
-          allDays={allDays}
-          getNextDay={async (date) => {
-            const next = getNextDay(allDays, date);
-            return next ? Promise.resolve(next) : Promise.resolve(null);
-          }}
-          getPreviousDay={async (date) => {
-            const prev = getPreviousDay(allDays, date);
-            return prev ? Promise.resolve(prev) : Promise.resolve(null);
-          }}
-          onNavigateToDay={(date) => {
-            const day = getDayByDate(allDays, date);
-            if (day) {
-              setSelectedDay(day);
-            }
-          }}
-        />
-      )}
     </div>
   );
 }

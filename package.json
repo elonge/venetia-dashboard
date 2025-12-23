@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "ingest": "tsx scripts/ingest-documents.ts",
+    "ingest:asquith": "tsx scripts/ingest-asquith-letters.ts",
+    "build:asquith-buckets": "tsx scripts/build-asquith-bucket-embeddings.ts",
     "clear-chunks": "tsx scripts/clear-document-chunks.ts"
   },
   "dependencies": {
