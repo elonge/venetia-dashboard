@@ -178,10 +178,6 @@ export default function DataRoomFull({
 
           <div className="flex gap-10">
             <div className="text-right">
-              <span className="block text-[10px] font-bold text-[#6B7280] uppercase tracking-wider mb-1">Verified Points</span>
-              <span className="text-2xl font-serif text-[#4A7C59] leading-none">{SUMMARY_STATS.verifiedPoints}</span>
-            </div>
-            <div className="text-right">
               <span className="block text-[10px] font-bold text-[#6B7280] uppercase tracking-wider mb-1">Historical Range</span>
               <span className="text-2xl font-serif text-[#1A2A40] leading-none">
                 {SUMMARY_STATS.startYear} — {SUMMARY_STATS.endYear}
@@ -281,7 +277,7 @@ export default function DataRoomFull({
               </div>
               <div className="italic font-serif lowercase tracking-normal flex gap-2">
                 <span className="text-[#9CA3AF]">source:</span>
-                <span className="text-[#6B7280]">Record Group 1912.b-16 / Cabinet Office Logs</span>
+                <span className="text-[#6B7280]">Letters to Venetia Stanley</span>
               </div>
             </footer>
           </main>

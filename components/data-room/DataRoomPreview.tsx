@@ -79,14 +79,14 @@ export default function DataRoomPreview({
           <div className="min-w-0">
             <h3
               className={`font-serif font-semibold uppercase tracking-[0.14em] text-white/95 ${
-                isCompact ? 'text-[13px]' : 'text-[22px] leading-none'
+                isCompact ? 'text-[18px]' : 'text-[22px] leading-none'
               }`}
             >
               THE DATA ROOM
             </h3>
             <p
-              className={`mt-2 max-w-[36ch] text-[#B4C3DD] transition-colors group-hover:text-[#D6E2F5] ${
-                isCompact ? 'text-[13px] leading-snug' : 'text-sm'
+              className={`mt-8 max-w-[36ch] text-[#B4C3DD] transition-colors group-hover:text-[#D6E2F5] ${
+                isCompact ? 'text-[16px] leading-snug' : 'text-sm'
               }`}
             >
               Explore correspondence patterns &amp; sentiment.

@@ -152,8 +152,7 @@ export default function ChartRenderer({
 
         {/* Source Footer */}
         <div className="mt-4 pt-3 border-t border-dashed border-[#D4CFC4] text-[9px] text-[#6B7280] italic">
-          Sentiment analysis derived from NLP processing of Cabinet Office
-          Record Group 1912.b-16.
+          Sentiment analysis derived from NLP processing Asquith letters to Venetia Stanley
         </div>
       </div>
     );
@@ -247,7 +246,7 @@ export default function ChartRenderer({
 
         {/* Scholarly Methodology Footer */}
         <footer className="mt-6 pt-4 border-t border-dashed border-[#D4CFC4] flex justify-between items-center text-[9px] font-bold uppercase tracking-widest text-[#9CA3AF]">
-          <span>NLP Analysis // RG 1912.B-16</span>
+          <span>NLP Analysis</span>
           <span className="italic font-serif lowercase tracking-normal text-[#6B7280]">
             weighted by mention frequency
           </span>
@@ -317,9 +316,6 @@ export default function ChartRenderer({
         <footer className="mt-4 pt-3 border-t border-dashed border-[#D4CFC4] flex justify-between text-[9px] font-bold uppercase tracking-widest text-[#9CA3AF]">
           <span>
             Total: {dataRoomData.dailyLetterCount.weeks.length} active weeks
-          </span>
-          <span className="italic font-serif lowercase tracking-normal text-[#6B7280]">
-            Source: RG 1912.B-16 / Cabinet Office
           </span>
         </footer>
       </div>
