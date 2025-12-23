@@ -48,13 +48,18 @@ export const PEOPLE_IMAGES = {
     "The Observers": "venetia-observers.png"
   }
 
-export const PODCASTS = [
+export const PODCASTS: Array<{
+    title: string;
+    description: string;
+    duration: number;
+    chapter_id: string;
+    video_exists?: boolean;
+  }> = [
     {
         "title": "Sicily 1912: The Prime Minister's Holiday",
         "description": "A sun-drenched trip to Sicily reveals the shifting dynamics of Asquith's inner circle and the dawn of his obsession with Venetia Stanley.",
         "duration": 317,
         "chapter_id": "sicily",
-        "video_exists": true
       },
     {
         "title": "Marconi Scandal: The Razor Thin Defense",
@@ -67,7 +72,6 @@ export const PODCASTS = [
         "description": "Asquith's weekly escape: the intimate car rides with Venetia where state secrets were shared.",
         "chapter_id": "friday_drives",
         "duration": 266,
-        "video_exists": true
       },
       {
         "title": "The Corrupt Coterie",
@@ -98,14 +102,12 @@ export const PODCASTS = [
         "description": "Venetia leaves high society for the harsh reality of training as a nurse at the London Hospital.",
         "chapter_id": "venetia_nurse",
         "duration": 333,
-        "video_exists": true
       },
       {
         "title": "The Betrayal",
         "description": "The shock engagement to Edwin Montagu that broke the Prime Minister's heart and changed the war.",
         "chapter_id": "venetia_engagement",
         "duration": 393,
-        "video_exists": true
       },
       {
         "title": "Fisher vs. Churchill",

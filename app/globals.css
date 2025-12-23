@@ -10,6 +10,17 @@
   --line-height-base: 1.6;
 }
 
+/* Add this to the bottom of global.css */
+::selection {
+  background-color: rgba(74, 124, 89, 0.4) !important; /* Thematic Green */
+  color: #ffffff !important; /* Force white text during selection for contrast */
+}
+
+/* Ensure it works for Firefox as well */
+::-moz-selection {
+  background-color: rgba(74, 124, 89, 0.4) !important;
+  color: #ffffff !important;
+}
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -124,37 +135,17 @@ html {
   display: none !important;
 }
 
-/* Isolate DataRoom modal from react-chrono styles */
-.fixed.z-50 > div {
+/* Isolate DataRoom page from react-chrono styles */
+.dataroom-shell {
   isolation: isolate;
   position: relative;
 }
 
-/* Ensure text content in DataRoom is above any potential timeline lines */
-.fixed.z-50 [class*="text-"],
-.fixed.z-\[9999\] [class*="text-"] {
+/* Ensure text content in DataRoom stays above any potential timeline lines */
+/* .dataroom-shell [class*="text-"] {
   position: relative;
   z-index: 1;
-}
-
-/* Ensure DataRoom modal appears above Leaflet maps */
-.fixed.z-\[9999\] {
-  z-index: 9999 !important;
-}
-
-/* Lower Leaflet map z-index when DataRoom modal is open */
-/* Leaflet typically uses z-index values like 400, 500, 600, etc. */
-body:has(.fixed.z-\[9999\]) .leaflet-container,
-body:has(.fixed.z-\[9999\]) .leaflet-pane,
-body:has(.fixed.z-\[9999\]) .leaflet-map-pane,
-body:has(.fixed.z-\[9999\]) .leaflet-tile-pane,
-body:has(.fixed.z-\[9999\]) .leaflet-overlay-pane,
-body:has(.fixed.z-\[9999\]) .leaflet-shadow-pane,
-body:has(.fixed.z-\[9999\]) .leaflet-marker-pane,
-body:has(.fixed.z-\[9999\]) .leaflet-tooltip-pane,
-body:has(.fixed.z-\[9999\]) .leaflet-popup-pane {
-  z-index: 1 !important;
-}
+} */
 
 /* DataRoom Preview Animations */
 @keyframes wave {

@@ -148,69 +148,14 @@ export default function ChaptersGrid() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {sortedChapters.map((chapter, index) => (
-        <ChapterCard2 key={chapter._id} chapter={chapter} index={index} />
+        <ChapterCard key={chapter._id} chapter={chapter} index={index} />
       ))}
     </div>
   );
 }
 
-function ChapterCard({ chapter }: { chapter: Chapter }) {
-  const coverUrl = useChapterCoverUrl(chapter.chapter_id);
-  const hasCover = typeof coverUrl === 'string' && coverUrl.length > 0;
-  const title = chapter.chapter_title || chapter.chapter_id;
 
-  return (
-    <Link
-      href={`/chapter?chapter_id=${encodeURIComponent(chapter.chapter_id)}`}
-      aria-label={title}
-      className={`relative overflow-hidden rounded-2xl border p-5 shadow-[0_12px_28px_rgba(0,0,0,0.08)] hover:-translate-y-[1px] hover:shadow-[0_16px_38px_rgba(0,0,0,0.10)] transition-all group ${
-        hasCover ? 'border-black/10 bg-[#0B1626]' : 'border-[#D4CFC4] bg-[#F5F0E8]'
-      }`}
-    >
-      {hasCover ? (
-        <>
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('${coverUrl}')` }}
-            aria-hidden="true"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10" aria-hidden="true" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent" aria-hidden="true" />
-        </>
-      ) : null}
-
-      <div className="relative z-10">
-        {hasCover ? (
-          <>
-            <span className="sr-only">{title}</span>
-            <div className="absolute bottom-4 left-4 inline-flex items-center rounded-full bg-black/45 px-3 py-1 text-xs font-semibold tracking-wide text-white/90 ring-1 ring-white/15 backdrop-blur-sm">
-              Open →
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="text-[11px] font-semibold tracking-[0.14em] uppercase text-[#6B2D3C]">
-              Chapter
-            </div>
-            <h3 className="mt-2 font-serif text-lg leading-snug font-semibold text-[#1A2A40] group-hover:text-[#4A7C59] transition-colors">
-              {title}
-            </h3>
-            {chapter.main_story ? (
-              <p className="mt-2 text-sm text-[#2D3648] leading-relaxed line-clamp-3">
-                {chapter.main_story}
-              </p>
-            ) : null}
-            <div className="mt-4 pt-4 border-t border-[#D4CFC4] text-xs text-[#3E4A60] uppercase tracking-wider">
-              Listen &amp; Read More →
-            </div>
-          </>
-        )}
-      </div>
-    </Link>
-  );
-}
-
-function ChapterCard2({ chapter, index }: { chapter: Chapter, index: number }) {
+function ChapterCard({ chapter, index }: { chapter: Chapter, index: number }) {
   const coverUrl = useChapterCoverUrl(chapter.chapter_id);
   const hasCover = typeof coverUrl === 'string' && coverUrl.length > 0;
   const title = chapter.chapter_title || chapter.chapter_id;
@@ -218,7 +163,7 @@ function ChapterCard2({ chapter, index }: { chapter: Chapter, index: number }) {
 
   return (
     // Theoretical Component Structure
-<div className="group relative overflow-hidden rounded-xl aspect-video cursor-pointer shadow-md">
+<Link className="group relative overflow-hidden rounded-xl aspect-video cursor-pointer shadow-md" href={`/chapter?chapter_id=${encodeURIComponent(chapter.chapter_id)}`}>
   
   {/* 1. BACKGROUND IMAGE */}
   <img 
@@ -227,7 +172,7 @@ function ChapterCard2({ chapter, index }: { chapter: Chapter, index: number }) {
   />
   
   {/* 2. GRADIENT OVERLAY (For text readability) */}
-  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+  <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent" />
 
   {/* 3. CONTENT LAYER */}
   <div className="absolute inset-0 p-6 flex flex-col justify-end">
@@ -251,6 +196,6 @@ function ChapterCard2({ chapter, index }: { chapter: Chapter, index: number }) {
     </p>
 
   </div>
-</div>  
+</Link>  
   );
 }

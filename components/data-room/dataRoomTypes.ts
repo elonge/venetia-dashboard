@@ -66,13 +66,12 @@ export const zoomDefaults: Record<ZoomKey, ZoomState> = {
   meetingDates: { minX: 0, maxX: 200 },
 };
 
-// React-Chrono theme configuration to match DataRoom dark theme
+// React-Chrono theme configuration to match site palette
 export const chronoTheme = {
-  primary: '#4A7C59',           // Accent green color
-  secondary: '#C8D5EA',          // Text color
-  cardBgColor: '#0F1F34',        // Card background
-  cardForeColor: '#C8D5EA',      // Card text color (description)
-  titleColor: '#FFFFFF',         // Title color (date)
-  titleColorActive: '#4A7C59',   // Active title color
+  primary: '#4A7C59',
+  secondary: '#1A2A40',
+  cardBgColor: '#F5F0E8',
+  cardForeColor: '#1A2A40',
+  titleColor: '#1A2A40',
+  titleColorActive: '#4A7C59',
 };
-

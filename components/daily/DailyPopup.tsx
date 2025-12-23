@@ -407,7 +407,7 @@ export default function DailyPopup({
                         {/* THE QUOTE: Large and Impactful */}
                         {letter.excerpt && (
                           <div className="relative pt-2">
-                            <span className="absolute -top-4 -left-2 text-6xl font-serif text-[#6B2D3C]/10 select-none">
+                            <span className="absolute -top-4 -left-2 text-6xl font-serif text-[#6B2D3C]/10">
                               “
                             </span>
                             <p className="font-serif text-2xl md:text-3xl text-[#1A2A40] italic leading-tight relative z-10">

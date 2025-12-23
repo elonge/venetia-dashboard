@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import React, { useMemo } from 'react';
-import { TimeSeries, TimeRange, Event } from 'pondjs';
+import React, { useMemo } from "react";
+import { TimeSeries, TimeRange, Event } from "pondjs";
 import {
   LineChart as RechartsLineChart,
   Line,
@@ -10,22 +10,28 @@ import {
   CartesianGrid,
   ResponsiveContainer,
   Tooltip,
-} from 'recharts';
-import { transformSentimentToRecharts, transformWeeklyLetterCountToRecharts } from '@/lib/recharts-transformers';
-import { SentimentData, DailyLetterCountData } from './dataRoomTypes';
+} from "recharts";
+import {
+  transformSentimentToRecharts,
+  transformWeeklyLetterCountToRecharts,
+} from "@/lib/recharts-transformers";
+import { SentimentData, DailyLetterCountData } from "./dataRoomTypes";
 
 interface TimeSeriesChartProps {
   timerange: any;
-  series: {
-    tensionSeries?: TimeSeries | null;
-    warmthSeries?: TimeSeries | null;
-    anxietySeries?: TimeSeries | null;
-  } | {
-    letterCountSeries?: TimeSeries | null;
-  };
-  variant: 'sentiment' | 'letterCount';
+  series:
+    | {
+        tensionSeries?: TimeSeries | null;
+        warmthSeries?: TimeSeries | null;
+        anxietySeries?: TimeSeries | null;
+      }
+    | {
+        letterCountSeries?: TimeSeries | null;
+      };
+  variant: "sentiment" | "letterCount";
   height: number;
   maxValue?: number;
+  valueFormatter?: (value: number) => string;
   // Add raw data for recharts transformation
   rawData?: {
     sentiment?: SentimentData;
@@ -34,30 +40,44 @@ interface TimeSeriesChartProps {
 }
 
 // Helper to convert TimeSeries to date-value pairs
-function timeSeriesToDataPoints(series: TimeSeries, column: string): Array<{ date: string; value: number }> {
+function timeSeriesToDataPoints(
+  series: TimeSeries,
+  column: string
+): Array<{ date: string; value: number }> {
   const events = series.events();
-  return events.map((event: Event) => {
-    const timestamp = event.timestamp();
-    const date = new Date(timestamp);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return {
-      date: `${year}-${month}-${day}`,
-      value: event.get(column) || 0,
-    };
-  }).sort((a: { date: string; value: number }, b: { date: string; value: number }) => a.date.localeCompare(b.date));
+  return events
+    .map((event: Event) => {
+      const timestamp = event.timestamp();
+      const date = new Date(timestamp);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return {
+        date: `${year}-${month}-${day}`,
+        value: event.get(column) || 0,
+      };
+    })
+    .sort(
+      (
+        a: { date: string; value: number },
+        b: { date: string; value: number }
+      ) => a.date.localeCompare(b.date)
+    );
 }
 
-// Custom tooltip for dark theme
-const CustomTooltip = ({ active, payload, label }: any) => {
+// Update the CustomTooltip to accept and use the 'variant' prop
+const CustomTooltip = ({ active, payload, label, variant }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-[#0D1B2A] border border-[#23354D] rounded-md px-3 py-2 text-xs shadow-xl">
-        <p className="text-[#C8D5EA] mb-1">{label}</p>
+      <div className="bg-[#F5F0E8] border border-[#D4CFC4] rounded-md px-3 py-2 text-xs shadow-xl">
+        <p className="text-[#6B7280] mb-1 font-serif italic">{label}</p>
         {payload.map((entry: any, index: number) => (
-          <p key={index} style={{ color: entry.color }} className="font-semibold">
-            {entry.name}: {entry.value.toFixed(2)}
+          <p key={index} style={{ color: entry.color }} className="font-bold uppercase tracking-wider">
+            {entry.name}: {
+              typeof entry.value === 'number' 
+                ? (variant === 'letterCount' ? Math.round(entry.value) : entry.value.toFixed(2)) 
+                : entry.value
+            }
           </p>
         ))}
       </div>
@@ -65,16 +85,22 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   }
   return null;
 };
-
 // Format date for X-axis
 const formatDate = (dateStr: string) => {
   const date = new Date(dateStr);
-  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+  return date.toLocaleDateString("en-US", { year: "numeric", month: "short" });
 };
 
-export default function TimeSeriesChart({ timerange, series, variant, height, maxValue, rawData }: TimeSeriesChartProps) {
+export default function TimeSeriesChart({
+  timerange,
+  series,
+  variant,
+  height,
+  maxValue,
+  rawData,
+}: TimeSeriesChartProps) {
   const chartData = useMemo(() => {
-    if (variant === 'sentiment') {
+    if (variant === "sentiment") {
       const { tensionSeries, warmthSeries, anxietySeries } = series as {
         tensionSeries?: TimeSeries | null;
         warmthSeries?: TimeSeries | null;
@@ -85,38 +111,51 @@ export default function TimeSeriesChart({ timerange, series, variant, height, ma
       if (rawData?.sentiment) {
         const transformed = transformSentimentToRecharts(rawData.sentiment);
         // Merge all series by date
-        const dateMap = new Map<string, { date: string; tension?: number; warmth?: number; anxiety?: number }>();
-        
-        transformed.tension.forEach(item => {
+        const dateMap = new Map<
+          string,
+          { date: string; tension?: number; warmth?: number; anxiety?: number }
+        >();
+
+        transformed.tension.forEach((item) => {
           if (!dateMap.has(item.date)) {
             dateMap.set(item.date, { date: item.date });
           }
           dateMap.get(item.date)!.tension = item.value;
         });
-        
-        transformed.warmth.forEach(item => {
+
+        transformed.warmth.forEach((item) => {
           if (!dateMap.has(item.date)) {
             dateMap.set(item.date, { date: item.date });
           }
           dateMap.get(item.date)!.warmth = item.value;
         });
-        
-        transformed.anxiety.forEach(item => {
+
+        transformed.anxiety.forEach((item) => {
           if (!dateMap.has(item.date)) {
             dateMap.set(item.date, { date: item.date });
           }
           dateMap.get(item.date)!.anxiety = item.value;
         });
-        
-        return Array.from(dateMap.values()).sort((a, b) => a.date.localeCompare(b.date));
+
+        return Array.from(dateMap.values()).sort((a, b) =>
+          a.date.localeCompare(b.date)
+        );
       }
 
       // Fallback to TimeSeries conversion
-      const allData: Array<{ date: string; tension?: number; warmth?: number; anxiety?: number }> = [];
-      const dateMap = new Map<string, { date: string; tension?: number; warmth?: number; anxiety?: number }>();
+      const allData: Array<{
+        date: string;
+        tension?: number;
+        warmth?: number;
+        anxiety?: number;
+      }> = [];
+      const dateMap = new Map<
+        string,
+        { date: string; tension?: number; warmth?: number; anxiety?: number }
+      >();
 
       if (tensionSeries) {
-        timeSeriesToDataPoints(tensionSeries, 'tension').forEach(item => {
+        timeSeriesToDataPoints(tensionSeries, "tension").forEach((item) => {
           if (!dateMap.has(item.date)) {
             dateMap.set(item.date, { date: item.date });
           }
@@ -125,7 +164,7 @@ export default function TimeSeriesChart({ timerange, series, variant, height, ma
       }
 
       if (warmthSeries) {
-        timeSeriesToDataPoints(warmthSeries, 'warmth').forEach(item => {
+        timeSeriesToDataPoints(warmthSeries, "warmth").forEach((item) => {
           if (!dateMap.has(item.date)) {
             dateMap.set(item.date, { date: item.date });
           }
@@ -134,7 +173,7 @@ export default function TimeSeriesChart({ timerange, series, variant, height, ma
       }
 
       if (anxietySeries) {
-        timeSeriesToDataPoints(anxietySeries, 'anxiety').forEach(item => {
+        timeSeriesToDataPoints(anxietySeries, "anxiety").forEach((item) => {
           if (!dateMap.has(item.date)) {
             dateMap.set(item.date, { date: item.date });
           }
@@ -142,16 +181,22 @@ export default function TimeSeriesChart({ timerange, series, variant, height, ma
         });
       }
 
-      return Array.from(dateMap.values()).sort((a, b) => a.date.localeCompare(b.date));
+      return Array.from(dateMap.values()).sort((a, b) =>
+        a.date.localeCompare(b.date)
+      );
     } else {
-      const { letterCountSeries } = series as { letterCountSeries?: TimeSeries | null };
+      const { letterCountSeries } = series as {
+        letterCountSeries?: TimeSeries | null;
+      };
 
       // Try to use raw data if available
       if (rawData?.letterCount) {
-        return transformWeeklyLetterCountToRecharts(rawData.letterCount).map(item => ({
-          date: item.date,
-          letters: item.letters,
-        }));
+        return transformWeeklyLetterCountToRecharts(rawData.letterCount).map(
+          (item) => ({
+            date: item.date,
+            letters: item.letters,
+          })
+        );
       }
 
       // Fallback to TimeSeries conversion
@@ -159,7 +204,7 @@ export default function TimeSeriesChart({ timerange, series, variant, height, ma
         return [];
       }
 
-      return timeSeriesToDataPoints(letterCountSeries, 'count').map(item => ({
+      return timeSeriesToDataPoints(letterCountSeries, "count").map((item) => ({
         date: item.date,
         letters: item.value,
       }));
@@ -168,13 +213,13 @@ export default function TimeSeriesChart({ timerange, series, variant, height, ma
 
   if (chartData.length === 0) {
     return (
-      <div className="w-full h-full flex items-center justify-center text-[#C8D5EA] text-sm">
+      <div className="w-full h-full flex items-center justify-center text-[#6B7280] text-sm">
         No data available
       </div>
     );
   }
 
-  if (variant === 'sentiment') {
+  if (variant === "sentiment") {
     return (
       <ResponsiveContainer width="100%" height={height}>
         <RechartsLineChart
@@ -185,18 +230,26 @@ export default function TimeSeriesChart({ timerange, series, variant, height, ma
           <XAxis
             dataKey="date"
             tickFormatter={formatDate}
-            stroke="#C8D5EA"
-            tick={{ fill: '#C8D5EA', fontSize: 11 }}
-            axisLine={{ stroke: '#C8D5EA' }}
+            stroke="#6B7280"
+            tick={{ fill: "#6B7280", fontSize: 11 }}
+            axisLine={{ stroke: "#D4CFC4" }}
           />
           <YAxis
-            label={{ value: 'Sentiment Score', angle: -90, position: 'insideLeft', fill: '#C8D5EA', style: { fontSize: 11 } }}
+            label={{
+              value: "Sentiment Score",
+              angle: -90,
+              position: "insideLeft",
+              fill: "#6B7280",
+              style: { fontSize: 11 },
+            }}
             domain={[0, 10]}
-            stroke="#C8D5EA"
-            tick={{ fill: '#C8D5EA', fontSize: 11 }}
-            axisLine={{ stroke: '#C8D5EA' }}
+            stroke="#6B7280"
+            tick={{ fill: "#6B7280", fontSize: 11 }}
+            axisLine={{ stroke: "#D4CFC4" }}
           />
-          <Tooltip content={<CustomTooltip />} />
+          <Tooltip
+            content={<CustomTooltip variant="sentiment" />}
+          />
           <Line
             type="monotone"
             dataKey="tension"
@@ -238,18 +291,25 @@ export default function TimeSeriesChart({ timerange, series, variant, height, ma
           <XAxis
             dataKey="date"
             tickFormatter={formatDate}
-            stroke="#C8D5EA"
-            tick={{ fill: '#C8D5EA', fontSize: 11 }}
-            axisLine={{ stroke: '#C8D5EA' }}
+            stroke="#6B7280"
+            tick={{ fill: "#6B7280", fontSize: 11 }}
+            axisLine={{ stroke: "#D4CFC4" }}
           />
           <YAxis
-            label={{ value: 'Letters per Week', angle: -90, position: 'insideLeft', fill: '#C8D5EA', style: { fontSize: 11 } }}
-            domain={[0, maxValue ? maxValue * 1.1 : 'auto']}
-            stroke="#C8D5EA"
-            tick={{ fill: '#C8D5EA', fontSize: 11 }}
-            axisLine={{ stroke: '#C8D5EA' }}
-          />
-          <Tooltip content={<CustomTooltip />} />
+            label={{
+              value: "Letters per Week",
+              angle: -90,
+              position: "insideLeft",
+              fill: "#6B7280",
+              style: { fontSize: 11 },
+            }}
+            domain={[0, maxValue ? Math.ceil(maxValue) : "auto"]}
+            allowDecimals={false} // This prevents Recharts from creating 0.5, 1.5, etc.
+            stroke="#6B7280"
+            tick={{ fill: "#6B7280", fontSize: 11 }}
+            axisLine={{ stroke: "#D4CFC4" }}
+          />{" "}
+          <Tooltip content={<CustomTooltip variant="letterCount" />} />
           <Line
             type="monotone"
             dataKey="letters"

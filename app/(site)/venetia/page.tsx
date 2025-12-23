@@ -406,7 +406,7 @@ export default function VenetiaPage() {
   <div className="relative bg-[#F5F0E8] rounded-sm p-8 md:p-10 shadow-xl border-l-4 border-[#1A2A40]">
     
     {/* FIXED: Changed quote mark color to be subtle on light bg */}
-    <div className="absolute top-4 right-6 text-9xl font-serif text-[#1A2A40]/5 select-none leading-none pointer-events-none">
+    <div className="absolute top-4 right-6 text-9xl font-serif text-[#1A2A40]/5 leading-none pointer-events-none">
       ”
     </div>
 
@@ -547,7 +547,7 @@ export default function VenetiaPage() {
                   {/* The List Content */}
                   <div className="p-8 space-y-8 relative">
                     {/* Background decorative watermark (kept subtle) */}
-                    <div className="absolute top-10 right-0 text-[10rem] font-serif text-[#1A2A40]/5 leading-none select-none pointer-events-none -mr-4">
+                    <div className="absolute top-10 right-0 text-[10rem] font-serif text-[#1A2A40]/5 leading-none pointer-events-none -mr-4">
                       &
                     </div>
 
