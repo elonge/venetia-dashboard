@@ -1,15 +1,20 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect, useCallback } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { ArrowRight, Cog, Shuffle } from 'lucide-react';
-import HeroSection from '@/components/home/HeroSection';
-import { useChatVisibility } from '@/components/chat/useChatVisibility';
-import { DailyWidget, getDayByDate, isInterestingDay, normalizeDayDate } from '@/components/daily';
-import type { DayData } from '@/components/daily';
-import DataRoom from '@/components/data-room/DataRoom';
-import ChaptersGrid from '@/components/home/ChaptersGrid';
+import React, { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { ArrowRight, Cog, Shuffle } from "lucide-react";
+import HeroSection from "@/components/home/HeroSection";
+import { useChatVisibility } from "@/components/chat/useChatVisibility";
+import {
+  DailyWidget,
+  getDayByDate,
+  isInterestingDay,
+  normalizeDayDate,
+} from "@/components/daily";
+import type { DayData } from "@/components/daily";
+import DataRoom from "@/components/data-room/DataRoom";
+import ChaptersGrid from "@/components/home/ChaptersGrid";
 
 export default function Home() {
   const router = useRouter();
@@ -18,7 +23,10 @@ export default function Home() {
   const [todayInHistory, setTodayInHistory] = useState<DayData | null>(null);
   const [loadingDays, setLoadingDays] = useState(true);
 
-  const [funFacts, setFunFacts] = useState<Array<{ _id: string; fact: string }> | null>(null);
+  const [funFacts, setFunFacts] = useState<Array<{
+    _id: string;
+    fact: string;
+  }> | null>(null);
   const [funFactIndex, setFunFactIndex] = useState(0);
   const [loadingFunFacts, setLoadingFunFacts] = useState(true);
 
@@ -34,7 +42,11 @@ export default function Home() {
         const yearsByPriority = [1914, 1915, 1913, 1912] as const;
 
         const candidateDateStrings = yearsByPriority.map(
-          (year) => `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+          (year) =>
+            `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(
+              2,
+              "0"
+            )}`
         );
 
         for (const candidate of candidateDateStrings) {
@@ -50,7 +62,7 @@ export default function Home() {
           }
         }
 
-        const listResponse = await fetch('/api/daily_records');
+        const listResponse = await fetch("/api/daily_records");
         if (listResponse.ok) {
           const list = (await listResponse.json()) as DayData[];
           for (const candidate of candidateDateStrings) {
@@ -62,8 +74,9 @@ export default function Home() {
           }
         }
 
-        const fallbackResponse = await fetch('/api/mock_days');
-        if (!fallbackResponse.ok) throw new Error('Failed to load daily records');
+        const fallbackResponse = await fetch("/api/mock_days");
+        if (!fallbackResponse.ok)
+          throw new Error("Failed to load daily records");
         const fallbackList = (await fallbackResponse.json()) as DayData[];
         for (const candidate of candidateDateStrings) {
           const dayData = getDayByDate(fallbackList, candidate);
@@ -73,27 +86,30 @@ export default function Home() {
           }
         }
       } catch (error) {
-        console.error('Error loading days:', error);
+        console.error("Error loading days:", error);
       } finally {
         setLoadingDays(false);
       }
     }
-    
+
     loadDays();
   }, []);
 
   useEffect(() => {
     async function loadFunFacts() {
       try {
-        const response = await fetch('/api/fun_facts');
+        const response = await fetch("/api/fun_facts");
         if (!response.ok) {
-          throw new Error('Failed to load fun facts');
+          throw new Error("Failed to load fun facts");
         }
-        const data = (await response.json()) as Array<{ _id: string; fact: string }>;
+        const data = (await response.json()) as Array<{
+          _id: string;
+          fact: string;
+        }>;
         setFunFacts(data);
         setFunFactIndex(0);
       } catch (error) {
-        console.error('Error loading fun facts:', error);
+        console.error("Error loading fun facts:", error);
         setFunFacts(null);
       } finally {
         setLoadingFunFacts(false);
@@ -151,35 +167,42 @@ export default function Home() {
 
             <Link
               href="/lab"
-              className="block min-h-[170px] rounded-2xl border border-[#1F3350] bg-[#18324E] p-5 shadow-[0_14px_34px_rgba(0,0,0,0.10)] hover:-translate-y-[1px] hover:shadow-[0_18px_44px_rgba(0,0,0,0.14)] transition-all relative overflow-hidden group"
+              className="block min-h-[180px] rounded-sm border border-white/10 bg-[#0D1B2A] p-6 shadow-2xl hover:border-[#63D29A]/50 transition-all relative overflow-hidden group"
               style={{
-                backgroundImage:
-                  "linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px), radial-gradient(1200px 500px at -10% -10%, rgba(255,255,255,0.10), transparent 55%)",
-                backgroundSize: "22px 22px, 22px 22px, auto",
+                backgroundImage: `
+      linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px), 
+      linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px)
+    `,
+                backgroundSize: "24px 24px",
               }}
             >
-              <div className="absolute -right-10 -bottom-10 h-40 w-40 rounded-full border border-white/10 bg-white/5 blur-[0.2px] pointer-events-none" />
-              <div className="absolute right-4 bottom-4 text-white/25 pointer-events-none">
-                <Cog className="h-10 w-10" />
+              {/* The "Radar" Radial Glow - Using Bright Mint for higher contrast */}
+              <div className="absolute -right-12 -bottom-12 h-48 w-48 rounded-full border border-[#63D29A]/20 bg-[#63D29A]/5 blur-sm pointer-events-none group-hover:scale-110 transition-transform duration-700" />
+
+              {/* Icon: Using a muted blue-white to avoid competing with the header */}
+              <div className="absolute right-6 bottom-6 text-[#C8D5EA]/10 group-hover:text-[#63D29A]/30 transition-colors duration-500 pointer-events-none">
+                <Cog className="h-12 w-12 animate-[spin_12s_linear_infinite]" />
               </div>
 
-              <div className="relative flex h-full flex-col justify-between">
+              <div className="relative flex h-full flex-col justify-between z-10">
                 <div>
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="text-[11px] font-semibold tracking-[0.14em] uppercase text-white/80">
-                      Simulation Lab
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      {/* Pulse Indicator: Now glows with more intensity */}
+                      <div className="w-2.5 h-2.5 bg-[#63D29A] rounded-full animate-pulse shadow-[0_0_10px_#63D29A]" />
+                      <div className="font-serif font-semibold uppercase tracking-[0.14em] text-white/95 text-[18px]">
+                        Simulation Lab
+                      </div>
                     </div>
-                    <ArrowRight className="h-5 w-5 text-white/35 group-hover:text-white/60 transition-colors" />
+                    <ArrowRight className="h-5 w-5 text-[#C8D5EA]/30 group-hover:text-[#63D29A] group-hover:translate-x-1 transition-all" />
                   </div>
 
-                  <p className="mt-3 text-sm text-white/80 max-w-[34ch]">
-                    Test alternative historical outcomes.
+                  {/* Main Text: High-contrast Off-White */}
+                  <p className="mt-4 text-[16px] text-white/95 font-serif italic leading-relaxed max-w-[28ch]">
+                    Fill the gaps with generative AI reconstructions
                   </p>
                 </div>
 
-                <div className="mt-5 text-sm font-semibold text-white/90">
-                  Open →
-                </div>
               </div>
             </Link>
           </section>
@@ -188,7 +211,7 @@ export default function Home() {
           <section className="min-w-0">
             <Link
               href="/venetia"
-              className="block min-h-62.5 rounded-2xl overflow-hidden border border-black/10 shadow-[0_18px_44px_rgba(0,0,0,0.16)] hover:-translate-y-px hover:shadow-[0_24px_60px_rgba(0,0,0,0.20)] transition-all relative group"
+              className="block min-h-62.5 rounded-sm overflow-hidden border border-white/10 shadow-2xl hover:border-[#4A7C59]/50 transition-all relative group"
               style={{
                 backgroundImage: "url('/asquith_venetia_split_screen2.jpg')",
                 backgroundSize: "cover",
@@ -196,30 +219,31 @@ export default function Home() {
               }}
             >
               {/* Darker gradient at bottom to make text readable */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2A]/95 via-[#0D1B2A]/70 to-[#0D1B2A]/40" />
 
-              <div className="relative h-full p-6 flex flex-col justify-between">
+              <div className="relative h-full p-6 flex flex-col justify-between z-10">
                 <div>
-                  {/* CHANGED: Badge uses amber/gold tones for an 'archival' look */}
-                  <span className="inline-flex items-center rounded-full bg-amber-100/10 px-3 py-1 text-xs font-semibold tracking-[0.12em] uppercase text-amber-100/90 border border-amber-100/30 backdrop-blur-md">
-                    FROM THE ARCHIVE
-                  </span>
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      {/* Pulse Indicator: Sage Green is the "Active" signal */}
+                      <div className="w-2.5 h-2.5 bg-white rounded-full animate-pulse shadow-[0_0_8px_#4A7C59]" />
+                      <div className="font-serif font-semibold uppercase tracking-[0.14em] text-white text-[22px]">
+                        Venetia
+                      </div>
+                    </div>
+                    <ArrowRight className="h-5 w-5 text-[#C8D5EA]/30 group-hover:text-[#4A7C59] group-hover:translate-x-1 transition-all" />
+                  </div>
 
-                  {/* CHANGED: Title is now a warm parchment color (amber-50) */}
-                  <h3 className="mt-4 font-serif text-4xl leading-tight font-semibold text-amber-50 drop-shadow-sm">
-                    Venetia
-                  </h3>
-
-                  {/* Subtitle remains soft white/gray for contrast against the title */}
-                  <p className="mt-2 text-lg text-white/80 font-light tracking-wide">
+                  {/* Main Text: Switched to Off-White (#F5F0E8) for maximum readability */}
+                  <p className="mt-4 text-[16px] font-serif italic text-[#F5F0E8] leading-relaxed max-w-[28ch]">
                     Reconstructed from primary sources
                   </p>
                 </div>
 
-                {/* CTA */}
-                <div className="inline-flex items-center gap-2 text-amber-50/90 font-medium group-hover:text-amber-50 transition-colors">
+                {/* The Call to Action: Switched from low-opacity blue to bright Off-White/Sage */}
+                <div className="mt-6 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#C8D5EA] group-hover:text-white transition-colors">
                   <span>Enter the archive</span>
-                  <ArrowRight className="h-5 w-5 group-hover:translate-x-0.5 transition-transform" />
+                  <span className="text-[#4A7C59] font-black">→</span>
                 </div>
               </div>
             </Link>

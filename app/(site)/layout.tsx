@@ -105,19 +105,6 @@ export default function SiteLayout({
   }, [isResizingChat, handleMouseMove, handleMouseUp]);
 
   const handleHeaderBack = useCallback(() => {
-    if (pathname === '/data-room') {
-      const from = new URLSearchParams(window.location.search).get('from');
-      if (from && from.startsWith('/')) {
-        router.push(from);
-        return;
-      }
-    }
-
-    if (window.history.length > 1) {
-      router.back();
-      return;
-    }
-
     router.push('/');
   }, [pathname, router]);
 

@@ -1,10 +1,11 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import type { ZoomKey, ZoomState } from './dataRoomTypes';
 
 interface DataRoomPreviewProps {
-  onOpenFull?: () => void;
+  href?: string;
   activeChartIndex?: number;
   onChartIndexChange?: (index: number) => void;
   zoomStates?: Record<ZoomKey, ZoomState>;
@@ -50,26 +51,19 @@ function DecorativeWaves({ compact }: { compact: boolean }) {
 }
 
 export default function DataRoomPreview({
-  onOpenFull,
+  href = '/data-room',
   variant = 'default',
 }: DataRoomPreviewProps) {
   const isCompact = variant === 'compact';
-  const isDisabled = !onOpenFull;
 
   return (
-    <div className="relative h-full w-full">
-      <button
-        type="button"
-        onClick={() => onOpenFull?.()}
-        disabled={isDisabled}
+    <div className="relative h-full w-full cursor-pointer">
+      <Link
+        href={href}
         aria-label="Open Data Room"
-        className={`group relative w-full overflow-hidden rounded-2xl border border-[#1F3350] text-left transition-all ${
+        className={`group relative block w-full overflow-hidden rounded-2xl border border-[#1F3350] text-left transition-all ${
           isCompact ? 'min-h-27.5 p-4!' : 'min-h-62.5 p-6'
-        } ${
-          isDisabled
-            ? 'cursor-not-allowed opacity-70'
-            : 'hover:-translate-y-px hover:border-[#2A3D5D]'
-        } shadow-[0_14px_34px_rgba(0,0,0,0.10)] hover:shadow-[0_18px_44px_rgba(0,0,0,0.14)]`}
+        } hover:-translate-y-px hover:border-[#2A3D5D] shadow-[0_14px_34px_rgba(0,0,0,0.10)] hover:shadow-[0_18px_44px_rgba(0,0,0,0.14)]`}
       >
         <div className="absolute inset-0 bg-linear-to-br from-[#1C3555] via-[#12243A] to-[#0B1626]" />
         <div className="absolute inset-0 bg-[radial-gradient(900px_220px_at_-10%_-30%,rgba(255,255,255,0.18),transparent_58%)] opacity-80 pointer-events-none" />
@@ -85,7 +79,7 @@ export default function DataRoomPreview({
               THE DATA ROOM
             </h3>
             <p
-              className={`mt-8 max-w-[36ch] text-[#B4C3DD] transition-colors group-hover:text-[#D6E2F5] ${
+              className={`mt-8 max-w-[36ch] text-white/95 transition-colors group-hover:text-[#D6E2F5] ${
                 isCompact ? 'text-[16px] leading-snug' : 'text-sm'
               }`}
             >
@@ -110,7 +104,7 @@ export default function DataRoomPreview({
             <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
           </svg>
         </div>
-      </button>
+      </Link>
     </div>
   );
 }
