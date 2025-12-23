@@ -3,8 +3,7 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { ArrowLeft, ExternalLink, MessageSquare } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ExternalLink, MessageSquare } from 'lucide-react';
 import { useChatVisibility } from '@/components/chat/useChatVisibility';
 import { getRealSourceName } from '@/constants';
 
@@ -92,25 +91,8 @@ function QAContent() {
   const sources = Array.from(new Set(question.Answer.map(a => a.link)));
 
   return (
-    <div className="min-h-screen bg-[#E8E4DC]">
-      {/* Header */}
-      <header className="bg-[#F5F0E8] border-b border-[#D4CFC4] px-6 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Link href="/">
-            <Button variant="ghost" size="sm" className="text-[#1A2A40]">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Home
-            </Button>
-          </Link>
-          <div className="h-6 w-px bg-[#D4CFC4]" />
-          <h1 className="text-[#1A2A40] font-serif text-2xl font-medium">The Venetia Project</h1>
-        </div>
-        <div className="w-8 h-8 rounded-full bg-[#4A7C59] flex items-center justify-center">
-          <span className="text-white text-xs font-medium">V</span>
-        </div>
-      </header>
-
-      <div className="flex relative h-[calc(100vh-73px)]">
+    <div className="h-full bg-[#E8E4DC]">
+      <div className="flex relative h-full">
         {/* Left Column: QA Content */}
         <main 
           className="p-8 transition-all overflow-y-auto flex-1 min-w-[300px]"

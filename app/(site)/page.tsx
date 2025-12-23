@@ -100,28 +100,7 @@ export default function Home() {
   }, [funFacts]);
 
   return (
-    <div className="min-h-screen bg-[#E8E4DC]">
-      {/* Header */}
-      <header className="bg-[#F5F0E8] border-b border-[#D4CFC4] px-6 py-3 flex items-center justify-between">
-        <h1 className="text-[#1A2A40] font-serif text-2xl font-medium">
-          The Venetia Project
-        </h1>
-        <div className="flex items-center gap-6">
-          <span className="text-[#6B7280] text-base">
-            When AI Meets Primary Sources
-          </span>
-          <Link
-            href="/about"
-            className="text-[#1A2A40] hover:text-[#4A7C59] transition-colors text-base font-medium"
-          >
-            What is the Venetia Project?
-          </Link>
-        </div>
-        <div className="w-8 h-8 rounded-full bg-[#4A7C59] flex items-center justify-center">
-          <span className="text-white text-xs font-medium">V</span>
-        </div>
-      </header>
-
+    <div className="h-full bg-[#E8E4DC]">
       <div className="max-w-7xl mx-auto px-6 py-6">
         <HeroSection />
 

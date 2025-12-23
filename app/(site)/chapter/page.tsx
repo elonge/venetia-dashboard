@@ -4,7 +4,7 @@ import React, { useState, useEffect, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { ArrowLeft, Play, Headphones, ExternalLink, Sparkles } from 'lucide-react';
+import { Play, Headphones, ExternalLink, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PEOPLE_IMAGES, PODCASTS, getRealSourceName } from '@/constants';
 import { useChatVisibility } from '@/components/chat/useChatVisibility';
@@ -75,7 +75,7 @@ function ChapterContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#E8E4DC] flex items-center justify-center">
+      <div className="h-full bg-[#E8E4DC] flex items-center justify-center">
         <div className="text-[#1A2A40]">Loading chapter...</div>
       </div>
     );
@@ -83,19 +83,7 @@ function ChapterContent() {
 
   if (error || !chapterData) {
     return (
-      <div className="min-h-screen bg-[#E8E4DC]">
-        <header className="bg-[#F5F0E8] border-b border-[#D4CFC4] px-6 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Link href="/">
-              <Button variant="ghost" size="sm" className="text-[#1A2A40]">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Timeline
-              </Button>
-            </Link>
-            <div className="h-6 w-px bg-[#D4CFC4]" />
-            <h1 className="text-[#1A2A40] font-serif text-2xl font-medium">The Venetia Project</h1>
-          </div>
-        </header>
+      <div className="h-full bg-[#E8E4DC]">
         <main className="max-w-5xl mx-auto p-8">
           <div className="text-[#1A2A40] text-center">
             <p className="text-lg mb-4">{error || 'Chapter not found'}</p>
@@ -128,25 +116,8 @@ function ChapterContent() {
   };
 
   return (
-    <div className="min-h-screen bg-[#E8E4DC]">
-      {/* Header */}
-      <header className="bg-[#F5F0E8] border-b border-[#D4CFC4] px-6 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Link href="/">
-            <Button variant="ghost" size="sm" className="text-[#1A2A40]">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Timeline
-            </Button>
-          </Link>
-          <div className="h-6 w-px bg-[#D4CFC4]" />
-          <h1 className="text-[#1A2A40] font-serif text-2xl font-medium">The Venetia Project</h1>
-        </div>
-        <div className="w-8 h-8 rounded-full bg-[#4A7C59] flex items-center justify-center">
-          <span className="text-white text-xs font-medium">V</span>
-        </div>
-      </header>
-
-      <div className="flex relative h-[calc(100vh-73px)]">
+    <div className="h-full bg-[#E8E4DC]">
+      <div className="flex relative h-full">
         {/* Left Column: Chapter Content */}
         <main 
           className="p-8 transition-all overflow-y-auto flex-1 min-w-[300px]"

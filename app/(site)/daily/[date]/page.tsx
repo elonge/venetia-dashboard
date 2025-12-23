@@ -1,9 +1,7 @@
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
-import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
-import { ArrowLeft } from 'lucide-react';
 import { DailyPopup, getDayByDate, getNextDay, getPreviousDay, normalizeDayDate } from '@/components/daily';
 import type { DayData } from '@/components/daily';
 import { useChatVisibility } from '@/components/chat/useChatVisibility';
@@ -51,23 +49,7 @@ export default function DailyPage() {
   }, [allDays, normalizedDate]);
 
   return (
-    <div className="min-h-screen bg-[#E8E4DC]">
-      <header className="bg-[#F5F0E8] border-b border-[#D4CFC4] px-6 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Link
-            href="/"
-            className="flex items-center gap-2 text-[#1A2A40] hover:text-[#4A7C59] transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <h1 className="font-serif text-lg font-medium">The Venetia Project</h1>
-          </Link>
-        </div>
-        <span className="text-[#6B7280] text-base">Daily View</span>
-        <div className="w-8 h-8 rounded-full bg-[#4A7C59] flex items-center justify-center">
-          <span className="text-white text-xs font-medium">V</span>
-        </div>
-      </header>
-
+    <div className="h-full bg-[#E8E4DC]">
       <div className="max-w-7xl mx-auto px-6 py-6">
         {loadingDays ? (
           <div className="bg-[#F5F0E8] rounded-2xl p-6 text-center text-[#2D3648] border border-[#D4CFC4] min-h-[250px] flex items-center justify-center shadow-[0_14px_34px_rgba(0,0,0,0.08)]">

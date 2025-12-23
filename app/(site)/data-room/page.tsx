@@ -3,8 +3,6 @@
 import React, { Suspense, useCallback, useMemo } from 'react';
 import type { ReadonlyURLSearchParams } from 'next/navigation';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import DataRoomFull from '@/components/data-room/DataRoomFull';
 import { chartDefinitions } from '@/components/data-room/dataRoomTypes';
 import { useChatVisibility } from '@/components/chat/useChatVisibility';
@@ -39,21 +37,6 @@ function DataRoomContent() {
     [searchParams]
   );
 
-  const handleClose = useCallback(() => {
-    const from = searchParams.get('from');
-    if (from && from.startsWith('/')) {
-      router.push(from);
-      return;
-    }
-
-    if (window.history.length > 1) {
-      router.back();
-      return;
-    }
-
-    router.push('/');
-  }, [router, searchParams]);
-
   const handleChartIndexChange = useCallback(
     (index: number) => {
       const chartId = chartDefinitions[index]?.id;
@@ -68,31 +51,8 @@ function DataRoomContent() {
   );
 
   return (
-    <div className="min-h-screen bg-[#E8E4DC]">
-      <header className="bg-[#F5F0E8] border-b border-[#D4CFC4] px-6 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            className="text-[#1A2A40]"
-            onClick={handleClose}
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Timeline
-          </Button>
-          <div className="h-6 w-px bg-[#D4CFC4]" />
-          <h1 className="text-[#1A2A40] font-serif text-2xl font-medium">
-            The Venetia Project
-          </h1>
-        </div>
-        <span className="text-[#6B7280] text-base">Data Room</span>
-        <div className="w-8 h-8 rounded-full bg-[#4A7C59] flex items-center justify-center">
-          <span className="text-white text-xs font-medium">V</span>
-        </div>
-      </header>
-
-      <main className="h-[calc(100vh-73px)] max-w-7xl mx-auto px-6 py-6">
+    <div className="h-full bg-[#E8E4DC]">
+      <main className="h-full max-w-7xl mx-auto px-6 py-6">
         <DataRoomFull
           initialChartIndex={initialChartIndex}
           onChartIndexChange={handleChartIndexChange}

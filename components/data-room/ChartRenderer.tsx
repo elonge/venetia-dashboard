@@ -23,6 +23,7 @@ import {
   transformLetterCountToTimeSeries,
 } from "./dataRoomUtils";
 import { Calendar } from "lucide-react";
+import { PEOPLE_DESCRIPTIONS } from "@/constants";
 
 interface ChartRendererProps {
   dataRoomData: DataRoomData | null;
@@ -331,7 +332,7 @@ const renderPeople = () => {
   }
 
   return (
-    <div className={`flex flex-col bg-[#F5F0E8] border border-[#D4CFC4] rounded-lg p-6 ${variant === 'modal' ? 'h-[500px]' : 'h-64'}`}>
+    <div className={`flex flex-col bg-[#F5F0E8] border border-[#D4CFC4] rounded-lg p-6 ${variant === 'modal' ? 'h-[600px]' : 'h-64'}`}>
       
       {/* Module Header */}
       <div className="mb-6">
@@ -340,7 +341,7 @@ const renderPeople = () => {
       </div>
 
       {/* People Dossier List */}
-      <div className="flex-1 overflow-y-auto custom-scrollbar pr-4 space-y-2">
+      <div className="flex-1 overflow-y-auto custom-scrollbar pr-4 space-y-3">
         {dataRoomData.people.map((person, idx) => (
           <div
             key={person.name}
@@ -349,8 +350,8 @@ const renderPeople = () => {
               variant === "modal" &&
               onShowTooltip(e, {
                 title: person.name,
-                value: `${person.count} mentions`,
-                subtitle: `Frequency Rank #${idx + 1}`,
+                value: `${person.count} citations`,
+                subtitle: PEOPLE_DESCRIPTIONS[person.name as keyof typeof PEOPLE_DESCRIPTIONS] || "Historical figure in the Asquith circle.",
                 color: "#4A7C59"
               })
             }
@@ -361,18 +362,21 @@ const renderPeople = () => {
               <span className="text-[10px] font-serif italic text-[#6B7280] w-5">
                 {String(idx + 1).padStart(2, '0')}.
               </span>
-              <span className="text-[12px] font-black text-[#1A2A40] uppercase tracking-widest group-hover:text-[#4A7C59] transition-colors">
-                {person.name}
-              </span>
+              <div className="flex flex-col">
+                <span className="text-[12px] font-black text-[#1A2A40] uppercase tracking-widest group-hover:text-[#4A7C59] transition-colors">
+                  {person.name}
+                </span>
+                {/* Visualizing the description as a sub-label in the modal view */}
+              </div>
             </div>
 
-            {/* Data Badge */}
+            {/* Data Badge - Changed QTY to CIT. */}
             <div className="flex flex-col items-end">
               <div className="flex items-baseline gap-1">
                 <span className="text-lg font-serif font-bold text-[#4A7C59] leading-none">
                   {person.count}
                 </span>
-                <span className="text-[9px] font-bold text-[#9CA3AF] uppercase">MENTIONS</span>
+                <span className="text-[9px] font-bold text-[#9CA3AF] uppercase tracking-tighter">Cit.</span>
               </div>
             </div>
           </div>
@@ -382,12 +386,12 @@ const renderPeople = () => {
       {/* Methodology Footer */}
       <footer className="mt-6 pt-4 border-t border-dashed border-[#D4CFC4] flex justify-between items-center text-[9px] font-bold uppercase tracking-widest text-[#9CA3AF]">
         <div className="flex gap-4">
-          <span>Processing: MapReduce Aggregation</span>
+          <span>Processing: Frequency Aggregation</span>
           <span className="text-[#D4CFC4]">|</span>
           <span>Source: Cabinet Office Logs</span>
         </div>
         <span className="italic font-serif lowercase tracking-normal text-[#6B7280]">
-          showing top {dataRoomData.people.length} entities
+          showing top entities
         </span>
       </footer>
     </div>

@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useChatVisibility } from '@/components/chat/useChatVisibility';
 import { PEOPLE_IMAGES } from '@/constants';
 
@@ -201,25 +200,8 @@ export default function VenetiaPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#E8E4DC]">
+    <div className="h-full bg-[#E8E4DC]">
       <div className="mx-auto max-w-7xl">
-        {/* Header */}
-        <header className="bg-[#F5F0E8] border-b border-[#D4CFC4] px-6 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Link 
-              href="/" 
-              className="flex items-center gap-2 text-[#1A2A40] hover:text-[#4A7C59] transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <h1 className="font-serif text-lg font-medium">The Venetia Project</h1>
-            </Link>
-          </div>
-          <span className="text-[#6B7280] text-base">When AI Meets Primary Sources</span>
-          <div className="w-8 h-8 rounded-full bg-[#4A7C59] flex items-center justify-center">
-            <span className="text-white text-xs font-medium">V</span>
-          </div>
-        </header>
-
         {/* 1. Hero Section */}
         <section className="w-full bg-[#050505] py-16 md:py-24 lg:py-32 border-b border-white/10">
           <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12 lg:gap-20">
