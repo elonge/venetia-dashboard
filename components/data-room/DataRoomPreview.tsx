@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ZoomKey, ZoomState, zoomDefaults } from './dataRoomTypes';
+import type { ZoomKey, ZoomState } from './dataRoomTypes';
 
 interface DataRoomPreviewProps {
   onOpenFull?: () => void;
@@ -9,82 +9,108 @@ interface DataRoomPreviewProps {
   onChartIndexChange?: (index: number) => void;
   zoomStates?: Record<ZoomKey, ZoomState>;
   onZoomStatesChange?: (states: Record<ZoomKey, ZoomState>) => void;
+  variant?: 'default' | 'compact';
 }
 
-export default function DataRoomPreview({ 
-  onOpenFull,
-}: DataRoomPreviewProps) {
+function DecorativeWaves({ compact }: { compact: boolean }) {
+  const width = compact ? 78 : 120;
+  const height = compact ? 30 : 40;
+  const strokeWidth = compact ? 2.2 : 2.6;
+
   return (
-    <div className="relative mb-4 dataroom-preview">
-      {/* Star icon in bottom right corner */}
-      <div className="absolute bottom-0 right-0 w-4 h-4 text-white/30 dataroom-star z-10">
-        <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
-          <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-        </svg>
-      </div>
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 120 40"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="opacity-85 transition-opacity duration-300 group-hover:opacity-100"
+      aria-hidden="true"
+    >
+      <path
+        d="M4 11C16 6 26 16 38 11C50 6 60 16 72 11C84 6 94 16 116 11"
+        stroke="#F87171"
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+      />
+      <path
+        d="M4 20C16 25 26 15 38 20C50 25 60 15 72 20C84 25 94 15 116 20"
+        stroke="#34D399"
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+      />
+      <path
+        d="M4 29C16 27 26 31 38 29C50 27 60 31 72 29C84 27 94 31 116 29"
+        stroke="#FBBF24"
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
 
-      {/* Main card */}
+export default function DataRoomPreview({
+  onOpenFull,
+  variant = 'default',
+}: DataRoomPreviewProps) {
+  const isCompact = variant === 'compact';
+  const isDisabled = !onOpenFull;
+
+  return (
+    <div className="relative h-full w-full">
       <button
-        onClick={onOpenFull}
-        className="w-full bg-[#15263E] border border-[#1F3350] rounded-lg p-6 hover:bg-[#1A2F4A] hover:border-[#23354D] transition-all cursor-pointer text-left relative overflow-hidden group hover:scale-[1.01] hover:shadow-[0_0_20px_rgba(74,124,89,0.2),0_0_40px_rgba(74,124,89,0.1)]"
+        type="button"
+        onClick={() => onOpenFull?.()}
+        disabled={isDisabled}
+        aria-label="Open Data Room"
+        className={`group relative w-full overflow-hidden rounded-2xl border border-[#1F3350] text-left transition-all ${
+          isCompact ? 'min-h-27.5 p-4!' : 'min-h-62.5 p-6'
+        } ${
+          isDisabled
+            ? 'cursor-not-allowed opacity-70'
+            : 'hover:-translate-y-px hover:border-[#2A3D5D]'
+        } shadow-[0_14px_34px_rgba(0,0,0,0.10)] hover:shadow-[0_18px_44px_rgba(0,0,0,0.14)]`}
       >
-        {/* Subtle gradient overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#4A7C59]/0 via-[#4A7C59]/0 to-[#4A7C59]/0 group-hover:from-[#4A7C59]/5 group-hover:via-[#4A7C59]/0 group-hover:to-[#4A7C59]/5 transition-all duration-500 pointer-events-none" />
-        
-        <div className="flex items-center justify-between relative z-10">
-          {/* Left section - Text */}
-          <div className="flex-1">
-            <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-[#EAF2FF] transition-colors">
-              The Data Room
+        <div className="absolute inset-0 bg-linear-to-br from-[#1C3555] via-[#12243A] to-[#0B1626]" />
+        <div className="absolute inset-0 bg-[radial-gradient(900px_220px_at_-10%_-30%,rgba(255,255,255,0.18),transparent_58%)] opacity-80 pointer-events-none" />
+        <div className="absolute inset-0 bg-linear-to-br from-white/5 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none" />
+
+        <div className="relative z-10 flex w-full items-start justify-between gap-4">
+          <div className="min-w-0">
+            <h3
+              className={`font-serif font-semibold uppercase tracking-[0.14em] text-white/95 ${
+                isCompact ? 'text-[13px]' : 'text-[22px] leading-none'
+              }`}
+            >
+              THE DATA ROOM
             </h3>
-            <p className="text-sm text-[#9AAFD0] mb-4 group-hover:text-[#C8D5EA] transition-colors">
-              Explore correspondence patterns.
+            <p
+              className={`mt-2 max-w-[36ch] text-[#B4C3DD] transition-colors group-hover:text-[#D6E2F5] ${
+                isCompact ? 'text-[13px] leading-snug' : 'text-sm'
+              }`}
+            >
+              Explore correspondence patterns &amp; sentiment.
             </p>
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#4A7C59]/20 border border-[#4A7C59]/40 rounded-md text-white font-semibold group-hover:bg-[#4A7C59]/30 group-hover:border-[#4A7C59]/60 group-hover:text-[#EAF2FF] transition-all shadow-sm group-hover:shadow-[0_0_12px_rgba(74,124,89,0.4)]">
-              <span>Open</span>
-              <span className="text-lg dataroom-arrow">&gt;</span>
-            </div>
           </div>
 
-          {/* Right section - Wavy lines */}
-          <div className="flex-shrink-0 ml-6 flex flex-col gap-3">
-            {/* Red line */}
-            <svg width="120" height="8" viewBox="0 0 120 8" fill="none" xmlns="http://www.w3.org/2000/svg" className="dataroom-wave-1">
-              <path
-                d="M0 4C10 0 20 8 30 4C40 0 50 8 60 4C70 0 80 8 90 4C100 0 110 8 120 4"
-                stroke="#EF4444"
-                strokeWidth="2"
-                fill="none"
-                strokeLinecap="round"
-                className="group-hover:stroke-[#F87171] transition-colors"
-              />
-            </svg>
-            {/* Green line */}
-            <svg width="120" height="8" viewBox="0 0 120 8" fill="none" xmlns="http://www.w3.org/2000/svg" className="dataroom-wave-2">
-              <path
-                d="M0 4C10 8 20 0 30 4C40 8 50 0 60 4C70 8 80 0 90 4C100 8 110 0 120 4"
-                stroke="#22C55E"
-                strokeWidth="2"
-                fill="none"
-                strokeLinecap="round"
-                className="group-hover:stroke-[#4ADE80] transition-colors"
-              />
-            </svg>
-            {/* Yellow line */}
-            <svg width="120" height="8" viewBox="0 0 120 8" fill="none" xmlns="http://www.w3.org/2000/svg" className="dataroom-wave-3">
-              <path
-                d="M0 4C10 2 20 6 30 4C40 2 50 6 60 4C70 2 80 6 90 4C100 2 110 6 120 4"
-                stroke="#EAB308"
-                strokeWidth="2"
-                fill="none"
-                strokeLinecap="round"
-                className="group-hover:stroke-[#FCD34D] transition-colors"
-              />
-            </svg>
+          <div className={`shrink-0 ${isCompact ? 'pt-1' : 'pt-2'} flex items-start`}>
+            <DecorativeWaves compact={isCompact} />
           </div>
+        </div>
+
+        {!isCompact ? (
+          <div className="relative z-10 mt-8 inline-flex items-center gap-2 text-sm font-semibold text-white/90 group-hover:text-white transition-colors">
+            <span>Open</span>
+            <span aria-hidden="true">→</span>
+          </div>
+        ) : null}
+
+        <div className="absolute bottom-3 right-3 text-white/20">
+          <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+          </svg>
         </div>
       </button>
     </div>
   );
 }
-

@@ -101,7 +101,7 @@ export default function SiteLayout({
         </div>
 
         <div
-          className={`flex-shrink-0 bg-[#E8E4DC] h-screen overflow-hidden ${
+          className={`flex-shrink-0 bg-[#E8E4DC] h-screen overflow-hidden p-4 ${
             showChat ? '' : 'hidden'
           }`}
           style={{

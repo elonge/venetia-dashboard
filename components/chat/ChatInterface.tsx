@@ -6,15 +6,35 @@ import { Send, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import MessageBubble, { Message } from './MessageBubble';
-import { QuestionAnswer } from '@/lib/questions';
+import type { Question, QuestionAnswer } from '@/lib/questions';
 
 const CHAT_STORAGE_KEY = 'chatMessages';
+const DEFAULT_SUGGESTED_QUESTIONS_COUNT = 3;
+const FALLBACK_SUGGESTED_QUESTIONS: string[] = [
+  'Why did Asquith write so often?',
+  'Why did Asquith mawl Venetia so often?',
+  'What were the key political events of 1912–1916?',
+];
+
+function pickRandomUnique<T>(items: T[], count: number): T[] {
+  if (count <= 0) return [];
+  if (items.length <= count) return items.slice();
+
+  const indices = new Set<number>();
+  while (indices.size < count) {
+    indices.add(Math.floor(Math.random() * items.length));
+  }
+  return Array.from(indices).map((i) => items[i]);
+}
 
 export default function ChatInterface() {
   const searchParams = useSearchParams();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [popularQuestions, setPopularQuestions] = useState<Question[]>([]);
+  const [suggestedQuestions, setSuggestedQuestions] = useState<Question[]>([]);
+  const [isLoadingPopularQuestions, setIsLoadingPopularQuestions] = useState(true);
   const hasAutoSentRef = useRef(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -26,6 +46,42 @@ export default function ChatInterface() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Load popular questions for empty state
+  useEffect(() => {
+    let isActive = true;
+
+    async function loadPopularQuestions() {
+      try {
+        const response = await fetch('/api/questions');
+        if (!response.ok) return;
+
+        const data = (await response.json()) as Question[];
+        if (!isActive || !Array.isArray(data)) return;
+
+        setPopularQuestions(data);
+      } catch (error) {
+        console.error('Error fetching popular questions:', error);
+      } finally {
+        if (isActive) setIsLoadingPopularQuestions(false);
+      }
+    }
+
+    loadPopularQuestions();
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (popularQuestions.length > 0) {
+      setSuggestedQuestions(
+        pickRandomUnique(popularQuestions, DEFAULT_SUGGESTED_QUESTIONS_COUNT)
+      );
+    } else {
+      setSuggestedQuestions([]);
+    }
+  }, [popularQuestions]);
 
   // Restore chat history on mount
   useEffect(() => {
@@ -230,7 +286,7 @@ export default function ChatInterface() {
               if (data.answers && !data.done && Array.isArray(data.answers)) {
                 answers = data.answers;
               }
-            } catch (e) {
+            } catch {
               // Ignore JSON parse errors for incomplete chunks
             }
           }
@@ -267,17 +323,10 @@ export default function ChatInterface() {
     const question = searchParams.get('q');
     if (question && !hasAutoSentRef.current && messages.length === 0 && !isLoading) {
       hasAutoSentRef.current = true;
-      // Check if this question is already in messages to prevent duplicates
-      const questionAlreadySent = messages.some(
-        (msg) => msg.role === 'user' && msg.content === question
-      );
-      
-      if (!questionAlreadySent) {
-        // Small delay to ensure component is fully mounted
-        setTimeout(() => {
-          handleSend(question);
-        }, 100);
-      }
+      // Small delay to ensure component is fully mounted
+      setTimeout(() => {
+        handleSend(question);
+      }, 100);
     }
   }, [searchParams, messages.length, handleSend, isLoading]);
 
@@ -289,20 +338,63 @@ export default function ChatInterface() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#E8E4DC]">
+    <div className="flex flex-col h-full rounded-2xl border border-[#D4CFC4] bg-[#F5F0E8] shadow-[0_18px_44px_rgba(0,0,0,0.14)] overflow-hidden">
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto px-6 py-4">
+      <div className="flex-1 overflow-y-auto px-6 py-5">
         {messages.length === 0 ? (
           <div className="flex items-center justify-center h-full">
-            <div className="text-center max-w-md">
-              <h2 className="text-2xl font-serif text-[#1A2A40] mb-2">
+            <div className="w-full max-w-sm">
+              <h2 className="text-center text-lg font-serif text-[#1A2A40] mb-2">
                 Chat with Historical Documents
               </h2>
-              <p className="text-[#2D3648]">
+              <p className="text-center text-sm leading-relaxed text-[#2D3648]">
                 Ask questions about Venetia Stanley, H.H. Asquith, Edwin Montagu,
-                and the political events of 1912-1916. I'll search through the
+                and the political events of 1912-1916. I&apos;ll search through the
                 primary sources to provide accurate answers.
               </p>
+
+              <div className="mt-8 flex flex-col gap-3">
+                {isLoadingPopularQuestions ? (
+                  Array.from({ length: DEFAULT_SUGGESTED_QUESTIONS_COUNT }).map(
+                    (_, index) => (
+                      <div
+                        key={index}
+                        className="h-9 w-full rounded-full border border-[#D4CFC4] bg-white/60"
+                        aria-hidden="true"
+                      />
+                    )
+                  )
+                ) : suggestedQuestions.length > 0 ? (
+                  suggestedQuestions.map((q) => (
+                    <button
+                      key={q._id}
+                      type="button"
+                      onClick={() => handleSend(q.Question)}
+                      className="w-full rounded-full border border-[#D4CFC4] bg-[#FDFBF7] px-4 py-2 text-sm font-serif text-[#1A2A40] shadow-[0_1px_0_rgba(0,0,0,0.05)] hover:bg-[#E8E4DC] transition-colors"
+                      disabled={isLoading}
+                      title="Ask this question"
+                    >
+                      {q.Question}
+                    </button>
+                  ))
+                ) : (
+                  FALLBACK_SUGGESTED_QUESTIONS.slice(
+                    0,
+                    DEFAULT_SUGGESTED_QUESTIONS_COUNT
+                  ).map((question) => (
+                    <button
+                      key={question}
+                      type="button"
+                      onClick={() => handleSend(question)}
+                      className="w-full rounded-full border border-[#D4CFC4] bg-[#FDFBF7] px-4 py-2 text-sm font-serif text-[#1A2A40] shadow-[0_1px_0_rgba(0,0,0,0.05)] hover:bg-[#E8E4DC] transition-colors"
+                      disabled={isLoading}
+                      title="Ask this question"
+                    >
+                      {question}
+                    </button>
+                  ))
+                )}
+              </div>
             </div>
           </div>
         ) : (
@@ -323,7 +415,7 @@ export default function ChatInterface() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Ask a question about the historical documents..."
+            placeholder="Type your question..."
             disabled={isLoading}
             className="flex-1"
           />

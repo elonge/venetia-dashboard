@@ -425,50 +425,64 @@ export default function DailyPopup({
 
                       {/* Scores with Progress Bars */}
                       {letter.scores && (
-                        <div className="space-y-3">
+                        <div className="space-y-2">
                           <div className="text-xs font-semibold text-[#444] mb-2 uppercase tracking-wide">Metrics</div>
-                          {letter.scores.romantic_adoration !== undefined && (
-                            <div>
-                              <div className="flex justify-between items-center mb-1">
-                                <span className="text-xs text-[#444] font-medium">Romantic Adoration</span>
-                                <span className="text-xs text-[#1A2A40] font-semibold">{letter.scores.romantic_adoration}/10</span>
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            {letter.scores.romantic_adoration !== undefined && (
+                              <div className="min-w-0 rounded-lg border border-[#D4CFC4] bg-[#F5F0E8]/60 p-2">
+                                <div className="flex justify-between items-center mb-1 gap-2">
+                                  <span className="text-[11px] leading-tight text-[#444] font-medium truncate">
+                                    Romantic Adoration
+                                  </span>
+                                  <span className="text-[11px] text-[#1A2A40] font-semibold tabular-nums flex-shrink-0">
+                                    {letter.scores.romantic_adoration}/10
+                                  </span>
+                                </div>
+                                <div className="w-full bg-[#E8E4DC] rounded-full h-2">
+                                  <div
+                                    className="bg-[#6B2D3C] h-2 rounded-full transition-all"
+                                    style={{ width: `${(letter.scores.romantic_adoration / 10) * 100}%` }}
+                                  />
+                                </div>
                               </div>
-                              <div className="w-full bg-[#E8E4DC] rounded-full h-2">
-                                <div 
-                                  className="bg-[#6B2D3C] h-2 rounded-full transition-all"
-                                  style={{ width: `${(letter.scores.romantic_adoration / 10) * 100}%` }}
-                                />
+                            )}
+                            {letter.scores.political_unburdening !== undefined && (
+                              <div className="min-w-0 rounded-lg border border-[#D4CFC4] bg-[#F5F0E8]/60 p-2">
+                                <div className="flex justify-between items-center mb-1 gap-2">
+                                  <span className="text-[11px] leading-tight text-[#444] font-medium truncate">
+                                    Political Unburdening
+                                  </span>
+                                  <span className="text-[11px] text-[#1A2A40] font-semibold tabular-nums flex-shrink-0">
+                                    {letter.scores.political_unburdening}/10
+                                  </span>
+                                </div>
+                                <div className="w-full bg-[#E8E4DC] rounded-full h-2">
+                                  <div
+                                    className="bg-[#4A7C59] h-2 rounded-full transition-all"
+                                    style={{ width: `${(letter.scores.political_unburdening / 10) * 100}%` }}
+                                  />
+                                </div>
                               </div>
-                            </div>
-                          )}
-                          {letter.scores.political_unburdening !== undefined && (
-                            <div>
-                              <div className="flex justify-between items-center mb-1">
-                                <span className="text-xs text-[#444] font-medium">Political Unburdening</span>
-                                <span className="text-xs text-[#1A2A40] font-semibold">{letter.scores.political_unburdening}/10</span>
+                            )}
+                            {letter.scores.emotional_desolation !== undefined && (
+                              <div className="min-w-0 rounded-lg border border-[#D4CFC4] bg-[#F5F0E8]/60 p-2">
+                                <div className="flex justify-between items-center mb-1 gap-2">
+                                  <span className="text-[11px] leading-tight text-[#444] font-medium truncate">
+                                    Emotional Desolation
+                                  </span>
+                                  <span className="text-[11px] text-[#1A2A40] font-semibold tabular-nums flex-shrink-0">
+                                    {letter.scores.emotional_desolation}/10
+                                  </span>
+                                </div>
+                                <div className="w-full bg-[#E8E4DC] rounded-full h-2">
+                                  <div
+                                    className="bg-[#8B6F47] h-2 rounded-full transition-all"
+                                    style={{ width: `${(letter.scores.emotional_desolation / 10) * 100}%` }}
+                                  />
+                                </div>
                               </div>
-                              <div className="w-full bg-[#E8E4DC] rounded-full h-2">
-                                <div 
-                                  className="bg-[#4A7C59] h-2 rounded-full transition-all"
-                                  style={{ width: `${(letter.scores.political_unburdening / 10) * 100}%` }}
-                                />
-                              </div>
-                            </div>
-                          )}
-                          {letter.scores.emotional_desolation !== undefined && (
-                            <div>
-                              <div className="flex justify-between items-center mb-1">
-                                <span className="text-xs text-[#444] font-medium">Emotional Desolation</span>
-                                <span className="text-xs text-[#1A2A40] font-semibold">{letter.scores.emotional_desolation}/10</span>
-                              </div>
-                              <div className="w-full bg-[#E8E4DC] rounded-full h-2">
-                                <div 
-                                  className="bg-[#8B6F47] h-2 rounded-full transition-all"
-                                  style={{ width: `${(letter.scores.emotional_desolation / 10) * 100}%` }}
-                                />
-                              </div>
-                            </div>
-                          )}
+                            )}
+                          </div>
                         </div>
                       )}
 

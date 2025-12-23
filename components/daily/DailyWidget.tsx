@@ -130,7 +130,7 @@ export default function DailyWidget({ day, onClick }: DailyWidgetProps) {
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
         <div className="inline-flex items-center rounded-md bg-[#B58A2A] px-2 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase text-[#FDFBF7] shadow-sm">
-          A Day In History
+          Daily View
         </div>
         <div className="flex items-center gap-2">
           {hasMeeting && (

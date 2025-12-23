@@ -5,7 +5,11 @@ import DataRoomPreview from './DataRoomPreview';
 import DataRoomFull from './DataRoomFull';
 import { ZoomKey, ZoomState, zoomDefaults } from './dataRoomTypes';
 
-export default function DataRoom() {
+export default function DataRoom({
+  previewVariant,
+}: {
+  previewVariant?: 'default' | 'compact';
+}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeChartIndex, setActiveChartIndex] = useState(0);
   const [zoomStates, setZoomStates] = useState<Record<ZoomKey, ZoomState>>(zoomDefaults);
@@ -26,6 +30,7 @@ export default function DataRoom() {
         onChartIndexChange={setActiveChartIndex}
         zoomStates={zoomStates}
         onZoomStatesChange={setZoomStates}
+        variant={previewVariant}
             />
       {isModalOpen && (
         <DataRoomFull

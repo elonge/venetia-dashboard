@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { ChevronRight, ChevronLeft, ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import DataRoom from '@/components/data-room/DataRoom';
 import ChapterCarousel from './ChapterCarousel';
 
@@ -17,12 +16,6 @@ interface Chapter {
   sources: string[];
 }
 
-interface Question {
-  _id: string;
-  Question: string;
-  Answer: Array<{ text: string; link: string }>;
-}
-
 interface FunFact {
   _id: string;
   fact: string;
@@ -31,35 +24,11 @@ interface FunFact {
 }
 
 export default function Sidebar() {
-  const [questions, setQuestions] = useState<Question[]>([]);
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [funFacts, setFunFacts] = useState<FunFact[]>([]);
   const [currentFunFactIndex, setCurrentFunFactIndex] = useState(0);
-  const [loading, setLoading] = useState(true);
   const [chaptersLoading, setChaptersLoading] = useState(true);
   const [funFactsLoading, setFunFactsLoading] = useState(true);
-  const [showAllQuestions, setShowAllQuestions] = useState(false);
-
-  const MAX_QUESTIONS_DEFAULT = 4;
-  const displayedQuestions = showAllQuestions ? questions : questions.slice(0, MAX_QUESTIONS_DEFAULT);
-  const hasMoreQuestions = questions.length > MAX_QUESTIONS_DEFAULT;
-
-  useEffect(() => {
-    async function fetchQuestions() {
-      try {
-        const response = await fetch('/api/questions');
-        if (response.ok) {
-          const data = await response.json();
-          setQuestions(data);
-        }
-      } catch (error) {
-        console.error('Error fetching questions:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchQuestions();
-  }, []);
 
   useEffect(() => {
     async function fetchChapters() {
@@ -119,56 +88,9 @@ export default function Sidebar() {
         <ChapterCarousel chapters={chapters} loading={chaptersLoading} />
       </div>
 
-      {/* Popular Questions */}
       <div className="mb-6">
-        <h3 className="text-lg font-semibold uppercase tracking-wider text-white mb-3">
-          Popular Questions
-        </h3>
-        <div className="space-y-4">
-          {loading ? (
-            <div className="text-sm text-[#E5E8F0] p-3">Loading questions...</div>
-          ) : questions.length === 0 ? (
-            <div className="text-sm text-[#E5E8F0] p-3">No questions available</div>
-          ) : (
-            <>
-              {displayedQuestions.map((q, index) => (
-                <Link
-                  key={q._id}
-                  href={`/qa?id=${encodeURIComponent(q._id)}`}
-                  className={`rounded p-4 flex items-center justify-between cursor-pointer transition-colors text-[#1A2A40] ${
-                    index % 2 === 0
-                      ? 'bg-[#F5F0E8] hover:bg-[#E8E4DC]'
-                      : 'bg-[#EEE6D8] hover:bg-[#E6DBC9]'
-                  }`}
-                >
-                  <span className="text-lg text-[#1A2A40]">{q.Question}</span>
-                  <ChevronRight className="w-4 h-4 text-[#3E4A60]" />
-                </Link>
-              ))}
-              {hasMoreQuestions && (
-                <button
-                  onClick={() => setShowAllQuestions(!showAllQuestions)}
-                  className="w-full bg-[#F5F0E8] text-white rounded p-2 flex items-center justify-center gap-2 hover:bg-[#E8E4DC] transition-colors text-sm font-medium"
-                >
-                  {showAllQuestions ? (
-                    <>
-                      <ChevronUp className="w-4 h-4" />
-                      Show Less
-                    </>
-                  ) : (
-                    <>
-                      <ChevronDown className="w-4 h-4" />
-                      View More ({questions.length - MAX_QUESTIONS_DEFAULT} more)
-                    </>
-                  )}
-                </button>
-              )}
-            </>
-          )}
-        </div>
+        <DataRoom />
       </div>
-
-      <DataRoom />
 
       {/* Fun Facts */}
       <div className="bg-[#F5F0E8] text-[#1A2A40] rounded p-3">
