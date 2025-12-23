@@ -44,6 +44,7 @@ export const PEOPLE_IMAGES = {
     "Violet": "https://commons.wikimedia.org/wiki/Special:FilePath/Violet_Bonham_Carter_1915.jpg",
     "Winston Churchill": "https://commons.wikimedia.org/wiki/Special:FilePath/Churchill_in_Oxford_Yeomanry_uniform_1915.jpg",
     "Sir Lawrence Jones": "https://upload.wikimedia.org/wikipedia/en/1/18/Sir-Lawrence-Jones-1955.png",
+    "Lord Riddell": "https://upload.wikimedia.org/wikipedia/commons/a/a6/1st_Baron_Riddell.jpg",
     "The Observers": "venetia-observers.png"
   }
 

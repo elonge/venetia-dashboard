@@ -187,6 +187,7 @@ export function mapDailyRecordToDayData(doc: DailyRecordDocument | unknown): Day
     politics,
     diaries_summary: diariesSummary?.length ? diariesSummary : undefined,
     weather,
+    met_venetia: record.met_venetia === true,
   };
 }
 
@@ -213,6 +214,7 @@ export async function getAllDailyRecords(): Promise<DayData[]> {
           diaries: 1,
           weather: 1,
           weather_short: 1,
+          met_venetia: 1,
         },
       }
     )

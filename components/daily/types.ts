@@ -28,5 +28,6 @@ export interface DayData {
     excerpt: string;
   }>;
   weather?: string;
+  met_venetia?: boolean;
 }
 

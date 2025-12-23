@@ -103,11 +103,15 @@ export default function Home() {
     <div className="min-h-screen bg-[#E8E4DC]">
       {/* Header */}
       <header className="bg-[#F5F0E8] border-b border-[#D4CFC4] px-6 py-3 flex items-center justify-between">
-        <h1 className="text-[#1A2A40] font-serif text-2xl font-medium">The Venetia Project</h1>
+        <h1 className="text-[#1A2A40] font-serif text-2xl font-medium">
+          The Venetia Project
+        </h1>
         <div className="flex items-center gap-6">
-          <span className="text-[#6B7280] text-base">When AI Meets Primary Sources</span>
-          <Link 
-            href="/about" 
+          <span className="text-[#6B7280] text-base">
+            When AI Meets Primary Sources
+          </span>
+          <Link
+            href="/about"
             className="text-[#1A2A40] hover:text-[#4A7C59] transition-colors text-base font-medium"
           >
             What is the Venetia Project?
@@ -131,7 +135,9 @@ export default function Home() {
             ) : todayIn1914 ? (
               <DailyWidget
                 day={todayIn1914}
-                onClick={() => router.push(`/daily/${normalizeDayDate(todayIn1914.date)}`)}
+                onClick={() =>
+                  router.push(`/daily/${normalizeDayDate(todayIn1914.date)}`)
+                }
               />
             ) : (
               <div className="bg-[#F5F0E8] rounded-2xl p-6 text-center text-[#2D3648] border border-[#D4CFC4] min-h-[250px] flex items-center justify-center shadow-[0_14px_34px_rgba(0,0,0,0.08)]">
@@ -149,8 +155,8 @@ export default function Home() {
               className="block min-h-[170px] rounded-2xl border border-[#1F3350] bg-[#18324E] p-5 shadow-[0_14px_34px_rgba(0,0,0,0.10)] hover:-translate-y-[1px] hover:shadow-[0_18px_44px_rgba(0,0,0,0.14)] transition-all relative overflow-hidden group"
               style={{
                 backgroundImage:
-                  'linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px), radial-gradient(1200px 500px at -10% -10%, rgba(255,255,255,0.10), transparent 55%)',
-                backgroundSize: '22px 22px, 22px 22px, auto',
+                  "linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px), radial-gradient(1200px 500px at -10% -10%, rgba(255,255,255,0.10), transparent 55%)",
+                backgroundSize: "22px 22px, 22px 22px, auto",
               }}
             >
               <div className="absolute -right-10 -bottom-10 h-40 w-40 rounded-full border border-white/10 bg-white/5 blur-[0.2px] pointer-events-none" />
@@ -182,30 +188,39 @@ export default function Home() {
           {/* Who is Venetia? (2/3) */}
           <section className="min-w-0">
             <Link
-              href="/chapter?chapter_id=sicily"
+              href="/venetia"
               className="block min-h-62.5 rounded-2xl overflow-hidden border border-black/10 shadow-[0_18px_44px_rgba(0,0,0,0.16)] hover:-translate-y-px hover:shadow-[0_24px_60px_rgba(0,0,0,0.20)] transition-all relative group"
               style={{
                 backgroundImage: "url('/asquith_venetia_split_screen2.jpg')",
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
+                backgroundSize: "cover",
+                backgroundPosition: "center",
               }}
             >
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10" />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/25 via-transparent to-transparent" />
+              {/* Darker gradient at bottom to make text readable */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
 
               <div className="relative h-full p-6 flex flex-col justify-between">
                 <div>
-                  <span className="inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-xs font-semibold tracking-[0.12em] uppercase text-white/90 border border-white/20">
-                    Start Here
+                  {/* CHANGED: Badge uses amber/gold tones for an 'archival' look */}
+                  <span className="inline-flex items-center rounded-full bg-amber-100/10 px-3 py-1 text-xs font-semibold tracking-[0.12em] uppercase text-amber-100/90 border border-amber-100/30 backdrop-blur-md">
+                    FROM THE ARCHIVE
                   </span>
-                  <h3 className="mt-4 font-serif text-4xl leading-tight font-semibold text-white">
-                    Who is Venetia?
+
+                  {/* CHANGED: Title is now a warm parchment color (amber-50) */}
+                  <h3 className="mt-4 font-serif text-4xl leading-tight font-semibold text-amber-50 drop-shadow-sm">
+                    Venetia
                   </h3>
+
+                  {/* Subtitle remains soft white/gray for contrast against the title */}
+                  <p className="mt-2 text-lg text-white/80 font-light tracking-wide">
+                    Reconstructed from primary sources
+                  </p>
                 </div>
 
-                <div className="inline-flex items-center gap-2 text-white/90 font-medium">
-                  <span>Read Story</span>
-                  <ArrowRight className="h-5 w-5 group-hover:translate-x-[2px] transition-transform" />
+                {/* CTA */}
+                <div className="inline-flex items-center gap-2 text-amber-50/90 font-medium group-hover:text-amber-50 transition-colors">
+                  <span>Enter the archive</span>
+                  <ArrowRight className="h-5 w-5 group-hover:translate-x-0.5 transition-transform" />
                 </div>
               </div>
             </Link>
@@ -218,8 +233,8 @@ export default function Home() {
                 className="absolute inset-0 pointer-events-none opacity-45"
                 style={{
                   backgroundImage:
-                    'radial-gradient(circle at 14px 14px, rgba(120, 53, 15, 0.10) 1px, transparent 1px)',
-                  backgroundSize: '26px 26px',
+                    "radial-gradient(circle at 14px 14px, rgba(120, 53, 15, 0.10) 1px, transparent 1px)",
+                  backgroundSize: "26px 26px",
                 }}
               />
 
@@ -240,7 +255,9 @@ export default function Home() {
                     type="button"
                     onClick={handleShuffleFunFact}
                     className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-amber-200 bg-white/60 text-amber-900 hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                    disabled={loadingFunFacts || !funFacts || funFacts.length === 0}
+                    disabled={
+                      loadingFunFacts || !funFacts || funFacts.length === 0
+                    }
                     aria-label="Shuffle fun fact"
                     title="Shuffle"
                   >
@@ -259,7 +276,9 @@ export default function Home() {
                     </p>
                   ) : (
                     <p className="text-[15px] leading-relaxed text-amber-950">
-                      In 1914, the UK’s Parliament was debating crises at home and abroad—while private letters carried entirely different stakes.
+                      In 1914, the UK’s Parliament was debating crises at home
+                      and abroad—while private letters carried entirely
+                      different stakes.
                     </p>
                   )}
                 </div>
@@ -280,7 +299,6 @@ export default function Home() {
           </section>
         </main>
       </div>
-
     </div>
   );
 }
