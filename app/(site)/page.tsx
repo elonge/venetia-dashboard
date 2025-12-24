@@ -246,14 +246,26 @@ export default function Home() {
             </Link>
           </section>
 
-          {/* Fun Facts (1/3) */}
-          <section>
-            <div className="relative rounded-md border min-h-70 border-amber-200 bg-[#F6E39A] p-4 md:p-6 shadow-[0_14px_34px_rgba(0,0,0,0.10)] rotate-[0.6deg] overflow-hidden">
-              <div
-                className="absolute inset-0 pointer-events-none opacity-45"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(circle at 14px 14px, rgba(120, 53, 15, 0.10) 1px, transparent 1px)",
+	          {/* Fun Facts (1/3) */}
+	          <section>
+	            <div
+	              className="relative cursor-pointer rounded-md border min-h-70 border-amber-200 bg-[#F6E39A] p-4 md:p-6 shadow-[0_14px_34px_rgba(0,0,0,0.10)] rotate-[0.6deg] overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-900/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#E8E4DC]"
+	              role="button"
+	              tabIndex={0}
+	              aria-label="Fun facts (click to shuffle)"
+	              onClick={handleShuffleFunFact}
+	              onKeyDown={(e) => {
+	                if (e.key === "Enter" || e.key === " ") {
+	                  e.preventDefault();
+	                  handleShuffleFunFact();
+	                }
+	              }}
+	            >
+	              <div
+	                className="absolute inset-0 pointer-events-none opacity-45"
+	                style={{
+	                  backgroundImage:
+	                    "radial-gradient(circle at 14px 14px, rgba(120, 53, 15, 0.10) 1px, transparent 1px)",
                   backgroundSize: "26px 26px",
                 }}
               />
@@ -271,15 +283,18 @@ export default function Home() {
                       Did you know?
                     </div>
                   </div>
-                  <button
-                    type="button"
-                    onClick={handleShuffleFunFact}
-                    className="inline-flex h-9 w-9 md:h-9 md:w-9 items-center justify-center rounded-md border border-amber-200 bg-white/60 text-amber-900 hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed shrink-0 min-w-[44px] min-h-[44px]"
-                    disabled={
-                      loadingFunFacts || !funFacts || funFacts.length === 0
-                    }
-                    aria-label="Shuffle fun fact"
-                    title="Shuffle"
+	                  <button
+	                    type="button"
+	                    onClick={(e) => {
+	                      e.stopPropagation();
+	                      handleShuffleFunFact();
+	                    }}
+	                    className="inline-flex h-9 w-9 md:h-9 md:w-9 items-center justify-center rounded-md border border-amber-200 bg-white/60 text-amber-900 hover:bg-white transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shrink-0 min-w-[44px] min-h-[44px]"
+	                    disabled={
+	                      loadingFunFacts || !funFacts || funFacts.length === 0
+	                    }
+	                    aria-label="Shuffle fun fact"
+	                    title="Shuffle"
                   >
                     <Shuffle className="h-4 w-4" />
                   </button>

@@ -94,7 +94,7 @@ export default function DailyWidget({ day, onClick }: DailyWidgetProps) {
     <button
       onClick={onClick}
       type="button"
-      className="w-full rounded-md bg-[#F5F0E8] p-4 md:p-6 border border-[#E2D8C8] shadow-[0_18px_40px_rgba(0,0,0,0.12)] hover:-translate-y-[1px] hover:shadow-[0_26px_54px_rgba(0,0,0,0.14)] transition-all text-left group"
+      className="w-full cursor-pointer rounded-md bg-[#F5F0E8] p-4 md:p-6 border border-[#E2D8C8] shadow-[0_18px_40px_rgba(0,0,0,0.12)] hover:-translate-y-[1px] hover:shadow-[0_26px_54px_rgba(0,0,0,0.14)] transition-all text-left group"
     >
       {/* Header */}
       <div className="flex items-start justify-between gap-2 md:gap-4">
