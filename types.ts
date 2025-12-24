@@ -134,6 +134,18 @@ export interface DailyRecordDocument {
   pm_location?: DailyRecordLocation | null;
   venetia_location?: DailyRecordLocation | null;
   meeting_reference?: string | null;
+  asquith_venetia_proximity?: {
+    distance_km?: number | null;
+    status?: string | null;
+    calculated_from?: {
+      pm?: string | null;
+      venetia?: string | null;
+    } | null;
+    geo_coords?: {
+      pm?: { lat?: number | null; lng?: number | null } | null;
+      venetia?: { lat?: number | null; lng?: number | null } | null;
+    } | null;
+  } | null;
   letters?: DailyRecordLetter[] | null;
   politics?: DailyRecordPolitics | null;
   diaries?: DailyRecordDiary[] | null;

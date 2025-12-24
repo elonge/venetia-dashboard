@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getAllTimelineDays } from '@/lib/timeline_days';
+import { getAsquithVenetiaProximitySeries } from '@/lib/daily_records';
 
 // Mock data for the Data Room
 // TODO: Replace with actual database queries later
@@ -36,12 +37,25 @@ export interface MeetingDatesData {
   timeline: Array<{ x: number; date: string }>; // x coordinate and date for timeline visualization
 }
 
+export interface AsquithVenetiaProximityData {
+  points: Array<{
+    date: string;
+    distance_km: number;
+    status?: string;
+    calculated_from?: { pm?: string; venetia?: string };
+    geo_coords: { pm: { lat: number; lng: number }; venetia: { lat: number; lng: number } };
+  }>;
+  dateRange: { start: string; end: string };
+  maxDistanceKm: number;
+}
+
 export interface DataRoomData {
   sentiment: SentimentData;
   topics: TopicData[];
   dailyLetterCount: DailyLetterCountData;
   people: PeopleData[];
   meetingDates: MeetingDatesData;
+  asquithVenetiaProximity: AsquithVenetiaProximityData;
 }
 
 export async function GET() {
@@ -822,12 +836,31 @@ export async function GET() {
     
     const meetingDatesData = await generateMeetingDatesData();
 
+    const generateAsquithVenetiaProximityData =
+      async (): Promise<AsquithVenetiaProximityData> => {
+        const points = await getAsquithVenetiaProximitySeries();
+        const dateRange =
+          points.length > 0
+            ? {
+                start: points[0].date.slice(0, 4),
+                end: points[points.length - 1].date.slice(0, 4),
+              }
+            : { start: '', end: '' };
+        const maxDistanceKm =
+          points.length > 0 ? Math.max(...points.map((p) => p.distance_km)) : 0;
+
+        return { points, dateRange, maxDistanceKm };
+      };
+
+    const asquithVenetiaProximityData = await generateAsquithVenetiaProximityData();
+
     const dataRoomData: DataRoomData = {
       sentiment: sentimentData,
       topics: topicsData,
       dailyLetterCount: dailyLetterCountData,
       people: peopleData,
-      meetingDates: meetingDatesData
+      meetingDates: meetingDatesData,
+      asquithVenetiaProximity: asquithVenetiaProximityData,
     };
 
     return NextResponse.json(dataRoomData);
@@ -839,4 +872,3 @@ export async function GET() {
     );
   }
 }
-

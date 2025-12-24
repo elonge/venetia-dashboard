@@ -17,6 +17,14 @@ import {
 } from "@/lib/recharts-transformers";
 import { SentimentData, DailyLetterCountData } from "./dataRoomTypes";
 
+type ExtraRechartsSeries = {
+  key: string;
+  name: string;
+  color: string;
+  points: Array<{ date: string; value: number }>;
+  strokeDasharray?: string;
+};
+
 interface TimeSeriesChartProps {
   timerange: any;
   series:
@@ -37,6 +45,7 @@ interface TimeSeriesChartProps {
     sentiment?: SentimentData;
     letterCount?: DailyLetterCountData;
   };
+  extraSeries?: ExtraRechartsSeries[];
 }
 
 // Helper to convert TimeSeries to date-value pairs
@@ -98,6 +107,7 @@ export default function TimeSeriesChart({
   height,
   maxValue,
   rawData,
+  extraSeries,
 }: TimeSeriesChartProps) {
   const chartData = useMemo(() => {
     if (variant === "sentiment") {
@@ -107,14 +117,20 @@ export default function TimeSeriesChart({
         anxietySeries?: TimeSeries | null;
       };
 
+      const dateMap = new Map<
+        string,
+        {
+          date: string;
+          tension?: number;
+          warmth?: number;
+          anxiety?: number;
+          [key: string]: any;
+        }
+      >();
+
       // Try to use raw data if available (more accurate)
       if (rawData?.sentiment) {
         const transformed = transformSentimentToRecharts(rawData.sentiment);
-        // Merge all series by date
-        const dateMap = new Map<
-          string,
-          { date: string; tension?: number; warmth?: number; anxiety?: number }
-        >();
 
         transformed.tension.forEach((item) => {
           if (!dateMap.has(item.date)) {
@@ -136,50 +152,44 @@ export default function TimeSeriesChart({
           }
           dateMap.get(item.date)!.anxiety = item.value;
         });
+      } else {
+        // Fallback to TimeSeries conversion
+        if (tensionSeries) {
+          timeSeriesToDataPoints(tensionSeries, "tension").forEach((item) => {
+            if (!dateMap.has(item.date)) {
+              dateMap.set(item.date, { date: item.date });
+            }
+            dateMap.get(item.date)!.tension = item.value;
+          });
+        }
 
-        return Array.from(dateMap.values()).sort((a, b) =>
-          a.date.localeCompare(b.date)
-        );
+        if (warmthSeries) {
+          timeSeriesToDataPoints(warmthSeries, "warmth").forEach((item) => {
+            if (!dateMap.has(item.date)) {
+              dateMap.set(item.date, { date: item.date });
+            }
+            dateMap.get(item.date)!.warmth = item.value;
+          });
+        }
+
+        if (anxietySeries) {
+          timeSeriesToDataPoints(anxietySeries, "anxiety").forEach((item) => {
+            if (!dateMap.has(item.date)) {
+              dateMap.set(item.date, { date: item.date });
+            }
+            dateMap.get(item.date)!.anxiety = item.value;
+          });
+        }
       }
 
-      // Fallback to TimeSeries conversion
-      const allData: Array<{
-        date: string;
-        tension?: number;
-        warmth?: number;
-        anxiety?: number;
-      }> = [];
-      const dateMap = new Map<
-        string,
-        { date: string; tension?: number; warmth?: number; anxiety?: number }
-      >();
-
-      if (tensionSeries) {
-        timeSeriesToDataPoints(tensionSeries, "tension").forEach((item) => {
-          if (!dateMap.has(item.date)) {
-            dateMap.set(item.date, { date: item.date });
+      extraSeries?.forEach((extra) => {
+        extra.points.forEach((p) => {
+          if (!dateMap.has(p.date)) {
+            dateMap.set(p.date, { date: p.date });
           }
-          dateMap.get(item.date)!.tension = item.value;
+          dateMap.get(p.date)![extra.key] = p.value;
         });
-      }
-
-      if (warmthSeries) {
-        timeSeriesToDataPoints(warmthSeries, "warmth").forEach((item) => {
-          if (!dateMap.has(item.date)) {
-            dateMap.set(item.date, { date: item.date });
-          }
-          dateMap.get(item.date)!.warmth = item.value;
-        });
-      }
-
-      if (anxietySeries) {
-        timeSeriesToDataPoints(anxietySeries, "anxiety").forEach((item) => {
-          if (!dateMap.has(item.date)) {
-            dateMap.set(item.date, { date: item.date });
-          }
-          dateMap.get(item.date)!.anxiety = item.value;
-        });
-      }
+      });
 
       return Array.from(dateMap.values()).sort((a, b) =>
         a.date.localeCompare(b.date)
@@ -277,6 +287,19 @@ export default function TimeSeriesChart({
             name="Emotional Desolation"
             connectNulls
           />
+          {extraSeries?.map((extra) => (
+            <Line
+              key={extra.key}
+              type="monotone"
+              dataKey={extra.key}
+              stroke={extra.color}
+              strokeWidth={2}
+              dot={false}
+              name={extra.name}
+              connectNulls
+              strokeDasharray={extra.strokeDasharray}
+            />
+          ))}
         </RechartsLineChart>
       </ResponsiveContainer>
     );

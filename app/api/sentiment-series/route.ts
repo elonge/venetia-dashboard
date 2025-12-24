@@ -36,6 +36,8 @@ type SentimentSeriesResponse = {
   series: SeriesPoint[];
 };
 
+const MAX_TO_DATE = new Date(Date.UTC(1916, 11, 31, 23, 59, 59, 999));
+
 function parseBucket(value: string | null): Bucket {
   if (!value) return 'week';
   const v = value.toLowerCase();
@@ -55,6 +57,11 @@ function parseISODateOrUndefined(value: string | null): Date | undefined {
   const d = new Date(value);
   if (Number.isNaN(d.getTime())) return undefined;
   return d;
+}
+
+function clampToMaxDate(d: Date | undefined): Date | undefined {
+  if (!d) return undefined;
+  return d > MAX_TO_DATE ? new Date(MAX_TO_DATE) : d;
 }
 
 async function getOrCreateConcept(
@@ -192,8 +199,8 @@ async function handle(request: NextRequest) {
 
   const bucket = parseBucket(url.searchParams.get('bucket'));
   const smoothingWindow = parsePositiveInt(url.searchParams.get('smoothingWindow'), 7);
-  const from = parseISODateOrUndefined(url.searchParams.get('from'));
-  const to = parseISODateOrUndefined(url.searchParams.get('to'));
+  const from = clampToMaxDate(parseISODateOrUndefined(url.searchParams.get('from')));
+  const to = clampToMaxDate(parseISODateOrUndefined(url.searchParams.get('to')) ?? MAX_TO_DATE);
   const source = url.searchParams.get('source') || undefined;
 
   const chatModel = url.searchParams.get('chatModel') || DEFAULT_CHAT_MODEL;
@@ -283,4 +290,3 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
-

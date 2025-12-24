@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { Calendar, TrendingUp, BarChart3, Mail, Users } from "lucide-react";
+import { Calendar, TrendingUp, BarChart3, Mail, Users, MapPin } from "lucide-react";
 import {
   DataRoomData,
   chartDefinitions,
@@ -146,6 +146,7 @@ export default function DataRoomFull({
 
   const chartIcons: Record<ChartId, React.ReactElement> = {
     "meeting-dates": <Calendar className="w-5 h-5" />,
+    asquith_venetia_proximity: <MapPin className="w-5 h-5" />,
     sentiment: <TrendingUp className="w-5 h-5" />,
     topics: <BarChart3 className="w-5 h-5" />,
     "weekly-letter-count": <Mail className="w-5 h-5" />,

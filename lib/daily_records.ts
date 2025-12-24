@@ -224,6 +224,87 @@ export async function getAllDailyRecords(): Promise<DayData[]> {
   return docs.map(mapDailyRecordToDayData);
 }
 
+type ProximityCoords = { lat: number; lng: number };
+type ProximityPoint = {
+  date: string;
+  distance_km: number;
+  status?: string;
+  calculated_from?: { pm?: string; venetia?: string };
+  geo_coords: { pm: ProximityCoords; venetia: ProximityCoords };
+};
+
+function isFiniteNumber(value: unknown): value is number {
+  return typeof value === 'number' && Number.isFinite(value);
+}
+
+function asProximityCoords(value: unknown): ProximityCoords | null {
+  if (!isRecord(value)) return null;
+  const lat = asNumber(value.lat);
+  const lng = asNumber(value.lng);
+  if (!isFiniteNumber(lat) || !isFiniteNumber(lng)) return null;
+  return { lat, lng };
+}
+
+export async function getAsquithVenetiaProximitySeries(): Promise<ProximityPoint[]> {
+  const client = await clientPromise;
+  const db = client.db(DB_NAME);
+  const col = db.collection<DailyRecordDocument>(COLLECTION_NAME);
+
+  const docs = await col
+    .find(
+      { asquith_venetia_proximity: { $exists: true } },
+      {
+        projection: {
+          _id: 0,
+          date_string: 1,
+          asquith_venetia_proximity: 1,
+        },
+      }
+    )
+    .sort({ date_string: 1 })
+    .toArray();
+
+  const points: ProximityPoint[] = [];
+  for (const doc of docs) {
+    const date = cleanString(doc.date_string);
+    if (!date) continue;
+
+    const prox = isRecord(doc.asquith_venetia_proximity)
+      ? (doc.asquith_venetia_proximity as UnknownRecord)
+      : null;
+    if (!prox) continue;
+
+    const distance_km = asNumber(prox.distance_km);
+    if (!isFiniteNumber(distance_km)) continue;
+
+    const geo = isRecord(prox.geo_coords) ? (prox.geo_coords as UnknownRecord) : null;
+    if (!geo) continue;
+
+    const pmCoords = asProximityCoords(geo.pm);
+    const venetiaCoords = asProximityCoords(geo.venetia);
+    if (!pmCoords || !venetiaCoords) continue;
+
+    const calculatedFrom = isRecord(prox.calculated_from)
+      ? (prox.calculated_from as UnknownRecord)
+      : null;
+
+    points.push({
+      date,
+      distance_km,
+      status: cleanString(prox.status),
+      calculated_from: calculatedFrom
+        ? {
+            pm: cleanString(calculatedFrom.pm),
+            venetia: cleanString(calculatedFrom.venetia),
+          }
+        : undefined,
+      geo_coords: { pm: pmCoords, venetia: venetiaCoords },
+    });
+  }
+
+  return points;
+}
+
 export async function getDailyRecordByDate(dateString: string): Promise<DayData | null> {
   const client = await clientPromise;
   const db = client.db(DB_NAME);

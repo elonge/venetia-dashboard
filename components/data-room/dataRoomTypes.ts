@@ -1,4 +1,10 @@
-export type ChartId = 'sentiment' | 'topics' | 'weekly-letter-count' | 'people' | 'meeting-dates';
+export type ChartId =
+  | 'sentiment'
+  | 'topics'
+  | 'weekly-letter-count'
+  | 'people'
+  | 'meeting-dates'
+  | 'asquith_venetia_proximity';
 
 export interface SentimentData {
   tension: Array<{ x: number; y: number; date?: string }>;
@@ -32,12 +38,25 @@ export interface MeetingDatesData {
   timeline: Array<{ x: number; date: string }>;
 }
 
+export interface AsquithVenetiaProximityData {
+  points: Array<{
+    date: string;
+    distance_km: number;
+    status?: string;
+    calculated_from?: { pm?: string; venetia?: string };
+    geo_coords: { pm: { lat: number; lng: number }; venetia: { lat: number; lng: number } };
+  }>;
+  dateRange: { start: string; end: string };
+  maxDistanceKm: number;
+}
+
 export interface DataRoomData {
   sentiment: SentimentData;
   topics: TopicData[];
   dailyLetterCount: DailyLetterCountData;
   people: PeopleData[];
   meetingDates: MeetingDatesData;
+  asquithVenetiaProximity: AsquithVenetiaProximityData;
 }
 
 export type ZoomKey = 'sentiment' | 'letterCount' | 'meetingDates';
@@ -54,6 +73,11 @@ export interface TooltipState {
 
 export const chartDefinitions: Array<{ id: ChartId; label: string; description: string }> = [
   { id: 'meeting-dates', label: 'Meeting Dates', description: 'When they met face to face' },
+  {
+    id: 'asquith_venetia_proximity',
+    label: 'Proximity Timeline',
+    description: 'Distance between their inferred locations',
+  },
   { id: 'sentiment', label: 'Sentiment Over Time', description: 'Emotional tone across the correspondence' },
   { id: 'topics', label: 'Topic Frequency', description: 'Dominant themes bubbling up' },
   { id: 'weekly-letter-count', label: 'Weekly Letter Count', description: 'Rhythm of their correspondence' },
