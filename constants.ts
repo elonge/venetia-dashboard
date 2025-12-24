@@ -38,13 +38,20 @@ export const PEOPLE_IMAGES = {
     "Sir Edward Carson": "https://commons.wikimedia.org/wiki/Special:FilePath/Portrait_of_Edward_Carson,_Baron_Carson.jpg",
     "Sir Edward Grey": "https://commons.wikimedia.org/wiki/Special:FilePath/Edward_Grey,_1st_Viscount_Grey_of_Fallodon.jpg",
     "Sir John French": "https://commons.wikimedia.org/wiki/Special:FilePath/John_French_GW.png",
-    "Sylvia Henley": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg",
+    "Sylvia Henley": "/sylvia_henley.jpg",
     "Venetia Stanley": "https://en.wikipedia.org/wiki/Special:FilePath/Venetia_Stanley.jpg",
+    "Venetia Montagu": "https://en.wikipedia.org/wiki/Special:FilePath/Venetia_Stanley.jpg",
     "Violet Asquith": "https://commons.wikimedia.org/wiki/Special:FilePath/Violet_Bonham_Carter_1915.jpg",
     "Violet": "https://commons.wikimedia.org/wiki/Special:FilePath/Violet_Bonham_Carter_1915.jpg",
     "Winston Churchill": "https://commons.wikimedia.org/wiki/Special:FilePath/Churchill_in_Oxford_Yeomanry_uniform_1915.jpg",
     "Sir Lawrence Jones": "https://upload.wikimedia.org/wikipedia/en/1/18/Sir-Lawrence-Jones-1955.png",
     "Lord Riddell": "https://upload.wikimedia.org/wikipedia/commons/a/a6/1st_Baron_Riddell.jpg",
+    "Helen Asquith": "https://images.findagrave.com/photos/2016/10/86412105_1452547277.jpg",
+    "Herbert 'Beb' Asquith": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Herbert_Asquith_%281881-1947%29.jpg/250px-Herbert_Asquith_%281881-1947%29.jpg",
+    "Arthur 'Oc' Asquith": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Brigadier-General_Arthur_M_Asquith%2C_by_Ambrose_McEvoy.jpg/960px-Brigadier-General_Arthur_M_Asquith%2C_by_Ambrose_McEvoy.jpg",
+    "Cyril 'Cys' Asquith": "https://upload.wikimedia.org/wikipedia/en/b/ba/Cyril_Asquith.jpg",
+    "Elizabeth Asquith": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Elizabeth_Bibesco.jpg/960px-Elizabeth_Bibesco.jpg",
+    "Anthony 'Puffin' Asquith": "https://m.media-amazon.com/images/M/MV5BMWQ2ZTdhYTItM2M2Yi00MjJjLWE0OTMtNGFmNWM5YzY0ZmM4XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
     "The Observers": "venetia-observers.png"
   }
 export const PEOPLE_DESCRIPTIONS = {
@@ -169,6 +176,12 @@ export const PODCASTS: Array<{
         "duration": 317,
         "chapter_id": "sicily",
       },
+      {
+        "title": "The Asquith family",
+        "description": "Introducing the asquith family members and their dynamics that shaped the prime minister's world.",
+        "chapter_id": "asquith_family",
+        "duration": 280,
+      },
     {
         "title": "Marconi Scandal: The Razor Thin Defense",
         "description": "Uncovering the clever legal distinction that saved British ministers from a massive insider trading scandal in 1912.",
@@ -234,14 +247,23 @@ export const PODCASTS: Array<{
         "description": "Venetia's controversial decision to convert to Judaism to marry Edwin Montagu.",
         "chapter_id": "venetia_conversion",
         "duration": 404
+      },
+            {
+        "title": "After the breakup: Asquith's Darkest Days",
+        "description": "The emotional fallout of Venetia ending her correspondence with Asquith, coinciding with political turmoil and personal loss.",
+        "duration": 268,
+        "chapter_id": "after_breakup"
       }
     
     ]
 export const sourceNameMapping: Record<string, string> = {
         // Asquith & Family
         "asquith-letters-full.txt": "Asquith Letters",
+        "asquith_letters_full.txt": "Asquith Letters",
+        "Asquith - Roy Jenkins.txt": "Asquith (Roy Jenkins)",
         "The_Asquiths_Book-full.txt": "The Asquiths Book",
         "violet-full.txt": "Violet Asquith Diaries",
+        "Margot Asquith's Great War Diary - Michael Brock.txt": "Margot Asquith's Great War Diary",
       
         // Venetia Stanley & Montagu
         "venetia_edwin_letters.txt": "Venetia & Edwin Letters",
@@ -250,7 +272,11 @@ export const sourceNameMapping: Record<string, string> = {
         "Charles_Lister_Letters-full.txt": "Charles Lister Letters",
         "cynthia-diaries-full.txt": "Cynthia Diaries",
         "Diana_Cooper-full.txt": "Diana Cooper",
+        "Frances_Stevenson-full.txt": "Frances Stevenson",
         "naomi_levine-full.txt": "Naomi Levine",
+        "Lord_Riddel-full.txt": "Lord Riddell",
+        "Maurice_Hankey-full.txt": "Maurice Hankey",
+        "maurice_hunkey_man_of_secrets_relevant_years.txt": "Maurice Hankey: Man of Secrets",
       
         // Official Records & Churchill
         "The Annual Register 1914.txt": "The Annual Register (1914)",
@@ -260,6 +286,7 @@ export const sourceNameMapping: Record<string, string> = {
         
         // Data Folders (if needed)
         "hansard_data_notebooklm_ready": "Hansard Data Records"
+        
 };
       
       // Helper function to safely get the name

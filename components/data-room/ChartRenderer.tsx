@@ -80,6 +80,19 @@ export default function ChartRenderer({
   const [termError, setTermError] = useState<string | null>(null);
   const termRequestRef = useRef<AbortController | null>(null);
 
+  const [topicInput, setTopicInput] = useState("");
+  const [topicResult, setTopicResult] = useState<{
+    query: string;
+    matchedQuery: string;
+    definition?: string;
+    letterCount: number;
+    totalLetters: number;
+    percent: number;
+  } | null>(null);
+  const [topicLoading, setTopicLoading] = useState(false);
+  const [topicError, setTopicError] = useState<string | null>(null);
+  const topicRequestRef = useRef<AbortController | null>(null);
+
   const [proximityPinnedDate, setProximityPinnedDate] = useState<string | null>(
     null
   );
@@ -181,6 +194,79 @@ export default function ChartRenderer({
       setTermOverlay(null);
     } finally {
       setTermLoading(false);
+    }
+  }, []);
+
+  type TopicFrequencyApiResponse = {
+    query?: string;
+    matchedQuery?: string;
+    definition?: string;
+    letterCount?: number;
+    totalLetters?: number;
+    percent?: number;
+    error?: string;
+  };
+
+  const isTopicFrequencyApiResponse = (
+    value: unknown
+  ): value is TopicFrequencyApiResponse =>
+    typeof value === "object" && value !== null;
+
+  const fetchTopicFrequency = useCallback(async (topic: string) => {
+    const trimmed = topic.trim();
+    if (!trimmed) return;
+
+    topicRequestRef.current?.abort();
+    const controller = new AbortController();
+    topicRequestRef.current = controller;
+
+    setTopicLoading(true);
+    setTopicError(null);
+
+    try {
+      const url = `/api/topic-frequency?topic=${encodeURIComponent(trimmed)}`;
+      const resp = await fetch(url, { signal: controller.signal });
+      const json = (await resp.json()) as unknown;
+      const data: TopicFrequencyApiResponse = isTopicFrequencyApiResponse(json)
+        ? (json as TopicFrequencyApiResponse)
+        : {};
+
+      if (!resp.ok) {
+        const message =
+          typeof data?.error === "string"
+            ? data.error
+            : `Request failed (${resp.status})`;
+        throw new Error(message);
+      }
+
+      const letterCount =
+        typeof data.letterCount === "number" && Number.isFinite(data.letterCount)
+          ? data.letterCount
+          : 0;
+      const totalLetters =
+        typeof data.totalLetters === "number" && Number.isFinite(data.totalLetters)
+          ? data.totalLetters
+          : 0;
+      const percent =
+        typeof data.percent === "number" && Number.isFinite(data.percent)
+          ? data.percent
+          : 0;
+
+      setTopicResult({
+        query: String(data.query || trimmed),
+        matchedQuery: String(data.matchedQuery || data.query || trimmed),
+        definition: typeof data.definition === "string" ? data.definition : undefined,
+        letterCount,
+        totalLetters,
+        percent,
+      });
+    } catch (err) {
+      if (err instanceof DOMException && err.name === "AbortError") return;
+      const msg = err instanceof Error ? err.message : "Failed to check topic";
+      setTopicError(msg);
+      setTopicResult(null);
+    } finally {
+      setTopicLoading(false);
     }
   }, []);
   const renderSentiment = () => {
@@ -390,6 +476,12 @@ export default function ChartRenderer({
       );
     }
 
+    const normalizeTopic = (value: string) =>
+      value.trim().toLowerCase().replace(/\s+/g, " ");
+    const normalizedQuery = topicResult
+      ? normalizeTopic(topicResult.matchedQuery || topicResult.query)
+      : null;
+
     return (
       <div
         className={`flex flex-col bg-[#F5F0E8] border border-[#D4CFC4] rounded-lg p-6 ${
@@ -397,55 +489,127 @@ export default function ChartRenderer({
         }`}
       >
         {/* Header with Categorical Context */}
-        <div className="mb-6">
-          <h4 className="text-[10px] font-black text-[#6B7280] uppercase tracking-[0.2em] mb-1">
-            Lexical Analysis
-          </h4>
-          <p className="text-sm font-serif italic text-[#4B5563]">
-            Dominant themes identified in the record group
-          </p>
+        <div className="mb-6 flex items-start justify-between gap-6">
+          <div>
+            <h4 className="text-[10px] font-black text-[#6B7280] uppercase tracking-[0.2em] mb-1">
+              Lexical Analysis
+            </h4>
+            <p className="text-sm font-serif italic text-[#4B5563]">
+              Dominant themes identified in the record group
+            </p>
+          </div>
+
+          <div className="flex flex-col items-end gap-2">
+            <form
+              className="flex items-center gap-2 bg-[#FAF7F2] p-1.5 border border-[#D4CFC4] rounded-sm shadow-inner"
+              onSubmit={(e) => {
+                e.preventDefault();
+                fetchTopicFrequency(topicInput);
+              }}
+            >
+              <input
+                value={topicInput}
+                onChange={(e) => setTopicInput(e.target.value)}
+                placeholder="Check semantic topic frequency (e.g. war, gossip)..."
+                disabled={topicLoading}
+                className="h-8 w-[300px] bg-transparent text-[12px] font-serif italic text-[#1A2A40] placeholder:text-[#A67C52] placeholder:opacity-70 focus:outline-none disabled:opacity-50"
+                maxLength={120}
+              />
+              <button
+                type="submit"
+                disabled={topicLoading || topicInput.trim().length === 0}
+                className="h-8 px-4 bg-[#1A2A40] hover:bg-[#4A7C59] text-white text-[10px] font-black uppercase tracking-widest transition-all rounded-sm disabled:opacity-30"
+              >
+                {topicLoading ? "CHECKING..." : "CHECK"}
+              </button>
+
+              {topicResult && !topicLoading && (
+                <button
+                  type="button"
+                  onClick={() => setTopicResult(null)}
+                  className="h-8 px-2 text-[#6B7280] hover:text-[#DC2626] transition-colors"
+                  aria-label="Clear topic query"
+                >
+                  <X size={16} />
+                </button>
+              )}
+            </form>
+
+            {(topicError || topicResult) && (
+              <div className="text-[10px] font-serif italic text-[#5A6472] text-right leading-tight max-w-[420px]">
+                {topicError ? (
+                  <span className="text-[#DC2626]">{topicError}</span>
+                ) : topicResult ? (
+                  <div className="space-y-1">
+                    {topicResult.definition && (
+                      <div className="text-[#6B7280]">{topicResult.definition}</div>
+                    )}
+                    <div>
+                    {`“${topicResult.matchedQuery || topicResult.query}”`}{" "}
+                    appears in{" "}
+                    <span className="font-bold text-[#1A2A40]">
+                      {topicResult.letterCount}
+                    </span>{" "}
+                    letter(s){" "}
+                    <span className="text-[#6B7280]">
+                      ({topicResult.percent}% of {topicResult.totalLetters} letters)
+                    </span>
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Topics List */}
         <div className="flex-1 overflow-y-auto custom-scrollbar pr-4 space-y-6">
-          {dataRoomData.topics.map((item) => (
-            <div
-              key={item.topic}
-              className="group cursor-default"
-              onMouseMove={(e) =>
-                variant === "modal" &&
-                onShowTooltip(e, {
-                  title: item.topic,
-                  value: `${item.value}%`,
-                  subtitle: "Topic density in correspondence",
-                  color: item.color,
-                })
-              }
-              onMouseLeave={variant === "modal" ? onHideTooltip : undefined}
-            >
-              {/* Label & Value */}
-              <div className="flex justify-between items-baseline mb-2">
-                <span className="text-[11px] font-black text-[#1A2A40] uppercase tracking-widest transition-colors group-hover:text-[#4A7C59]">
-                  {item.topic}
-                </span>
-                <span className="text-xs font-serif italic text-[#6B7280]">
-                  {item.value}%
-                </span>
-              </div>
+          {dataRoomData.topics.map((item) => {
+            const isMatch =
+              normalizedQuery && normalizeTopic(item.topic) === normalizedQuery;
+            return (
+              <div
+                key={item.topic}
+                className={`group cursor-default ${
+                  isMatch
+                    ? "ring-1 ring-[#4A7C59]/40 bg-white/30 rounded-sm p-2 -m-2"
+                    : ""
+                }`}
+                onMouseMove={(e) =>
+                  variant === "modal" &&
+                  onShowTooltip(e, {
+                    title: item.topic,
+                    value: `${item.value}%`,
+                    subtitle: "Topic density in correspondence",
+                    color: item.color,
+                  })
+                }
+                onMouseLeave={variant === "modal" ? onHideTooltip : undefined}
+              >
+                {/* Label & Value */}
+                <div className="flex justify-between items-baseline mb-2">
+                  <span className="text-[11px] font-black text-[#1A2A40] uppercase tracking-widest transition-colors group-hover:text-[#4A7C59]">
+                    {item.topic}
+                  </span>
+                  <span className="text-xs font-serif italic text-[#6B7280]">
+                    {item.value}%
+                  </span>
+                </div>
 
-              {/* Archival Style Progress Bar */}
-              <div className="relative h-2 w-full bg-[#E8E4DC] border border-[#D4CFC4]/50 overflow-hidden shadow-inner">
-                <div
-                  className="absolute left-0 top-0 h-full transition-all duration-1000 ease-in-out"
-                  style={{
-                    width: `${item.value}%`,
-                    backgroundColor: item.color,
-                    opacity: 0.8, // Slightly muted to blend with parchment
-                  }}
-                />
+                {/* Archival Style Progress Bar */}
+                <div className="relative h-2 w-full bg-[#E8E4DC] border border-[#D4CFC4]/50 overflow-hidden shadow-inner">
+                  <div
+                    className="absolute left-0 top-0 h-full transition-all duration-1000 ease-in-out"
+                    style={{
+                      width: `${item.value}%`,
+                      backgroundColor: item.color,
+                      opacity: 0.8, // Slightly muted to blend with parchment
+                    }}
+                  />
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Scholarly Methodology Footer */}
