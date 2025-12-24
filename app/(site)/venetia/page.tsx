@@ -203,45 +203,72 @@ export default function VenetiaPage() {
     <div className="h-full bg-[#E8E4DC]">
       <div className="mx-auto max-w-7xl">
         {/* 1. Hero Section */}
-        <section className="w-full bg-[#050505] py-12 md:py-16 lg:py-24 xl:py-32 border-b border-white/10">
-          <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-8 md:gap-12 lg:gap-20">
+{/* 1. Hero Section - COMPACT VERSION */}
+<section className="w-full bg-[#050505] py-12 md:py-20 border-b border-white/10 relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-8 md:gap-16">
 
-            {/* LEFT COL: The Portrait */}
-            <div className="w-full md:w-1/2 flex justify-center md:justify-start z-10">
+            {/* LEFT COL: The Portrait (Sized Down) */}
+            <div className="w-full md:w-5/12 flex justify-center md:justify-end z-10">
               {PEOPLE_IMAGES['Venetia Stanley'] && (
-                <div className="relative aspect-[3/4] w-full max-w-md rounded-sm overflow-hidden shadow-2xl filter sepia-[0.05] contrast-110">
+                // Changed max-w-md to max-w-sm to reduce vertical height
+                <div className="relative aspect-[3/4] w-full max-w-sm rounded-sm overflow-hidden shadow-2xl filter sepia-[0.05] contrast-110">
                   <img
                     src={PEOPLE_IMAGES['Venetia Stanley']}
                     alt="Venetia Stanley"
                     className="w-full h-full object-cover"
                   />
-                  {/* A very subtle vignette to blend the edges into the dark background */}
-                  <div className="absolute inset-0 shadow-[inset_0_0_100px_rgba(0,0,0,0.5)]" />
+                  <div className="absolute inset-0 shadow-[inset_0_0_80px_rgba(0,0,0,0.5)]" />
                 </div>
               )}
             </div>
 
-            {/* RIGHT COL: The Text */}
-            <div className="w-full md:w-1/2 text-left space-y-6 md:space-y-8 z-10">
+            {/* RIGHT COL: Text & Audio (Tighter Spacing) */}
+            <div className="w-full md:w-7/12 text-left space-y-5 z-10">
+              
+              {/* Title Block */}
               <div>
-                <h1 className="text-3xl md:text-5xl lg:text-7xl font-serif font-bold text-[#F5F0E8] mb-4 md:mb-6 leading-none tracking-tight drop-shadow-lg">
-                  The Enigma of <br/><span className="text-[#8B4513]">Venetia Stanley</span>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-[#F5F0E8] mb-4 leading-none tracking-tight drop-shadow-lg">
+                  The Enigma of <br/>
+                  <span className="text-[#8B4513]">Venetia Stanley</span>
                 </h1>
-                {/* Decorative line */}
-                <div className="w-24 md:w-32 h-[2px] md:h-[3px] bg-[#8B4513] mb-6 md:mb-8 opacity-80" />
+                <div className="w-20 h-[2px] bg-[#8B4513] opacity-80" />
               </div>
 
-              <p className="text-xl md:text-2xl lg:text-3xl text-[#E8E4DC] italic font-serif leading-snug drop-shadow-md">
-                The &quot;Poll-star&quot; of the Edwardian Era—Intellectual, Hedonist, and &quot;Uncertain Prop.&quot;
+              {/* Subtitle */}
+              <p className="text-xl md:text-2xl text-[#E8E4DC] italic font-serif leading-snug drop-shadow-md max-w-lg">
+                The &quot;Pole star&quot; of the Edwardian Era—Intellectual, Hedonist, and &quot;Uncertain Prop.&quot;
               </p>
 
-              <p className="text-base md:text-lg lg:text-xl text-gray-200 font-normal leading-relaxed tracking-wide max-w-xl border-t border-white/20 pt-6 md:pt-8 drop-shadow-md">
+              {/* Intro Text */}
+              <p className="text-base text-gray-300 font-normal leading-relaxed tracking-wide max-w-lg border-t border-white/10 pt-5">
                 In an era of rigid social codes and impending war, she was a brilliant anomaly. A woman who commanded the obsession of the most powerful men in the Empire, leaving a trail of burned letters and broken hearts in her wake.
               </p>
+
+              {/* Hero Podcast Player (Integrated tightly) */}
+              <div className="bg-[#1A1A1A] border border-[#333] rounded-sm p-4 max-w-md mt-6 group hover:border-[#C24E42]/50 transition-colors">
+                <div className="mb-3 flex items-center justify-between">
+                   <div className="flex flex-col">
+                      <span className="text-[9px] font-black text-[#9CA3AF] uppercase tracking-[0.2em] mb-1">
+                        Audio Biography
+                      </span>
+                      <span className="text-[#F5F0E8] font-serif text-sm">
+                        Venetia Stanley: Cool, Clever, Unavailable
+                      </span>
+                   </div>
+                </div>
+                <audio 
+                  controls 
+                  className="w-full h-8"
+                  src="/audio/venetia.mp3"
+                >
+                  Your browser does not support the audio element.
+                </audio>
+              </div>
+
             </div>
           </div>
           
-          {/* Optional: A subtle background texture or very faint blurred version of her image for depth */}
+          {/* Background Texture */}
           <div className="absolute inset-0 pointer-events-none opacity-10 bg-[url('/images/noise.png')] mix-blend-overlay"></div>
         </section>
 
@@ -382,71 +409,62 @@ export default function VenetiaPage() {
                   </div>
 
                   {/* 2. The Quote Card (Top Layer) - Overlapping */}
-{/* 2. The Quote Card (Top Layer) - Overlapping */}
-<div className="w-full md:w-8/12 z-10 -mt-6 md:-mt-8 md:mt-12 md:-ml-16">
-  {/* FIXED: Changed bg from dark to light (#F5F0E8) */}
-  <div className="relative bg-[#F5F0E8] rounded-sm p-6 md:p-8 lg:p-10 shadow-xl border-l-4 border-[#1A2A40]">
-    
-    {/* FIXED: Changed quote mark color to be subtle on light bg */}
-    <div className="absolute top-3 md:top-4 right-4 md:right-6 text-6xl md:text-9xl font-serif text-[#1A2A40]/5 leading-none pointer-events-none">
-      "
-    </div>
+                  <div className="w-full md:w-8/12 z-10 -mt-6 md:-mt-8 md:mt-12 md:-ml-16">
+                    <div className="relative bg-[#F5F0E8] rounded-sm p-6 md:p-8 lg:p-10 shadow-xl border-l-4 border-[#1A2A40]">
+                      
+                      <div className="absolute top-3 md:top-4 right-4 md:right-6 text-6xl md:text-9xl font-serif text-[#1A2A40]/5 leading-none pointer-events-none">
+                        "
+                      </div>
 
-    <div className="relative z-10 space-y-4 md:space-y-6 min-h-[180px] md:min-h-[220px] flex flex-col justify-center">
-      {/* The "Lens" Label */}
-      <div className="flex items-center gap-2 md:gap-3 mb-2">
-         <span className="h-[1px] w-6 md:w-8 bg-[#8B4513]"></span>
-         {/* FIXED: Ensure label text is a readable color */}
-         <p className="text-[10px] md:text-xs font-bold text-[#8B4513] uppercase tracking-[0.2em]">
-           {handwrittenQuotes[currentQuote].category}
-         </p>
-      </div>
+                      <div className="relative z-10 space-y-4 md:space-y-6 min-h-[180px] md:min-h-[220px] flex flex-col justify-center">
+                        {/* The "Lens" Label */}
+                        <div className="flex items-center gap-2 md:gap-3 mb-2">
+                          <span className="h-[1px] w-6 md:w-8 bg-[#8B4513]"></span>
+                          <p className="text-[10px] md:text-xs font-bold text-[#8B4513] uppercase tracking-[0.2em]">
+                            {handwrittenQuotes[currentQuote].category}
+                          </p>
+                        </div>
 
-      {/* FIXED: Changed quote text color to dark (#1A2A40) for high contrast */}
-      <p className="text-lg md:text-xl lg:text-2xl font-serif text-[#1A2A40] leading-relaxed">
-        {handwrittenQuotes[currentQuote].quote}
-      </p>
-    </div>
-    
-    {/* Navigation Controls */}
-    {/* FIXED: Changed border color to be visible on light bg */}
-    <div className="flex items-center justify-between mt-6 md:mt-8 pt-4 md:pt-6 border-t border-[#1A2A40]/10">
-      <div className="flex gap-1.5">
-        {handwrittenQuotes.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentQuote(index)} 
-            /* FIXED: Updated dot colors for light background */
-            className={`h-1.5 rounded-full transition-all duration-300 min-w-[6px] ${
-              index === currentQuote ? 'w-8 bg-[#1A2A40]' : 'w-1.5 bg-[#1A2A40]/20 hover:bg-[#1A2A40]/40'
-            }`}
-            aria-label={`Go to quote ${index + 1}`}
-          />
-        ))}
-      </div>
-      
-      <div className="flex gap-2">
-        <button
-          onClick={prevQuote}
-          /* FIXED: Updated arrow button colors for light background */
-          className="p-2 text-[#1A2A40] hover:bg-[#1A2A40]/5 rounded-full transition-colors border border-[#1A2A40]/20 min-w-[44px] min-h-[44px] flex items-center justify-center"
-          aria-label="Previous quote"
-        >
-          <ChevronLeft className="w-4 h-4" />
-        </button>
-        <button
-          onClick={nextQuote}
-          /* FIXED: Updated arrow button colors for light background */
-          className="p-2 text-[#1A2A40] hover:bg-[#1A2A40]/5 rounded-full transition-colors border border-[#1A2A40]/20 min-w-[44px] min-h-[44px] flex items-center justify-center"
-          aria-label="Next quote"
-        >
-          <ChevronRight className="w-4 h-4" />
-        </button>
-      </div>
-    </div>
+                        <p className="text-lg md:text-xl lg:text-2xl font-serif text-[#1A2A40] leading-relaxed">
+                          {handwrittenQuotes[currentQuote].quote}
+                        </p>
+                      </div>
+                      
+                      {/* Navigation Controls */}
+                      <div className="flex items-center justify-between mt-6 md:mt-8 pt-4 md:pt-6 border-t border-[#1A2A40]/10">
+                        <div className="flex gap-1.5">
+                          {handwrittenQuotes.map((_, index) => (
+                            <button
+                              key={index}
+                              onClick={() => setCurrentQuote(index)} 
+                              className={`h-1.5 rounded-full transition-all duration-300 min-w-[6px] ${
+                                index === currentQuote ? 'w-8 bg-[#1A2A40]' : 'w-1.5 bg-[#1A2A40]/20 hover:bg-[#1A2A40]/40'
+                              }`}
+                              aria-label={`Go to quote ${index + 1}`}
+                            />
+                          ))}
+                        </div>
+                        
+                        <div className="flex gap-2">
+                          <button
+                            onClick={prevQuote}
+                            className="p-2 text-[#1A2A40] hover:bg-[#1A2A40]/5 rounded-full transition-colors border border-[#1A2A40]/20 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                            aria-label="Previous quote"
+                          >
+                            <ChevronLeft className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={nextQuote}
+                            className="p-2 text-[#1A2A40] hover:bg-[#1A2A40]/5 rounded-full transition-colors border border-[#1A2A40]/20 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                            aria-label="Next quote"
+                          >
+                            <ChevronRight className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
 
-  </div>
-</div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -627,107 +645,107 @@ export default function VenetiaPage() {
         {/* 5. Footer */}
         <footer className="w-full bg-[#EBE5DA] py-20 border-t border-[#D4CFC4] relative overflow-hidden">
   
-  {/* Background Texture: Subtle paper grain */}
-  <div className="absolute inset-0 opacity-[0.4] pointer-events-none mix-blend-multiply" 
-      style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}>
-  </div>
-
-  <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12 lg:gap-20 relative z-10">
-    
-    {/* LEFT COLUMN: The Narrative Context */}
-    <div className="w-full md:w-1/2 space-y-6 text-center md:text-left">
-      <div>
-        {/* Archival Label */}
-        <div className="flex items-center justify-center md:justify-start gap-3 mb-3">
-          <div className="w-8 h-[1px] bg-[#8B4513]/40"></div>
-          <span className="text-[10px] font-black text-[#8B4513] uppercase tracking-[0.25em]">
-            The 1928 Footage
-          </span>
-        </div>
-
-        <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#1A2A40] mb-4 leading-tight">
-          A Glimpse of Venetia.
-        </h2>
-      </div>
-      
-      <div className="space-y-4">
-        <p className="text-lg md:text-xl text-[#5A6472] font-serif font-normal leading-relaxed">
-          H.H. Asquith destroyed nearly all her letters. The &quot;Venetia&quot; we know is mostly constructed from his obsession.
-        </p>              
-        
-        {/* The "Handwritten" Note Style */}
-        <div className="pl-5 border-l-[3px] border-[#A67C52]/30 text-left mx-auto md:mx-0 max-w-lg">
-           <p className="text-lg text-[#8B4513] font-serif italic leading-relaxed mb-2">
-            But one rare glimpse remains.
-          </p>
-          <p className="text-sm md:text-base text-[#5A6472] font-medium leading-relaxed">
-            This archival footage from 1928 captures Venetia at Alderley Edge,
-            playing bridge with her mother. It is a silent testament to the
-            woman who outlived the scandal to find her own quiet, sharp-witted peace.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    {/* RIGHT COLUMN: The Video Link Card (Styled as a Framed Photo) */}
-    <div className="w-full md:w-1/2 flex justify-center md:justify-end relative">
-      
-      {/* Decorative "Tape" or Shadow beneath */}
-      <div className="absolute -bottom-6 -right-6 w-full max-w-lg h-full border border-[#8B4513]/10 rounded-sm -z-10 hidden md:block" />
-
-      <a 
-        href="https://www.bridgemanimages.com/en/noartistknown/venetia-montagu-and-dowager-lady-stanley-of-alderley-playing-bridge/footage/asset/486980"
-        target="_blank"
-        rel="noopener noreferrer"
-        // The "Physical Photo" Frame: White Border + Deep Shadow
-        className="group relative w-full max-w-lg aspect-video bg-black rounded-sm overflow-hidden shadow-[0_20px_50px_rgba(26,42,64,0.15)] border-[8px] border-white transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_30px_60px_rgba(26,42,64,0.2)]"
-      >
-        {/* 1. The "Silent Film" Content */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#101010]">
-          
-          {/* Film Grain Texture */}
-          <div className="absolute inset-0 opacity-30 pointer-events-none" 
-               style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}>
+          {/* Background Texture: Subtle paper grain */}
+          <div className="absolute inset-0 opacity-[0.4] pointer-events-none mix-blend-multiply" 
+              style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}>
           </div>
-          
-          {/* Sepia Vignette Overlay (Makes the black screen feel vintage) */}
-          <div className="absolute inset-0 bg-[#8B4513]/20 mix-blend-overlay"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_#000000_120%)] opacity-80"></div>
 
-          {/* The "Title Card" Text */}
-          <div className="z-10 text-center space-y-3 opacity-70 group-hover:opacity-50 transition-opacity duration-500">
-             <p className="text-[#F5F0E8] font-serif text-3xl md:text-4xl tracking-[0.2em] font-bold drop-shadow-md">
-               ARCHIVE
-             </p>
-             <div className="w-16 h-[1px] bg-[#F5F0E8]/50 mx-auto"></div>
-             <p className="text-[#F5F0E8]/80 font-mono text-[10px] tracking-[0.3em] uppercase">
-               Alderley Edge, 1928
-             </p>
+          <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12 lg:gap-20 relative z-10">
+            
+            {/* LEFT COLUMN: The Narrative Context */}
+            <div className="w-full md:w-1/2 space-y-6 text-center md:text-left">
+              <div>
+                {/* Archival Label */}
+                <div className="flex items-center justify-center md:justify-start gap-3 mb-3">
+                  <div className="w-8 h-[1px] bg-[#8B4513]/40"></div>
+                  <span className="text-[10px] font-black text-[#8B4513] uppercase tracking-[0.25em]">
+                    The 1928 Footage
+                  </span>
+                </div>
+
+                <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#1A2A40] mb-4 leading-tight">
+                  A Glimpse of Venetia.
+                </h2>
+              </div>
+              
+              <div className="space-y-4">
+                <p className="text-lg md:text-xl text-[#5A6472] font-serif font-normal leading-relaxed">
+                  H.H. Asquith destroyed nearly all her letters. The &quot;Venetia&quot; we know is mostly constructed from his obsession.
+                </p>              
+                
+                {/* The "Handwritten" Note Style */}
+                <div className="pl-5 border-l-[3px] border-[#A67C52]/30 text-left mx-auto md:mx-0 max-w-lg">
+                  <p className="text-lg text-[#8B4513] font-serif italic leading-relaxed mb-2">
+                    But one rare glimpse remains.
+                  </p>
+                  <p className="text-sm md:text-base text-[#5A6472] font-medium leading-relaxed">
+                    This archival footage from 1928 captures Venetia at Alderley Edge,
+                    playing bridge with her mother. It is a silent testament to the
+                    woman who outlived the scandal to find her own quiet, sharp-witted peace.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT COLUMN: The Video Link Card (Styled as a Framed Photo) */}
+            <div className="w-full md:w-1/2 flex justify-center md:justify-end relative">
+              
+              {/* Decorative "Tape" or Shadow beneath */}
+              <div className="absolute -bottom-6 -right-6 w-full max-w-lg h-full border border-[#8B4513]/10 rounded-sm -z-10 hidden md:block" />
+
+              <a 
+                href="https://www.bridgemanimages.com/en/noartistknown/venetia-montagu-and-dowager-lady-stanley-of-alderley-playing-bridge/footage/asset/486980"
+                target="_blank"
+                rel="noopener noreferrer"
+                // The "Physical Photo" Frame: White Border + Deep Shadow
+                className="group relative w-full max-w-lg aspect-video bg-black rounded-sm overflow-hidden shadow-[0_20px_50px_rgba(26,42,64,0.15)] border-[8px] border-white transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_30px_60px_rgba(26,42,64,0.2)]"
+              >
+                {/* 1. The "Silent Film" Content */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#101010]">
+                  
+                  {/* Film Grain Texture */}
+                  <div className="absolute inset-0 opacity-30 pointer-events-none" 
+                      style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}>
+                  </div>
+                  
+                  {/* Sepia Vignette Overlay (Makes the black screen feel vintage) */}
+                  <div className="absolute inset-0 bg-[#8B4513]/20 mix-blend-overlay"></div>
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_#000000_120%)] opacity-80"></div>
+
+                  {/* The "Title Card" Text */}
+                  <div className="z-10 text-center space-y-3 opacity-70 group-hover:opacity-50 transition-opacity duration-500">
+                    <p className="text-[#F5F0E8] font-serif text-3xl md:text-4xl tracking-[0.2em] font-bold drop-shadow-md">
+                      ARCHIVE
+                    </p>
+                    <div className="w-16 h-[1px] bg-[#F5F0E8]/50 mx-auto"></div>
+                    <p className="text-[#F5F0E8]/80 font-mono text-[10px] tracking-[0.3em] uppercase">
+                      Alderley Edge, 1928
+                    </p>
+                  </div>
+                </div>
+
+                {/* 2. The Play Button Overlay */}
+                <div className="absolute inset-0 flex items-center justify-center z-20">
+                  <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#F5F0E8]/10 backdrop-blur-sm border border-[#F5F0E8]/20 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#F5F0E8]/20 transition-all duration-300 shadow-2xl">
+                    {/* Play Icon - slightly sepia tinted */}
+                    <div className="w-0 h-0 border-t-[10px] border-t-transparent border-l-[18px] border-l-[#F5F0E8] border-b-[10px] border-b-transparent ml-1 opacity-90 group-hover:opacity-100"></div>
+                  </div>
+                </div>
+
+                {/* 3. The Source Footer (Inside the frame) */}
+                <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-md px-4 py-2 flex justify-between items-center z-30">
+                  <span className="text-[10px] text-[#E8E4DC] font-bold uppercase tracking-wider flex items-center gap-2 group-hover:text-white transition-colors">
+                    Watch Footage <span className="text-[#C24E42]">↗</span>
+                  </span>
+                  <span className="text-[9px] text-[#9CA3AF]">
+                    Bridgeman Images
+                  </span>
+                </div>
+              </a>
+            </div>
+
           </div>
-        </div>
-
-        {/* 2. The Play Button Overlay */}
-        <div className="absolute inset-0 flex items-center justify-center z-20">
-          <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#F5F0E8]/10 backdrop-blur-sm border border-[#F5F0E8]/20 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#F5F0E8]/20 transition-all duration-300 shadow-2xl">
-            {/* Play Icon - slightly sepia tinted */}
-            <div className="w-0 h-0 border-t-[10px] border-t-transparent border-l-[18px] border-l-[#F5F0E8] border-b-[10px] border-b-transparent ml-1 opacity-90 group-hover:opacity-100"></div>
-          </div>
-        </div>
-
-        {/* 3. The Source Footer (Inside the frame) */}
-        <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-md px-4 py-2 flex justify-between items-center z-30">
-           <span className="text-[10px] text-[#E8E4DC] font-bold uppercase tracking-wider flex items-center gap-2 group-hover:text-white transition-colors">
-             Watch Footage <span className="text-[#C24E42]">↗</span>
-           </span>
-           <span className="text-[9px] text-[#9CA3AF]">
-             Bridgeman Images
-           </span>
-        </div>
-      </a>
-    </div>
-
-  </div>
-</footer>
+        </footer>
       </div>
     </div>
   );
