@@ -14,7 +14,7 @@ const CHAT_DEFAULT_WIDTH = 400;
 
 function getHeaderSubtitle(pathname: string): string {
   if (pathname === '/') return 'When AI Meets Primary Sources';
-  if (pathname === '/about') return 'About';
+  if (pathname === '/about') return 'When AI Meets Primary Sources';
   if (pathname === '/chat') return 'Chat with Historical Documents';
   if (pathname === '/qa') return 'Q&A';
   if (pathname === '/chapter') return 'Chapter';
@@ -172,7 +172,11 @@ export default function SiteLayout({
 
           <div className="flex items-center gap-2 md:gap-6 justify-center flex-1 min-w-0 px-2 md:px-6">
             <span className="text-[#6B7280] text-sm md:text-base truncate">
-              {headerSubtitle}
+              {isHome ? (
+                <Link href="/about"> {headerSubtitle} </Link>
+              ) : (
+                headerSubtitle
+              )}
             </span>
             {!isAbout ? (
               <Link
