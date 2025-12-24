@@ -163,12 +163,14 @@ export const PODCASTS: Array<{
     duration: number;
     chapter_id: string;
     video_exists?: boolean;
+    spotify_url?: string;
   }> = [
     {
         "title": "Introduction: The Asquith-Stanley Letters",
         "description": "An overview of the intimate correspondence between Prime Minister H.H. Asquith and Venetia Stanley, revealing the personal and political dynamics of early 20th-century Britain.",
         "duration": 413,
-        "chapter_id": "the_letters"
+        "chapter_id": "the_letters",
+        "spotify_url": "https://open.spotify.com/show/6sSEg9Sf5MHjcrqFVIb4SJ"
     },
     {
         "title": "Sicily 1912: The Prime Minister's Holiday",
