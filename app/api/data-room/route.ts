@@ -1,9 +1,49 @@
 import { NextResponse } from 'next/server';
 import { getAllTimelineDays } from '@/lib/timeline_days';
 import { getAsquithVenetiaProximitySeries } from '@/lib/daily_records';
+import { PEOPLE_DESCRIPTIONS } from '@/constants';
 
 // Mock data for the Data Room
 // TODO: Replace with actual database queries later
+const NAME_MAPPINGS: Record<string, keyof typeof PEOPLE_DESCRIPTIONS> = {
+  // Asquith Family
+  "Violet": "Violet Asquith",
+  "Violet Asquith": "Violet Asquith",
+  "Margot": "Margot Asquith",
+  "Margot Asquith": "Margot Asquith",
+  "Raymond": "Raymond Asquith",
+  "Cynthia": "Cynthia Asquith",
+
+  // Churchill Circle
+  "Clemmie Churchill": "Clementine Churchill",
+  "Goonie": "Lady Gwendeline 'Goonie' Churchill",
+  "Winston Churchill": "Winston Churchill",
+
+  // Political/Military Leaders
+  "Kitchener": "Lord Kitchener",
+  "K": "Lord Kitchener",
+  "Lloyd George": "David Lloyd George",
+  "Bonar Law": "Andrew Bonar Law",
+  "Birrell": "Augustine Birrell",
+  "McKenna": "Reginald McKenna", // Historically refers to Reginald in this context
+  "Redmond": "John Redmond",
+  "Grey": "Sir Edward Grey",
+  "Edward Grey": "Sir Edward Grey",
+  "E. Grey": "Sir Edward Grey",
+  "French": "Sir John French",
+  "Sir J. French": "Sir John French",
+  "Sir John French": "Sir John French",
+  "The King": "King George V",
+  "George V": "King George V",
+  "Carson": "Sir Edward Carson",
+  "Hankey": "Maurice Hankey",
+  "Montagu": "Edwin Montagu",
+  "Edwin": "Edwin Montagu",
+  "Fisher": "Lord Fisher",
+  "AJB": "Arthur Balfour", // Arthur James Balfour
+  "The Impeccable": "Basil Blackwood", // Historical nickname in this circle
+  "Haldane": "Lord Haldane",
+};
 
 export interface SentimentData {
   tension: Array<{ x: number; y: number; date?: string }>;
@@ -738,6 +778,13 @@ export async function GET() {
     
     const dailyLetterCountData = await generateDailyLetterData();
 
+    const normalizePersonName = (name: string): string => {
+      if (!NAME_MAPPINGS[name.trim()]) {
+        console.log(`[DEBUG] Unmapped person name encountered: "${name.trim()}"`);
+      }
+      const normalizedKey = NAME_MAPPINGS[name.trim()] || name.trim();
+      return normalizedKey;
+    }
     // Generate people data from timeline_days collection
     const generatePeopleData = async (): Promise<PeopleData[]> => {
       const allDays = await getAllTimelineDays();
@@ -748,7 +795,8 @@ export async function GET() {
         const peopleMentioned = day.people_mentioned || [];
         for (const person of peopleMentioned) {
           if (person && person.trim()) {
-            const normalizedPerson = person.trim();
+            const normalizedPerson = normalizePersonName(person);
+
             peopleFrequency.set(
               normalizedPerson,
               (peopleFrequency.get(normalizedPerson) || 0) + 1

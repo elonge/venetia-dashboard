@@ -94,7 +94,8 @@ export const PEOPLE_DESCRIPTIONS = {
     "Winston Churchill": "The ambitious First Lord of the Admiralty whose early wartime career was marked by both brilliance and controversy.",
     "Sir Lawrence Jones": "A writer and barrister who provided insightful accounts of the social and political life of the era.",
     "Lord Riddell": "A newspaper proprietor and close associate of Lloyd George, noted for his candid wartime diaries.",
-    "The Observers": "A group of prominent figures within the social and political elite who monitored and recorded the events of the day."
+    "The Observers": "A group of prominent figures within the social and political elite who monitored and recorded the events of the day.",
+    "Lord Haldane": "The Lord Chancellor and former War Secretary who created the British Expeditionary Force but was forced to resign in 1915 due to anti-German hysteria."
 };
 
 export const PODCASTS: Array<{

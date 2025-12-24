@@ -1,9 +1,6 @@
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Chrono } from "react-chrono";
-import "react-chrono/dist/style.css";
-import { transformMeetingDatesToTimelineItems } from "@/lib/react-chrono-transformers";
 import { TimeSeries, TimeRange } from "pondjs";
 import dynamic from "next/dynamic";
 
@@ -25,7 +22,8 @@ import {
 import { Calendar, X } from "lucide-react";
 import { PEOPLE_DESCRIPTIONS } from "@/constants";
 import ProximityTimeline from "./ProximityTimeline";
-import ProximityMap from "./ProximityMap";
+
+const ProximityMap = dynamic(() => import("./ProximityMap"), { ssr: false });
 
 interface ChartRendererProps {
   dataRoomData: DataRoomData | null;
@@ -535,7 +533,7 @@ export default function ChartRenderer({
         </div>
       );
     }
-
+    console.log("Rendering people dossier with data:", dataRoomData.people);
     return (
       <div
         className={`flex flex-col bg-[#F5F0E8] border border-[#D4CFC4] rounded-lg p-6 ${
