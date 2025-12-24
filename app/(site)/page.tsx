@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Cog, Shuffle } from "lucide-react";
 import HeroSection from "@/components/home/HeroSection";
+import { useChatVisibility } from "@/components/chat/useChatVisibility";
 import {
   DailyWidget,
   getDayByDate,
@@ -12,12 +13,12 @@ import {
   normalizeDayDate,
 } from "@/components/daily";
 import type { DayData } from "@/components/daily";
-import DataRoom from "@/components/data-room/DataRoom";
 import ChaptersGrid from "@/components/home/ChaptersGrid";
 import DataRoomPreview from "@/components/data-room/DataRoomPreview";
 
 export default function Home() {
   const router = useRouter();
+  useChatVisibility(true);
 
   // Daily widget state
   const [todayInHistory, setTodayInHistory] = useState<DayData | null>(null);

@@ -12,19 +12,6 @@ const CHAT_MIN_WIDTH = 300;
 const CHAT_MAX_WIDTH = 600;
 const CHAT_DEFAULT_WIDTH = 400;
 
-function getHeaderSubtitle(pathname: string): string {
-  if (pathname === '/') return 'When AI Meets Primary Sources';
-  if (pathname === '/about') return 'When AI Meets Primary Sources';
-  if (pathname === '/chat') return 'Chat with Historical Documents';
-  if (pathname === '/qa') return 'Q&A';
-  if (pathname === '/chapter') return 'Chapter';
-  if (pathname === '/data-room') return 'Data Room';
-  if (pathname.startsWith('/daily/')) return 'Daily View';
-  if (pathname === '/venetia') return 'Venetia Stanley';
-  if (pathname === '/lab') return 'Simulation Lab';
-  return 'The Venetia Project';
-}
-
 export default function SiteLayout({
   children,
 }: {
@@ -39,9 +26,7 @@ export default function SiteLayout({
   const [showChat, setShowChat] = useState(false); // Start closed, will open on desktop via useEffect
   const [isChatOpen, setIsChatOpen] = useState(false); // For mobile bottom sheet - always starts closed
 
-  const headerSubtitle = useMemo(() => getHeaderSubtitle(pathname), [pathname]);
   const isHome = pathname === '/';
-  const isAbout = pathname === '/about';
 
   // Update showChat when mobile state changes - desktop shows chat by default, mobile hides it
   useEffect(() => {
@@ -150,48 +135,58 @@ export default function SiteLayout({
   return (
     <ChatLayoutContext.Provider value={{ showChat: isMobile ? isChatOpen : showChat, setShowChat: isMobile ? setIsChatOpen : setShowChat }}>
       <div className="flex h-screen flex-col bg-[#E8E4DC]">
-        <header className="bg-[#F5F0E8] border-b border-[#D4CFC4] px-4 md:px-6 py-3 flex items-center justify-between w-full">
-          <div className="flex items-center gap-2 md:gap-4 min-w-0 flex-shrink">
-            {isHome ? (
-              <h1 className="text-[#1A2A40] font-serif text-xl md:text-2xl font-medium truncate">
-                The Venetia Project
-              </h1>
-            ) : (
-              <button
-                type="button"
-                onClick={handleHeaderBack}
-                className="flex items-center gap-1 md:gap-2 text-[#1A2A40] hover:text-[#4A7C59] transition-colors min-w-0"
-              >
-                <ArrowLeft className="w-4 h-4 shrink-0" />
-                <span className="font-serif text-base md:text-lg font-medium truncate">
-                  The Venetia Project
-                </span>
-              </button>
-            )}
+<header className="sticky top-0 z-50 w-full bg-[#F5F0E8]/95 backdrop-blur-sm border-b border-[#D4CFC4] shadow-[0_1px_3px_rgba(0,0,0,0.02)] transition-all duration-300">
+  <div className="max-w-[1600px] mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
+    
+    {/* 1. LEFT: THE MASTHEAD */}
+    <div className="flex items-center gap-2 min-w-0 flex-shrink">
+      {!isHome ? (
+        <button
+          type="button"
+          onClick={handleHeaderBack}
+          className="group flex items-center gap-3 text-[#1A2A40] hover:text-[#4A7C59] transition-colors min-w-0"
+        >
+          <ArrowLeft className="w-4 h-4 shrink-0 transition-transform group-hover:-translate-x-1" />
+          <div className="flex flex-col items-start">
+             <span className="font-serif text-lg md:text-xl font-bold leading-none">
+               The Venetia Project
+             </span>
+             <span className="text-[8px] font-bold text-[#8B4513] uppercase tracking-[0.2em] opacity-80 mt-0.5">
+               Return to Index
+             </span>
           </div>
+        </button>
+      ) : (
+        <div className="flex flex-col">
+          <h1 className="text-[#1A2A40] font-serif text-xl md:text-2xl font-bold tracking-tight leading-none">
+            The Venetia Project
+          </h1>
+          <span className="text-[9px] font-bold text-[#8B4513] uppercase tracking-[0.3em] opacity-80 mt-1 pl-0.5">
+            When AI Meets Primary Sources
+          </span>
+        </div>
+      )}
+    </div>
 
-          <div className="flex items-center gap-2 md:gap-6 justify-center flex-1 min-w-0 px-2 md:px-6">
-            <span className="text-[#6B7280] text-sm md:text-base truncate">
-              {isHome ? (
-                <Link href="/about"> {headerSubtitle} </Link>
-              ) : (
-                headerSubtitle
-              )}
-            </span>
-            {!isAbout ? (
-              <Link
-                href="/about"
-                className="hidden sm:inline text-[#1A2A40] hover:text-[#4A7C59] transition-colors text-sm md:text-base font-medium whitespace-nowrap"
-              >
-                What is the Venetia Project?
-              </Link>
-            ) : null}
-          </div>
+    {/* 2. RIGHT: NAVIGATION & SEAL */}
+    {/* <div className="flex items-center gap-6 md:gap-8 justify-end flex-1 min-w-0 pl-4">
+      
+      <nav className="flex items-center gap-6 overflow-hidden">
+        <span className="hidden md:block text-[10px] font-bold uppercase tracking-widest text-[#5A6472] hover:text-[#1A2A40] relative group py-1 cursor-default">
+        </span>
+      </nav>
 
-          <div className="w-8 h-8 rounded-full bg-[#4A7C59] flex items-center justify-center shrink-0">
-            <span className="text-white text-xs font-medium">V</span>
-          </div>
-        </header>
+      <div className="h-4 w-px bg-[#D4CFC4] hidden sm:block" />
+
+      <div className="group relative w-9 h-9 flex items-center justify-center rounded-full bg-[#4A7C59] text-[#F5F0E8] shadow-sm hover:bg-[#3D664A] hover:shadow-md transition-all duration-300 border-[3px] border-[#F5F0E8] outline outline-1 outline-[#D4CFC4] shrink-0 cursor-default">
+        <span className="font-serif italic font-bold text-lg leading-none translate-y-[1px]">
+          V
+        </span>
+      </div>
+    </div> */}
+
+  </div>
+</header>
 
         <div className="flex flex-1 min-h-0 relative">
           <div className="flex-1 min-w-0 relative overflow-y-auto">
