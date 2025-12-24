@@ -163,7 +163,7 @@ function ChapterCard({ chapter, index }: { chapter: Chapter, index: number }) {
 
   return (
     // Theoretical Component Structure
-<Link className="group relative overflow-hidden rounded-lg aspect-video cursor-pointer shadow-md" href={`/chapter?chapter_id=${encodeURIComponent(chapter.chapter_id)}`}>
+<Link className="group relative overflow-hidden rounded-md aspect-video cursor-pointer shadow-md" href={`/chapter?chapter_id=${encodeURIComponent(chapter.chapter_id)}`}>
   
   {/* 1. BACKGROUND IMAGE */}
   <img 

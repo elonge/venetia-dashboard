@@ -328,7 +328,7 @@ export default function ChatInterface() {
       
       {/* 1. HEADER: Specialized Terminal Look */}
       <div className="px-4 md:px-6 py-4 md:py-5 border-b border-[#D4CFC4] bg-[#FAF7F2] flex items-center gap-2 md:gap-3 z-10 shadow-sm">
-        <div className="w-7 h-7 md:w-8 md:h-8 bg-[#1A2A40] rounded-sm flex items-center justify-center shadow-sm shrink-0">
+        <div className="w-7 h-7 md:w-8 md:h-8 bg-[#1A2A40] rounded-md flex items-center justify-center shadow-sm shrink-0">
           <Sparkles size={12} className="md:w-[14px] md:h-[14px] text-[#F5F0E8]" />
         </div>
         <div className="min-w-0">
@@ -359,13 +359,13 @@ export default function ChatInterface() {
             <div className="w-full max-w-sm space-y-2 md:space-y-2.5 px-4">
               {isLoadingPopularQuestions ? (
                 Array.from({ length: DEFAULT_SUGGESTED_QUESTIONS_COUNT }).map((_, i) => (
-                  <div key={i} className="h-12 w-full bg-white/50 border border-[#D4CFC4] rounded-sm animate-pulse" />
+                  <div key={i} className="h-12 w-full bg-white/50 border border-[#D4CFC4] rounded-md animate-pulse" />
                 ))
               ) : (suggestedQuestions.length > 0 ? suggestedQuestions.map(q => q.Question) : FALLBACK_SUGGESTED_QUESTIONS.slice(0, DEFAULT_SUGGESTED_QUESTIONS_COUNT)).map((qText, i) => (
                 <button
                   key={i}
                   onClick={() => handleSend(qText)}
-                  className="w-full text-left p-3 md:p-3.5 bg-white border border-[#D4CFC4] rounded-sm hover:border-[#4A7C59] hover:bg-[#4A7C59]/5 transition-all group flex items-center justify-between shadow-sm min-h-[44px]"
+                  className="w-full text-left p-3 md:p-3.5 bg-white border border-[#D4CFC4] rounded-md hover:border-[#4A7C59] hover:bg-[#4A7C59]/5 transition-all group flex items-center justify-between shadow-sm min-h-[44px]"
                 >
                   <span className="text-[10px] md:text-[11px] font-bold text-[#1A2A40] group-hover:text-[#4A7C59] transition-colors line-clamp-2 md:line-clamp-1 flex-1">
                     {qText}
@@ -408,12 +408,12 @@ export default function ChatInterface() {
             onKeyDown={handleKeyPress}
             placeholder="Ask a question about the archive..."
             disabled={isLoading}
-            className="w-full bg-white border border-[#D4CFC4] text-[#1A2A40] placeholder:text-[#D4CFC4] text-sm px-4 py-4 md:py-6 rounded-sm pr-12 md:pr-14 focus-visible:ring-1 focus-visible:ring-[#1A2A40]/20 focus-visible:border-[#1A2A40] transition-all font-serif"
+            className="w-full bg-white border border-[#D4CFC4] text-[#1A2A40] placeholder:text-[#D4CFC4] text-sm px-4 py-4 md:py-6 rounded-md pr-12 md:pr-14 focus-visible:ring-1 focus-visible:ring-[#1A2A40]/20 focus-visible:border-[#1A2A40] transition-all font-serif"
           />
           <button
             onClick={() => handleSend()}
             disabled={isLoading || !input.trim()}
-            className="absolute right-2 p-2! md:p-2.5! bg-[#1A2A40] text-white rounded-sm hover:bg-[#4A7C59] disabled:bg-[#D4CFC4] disabled:cursor-not-allowed transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="absolute right-2 p-2! md:p-2.5! bg-[#1A2A40] text-white rounded-md hover:bg-[#4A7C59] disabled:bg-[#D4CFC4] disabled:cursor-not-allowed transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
             aria-label="Send message"
           >
             {isLoading ? (
