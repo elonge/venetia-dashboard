@@ -13,8 +13,45 @@ const NAME_MAPPINGS: Record<string, keyof typeof PEOPLE_DESCRIPTIONS> = {
   "Margot Asquith": "Margot Asquith",
   "Raymond": "Raymond Asquith",
   "Cynthia": "Cynthia Asquith",
+  "Puffin": "Anthony Asquith",
+    "Anthony Asquith": "Anthony Asquith",
+    "Cyril Asquith": "Cyril Asquith",
+    "Arthur Asquith": "Arthur Asquith",
+    "Elizabeth": "Elizabeth Asquith",
+    "Elizabeth Asquith": "Elizabeth Asquith",
+    "Maurice Bonham Carter": "Maurice Bonham Carter", // Ensure this key exists in descriptions    
 
-  // Churchill Circle
+// The "Coterie" & Social Circle
+    "Diana": "Lady Diana Manners",
+    "Bron": "Auberon Herbert (Lord Lucas)",
+    "Nan": "Nan Tennant",
+    "Nan Tennant": "Nan Tennant",
+    "Clare Tennant": "Nan Tennant", // Often conflated in casual mentions, or map separately if specific
+    "Frances Horner": "Lady Frances Horner",
+    "Nellie Hozier": "Nellie Hozier", // Ensure description exists (Clementine's sister)
+    "Muriel Wilson": "Muriel Wilson", // A prominent socialite  // Churchill Circle
+    "Sylvia": "Sylvia Henley",
+    "Viola": "Viola Tree",
+    "Rupert": "Rupert Brooke",
+    "Rupert Brooke": "Rupert Brooke",
+    "Eddie Marsh": "Edward Marsh", // Winston's secretary
+    "Dinah Tennant": "Nan Tennant", // Often used interchangeably or close relation
+    "Jack": "Jack Tennant", // Venetia's brother
+    "Jack Tennant": "Jack Tennant",
+    "Beb": "Herbert Asquith", // Asquith's son, husband of Cynthia
+    "Herbert Asquith": "Herbert Asquith",
+    "Katharine": "Katharine Asquith", // Wife of Raymond
+    "Kath": "Katharine Asquith",
+    "Duff Cooper": "Duff Cooper",
+    "Patrick": "Patrick Shaw-Stewart",
+    "Patrick Shaw-Stewart": "Patrick Shaw-Stewart",
+    "The Impeccable": "Basil Blackwood",
+    "Impeccable": "Basil Blackwood",
+    "Basil Blackwood": "Basil Blackwood",
+    "Lord Lucas": "Auberon Herbert (Lord Lucas)",
+    "Archie": "Archibald Sinclair",
+    "Sir A. Sinclair": "Archibald Sinclair",    
+
   "Clemmie Churchill": "Clementine Churchill",
   "Goonie": "Lady Gwendeline 'Goonie' Churchill",
   "Winston Churchill": "Winston Churchill",
@@ -39,10 +76,81 @@ const NAME_MAPPINGS: Record<string, keyof typeof PEOPLE_DESCRIPTIONS> = {
   "Hankey": "Maurice Hankey",
   "Montagu": "Edwin Montagu",
   "Edwin": "Edwin Montagu",
+  "Edwin Montagu": "Edwin Montagu",
   "Fisher": "Lord Fisher",
   "AJB": "Arthur Balfour", // Arthur James Balfour
-  "The Impeccable": "Basil Blackwood", // Historical nickname in this circle
   "Haldane": "Lord Haldane",
+  "Harold Baker": "Harold Baker",
+    "Baker": "Harold Baker",
+    "Buckmaster": "Stanley Buckmaster",
+    "Runciman": "Walter Runciman",
+    "Masterman": "Charles Masterman",
+    "Jack Pease": "Jack Pease",
+    "Stamfordham": "Lord Stamfordham",
+    "The Speaker": "James Lowther",
+    "Sir John Simon": "Sir John Simon", // Ensure description exists  
+
+    // Military & Naval
+    "Jellicoe": "Admiral Jellicoe",
+    "Joffre": "General Joffre",
+    "General Rawlinson": "Sir Henry Rawlinson",
+    "Sir Henry Rawlinson": "Sir Henry Rawlinson",
+    "Jacky Fisher": "Lord Fisher", // Mapping colloquial to formal
+    "Sir Arthur Wilson": "Sir Arthur Wilson", // Ensure description exists
+    "Haig": "Douglas Haig",
+    "Robertson": "William Robertson", // Chief of Staff
+    "Murray": "General Murray",
+    "General Murray": "General Murray",
+    "Beatty": "Admiral Beatty",
+     "Goofy": "Lord Fisher", // Occasional nickname
+
+    // Diplomats & Foreign
+    "Cambon": "Paul Cambon", // French Ambassador
+    "Benckendorff": "Count Benckendorff", // Russian Ambassador
+    "Count Benckendorff": "Count Benckendorff",
+    "Countess Benckendorff": "Count Benckendorff", // Map to couple or primary
+    "Page": "Walter Hines Page", // US Ambassador
+    "President Wilson": "Woodrow Wilson",
+    "Woodrow Wilson": "Woodrow Wilson",
+    "Colonel House": "Colonel House", // US Envoy (often typo'd as Howse)
+    "Colonel Howse": "Colonel House",
+
+    // Nicknames & Specific References
+    "The Arch-Colonel": "Colonel Repington", // Asquith's nickname for Repington
+    "The Cardinal": "Lord Sheffield", // Asquith's nickname for Venetia's father
+    "Lord Aberdeen": "Lady Aberdeen", // Often mentioned as a couple "The Aberdeens", map to the primary entry or create "Lord & Lady Aberdeen"
+    "The Aberdeens": "Lady Aberdeen",
+
+    // Asquith's Nicknames for Colleagues
+    "The Assyrian": "Edwin Montagu", // Crucial nickname mapping
+    "Huck": "Harold Baker", // Asquith's nickname for Baker
+    "Bluey": "Harold Baker",
+    "Bongie": "Maurice Bonham Carter",
+    "Mikky": "Reginald McKenna", // Nickname for McKenna
+    "Reginald McKenna": "Reginald McKenna",
+    "Reggie": "Reginald McKenna",
+    "Pamela": "Pamela McKenna",
+    "Pamela McKenna": "Pamela McKenna",
+    "Simon": "Sir John Simon",
+    "The Bud": "Lady Gwendeline 'Goonie' Churchill", // Nickname
+
+    // Press & Opposition
+    "Northcliffe": "Lord Northcliffe",
+    "Curzon": "Lord Curzon",
+    "F. E. Smith": "F. E. Smith",
+
+    // Other recurring figures
+    "Crewe": "Lord Crewe",
+    "Lansdowne": "Lord Lansdowne",
+    "Reading": "Lord Reading",
+    "Rufus": "Lord Reading", // Rufus Isaacs
+    "Geoffrey": "Geoffrey Howard",
+    "Geoffrey Howard": "Geoffrey Howard",
+    "Illingworth": "Percy Illingworth", // Chief Whip
+    "Gulland": "John Gulland", // Whip
+    "Handel Booth": "Handel Booth",
+    "Hogge": "J.M. Hogge",
+    "Pringle": "W.M.R. Pringle"
 };
 
 export interface SentimentData {

@@ -129,12 +129,12 @@ const VenetiaSimulationLab = () => {
             By carefully examining what Asquith quotes, references, and responds to, we can infer the content and tone 
             of her original letters.
           </p>
-          <h2 className="text-lg font-bold text-[#1A2A40] mb-3">Why did I do this?</h2>
+          <h2 className="text-lg font-bold text-[#1A2A40] mb-3">Why did we do this?</h2>
           <p className="text-sm text-[#4B5563] leading-relaxed">
-            The archive is incomplete—we only have half the conversation. This reconstruction makes visible the 
-            missing voice, revealing how Venetia's words shaped political discourse and personal intimacy. Each 
-            simulated letter includes detailed logic showing the historical evidence that supports the reconstruction, 
-            making the methodology transparent and verifiable.
+            Because sometimes it is easier to imagine Venetia when she is writing.
+            Her letters are lost, but her presence in the correspondence is not. 
+            When reading Asquith’s replies closely, one begins to sense her tone, her provocations, her restraint, her economy of feeling. 
+            Thinking about what she might have written — sentence by sentence — makes her feel less abstract and less mythic..
           </p>
         </div>
 
@@ -211,12 +211,13 @@ const VenetiaSimulationLab = () => {
           {/* Audio Section Explanation */}
           <div className="bg-[#EBE7DF] rounded-2xl p-6 border border-[#C4BFAF] shadow-sm">
             <h2 className="text-base font-bold text-[#1A2A40] mb-3">Audio Reconstruction</h2>
-            <p className="text-xs text-[#4B5563] leading-relaxed mb-3">
+            <p className="text-sm text-[#4B5563] leading-relaxed mb-3">
               <strong className="text-[#1A2A40]">What is this?</strong> This is an audio reconstruction of Asquith 
-              reading one of his famous letters to Venetia, created using voice cloning of Asquith's voice (taken from his speech in 1909).
+              reading one of his famous letters to Venetia. 
+              The recording was created by modelling Asquith’s voice using surviving audio from a public speech he delivered in 1909, and applying it to the text of a letter preserved in the archive.
             </p>
-            <p className="text-xs text-[#4B5563] leading-relaxed">
-              <strong className="text-[#1A2A40]">Why did I do this?</strong> The written word captures only part of 
+            <p className="text-sm text-[#4B5563] leading-relaxed">
+              <strong className="text-[#1A2A40]">Why did we do this?</strong> The written word captures only part of 
               the intimacy of these letters. Hearing them read aloud—with the pauses, emphasis, and emotional tone— 
               brings us closer to understanding how these words were meant to be received. It transforms the archival 
               document into a living moment of communication.
@@ -259,18 +260,17 @@ const VenetiaSimulationLab = () => {
           {/* Instagram Section Explanation */}
           <div className="bg-white rounded-2xl p-6 border border-[#C4BFAF] shadow-sm">
             <h2 className="text-base font-bold text-[#1A2A40] mb-3">Instagram Displacement</h2>
-            <p className="text-xs text-[#4B5563] leading-relaxed mb-3">
+            <p className="text-sm text-[#4B5563] leading-relaxed mb-3">
               <strong className="text-[#1A2A40]">What is this?</strong> This is a speculative Instagram feed for 
               Venetia Stanley, translating her historical experiences and personality into contemporary social media 
               format. The posts capture moments from her life—boredom in the country, shopping trips, social activities— 
               as she might have shared them today.
             </p>
-            <p className="text-xs text-[#4B5563] leading-relaxed">
-              <strong className="text-[#1A2A40]">Why did I do this?</strong> Social media is our modern form of 
-              intimate correspondence. By reimagining Venetia's life through Instagram, we bridge the temporal gap 
-              and make her relatable to contemporary audiences. It highlights how the personal details of her life— 
-              the boredom, the shopping, the social commentary—are universal experiences that transcend historical 
-              context, while also revealing how different platforms shape how we express ourselves.
+            <p className="text-sm text-[#4B5563] leading-relaxed">
+              <strong className="text-[#1A2A40]">Why did we do this?</strong> Because it was <strong>fun</strong> - as Venetia probably would have said.
+              And because, in the process, it exposes a difference that is easy to overlook. 
+              It is difficult, from a contemporary standpoint, to imagine caring so little about public self-presentation. 
+              For Venetia and her world, the private and the public were not continuously performed, curated, and revised.
             </p>
           </div>
 
