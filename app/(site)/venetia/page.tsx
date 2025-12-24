@@ -625,94 +625,109 @@ export default function VenetiaPage() {
         </section>
 
         {/* 5. Footer */}
-      <footer className="w-full bg-[#050505] py-20 border-t border-white/10 relative overflow-hidden">
-        
-        {/* Optional: Background Noise Texture for Film Grain effect */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay" 
-            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}>
+        <footer className="w-full bg-[#EBE5DA] py-20 border-t border-[#D4CFC4] relative overflow-hidden">
+  
+  {/* Background Texture: Subtle paper grain */}
+  <div className="absolute inset-0 opacity-[0.4] pointer-events-none mix-blend-multiply" 
+      style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}>
+  </div>
+
+  <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12 lg:gap-20 relative z-10">
+    
+    {/* LEFT COLUMN: The Narrative Context */}
+    <div className="w-full md:w-1/2 space-y-6 text-center md:text-left">
+      <div>
+        {/* Archival Label */}
+        <div className="flex items-center justify-center md:justify-start gap-3 mb-3">
+          <div className="w-8 h-[1px] bg-[#8B4513]/40"></div>
+          <span className="text-[10px] font-black text-[#8B4513] uppercase tracking-[0.25em]">
+            The 1928 Footage
+          </span>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12 lg:gap-20">
-          
-          {/* LEFT COLUMN: The Narrative Context */}
-          <div className="w-full md:w-1/2 space-y-6 text-center md:text-left z-10">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#F5F0E8] mb-4">
-                The Survivor
-              </h2>
-              <div className="w-24 h-[1px] bg-[#8B4513] opacity-80 mx-auto md:mx-0"></div>
-            </div>
-            
-            <div className="space-y-4">
-              <p className="text-lg md:text-xl text-[#E8E4DC] font-normal leading-relaxed">
-                H.H. Asquith destroyed nearly all her letters. The &quot;Venetia&quot; we know is mostly constructed from his obsession.
-              </p>              
-              <p className="text-xl text-[#F5F0E8] font-serif italic leading-relaxed">
-                But one rare glimpse remains.
-              </p>
+        <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#1A2A40] mb-4 leading-tight">
+          A Glimpse of Venetia.
+        </h2>
+      </div>
+      
+      <div className="space-y-4">
+        <p className="text-lg md:text-xl text-[#5A6472] font-serif font-normal leading-relaxed">
+          H.H. Asquith destroyed nearly all her letters. The &quot;Venetia&quot; we know is mostly constructed from his obsession.
+        </p>              
+        
+        {/* The "Handwritten" Note Style */}
+        <div className="pl-5 border-l-[3px] border-[#A67C52]/30 text-left mx-auto md:mx-0 max-w-lg">
+           <p className="text-lg text-[#8B4513] font-serif italic leading-relaxed mb-2">
+            But one rare glimpse remains.
+          </p>
+          <p className="text-sm md:text-base text-[#5A6472] font-medium leading-relaxed">
+            This archival footage from 1928 captures Venetia at Alderley Edge,
+            playing bridge with her mother. It is a silent testament to the
+            woman who outlived the scandal to find her own quiet, sharp-witted peace.
+          </p>
+        </div>
+      </div>
+    </div>
 
-              <p className="text-sm md:text-base text-gray-300 font-medium leading-relaxed max-w-md mx-auto md:mx-0 border-l-2 border-[#8B4513] pl-4">
-                This archival footage from 1928 captures Venetia at Alderley Edge,
-                playing bridge with her mother. It is a silent testament to the
-                woman who outlived the scandal to find her own quiet, sharp-
-                witted peace.
-              </p>
-            </div>
-          </div>
+    {/* RIGHT COLUMN: The Video Link Card (Styled as a Framed Photo) */}
+    <div className="w-full md:w-1/2 flex justify-center md:justify-end relative">
+      
+      {/* Decorative "Tape" or Shadow beneath */}
+      <div className="absolute -bottom-6 -right-6 w-full max-w-lg h-full border border-[#8B4513]/10 rounded-sm -z-10 hidden md:block" />
 
-          {/* RIGHT COLUMN: The Video Link Card */}
-{/* RIGHT COLUMN: The Video Link Card */}
-    <div className="w-full md:w-1/2 z-10 flex justify-center md:justify-end">
       <a 
         href="https://www.bridgemanimages.com/en/noartistknown/venetia-montagu-and-dowager-lady-stanley-of-alderley-playing-bridge/footage/asset/486980"
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative w-full max-w-lg aspect-video bg-[#0A0A0A] rounded-sm overflow-hidden shadow-2xl border border-white/10 hover:border-[#8B4513]/50 transition-all duration-500"
+        // The "Physical Photo" Frame: White Border + Deep Shadow
+        className="group relative w-full max-w-lg aspect-video bg-black rounded-sm overflow-hidden shadow-[0_20px_50px_rgba(26,42,64,0.15)] border-[8px] border-white transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_30px_60px_rgba(26,42,64,0.2)]"
       >
-        {/* 1. The Generic "Silent Film" Background (CSS Only) */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#151515]">
+        {/* 1. The "Silent Film" Content */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#101010]">
           
           {/* Film Grain Texture */}
-          <div className="absolute inset-0 opacity-20 pointer-events-none" 
+          <div className="absolute inset-0 opacity-30 pointer-events-none" 
                style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}>
           </div>
           
-          {/* Vintage Vignette */}
+          {/* Sepia Vignette Overlay (Makes the black screen feel vintage) */}
+          <div className="absolute inset-0 bg-[#8B4513]/20 mix-blend-overlay"></div>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_#000000_120%)] opacity-80"></div>
 
           {/* The "Title Card" Text */}
-          <div className="z-10 text-center space-y-2 opacity-60 group-hover:opacity-40 transition-opacity duration-500">
-             <p className="text-[#F5F0E8] font-serif text-3xl md:text-4xl tracking-[0.2em] font-bold">
+          <div className="z-10 text-center space-y-3 opacity-70 group-hover:opacity-50 transition-opacity duration-500">
+             <p className="text-[#F5F0E8] font-serif text-3xl md:text-4xl tracking-[0.2em] font-bold drop-shadow-md">
                ARCHIVE
              </p>
-             <div className="w-12 h-[1px] bg-[#F5F0E8] mx-auto"></div>
-             <p className="text-[#F5F0E8] font-mono text-sm tracking-widest uppercase">
+             <div className="w-16 h-[1px] bg-[#F5F0E8]/50 mx-auto"></div>
+             <p className="text-[#F5F0E8]/80 font-mono text-[10px] tracking-[0.3em] uppercase">
                Alderley Edge, 1928
              </p>
           </div>
         </div>
 
-        {/* 2. The Play Button Overlay (Same as before) */}
+        {/* 2. The Play Button Overlay */}
         <div className="absolute inset-0 flex items-center justify-center z-20">
-          <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#F5F0E8]/5 backdrop-blur-sm border border-[#F5F0E8]/10 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#F5F0E8]/10 transition-all duration-300 shadow-2xl">
-            <div className="w-0 h-0 border-t-[10px] border-t-transparent border-l-[18px] border-l-[#F5F0E8] border-b-[10px] border-b-transparent ml-1 opacity-80 group-hover:opacity-100"></div>
+          <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#F5F0E8]/10 backdrop-blur-sm border border-[#F5F0E8]/20 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#F5F0E8]/20 transition-all duration-300 shadow-2xl">
+            {/* Play Icon - slightly sepia tinted */}
+            <div className="w-0 h-0 border-t-[10px] border-t-transparent border-l-[18px] border-l-[#F5F0E8] border-b-[10px] border-b-transparent ml-1 opacity-90 group-hover:opacity-100"></div>
           </div>
         </div>
 
-        {/* 3. The Source Footer */}
-        <div className="absolute bottom-0 left-0 right-0 bg-black/90 backdrop-blur-md px-4 py-3 flex justify-between items-center border-t border-white/5 z-30">
-           <span className="text-xs text-[#E8E4DC] font-bold uppercase tracking-wider flex items-center gap-2">
-             Watch Footage <span className="text-[#8B4513]">↗</span>
+        {/* 3. The Source Footer (Inside the frame) */}
+        <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-md px-4 py-2 flex justify-between items-center z-30">
+           <span className="text-[10px] text-[#E8E4DC] font-bold uppercase tracking-wider flex items-center gap-2 group-hover:text-white transition-colors">
+             Watch Footage <span className="text-[#C24E42]">↗</span>
            </span>
-           <span className="text-[10px] text-[#5A6472]">
-             Source: Bridgeman Images
+           <span className="text-[9px] text-[#9CA3AF]">
+             Bridgeman Images
            </span>
         </div>
       </a>
     </div>
 
-        </div>
-      </footer>
+  </div>
+</footer>
       </div>
     </div>
   );
