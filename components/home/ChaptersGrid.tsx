@@ -169,29 +169,30 @@ function ChapterCard({ chapter, index }: { chapter: Chapter, index: number }) {
   <img 
     src={chapter.image} 
     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+    alt={chapter.chapter_title}
   />
   
   {/* 2. GRADIENT OVERLAY (For text readability) */}
   <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent" />
 
   {/* 3. CONTENT LAYER */}
-  <div className="absolute inset-0 p-6 flex flex-col justify-end">
+  <div className="absolute inset-0 p-4 md:p-6 flex flex-col justify-end">
     
     {/* Top Badge: Chapter ID or Number */}
-    <div className="absolute top-4 left-4">
-      <span className="px-2 py-1 text-[10px] font-bold tracking-widest text-white/80 bg-black/30 backdrop-blur-sm rounded border border-white/10 uppercase">
+    <div className="absolute top-3 md:top-4 left-3 md:left-4">
+      <span className="px-1.5 md:px-2 py-0.5 md:py-1 text-[9px] md:text-[10px] font-bold tracking-widest text-white/80 bg-black/30 backdrop-blur-sm rounded border border-white/10 uppercase">
         Chapter {index + 1}
       </span>
       
     </div>
 
     {/* Title */}
-    <h3 className="text-xl md:text-2xl font-serif text-white mb-2 leading-tight">
+    <h3 className="text-lg md:text-xl lg:text-2xl font-serif text-white mb-1.5 md:mb-2 leading-tight">
       {chapter.chapter_title}
     </h3>
 
     {/* Description (Hidden by default, slides in, or just visible but small) */}
-    <p className="text-sm text-gray-300 line-clamp-2 max-w-[90%] opacity-80 group-hover:opacity-100 transition-opacity">
+    <p className="text-xs md:text-sm text-gray-300 line-clamp-2 max-w-[90%] opacity-80 group-hover:opacity-100 transition-opacity">
       {chapter.main_story}
     </p>
 

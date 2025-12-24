@@ -74,7 +74,7 @@ export default function SicilyMap({
   const zoom = 8;
 
   return (
-    <div className="bg-[#F5F0E8] rounded-lg overflow-hidden">
+    <div className="bg-[#F5F0E8] rounded-lg overflow-hidden relative z-0">
       <div className="p-4 border-b border-[#D4CFC4]">
         <h2 className="text-xs font-semibold text-[#2D3648] uppercase tracking-wider">
           {title}

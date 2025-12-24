@@ -145,76 +145,76 @@ export default function DataRoomFull({
   };
 
   const chartIcons: Record<ChartId, React.ReactElement> = {
-    "meeting-dates": <Calendar className="w-5 h-5" />,
-    asquith_venetia_proximity: <MapPin className="w-5 h-5" />,
-    sentiment: <TrendingUp className="w-5 h-5" />,
-    topics: <BarChart3 className="w-5 h-5" />,
-    "weekly-letter-count": <Mail className="w-5 h-5" />,
-    people: <Users className="w-5 h-5" />,
+    "meeting-dates": <Calendar className="w-4 h-4 md:w-5 md:h-5" />,
+    asquith_venetia_proximity: <MapPin className="w-4 h-4 md:w-5 md:h-5" />,
+    sentiment: <TrendingUp className="w-4 h-4 md:w-5 md:h-5" />,
+    topics: <BarChart3 className="w-4 h-4 md:w-5 md:h-5" />,
+    "weekly-letter-count": <Mail className="w-4 h-4 md:w-5 md:h-5" />,
+    people: <Users className="w-4 h-4 md:w-5 md:h-5" />,
   };
 
   return (
-    <div className="h-full font-sans antialiased text-[#1A2A40] selection:bg-[#4A7C59] selection:text-white">
-      <div className="relative mx-auto w-full h-full bg-[#F5F0E8] rounded-lg border border-[#D4CFC4] shadow-2xl flex flex-col overflow-hidden">
+    <div className="font-sans antialiased text-[#1A2A40] selection:bg-[#4A7C59] selection:text-white md:h-full">
+      <div className="relative mx-auto w-full bg-[#F5F0E8] rounded-lg border border-[#D4CFC4] shadow-2xl flex flex-col md:h-full overflow-hidden">
         
         {/* TOP HEADER */}
-        <header className="px-8 py-6 bg-[#F5F0E8] border-b border-[#D4CFC4] flex items-center justify-between">
-          <div className="space-y-1">
-            <div className="flex items-center gap-3">
-              <span className="text-[10px] font-black text-[#4A7C59] uppercase tracking-[0.3em]">
+        <header className="px-4 md:px-8 py-4 md:py-6 bg-[#F5F0E8] border-b border-[#D4CFC4] flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-0">
+          <div className="space-y-1 flex-1 min-w-0">
+            <div className="flex items-center gap-2 md:gap-3 flex-wrap">
+              <span className="text-[9px] md:text-[10px] font-black text-[#4A7C59] uppercase tracking-[0.3em]">
                 Intelligence Repository
               </span>
-              <div className="h-[1px] w-8 bg-[#D4CFC4]" />
-              <span className="text-[10px] font-bold text-[#6B7280] uppercase tracking-widest">
+              <div className="h-[1px] w-6 md:w-8 bg-[#D4CFC4]" />
+              <span className="text-[9px] md:text-[10px] font-bold text-[#6B7280] uppercase tracking-widest">
                 Data Room Navigator
               </span>
             </div>
-            <h2 className="font-serif text-4xl font-bold text-[#1A2A40]">
+            <h2 className="font-serif text-2xl md:text-4xl font-bold text-[#1A2A40]">
               {activeChart.label}
             </h2>
-            <p className="text-sm text-[#4B5563] italic font-serif">
+            <p className="text-xs md:text-sm text-[#4B5563] italic font-serif">
               {activeChart.description}
             </p>
           </div>
 
-          <div className="flex gap-10">
+          <div className="flex gap-6 md:gap-10 shrink-0">
             <div className="text-right">
-              <span className="block text-[10px] font-bold text-[#6B7280] uppercase tracking-wider mb-1">Historical Range</span>
-              <span className="text-2xl font-serif text-[#1A2A40] leading-none">
+              <span className="block text-[9px] md:text-[10px] font-bold text-[#6B7280] uppercase tracking-wider mb-1">Historical Range</span>
+              <span className="text-xl md:text-2xl font-serif text-[#1A2A40] leading-none">
                 {SUMMARY_STATS.startYear} — {SUMMARY_STATS.endYear}
               </span>
             </div>
           </div>
         </header>
 
-        <div className="flex flex-1 min-h-0 overflow-hidden">
+        <div className="flex flex-col md:flex-row md:flex-1 md:min-h-0 md:overflow-hidden">
           {/* SIDEBAR NAVIGATION */}
-          <aside className="w-85 bg-[#EBE7DF] border-r border-[#D4CFC4] p-6 flex flex-col gap-6 overflow-y-auto">
-            <span className="text-[10px] font-black text-[#6B7280] uppercase tracking-[0.2em]">
+          <aside className="w-full md:w-85 bg-[#EBE7DF] border-b md:border-b-0 md:border-r border-[#D4CFC4] p-4 md:p-6 flex flex-col gap-4 md:gap-6 overflow-x-auto md:overflow-y-auto">
+            <span className="text-[9px] md:text-[10px] font-black text-[#6B7280] uppercase tracking-[0.2em]">
               Navigation Modules
             </span>
 
-            <nav className="flex flex-col gap-3">
+            <nav className="flex flex-row md:flex-col gap-2 md:gap-3 overflow-x-auto md:overflow-x-visible pb-2 md:pb-0">
               {chartDefinitions.map((chart, idx) => {
                 const isActive = idx === activeChartIndex;
                 return (
                   <button
                     key={chart.id}
                     onClick={() => handleChartIndexChange(idx)}
-                    className={`group w-full p-4! text-left transition-all border rounded-md flex gap-4 items-start ${
+                    className={`group w-full md:w-full min-w-[200px] md:min-w-0 p-3 md:p-4 text-left transition-all border rounded-md flex gap-3 md:gap-4 items-start shrink-0 md:shrink ${
                       isActive
                         ? "bg-[#F5F0E8] border-[#D4CFC4] border-l-[#4A7C59] border-l-4 shadow-sm"
                         : "bg-transparent border-transparent hover:bg-[#F5F0E8]/50"
                     }`}
                   >
-                    <div className={`${isActive ? "text-[#4A7C59]" : "text-[#9CA3AF] group-hover:text-[#6B7280]"}`}>
+                    <div className={`shrink-0 ${isActive ? "text-[#4A7C59]" : "text-[#9CA3AF] group-hover:text-[#6B7280]"}`}>
                       {chartIcons[chart.id]}
                     </div>
-                    <div className="flex-1">
-                      <div className={`text-[12px] font-bold uppercase tracking-widest mb-1 ${isActive ? "text-[#1A2A40]" : "text-[#6B7280]"}`}>
+                    <div className="flex-1 min-w-0">
+                      <div className={`text-[11px] md:text-[12px] font-bold uppercase tracking-widest mb-1 ${isActive ? "text-[#1A2A40]" : "text-[#6B7280]"}`}>
                         {chart.label}
                       </div>
-                      <div className={`text-xs font-serif italic leading-snug ${isActive ? "text-[#4A7C59]" : "text-[#9CA3AF]"}`}>
+                      <div className={`text-[10px] md:text-xs font-serif italic leading-snug ${isActive ? "text-[#4A7C59]" : "text-[#9CA3AF]"}`}>
                         {chart.description}
                       </div>
                     </div>
@@ -225,15 +225,15 @@ export default function DataRoomFull({
           </aside>
 
           {/* MAIN VISUALIZATION AREA */}
-          <main className="flex-1 p-8 bg-[#E8E4DC] flex flex-col gap-6 overflow-hidden">
+          <main className="flex-1 p-4 md:p-8 bg-[#E8E4DC] flex flex-col gap-4 md:gap-6 md:overflow-hidden">
             <div 
               ref={modalChartRef}
-              className="flex-1 bg-[#F5F0E8] rounded-xl border border-[#D4CFC4] shadow-inner p-8 relative overflow-hidden"
+              className="flex-1 bg-[#F5F0E8] rounded-xl border border-[#D4CFC4] shadow-inner p-4 md:p-8 relative overflow-hidden min-h-[400px] md:min-h-0"
             >
               {loading ? (
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-                  <div className="w-10 h-10 border-4 border-[#4A7C59]/20 border-t-[#4A7C59] rounded-full animate-spin" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#6B7280]">Consulting Archives</span>
+                  <div className="w-8 h-8 md:w-10 md:h-10 border-4 border-[#4A7C59]/20 border-t-[#4A7C59] rounded-full animate-spin" />
+                  <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] text-[#6B7280]">Consulting Archives</span>
                 </div>
               ) : (
                 <ChartRenderer
@@ -254,29 +254,29 @@ export default function DataRoomFull({
               {/* TOOLTIP RENDERING */}
               {tooltip && (
                 <div
-                  className="absolute z-50 bg-[#FDFBF7] border border-[#D4CFC4] rounded p-3 shadow-2xl pointer-events-none"
+                  className="absolute z-50 bg-[#FDFBF7] border border-[#D4CFC4] rounded p-2 md:p-3 shadow-2xl pointer-events-none max-w-[200px] md:max-w-none"
                   style={{ left: `${tooltip.x}%`, top: `${tooltip.y}%`, transform: "translate(-50%, -120%)" }}
                 >
-                  <div className="font-serif font-bold text-sm text-[#1A2A40] mb-0.5">{tooltip.title}</div>
-                  {tooltip.subtitle && <div className="text-[10px] text-[#6B7280] italic mb-1">{tooltip.subtitle}</div>}
-                  {tooltip.value && <div className="font-bold text-xs" style={{ color: tooltip.color || "#4A7C59" }}>{tooltip.value}</div>}
+                  <div className="font-serif font-bold text-xs md:text-sm text-[#1A2A40] mb-0.5">{tooltip.title}</div>
+                  {tooltip.subtitle && <div className="text-[9px] md:text-[10px] text-[#6B7280] italic mb-1">{tooltip.subtitle}</div>}
+                  {tooltip.value && <div className="font-bold text-[10px] md:text-xs" style={{ color: tooltip.color || "#4A7C59" }}>{tooltip.value}</div>}
                 </div>
               )}
             </div>
 
             {/* FOOTER LEGEND */}
-            <footer className="flex items-center justify-between border-t border-[#D4CFC4]/50 pt-4 text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF]">
-              <div className="flex gap-8">
+            <footer className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-0 border-t border-[#D4CFC4]/50 pt-3 md:pt-4 text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-[#9CA3AF]">
+              <div className="flex flex-col md:flex-row gap-3 md:gap-8">
                 <span className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#4A7C59]" />
+                  <span className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-[#4A7C59] shrink-0" />
                   <span className="text-[#6B7280]">Confirmed Meeting</span>
                 </span>
                 <span className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#A67C52]" />
+                  <span className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-[#A67C52] shrink-0" />
                   <span className="text-[#6B7280]">Correspondence Silence</span>
                 </span>
               </div>
-              <div className="italic font-serif lowercase tracking-normal flex gap-2">
+              <div className="italic font-serif lowercase tracking-normal flex gap-2 text-[9px] md:text-[10px]">
                 <span className="text-[#9CA3AF]">source:</span>
                 <span className="text-[#6B7280]">Letters to Venetia Stanley</span>
               </div>

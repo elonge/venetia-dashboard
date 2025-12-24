@@ -51,8 +51,8 @@ function DataRoomContent() {
   );
 
   return (
-    <div className="h-full bg-[#E8E4DC]">
-      <main className="h-full max-w-7xl mx-auto px-6 py-6">
+    <div className="bg-[#E8E4DC] md:h-full">
+      <main className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-6 md:h-full">
         <DataRoomFull
           initialChartIndex={initialChartIndex}
           onChartIndexChange={handleChartIndexChange}

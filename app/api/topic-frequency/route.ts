@@ -28,13 +28,13 @@ const DEFAULT_SOURCE = "asquith_letters_full";
 const DEFAULT_VECTOR_INDEX =
   process.env.ASQUITH_VECTOR_SEARCH_INDEX_NAME ||
   process.env.VECTOR_SEARCH_INDEX_NAME ||
-  "vector_index";
+  "asquith_chunks_vector_index";
 const DEFAULT_SAMPLE_SIZE = 400;
 const DEFAULT_SCORE_THRESHOLD = 0.55;
 
 const CACHE_TTL_MS = 5 * 60 * 1000;
 let cachedAtMs = 0;
-let cachedTotalLetters = 0;
+let cachedTotalLettersBySource: Map<string, number> = new Map();
 
 function parseTopicQuery(request: NextRequest): string | null {
   const url = new URL(request.url);
@@ -121,8 +121,9 @@ async function getOrCreateConcept(params: {
 
 async function getTotalLetters(params: { source: string }): Promise<number> {
   const now = Date.now();
-  if (now - cachedAtMs < CACHE_TTL_MS && cachedTotalLetters > 0) {
-    return cachedTotalLetters;
+  if (now - cachedAtMs < CACHE_TTL_MS) {
+    const cached = cachedTotalLettersBySource.get(params.source);
+    if (typeof cached === "number" && cached > 0) return cached;
   }
 
   const client = await clientPromise;
@@ -133,7 +134,7 @@ async function getTotalLetters(params: { source: string }): Promise<number> {
   const totalLetters = Array.isArray(distinct) ? distinct.length : 0;
 
   cachedAtMs = now;
-  cachedTotalLetters = totalLetters;
+  cachedTotalLettersBySource.set(params.source, totalLetters);
   return totalLetters;
 }
 
@@ -153,6 +154,8 @@ export async function GET(request: NextRequest) {
     }
 
     const source = (url.searchParams.get("source") || DEFAULT_SOURCE).trim();
+    const indexOverride = (url.searchParams.get("index") || "").trim();
+    const vectorIndex = indexOverride || DEFAULT_VECTOR_INDEX;
     const sampleSize = parsePositiveInt(
       url.searchParams.get("sampleSize"),
       DEFAULT_SAMPLE_SIZE
@@ -180,13 +183,48 @@ export async function GET(request: NextRequest) {
     const db = client.db(DEFAULT_DB_NAME);
     const col = db.collection(ASQUITH_CHUNKS_COLLECTION);
 
+    const sampleDoc = debug
+      ? await col.findOne(
+          { source, embedding: { $exists: true } },
+          { projection: { _id: 0, source: 1, embedding: 1, metadata: { letterIndex: 1 } } }
+        )
+      : null;
+    const sampleEmbeddingLen = Array.isArray((sampleDoc as any)?.embedding)
+      ? ((sampleDoc as any).embedding as unknown[]).length
+      : 0;
+    const distinctSources = debug ? await col.distinct("source") : undefined;
+
+    const docCountSource = debug ? await col.countDocuments({ source }) : undefined;
+    const docCountWithEmbedding = debug
+      ? await col.countDocuments({ source, embedding: { $exists: true } })
+      : undefined;
+
+    if (docCountSource === 0) {
+      return NextResponse.json(
+        {
+          error: `No chunks found for source="${source}" in collection "${ASQUITH_CHUNKS_COLLECTION}".`,
+          debug: debug ? { docCountSource, docCountWithEmbedding } : undefined,
+        },
+        { status: 400 }
+      );
+    }
+
+    if (docCountWithEmbedding === 0) {
+      return NextResponse.json(
+        {
+          error: `No embeddings found for source="${source}" in collection "${ASQUITH_CHUNKS_COLLECTION}". Re-run ingestion to populate embeddings.`,
+          debug: debug ? { docCountSource, docCountWithEmbedding } : undefined,
+        },
+        { status: 400 }
+      );
+    }
+
     const pipeline: any[] = [
       {
         $vectorSearch: {
-          index: DEFAULT_VECTOR_INDEX,
+          index: vectorIndex,
           path: "embedding",
           queryVector: queryEmbedding,
-          filter: { source },
           numCandidates: Math.max(sampleSize * 10, 500),
           limit: sampleSize,
         },
@@ -199,6 +237,7 @@ export async function GET(request: NextRequest) {
           "metadata.letterIndex": 1,
         },
       },
+      { $match: { source } },
     ];
 
     const results = await col.aggregate(pipeline).toArray();
@@ -243,10 +282,72 @@ export async function GET(request: NextRequest) {
       return sortedScores[idx] || 0;
     };
 
+    let searchIndexes:
+      | Array<{ name?: string; type?: string; status?: string }>
+      | { error: string }
+      | undefined;
+    try {
+      const idxDocs = await col
+        .aggregate([{ $listSearchIndexes: {} }])
+        .toArray();
+      searchIndexes = Array.isArray(idxDocs)
+        ? idxDocs.map((d: any) => ({
+            name: typeof d?.name === "string" ? d.name : undefined,
+            type: typeof d?.type === "string" ? d.type : undefined,
+            status: typeof d?.status === "string" ? d.status : undefined,
+          }))
+        : [];
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : "Failed to list search indexes";
+      searchIndexes = { error: msg };
+    }
+
+    // If source matching might be filtering everything out, try an alternate pipeline that
+    // restricts the source inside `$vectorSearch` (Atlas-only), and report what happens.
+    let resultsWithVectorFilter: number | undefined;
+    try {
+      const alt = await col
+        .aggregate([
+          {
+            $vectorSearch: {
+              index: vectorIndex,
+              path: "embedding",
+              queryVector: queryEmbedding,
+              filter: { source },
+              numCandidates: Math.max(sampleSize * 10, 500),
+              limit: sampleSize,
+            },
+          },
+          { $limit: 1 },
+        ])
+        .toArray();
+      resultsWithVectorFilter = alt.length;
+    } catch {
+      // ignore - not supported or index mismatch; main debug fields cover this.
+    }
+
     return NextResponse.json({
       ...payload,
       debug: {
+        collection: ASQUITH_CHUNKS_COLLECTION,
+        vectorIndex,
+        searchIndexes,
+        source,
+        distinctSources:
+          Array.isArray(distinctSources) && distinctSources.length <= 50
+            ? distinctSources
+            : Array.isArray(distinctSources)
+            ? distinctSources.slice(0, 50)
+            : undefined,
+        docCountSource,
+        docCountWithEmbedding,
+        queryEmbeddingDims: queryEmbedding.length,
+        sampleEmbeddingDims: sampleEmbeddingLen,
+        sampleDoc: sampleDoc
+          ? { source: (sampleDoc as any)?.source, letterIndex: (sampleDoc as any)?.metadata?.letterIndex }
+          : undefined,
         resultCount: results.length,
+        resultsWithVectorFilter,
         scoreStats: {
           min: pick(0),
           p50: pick(0.5),

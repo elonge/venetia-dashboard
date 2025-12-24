@@ -45,7 +45,7 @@ function ChapterContent() {
   const [chapterData, setChapterData] = useState<Chapter | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  useChatVisibility(true);
+  useChatVisibility(false);
 
   useEffect(() => {
     async function fetchChapter() {
@@ -237,7 +237,7 @@ function ChapterContent() {
 
             {/* Media Section */}
             {(podcastData || chapterData.podcast || chapterData.video) && (
-              <div className="grid grid-cols-2 gap-6 mb-6">
+              <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-6 mb-6">
                 {/* Podcast */}
                 {(podcastData || chapterData.podcast) && (
                   <div className="bg-[#F5F0E8] rounded-lg overflow-hidden">

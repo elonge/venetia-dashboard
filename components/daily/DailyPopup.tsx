@@ -246,10 +246,10 @@ export default function DailyPopup({
 
   const isModal = mode === "modal";
   const containerClassName = isModal
-    ? "fixed inset-0 z-[9999] bg-black/70 flex items-center justify-center px-4 py-6"
+    ? "fixed inset-0 z-[9999] bg-black/70 flex items-center justify-center p-0 md:px-4 md:py-6"
     : "w-full flex justify-center";
   const cardClassName = isModal
-    ? "relative w-full max-w-[95vw] max-h-[90vh] bg-[#F5F0E8] rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+    ? "relative w-full h-full md:h-auto md:max-w-[95vw] md:max-h-[90vh] md:rounded-2xl bg-[#F5F0E8] shadow-2xl overflow-hidden flex flex-col"
     : "relative w-full max-w-5xl bg-[#F5F0E8] rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-[#D4CFC4]";
 
   return (
@@ -270,25 +270,25 @@ export default function DailyPopup({
         onClick={isModal ? (e) => e.stopPropagation() : undefined}
       >
 {/* Header: Integrated Navigation */}
-<div className="flex items-center justify-between p-6 border-b-2 border-[#D4CFC4] bg-white/80 backdrop-blur-md sticky top-0 z-50">
-  <div className="flex items-center gap-6">
-    <div className="min-w-[220px]">
-      <h2 className="font-serif text-2xl font-bold text-[#1A2A40] tracking-tight">
+<div className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 md:p-6 border-b-2 border-[#D4CFC4] bg-white/80 backdrop-blur-md sticky top-0 z-50 gap-4 md:gap-0">
+  <div className="flex items-center gap-3 md:gap-6 flex-1 min-w-0">
+    <div className="min-w-0 flex-1">
+      <h2 className="font-serif text-xl md:text-2xl font-bold text-[#1A2A40] tracking-tight">
         {formattedDate}
       </h2>
       {currentDay.weather && (
-        <div className="flex items-center gap-2 text-[11px] text-[#5A6472] font-black uppercase tracking-[0.15em] mt-1">
-          <Cloud className="w-3.5 h-3.5 text-[#8B4513]" />
-          <span>{currentDay.weather}</span>
+        <div className="flex items-center gap-2 text-[10px] md:text-[11px] text-[#5A6472] font-black uppercase tracking-[0.15em] mt-1">
+          <Cloud className="w-3 h-3 md:w-3.5 md:h-3.5 text-[#8B4513]" />
+          <span className="truncate">{currentDay.weather}</span>
         </div>
       )}
     </div>
     
     {/* Status Badge: Only visible if a meeting occurred */}
     {hasMeeting && (
-      <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-[#4A7C59]/10 rounded-sm border border-[#4A7C59]/30">
+      <div className="hidden sm:flex items-center gap-2 px-2 md:px-3 py-1 bg-[#4A7C59]/10 rounded-sm border border-[#4A7C59]/30 shrink-0">
         <div className="w-1.5 h-1.5 bg-[#4A7C59] rounded-full animate-pulse"></div>
-        <span className="text-[10px] text-[#4A7C59] font-black uppercase tracking-widest">
+        <span className="text-[9px] md:text-[10px] text-[#4A7C59] font-black uppercase tracking-widest whitespace-nowrap">
           In-Person Meeting Recorded
         </span>
       </div>
@@ -296,24 +296,26 @@ export default function DailyPopup({
   </div>
 
   {/* Control Group: Step Navigation & Archive Access */}
-  <div className="flex items-center gap-2">
+  <div className="flex items-center gap-2 w-full md:w-auto justify-end">
     <div className="flex items-center bg-[#F5F0E8] rounded-sm p-1 border border-[#D4CFC4]/60">
       <button
         onClick={handlePrevious}
         disabled={!hasPrevious || loading}
-        className="p-2 hover:bg-white rounded-sm transition-all text-[#1A2A40] disabled:opacity-20 disabled:cursor-not-allowed"
+        className="p-2 hover:bg-white rounded-sm transition-all text-[#1A2A40] disabled:opacity-20 disabled:cursor-not-allowed min-w-[44px] min-h-[44px] flex items-center justify-center"
         title="Previous Day"
+        aria-label="Previous Day"
       >
-        <ChevronLeft className="w-6 h-6" />
+        <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
       </button>
       <div className="w-[1px] h-5 bg-[#D4CFC4] mx-1"></div>
       <button
         onClick={handleNext}
         disabled={!hasNext || loading}
-        className="p-2 hover:bg-white rounded-sm transition-all text-[#1A2A40] disabled:opacity-20 disabled:cursor-not-allowed"
+        className="p-2 hover:bg-white rounded-sm transition-all text-[#1A2A40] disabled:opacity-20 disabled:cursor-not-allowed min-w-[44px] min-h-[44px] flex items-center justify-center"
         title="Next Day"
+        aria-label="Next Day"
       >
-        <ChevronRight className="w-6 h-6" />
+        <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
       </button>
     </div>
 
@@ -324,7 +326,7 @@ export default function DailyPopup({
         setDateInput(getCurrentDateInputValue());
         setDatePickerError(null);
       }}
-      className={`p-2.5 rounded-sm border transition-all ${
+      className={`p-2.5 rounded-sm border transition-all min-w-[44px] min-h-[44px] flex items-center justify-center ${
         showDatePicker 
           ? "bg-[#1A2A40] border-[#1A2A40] text-white shadow-inner" 
           : "bg-white border-[#D4CFC4] text-[#1A2A40] hover:bg-[#F5F0E8]"
@@ -332,22 +334,33 @@ export default function DailyPopup({
       aria-label="Jump to date"
       title="Open Archive Search"
     >
-      <Calendar className="w-5.5 h-5.5" />
+      <Calendar className="w-5 h-5 md:w-5.5 md:h-5.5" />
     </button>
+    
+    {/* Close button for mobile */}
+    {isModal && (
+      <button
+        onClick={onClose}
+        className="md:hidden p-2 rounded-sm border border-[#D4CFC4] bg-white text-[#1A2A40] hover:bg-[#F5F0E8] min-w-[44px] min-h-[44px] flex items-center justify-center"
+        aria-label="Close"
+      >
+        <X className="w-5 h-5" />
+      </button>
+    )}
   </div>
 </div>
 
 {/* Calendar Selector Drawer: Archival Search Style */}
 {showDatePicker && (
-  <div className="bg-[#E8E4DC] border-b border-[#D4CFC4] p-8 animate-in slide-in-from-top duration-300">
-    <div className="max-w-2xl mx-auto space-y-4">
-      <div className="flex items-center justify-between">
-        <div className="flex flex-col">
-          <span className="text-[10px] font-black text-[#8B4513] uppercase tracking-[0.2em]">Archive Navigation</span>
-          <span className="text-[11px] text-[#5A6472] font-serif italic mt-0.5">Jump to a specific point in the correspondence...</span>
+  <div className="bg-[#E8E4DC] border-b border-[#D4CFC4] p-4 md:p-8 animate-in slide-in-from-top duration-300">
+    <div className="max-w-2xl mx-auto space-y-3 md:space-y-4">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-2 md:gap-0">
+        <div className="flex flex-col min-w-0 flex-1">
+          <span className="text-[9px] md:text-[10px] font-black text-[#8B4513] uppercase tracking-[0.2em]">Archive Navigation</span>
+          <span className="text-[10px] md:text-[11px] text-[#5A6472] font-serif italic mt-0.5">Jump to a specific point in the correspondence...</span>
         </div>
         {allDays.length > 0 && (
-          <div className="text-[12px] font-bold text-[#5A6472] bg-white/40 px-2 py-1 rounded-sm border border-[#D4CFC4]/50">
+          <div className="text-[11px] md:text-[12px] font-bold text-[#5A6472] bg-white/40 px-2 py-1 rounded-sm border border-[#D4CFC4]/50 shrink-0">
             Valid Range: 1912 — 1916
           </div>
         )}
@@ -360,13 +373,13 @@ export default function DailyPopup({
           onChange={handleDateChange}
           min={dateRange.min}
           max={dateRange.max}
-          className="w-full bg-white border-2 border-[#D4CFC4] rounded-sm px-5 py-4 text-lg font-mono text-[#1A2A40] focus:outline-none focus:border-[#8B4513] transition-colors cursor-pointer"
+          className="w-full bg-white border-2 border-[#D4CFC4] rounded-sm px-4 md:px-5 py-3 md:py-4 text-base md:text-lg font-mono text-[#1A2A40] focus:outline-none focus:border-[#8B4513] transition-colors cursor-pointer min-h-[44px]"
         />
-        <Calendar className="absolute right-5 top-1/2 -translate-y-1/2 w-6 h-6 text-[#D4CFC4] pointer-events-none group-hover:text-[#8B4513] transition-colors" />
+        <Calendar className="absolute right-4 md:right-5 top-1/2 -translate-y-1/2 w-5 h-5 md:w-6 md:h-6 text-[#D4CFC4] pointer-events-none group-hover:text-[#8B4513] transition-colors" />
       </div>
 
       {datePickerError && (
-        <div className="text-center text-sm text-red-600 font-medium animate-pulse">
+        <div className="text-center text-xs md:text-sm text-red-600 font-medium animate-pulse">
           {datePickerError}
         </div>
       )}
@@ -374,7 +387,7 @@ export default function DailyPopup({
   </div>
 )}
         {/* Content - Scrollable */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 md:space-y-6">
           {loading && (
             <div className="text-center py-8 text-[#2D3648]">Loading...</div>
           )}
@@ -413,25 +426,25 @@ export default function DailyPopup({
               {letters.map((letter, idx) => (
                 <div
                   key={idx}
-                  className="bg-[#FBF8F1] rounded-sm p-6 border-l-[6px] border-[#6B2D3C] shadow-md mb-8"
+                  className="bg-[#FBF8F1] rounded-sm p-4 md:p-6 border-l-[4px] md:border-l-[6px] border-[#6B2D3C] shadow-md mb-6 md:mb-8"
                 >
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
                     {/* LEFT COLUMN: The Primary Source (2/3) */}
-                    <div className="lg:col-span-2 flex flex-col justify-between border-r border-[#D4CFC4]/50 pr-8">
-                      <div className="space-y-4">
+                    <div className="lg:col-span-2 flex flex-col justify-between lg:border-r lg:border-[#D4CFC4]/50 lg:pr-8">
+                      <div className="space-y-3 md:space-y-4">
                         {/* Header Info */}
-                        <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-widest text-[#8B4513]">
+                        <div className="flex items-center justify-between text-[10px] md:text-[11px] font-bold uppercase tracking-widest text-[#8B4513]">
                           <span>Letter #{letter.letter_number}</span>
-                          <span>{letter.time_of_day || "Unknown time"}</span>
+                          <span className="truncate ml-2">{letter.time_of_day || "Unknown time"}</span>
                         </div>
 
                         {/* THE QUOTE: Large and Impactful */}
                         {letter.excerpt && (
                           <div className="relative pt-2">
-                            <span className="absolute -top-4 -left-2 text-6xl font-serif text-[#6B2D3C]/10">
-                              “
+                            <span className="absolute -top-2 md:-top-4 -left-1 md:-left-2 text-4xl md:text-6xl font-serif text-[#6B2D3C]/10">
+                              "
                             </span>
-                            <p className="font-serif text-2xl md:text-3xl text-[#1A2A40] italic leading-tight relative z-10">
+                            <p className="font-serif text-xl md:text-2xl lg:text-3xl text-[#1A2A40] italic leading-tight relative z-10">
                               {letter.excerpt}
                             </p>
                           </div>
@@ -439,7 +452,7 @@ export default function DailyPopup({
 
                         {/* SUMMARY: Detailed Context */}
                         {letter.summary && (
-                          <p className="text-sm text-[#4A4A4A] leading-relaxed border-t border-[#D4CFC4] pt-4 italic">
+                          <p className="text-xs md:text-sm text-[#4A4A4A] leading-relaxed border-t border-[#D4CFC4] pt-3 md:pt-4 italic">
                             {letter.summary}
                           </p>
                         )}
@@ -463,7 +476,7 @@ export default function DailyPopup({
                     </div>
 
                     {/* RIGHT COLUMN: Intelligence Analysis (1/3) */}
-                    <div className="lg:col-span-1 space-y-6 bg-[#F5F0E8]/40 p-4 rounded-sm">
+                    <div className="lg:col-span-1 space-y-4 md:space-y-6 bg-[#F5F0E8]/40 p-3 md:p-4 rounded-sm mt-4 lg:mt-0">
                       {/* METRICS: Redesigned for full readability */}
                       <div>
                         <h3 className="text-[10px] font-black text-[#8B4513] uppercase tracking-[0.2em] mb-4">

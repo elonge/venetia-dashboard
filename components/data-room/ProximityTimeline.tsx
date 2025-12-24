@@ -110,19 +110,20 @@ export default function ProximityTimeline({
           dataKey="date"
           tickFormatter={formatDateTick}
           stroke="#D4CFC4"
-          tick={{ fill: "#8B4513", fontSize: 9, fontFamily: 'serif' }}
+          tick={{ fill: "#8B4513", fontSize: 8, fontFamily: 'serif' }}
           tickLine={false}
           axisLine={false}
           dy={10}
+          interval="preserveStartEnd"
         />
         
         <YAxis
           domain={[0, domainMax as any]}
           stroke="#D4CFC4"
-          tick={{ fill: "#8B4513", fontSize: 9, fontFamily: 'serif' }}
+          tick={{ fill: "#8B4513", fontSize: 8, fontFamily: 'serif' }}
           tickLine={false}
           axisLine={false}
-          width={40}
+          width={35}
         />
         
         <Tooltip content={<ProximityTooltip />} cursor={{ stroke: "#8B4513", strokeWidth: 1, strokeDasharray: "4 4" }} />

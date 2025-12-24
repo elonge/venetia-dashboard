@@ -327,36 +327,36 @@ export default function ChatInterface() {
     <div className="flex flex-col h-full bg-[#F5F0E8] border-l border-[#D4CFC4] shadow-[-10px_0_30px_rgba(0,0,0,0.02)] font-sans relative overflow-hidden">
       
       {/* 1. HEADER: Specialized Terminal Look */}
-      <div className="px-6 py-5 border-b border-[#D4CFC4] bg-[#FAF7F2] flex items-center gap-3 z-10 shadow-sm">
-        <div className="w-8 h-8 bg-[#1A2A40] rounded-sm flex items-center justify-center shadow-sm">
-          <Sparkles size={14} className="text-[#F5F0E8]" />
+      <div className="px-4 md:px-6 py-4 md:py-5 border-b border-[#D4CFC4] bg-[#FAF7F2] flex items-center gap-2 md:gap-3 z-10 shadow-sm">
+        <div className="w-7 h-7 md:w-8 md:h-8 bg-[#1A2A40] rounded-sm flex items-center justify-center shadow-sm shrink-0">
+          <Sparkles size={12} className="md:w-[14px] md:h-[14px] text-[#F5F0E8]" />
         </div>
-        <div>
-          <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-[#1A2A40]">
+        <div className="min-w-0">
+          <h3 className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] text-[#1A2A40]">
             Primary Source Query
           </h3>
-          <p className="text-[10px] text-[#8B4513]/60 font-serif italic">
+          <p className="text-[9px] md:text-[10px] text-[#8B4513]/60 font-serif italic">
             Searching 1912–1916 Archive
           </p>
         </div>
       </div>
 
       {/* 2. MESSAGES AREA */}
-      <div className="flex-1 overflow-y-auto px-6 py-6 scroll-smooth space-y-6">
+      <div className="flex-1 overflow-y-auto px-4 md:px-6 py-4 md:py-6 scroll-smooth space-y-4 md:space-y-6">
         {messages.length === 0 ? (
           // --- EMPTY STATE ---
           <div className="h-full flex flex-col justify-center items-center text-center animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-forwards">
             <div className="w-16 h-16 bg-[#D4CFC4]/30 rounded-full flex items-center justify-center mb-6 border border-[#D4CFC4]/50">
               <Search size={24} className="text-[#8B4513]/40" />
             </div>
-            <h2 className="font-serif text-2xl text-[#1A2A40] mb-3">
+            <h2 className="font-serif text-xl md:text-2xl text-[#1A2A40] mb-3">
               Chat with History
             </h2>
-            <p className="text-sm text-[#5A6472] max-w-[280px] leading-relaxed mb-8">
+            <p className="text-xs md:text-sm text-[#5A6472] max-w-[280px] leading-relaxed mb-6 md:mb-8 px-4">
               Ask questions about Venetia Stanley, H.H. Asquith, and the political events of 1912–1916. I verify every answer against the primary sources.
             </p>
 
-            <div className="w-full max-w-sm space-y-2.5">
+            <div className="w-full max-w-sm space-y-2 md:space-y-2.5 px-4">
               {isLoadingPopularQuestions ? (
                 Array.from({ length: DEFAULT_SUGGESTED_QUESTIONS_COUNT }).map((_, i) => (
                   <div key={i} className="h-12 w-full bg-white/50 border border-[#D4CFC4] rounded-sm animate-pulse" />
@@ -365,12 +365,12 @@ export default function ChatInterface() {
                 <button
                   key={i}
                   onClick={() => handleSend(qText)}
-                  className="w-full text-left p-3.5 bg-white border border-[#D4CFC4] rounded-sm hover:border-[#4A7C59] hover:bg-[#4A7C59]/5 transition-all group flex items-center justify-between shadow-sm"
+                  className="w-full text-left p-3 md:p-3.5 bg-white border border-[#D4CFC4] rounded-sm hover:border-[#4A7C59] hover:bg-[#4A7C59]/5 transition-all group flex items-center justify-between shadow-sm min-h-[44px]"
                 >
-                  <span className="text-[11px] font-bold text-[#1A2A40] group-hover:text-[#4A7C59] transition-colors line-clamp-1">
+                  <span className="text-[10px] md:text-[11px] font-bold text-[#1A2A40] group-hover:text-[#4A7C59] transition-colors line-clamp-2 md:line-clamp-1 flex-1">
                     {qText}
                   </span>
-                  <ArrowRight size={12} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#4A7C59]" />
+                  <ArrowRight size={12} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#4A7C59] shrink-0 ml-2" />
                 </button>
               ))}
             </div>
@@ -399,7 +399,7 @@ export default function ChatInterface() {
       </div>
 
       {/* 3. INPUT AREA */}
-      <div className="p-5 bg-[#F5F0E8] border-t border-[#D4CFC4] relative z-20">
+      <div className="p-4 md:p-5 bg-[#F5F0E8] border-t border-[#D4CFC4] relative z-20">
         <div className="relative flex items-center shadow-sm group">
           <Input
             ref={inputRef}
@@ -408,12 +408,13 @@ export default function ChatInterface() {
             onKeyDown={handleKeyPress}
             placeholder="Ask a question about the archive..."
             disabled={isLoading}
-            className="w-full bg-white border border-[#D4CFC4] text-[#1A2A40] placeholder:text-[#D4CFC4] text-sm px-4 py-6 rounded-sm pr-14 focus-visible:ring-1 focus-visible:ring-[#1A2A40]/20 focus-visible:border-[#1A2A40] transition-all font-serif"
+            className="w-full bg-white border border-[#D4CFC4] text-[#1A2A40] placeholder:text-[#D4CFC4] text-sm px-4 py-4 md:py-6 rounded-sm pr-12 md:pr-14 focus-visible:ring-1 focus-visible:ring-[#1A2A40]/20 focus-visible:border-[#1A2A40] transition-all font-serif"
           />
           <button
             onClick={() => handleSend()}
             disabled={isLoading || !input.trim()}
-            className="absolute right-2 p-2 bg-[#1A2A40] text-white rounded-sm hover:bg-[#4A7C59] disabled:bg-[#D4CFC4] disabled:cursor-not-allowed transition-colors"
+            className="absolute right-2 p-2 md:p-2.5 bg-[#1A2A40] text-white rounded-sm hover:bg-[#4A7C59] disabled:bg-[#D4CFC4] disabled:cursor-not-allowed transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+            aria-label="Send message"
           >
             {isLoading ? (
                <Loader2 className="w-4 h-4 animate-spin" />
@@ -422,8 +423,8 @@ export default function ChatInterface() {
             )}
           </button>
         </div>
-        <div className="text-center mt-3">
-           <span className="text-[8px] font-bold text-[#D4CFC4] uppercase tracking-[0.2em]">
+        <div className="text-center mt-2 md:mt-3">
+           <span className="text-[7px] md:text-[8px] font-bold text-[#D4CFC4] uppercase tracking-[0.2em]">
              Reconstructed from Sources • Assisted by AI
            </span>
         </div>

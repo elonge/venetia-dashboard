@@ -62,25 +62,25 @@ export default function DataRoomPreview({
         href={href}
         aria-label="Open Data Room"
         className={`group relative block w-full overflow-hidden rounded-2xl border border-[#1F3350] text-left transition-all ${
-          isCompact ? 'min-h-27.5 p-4!' : 'min-h-62.5 p-6'
+          isCompact ? 'min-h-[140px] md:min-h-27.5 p-3 md:p-4' : 'min-h-[200px] md:min-h-62.5 p-4 md:p-6'
         } hover:-translate-y-px hover:border-[#2A3D5D] shadow-[0_14px_34px_rgba(0,0,0,0.10)] hover:shadow-[0_18px_44px_rgba(0,0,0,0.14)]`}
       >
         <div className="absolute inset-0 bg-linear-to-br from-[#1C3555] via-[#12243A] to-[#0B1626]" />
         <div className="absolute inset-0 bg-[radial-gradient(900px_220px_at_-10%_-30%,rgba(255,255,255,0.18),transparent_58%)] opacity-80 pointer-events-none" />
         <div className="absolute inset-0 bg-linear-to-br from-white/5 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none" />
 
-        <div className="relative z-10 flex w-full items-start justify-between gap-4">
-          <div className="min-w-0">
+        <div className="relative z-10 flex w-full items-start justify-between gap-3 md:gap-4">
+          <div className="min-w-0 flex-1">
             <h3
               className={`font-serif font-semibold uppercase tracking-[0.14em] text-white/95 ${
-                isCompact ? 'text-[18px]' : 'text-[22px] leading-none'
+                isCompact ? 'text-base md:text-[18px]' : 'text-lg md:text-[22px] leading-none'
               }`}
             >
               THE DATA ROOM
             </h3>
             <p
-              className={`mt-8 max-w-[36ch] text-white/95 transition-colors group-hover:text-[#D6E2F5] ${
-                isCompact ? 'text-[16px] leading-snug' : 'text-sm'
+              className={`mt-4 md:mt-8 max-w-[36ch] text-white/95 transition-colors group-hover:text-[#D6E2F5] ${
+                isCompact ? 'text-sm md:text-[16px] leading-snug' : 'text-xs md:text-sm'
               }`}
             >
               Explore correspondence patterns &amp; sentiment.
@@ -93,7 +93,7 @@ export default function DataRoomPreview({
         </div>
 
         {!isCompact ? (
-          <div className="relative z-10 mt-8 inline-flex items-center gap-2 text-sm font-semibold text-white/90 group-hover:text-white transition-colors">
+          <div className="relative z-10 mt-4 md:mt-8 inline-flex items-center gap-2 text-xs md:text-sm font-semibold text-white/90 group-hover:text-white transition-colors">
             <span>Open</span>
             <span aria-hidden="true">→</span>
           </div>

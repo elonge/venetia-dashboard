@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { TimeSeries, TimeRange } from "pondjs";
 import dynamic from "next/dynamic";
 
@@ -240,11 +246,13 @@ export default function ChartRenderer({
       }
 
       const letterCount =
-        typeof data.letterCount === "number" && Number.isFinite(data.letterCount)
+        typeof data.letterCount === "number" &&
+        Number.isFinite(data.letterCount)
           ? data.letterCount
           : 0;
       const totalLetters =
-        typeof data.totalLetters === "number" && Number.isFinite(data.totalLetters)
+        typeof data.totalLetters === "number" &&
+        Number.isFinite(data.totalLetters)
           ? data.totalLetters
           : 0;
       const percent =
@@ -255,7 +263,8 @@ export default function ChartRenderer({
       setTopicResult({
         query: String(data.query || trimmed),
         matchedQuery: String(data.matchedQuery || data.query || trimmed),
-        definition: typeof data.definition === "string" ? data.definition : undefined,
+        definition:
+          typeof data.definition === "string" ? data.definition : undefined,
         letterCount,
         totalLetters,
         percent,
@@ -309,90 +318,86 @@ export default function ChartRenderer({
 
     return (
       <div
-        className={`flex flex-col bg-[#F5F0E8] border border-[#D4CFC4] rounded-sm p-8 relative overflow-hidden ${
+        className={`flex flex-col bg-[#F5F0E8] border border-[#D4CFC4] rounded-sm p-4 md:p-8 relative overflow-hidden ${
           variant === "modal" ? "h-[560px]" : "h-72"
         }`}
       >
         {/* 1. LOADING OVERLAY: Appears during the 30s calculation */}
         {termLoading && (
-          <div className="absolute inset-0 z-50 bg-[#F5F0E8]/80 backdrop-blur-[2px] flex flex-col items-center justify-center p-12 text-center animate-in fade-in duration-500">
-            <div className="w-16 h-16 border-4 border-[#D4CFC4] border-t-[#2563EB] rounded-full animate-spin mb-6"></div>
-            <h3 className="text-[11px] font-black text-[#1A2A40] uppercase tracking-[0.4em] mb-2">
+          <div className="absolute inset-0 z-50 bg-[#F5F0E8]/80 backdrop-blur-[2px] flex flex-col items-center justify-center p-6 md:p-12 text-center animate-in fade-in duration-500">
+            <div className="w-12 h-12 md:w-16 md:h-16 border-4 border-[#D4CFC4] border-t-[#2563EB] rounded-full animate-spin mb-4 md:mb-6"></div>
+            <h3 className="text-[10px] md:text-[11px] font-black text-[#1A2A40] uppercase tracking-[0.4em] mb-2">
               Executing NLP Scan
             </h3>
-            <p className="text-sm font-serif italic text-[#5A6472] max-w-xs leading-relaxed">
+            <p className="text-xs md:text-sm font-serif italic text-[#5A6472] max-w-xs leading-relaxed">
               Cross-referencing "{termInput}" against 500+ letters. This
               historical modeling usually takes 15-30 seconds.
             </p>
-            <div className="mt-8 w-48 h-1 bg-[#D4CFC4] rounded-full overflow-hidden">
+            <div className="mt-6 md:mt-8 w-40 md:w-48 h-1 bg-[#D4CFC4] rounded-full overflow-hidden">
               <div className="h-full bg-[#2563EB] animate-[loading_30s_ease-in-out_infinite]"></div>
             </div>
           </div>
         )}
 
         {/* HEADER & ANALYTICAL INPUT */}
-        <div className="flex items-start justify-between mb-8">
-          <div>
-            <h4 className="text-[10px] font-black text-[#8B4513] uppercase tracking-[0.3em] mb-1">
+        <div className="flex flex-col md:flex-row items-start md:items-start justify-between gap-4 md:gap-0 mb-6 md:mb-8">
+          <div className="flex-1 min-w-0">
+            <h4 className="text-[9px] md:text-[10px] font-black text-[#8B4513] uppercase tracking-[0.3em] mb-1">
               Emotional Intensity
             </h4>
-            <p className="text-[13px] font-serif italic text-[#5A6472]">
+            <p className="text-xs md:text-[13px] font-serif italic text-[#5A6472]">
               Fluctuations in tone across the archive
             </p>
           </div>
-
-<div className="flex flex-col items-end gap-3">
-  <form
-    className="flex items-center gap-2 bg-[#FAF7F2] p-1.5 border border-[#D4CFC4] rounded-sm shadow-inner"
-    onSubmit={(e) => {
-      e.preventDefault();
-      fetchTermSeries(termInput);
-    }}
-  >
-    <div className="relative flex items-center px-2">
-      <input
-        value={termInput}
-        onChange={(e) => setTermInput(e.target.value)}
-        placeholder="Track emotional motif (e.g. longing, guilty, despair)..."
-        disabled={termLoading}
-        /* Increased width to avoid cutting off your long placeholder */
-        className="h-8 w-[380px] bg-transparent text-[12px] font-serif italic text-[#1A2A40] placeholder:text-[#A67C52]! placeholder:opacity-70 focus:outline-none disabled:opacity-50"
-        maxLength={80}
-      />
-    {/* The Fixed Button: Solid background for visibility */}
-    <button
-      type="submit"
-      disabled={termLoading || termInput.trim().length === 0}
-      className="h-8 px-4! bg-[#1A2A40]! hover:bg-[#4A7C59] text-white! text-[10px] font-black uppercase tracking-widest transition-all rounded-sm disabled:opacity-30"
-    >
-      {termLoading ? "SCANNING..." : "SCAN"}
-    </button>
-    
-    {termOverlay && !termLoading && (
-      <button
-        type="button"
-        onClick={() => setTermOverlay(null)}
-        className="h-8 px-2 text-[#6B7280] hover:text-[#DC2626] transition-colors"
-      >
-        <X size={16} />
-      </button>
-    )}
-
-    </div>
-
-  </form>
-</div>        </div>
+          <div className="w-full md:w-auto flex flex-col items-stretch md:items-end gap-3">
+            <form
+              className="flex flex-col md:flex-row items-stretch md:items-center gap-2 bg-[#FAF7F2] p-1.5 border border-[#D4CFC4] rounded-sm shadow-inner"
+              onSubmit={(e) => {
+                e.preventDefault();
+                fetchTermSeries(termInput);
+              }}
+            >
+              <div className="relative flex items-center flex-1 min-w-0">
+                <input
+                  value={termInput}
+                  onChange={(e) => setTermInput(e.target.value)}
+                  placeholder="Track emotional motif..."
+                  disabled={termLoading}
+                  className="h-8 flex-1 min-w-0 bg-transparent text-[11px] md:text-[12px] font-serif italic text-[#1A2A40] placeholder:text-[#A67C52]! placeholder:opacity-70 focus:outline-none disabled:opacity-50 px-2"
+                  maxLength={80}
+                />
+                {termOverlay && !termLoading && (
+                  <button
+                    type="button"
+                    onClick={() => setTermOverlay(null)}
+                    className="h-8 px-2 text-[#6B7280] hover:text-[#DC2626] transition-colors shrink-0"
+                  >
+                    <X size={16} />
+                  </button>
+                )}
+              </div>
+              {/* The Fixed Button: Solid background for visibility */}
+              <button
+                type="submit"
+                disabled={termLoading || termInput.trim().length === 0}
+                className="h-8 px-4! bg-[#1A2A40]! hover:bg-[#4A7C59] text-white! text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all rounded-sm disabled:opacity-30 shrink-0"
+              >
+                {termLoading ? "SCANNING..." : "SCAN"}
+              </button>
+            </form>
+          </div>
+        </div>
 
         {/* CHART AREA */}
         <div className="flex-1 relative flex flex-col" style={{ minHeight: 0 }}>
-          <div className="flex flex-wrap gap-x-6 gap-y-2 mb-4">
+          <div className="flex flex-wrap gap-x-4 md:gap-x-6 gap-y-2 mb-3 md:mb-4">
             <LegendItem color="#DC2626" label="Political Unburdening" />
             <LegendItem color="#4A7C59" label="Romantic Adoration" />
             <LegendItem color="#F59E0B" label="Emotional Desolation" />
             {termOverlay && !termLoading && (
-              <div className="flex items-center gap-2 px-3 py-0.5 bg-[#2563EB]/5 border border-[#2563EB]/20 rounded-full">
-                <div className="w-3 h-0 border-t-2 border-dashed border-[#2563EB]"></div>
-                <span className="text-[9px] font-black text-[#2563EB] uppercase tracking-tighter">
+              <div className="flex items-center gap-2 px-2 md:px-3 py-0.5 bg-[#2563EB]/5 border border-[#2563EB]/20 rounded-full">
+                <div className="w-2 md:w-3 h-0 border-t-2 border-dashed border-[#2563EB]"></div>
+                <span className="text-[8px] md:text-[9px] font-black text-[#2563EB] uppercase tracking-tighter">
                   QUERY: {termOverlay.term}
                 </span>
               </div>
@@ -409,27 +414,27 @@ export default function ChartRenderer({
               extraSeries={extraSeries}
             />
 
-            <div className="absolute left-0 top-0 bottom-8 flex flex-col justify-between text-[9px] font-black text-[#A67C52]/40 uppercase pointer-events-none">
-              <span className="flex items-center gap-2">
-                Intense <div className="w-4 h-px bg-[#D4CFC4]"></div>
+            <div className="absolute left-0 top-0 bottom-8 flex flex-col justify-between text-[8px] md:text-[9px] font-black text-[#A67C52]/40 uppercase pointer-events-none">
+              <span className="flex items-center gap-1 md:gap-2">
+                Intense <div className="w-3 md:w-4 h-px bg-[#D4CFC4]"></div>
               </span>
-              <span className="flex items-center gap-2">
-                Moderate <div className="w-4 h-px bg-[#D4CFC4]"></div>
+              <span className="flex items-center gap-1 md:gap-2">
+                Moderate <div className="w-3 md:w-4 h-px bg-[#D4CFC4]"></div>
               </span>
-              <span className="flex items-center gap-2">
-                Formal <div className="w-4 h-px bg-[#D4CFC4]"></div>
+              <span className="flex items-center gap-1 md:gap-2">
+                Formal <div className="w-3 md:w-4 h-px bg-[#D4CFC4]"></div>
               </span>
             </div>
           </div>
         </div>
 
         {/* ARCHIVAL FOOTER */}
-        <div className="mt-6 pt-4 border-t border-dashed border-[#D4CFC4] flex justify-between items-center">
-          <div className="text-[9px] text-[#8B4513]/60 font-black uppercase tracking-widest">
+        <div className="mt-4 md:mt-6 pt-3 md:pt-4 border-t border-dashed border-[#D4CFC4] flex flex-col md:flex-row justify-between items-start md:items-center gap-2 md:gap-0">
+          <div className="text-[8px] md:text-[9px] text-[#8B4513]/60 font-black uppercase tracking-widest">
             Source: letters to venetia stanley // NLP Processing Group
           </div>
           {termOverlay?.definition && !termLoading && (
-            <div className="text-[10px] text-[#5A6472] font-serif italic max-w-md text-right leading-tight">
+            <div className="text-[9px] md:text-[10px] text-[#5A6472] font-serif italic max-w-full md:max-w-md text-left md:text-right leading-tight">
               {termOverlay.definition}
             </div>
           )}
@@ -468,10 +473,16 @@ export default function ChartRenderer({
   );
 
   const renderTopics = () => {
+    // 1. Empty State
     if (!dataRoomData?.topics || dataRoomData.topics.length === 0) {
       return (
-        <div className="h-32 bg-white/40 border-2 border-dashed border-[#D4CFC4] rounded-lg flex items-center justify-center text-[10px] font-black uppercase tracking-widest text-[#6B7280]">
-          No archival topics detected
+        <div className="h-64 bg-[#F5F0E8] border border-[#D4CFC4] rounded-sm flex flex-col items-center justify-center p-6 text-center">
+          <div className="w-12 h-12 bg-[#D4CFC4]/30 rounded-full flex items-center justify-center mb-4">
+            <span className="text-2xl opacity-40 font-serif">¶</span>
+          </div>
+          <p className="text-[10px] font-black uppercase tracking-widest text-[#8B4513]/50">
+            No Archival Topics Detected
+          </p>
         </div>
       );
     }
@@ -484,24 +495,52 @@ export default function ChartRenderer({
 
     return (
       <div
-        className={`flex flex-col bg-[#F5F0E8] border border-[#D4CFC4] rounded-lg p-6 ${
-          variant === "modal" ? "h-[500px]" : "h-64"
+        className={`flex flex-col bg-[#F5F0E8] border border-[#D4CFC4] rounded-sm p-4 md:p-8 relative overflow-hidden ${
+          variant === "modal" ? "h-[620px]" : "h-auto min-h-[580px]"
         }`}
       >
-        {/* Header with Categorical Context */}
-        <div className="mb-6 flex items-start justify-between gap-6">
-          <div>
-            <h4 className="text-[10px] font-black text-[#6B7280] uppercase tracking-[0.2em] mb-1">
-              Lexical Analysis
-            </h4>
-            <p className="text-sm font-serif italic text-[#4B5563]">
-              Dominant themes identified in the record group
+        {/* --- 1. LOADING OVERLAY (Copied & Adapted) --- */}
+        {topicLoading && (
+          <div className="absolute inset-0 z-50 bg-[#F5F0E8]/80 backdrop-blur-[2px] flex flex-col items-center justify-center p-6 md:p-12 text-center animate-in fade-in duration-500">
+            {/* Spinner: Switched border-t color to Navy (#1A2A40) to match your theme */}
+            <div className="w-12 h-12 md:w-16 md:h-16 border-4 border-[#D4CFC4] border-t-[#1A2A40] rounded-full animate-spin mb-4 md:mb-6"></div>
+            
+            <h3 className="text-[10px] md:text-[11px] font-black text-[#1A2A40] uppercase tracking-[0.4em] mb-2">
+              Executing NLP Scan
+            </h3>
+            
+            <p className="text-xs md:text-sm font-serif italic text-[#5A6472] max-w-xs leading-relaxed">
+              Cross-referencing "{topicInput}" against 500+ letters. This
+              historical modeling usually takes 15-30 seconds.
             </p>
+            
+            {/* Progress Bar: Switched bar color to Navy (#1A2A40) */}
+            <div className="mt-6 md:mt-8 w-40 md:w-48 h-1 bg-[#D4CFC4] rounded-full overflow-hidden">
+              <div className="h-full bg-[#1A2A40] animate-[loading_30s_ease-in-out_infinite]"></div>
+            </div>
+          </div>
+        )}
+
+        {/* --- 2. HEADER & LOOKUP TOOL --- */}
+        <div className="mb-6 md:mb-8 border-b border-[#D4CFC4]/50 pb-4 md:pb-6">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-start gap-3 md:gap-0 mb-4 md:mb-6">
+            <div className="flex-1 min-w-0">
+              <h4 className="text-[9px] md:text-[10px] font-black text-[#8B4513] uppercase tracking-[0.3em] mb-2">
+                Lexical Analysis
+              </h4>
+              <p className="text-xs md:text-[14px] font-serif italic text-[#5A6472]">
+                Dominant themes identified in the record group
+              </p>
+            </div>
+            <div className="text-[8px] md:text-[9px] font-bold text-[#D4CFC4] uppercase tracking-widest shrink-0">
+              REF: NLP-1915
+            </div>
           </div>
 
-          <div className="flex flex-col items-end gap-2">
+          {/* THE INPUT MACHINE */}
+          <div className="bg-[#FAF7F2] border border-[#D4CFC4] p-2 rounded-sm shadow-[inset_0_1px_4px_rgba(0,0,0,0.03)] flex flex-col gap-3">
             <form
-              className="flex items-center gap-2 bg-[#FAF7F2] p-1.5 border border-[#D4CFC4] rounded-sm shadow-inner"
+              className="flex flex-col md:flex-row items-stretch md:items-center gap-2"
               onSubmit={(e) => {
                 e.preventDefault();
                 fetchTopicFrequency(topicInput);
@@ -510,115 +549,123 @@ export default function ChartRenderer({
               <input
                 value={topicInput}
                 onChange={(e) => setTopicInput(e.target.value)}
-                placeholder="Check semantic topic frequency (e.g. war, gossip)..."
+                placeholder="Enter concept (e.g. war, love)..."
                 disabled={topicLoading}
-                className="h-8 w-[300px] bg-transparent text-[12px] font-serif italic text-[#1A2A40] placeholder:text-[#A67C52] placeholder:opacity-70 focus:outline-none disabled:opacity-50"
-                maxLength={120}
+                className="flex-1 h-9 bg-transparent text-sm md:text-[16px] font-serif text-[#1A2A40] placeholder:text-[#D4CFC4] px-3 focus:outline-none"
+                maxLength={60}
               />
-              <button
-                type="submit"
-                disabled={topicLoading || topicInput.trim().length === 0}
-                className="h-8 px-4 bg-[#1A2A40] hover:bg-[#4A7C59] text-white text-[10px] font-black uppercase tracking-widest transition-all rounded-sm disabled:opacity-30"
-              >
-                {topicLoading ? "CHECKING..." : "CHECK"}
-              </button>
-
+              
               {topicResult && !topicLoading && (
                 <button
                   type="button"
-                  onClick={() => setTopicResult(null)}
-                  className="h-8 px-2 text-[#6B7280] hover:text-[#DC2626] transition-colors"
-                  aria-label="Clear topic query"
+                  onClick={() => {
+                    setTopicResult(null);
+                    setTopicInput("");
+                  }}
+                  className="p-2 text-[#A67C52] hover:bg-[#E8E4D9] rounded-full transition-colors shrink-0 self-start md:self-auto"
                 >
-                  <X size={16} />
+                  <X size={14} />
                 </button>
               )}
+              
+              <button
+                type="submit"
+                disabled={topicLoading || topicInput.trim().length === 0}
+                className="h-9 md:h-8 px-4 md:px-5 bg-[#1A2A40] hover:bg-[#4A7C59] text-white text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all rounded-sm disabled:opacity-30 disabled:bg-[#D4CFC4] shrink-0"
+              >
+                {topicLoading ? "SCANNING..." : "CHECK"}
+              </button>
             </form>
 
-            {(topicError || topicResult) && (
-              <div className="text-[10px] font-serif italic text-[#5A6472] text-right leading-tight max-w-[420px]">
-                {topicError ? (
-                  <span className="text-[#DC2626]">{topicError}</span>
-                ) : topicResult ? (
-                  <div className="space-y-1">
-                    {topicResult.definition && (
-                      <div className="text-[#6B7280]">{topicResult.definition}</div>
-                    )}
-                    <div>
-                    {`“${topicResult.matchedQuery || topicResult.query}”`}{" "}
-                    appears in{" "}
-                    <span className="font-bold text-[#1A2A40]">
-                      {topicResult.letterCount}
-                    </span>{" "}
-                    letter(s){" "}
-                    <span className="text-[#6B7280]">
-                      ({topicResult.percent}% of {topicResult.totalLetters} letters)
-                    </span>
-                    </div>
-                  </div>
-                ) : null}
-              </div>
-            )}
+            {/* DYNAMIC DEFINITION RESULT */}
+            <div className="min-h-[50px] md:min-h-[60px] pl-3 border-l-2 border-[#A67C52]/20 flex items-center">
+              {topicError ? (
+                 <span className="text-[10px] md:text-[11px] font-serif text-[#DC2626] italic">{topicError}</span>
+              ) : topicResult ? (
+                <div className="animate-in fade-in duration-700">
+                   <p className="text-sm md:text-lg font-serif italic text-[#8B4513]">
+                     "{topicResult.matchedQuery || topicResult.query}" appears in{" "}
+                     <strong className="font-sans font-bold text-[#1A2A40]">{topicResult.letterCount}</strong>{" "}
+                     letter(s) (<strong className="font-sans font-bold text-[#1A2A40]">{topicResult.percent}%</strong> of corpus)
+                   </p>
+                </div>
+              ) : (
+                <span className="text-[10px] md:text-[11px] font-serif italic text-[#D4CFC4]">
+                  Enter a keyword above to calculate thematic weight...
+                </span>
+              )}
+            </div>
           </div>
         </div>
 
-        {/* Topics List */}
-        <div className="flex-1 overflow-y-auto custom-scrollbar pr-4 space-y-6">
-          {dataRoomData.topics.map((item) => {
-            const isMatch =
-              normalizedQuery && normalizeTopic(item.topic) === normalizedQuery;
+        {/* --- 3. TOPIC LIST (Ink Bars) --- */}
+        <div className="flex-1 overflow-y-auto custom-scrollbar pr-1 md:pr-2 space-y-4 md:space-y-6 relative">
+          {/* Background Grid Texture */}
+          <div className="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-[0.03] z-0">
+             {[...Array(8)].map((_, i) => <div key={i} className="w-full border-t border-[#1A2A40]"></div>)}
+          </div>
+
+          {dataRoomData.topics.map((item, idx) => {
+            const isMatch = normalizedQuery && normalizeTopic(item.topic) === normalizedQuery;
+            const INK_COLORS = ["#C24E42", "#D4A017", "#6B8E23", "#5D7293", "#D17A8F"];
+            const barColor = item.color || INK_COLORS[idx % INK_COLORS.length];
+
             return (
               <div
                 key={item.topic}
-                className={`group cursor-default ${
-                  isMatch
-                    ? "ring-1 ring-[#4A7C59]/40 bg-white/30 rounded-sm p-2 -m-2"
-                    : ""
-                }`}
+                className={`relative z-10 group ${isMatch ? "opacity-100" : "opacity-100"}`}
                 onMouseMove={(e) =>
                   variant === "modal" &&
                   onShowTooltip(e, {
                     title: item.topic,
                     value: `${item.value}%`,
                     subtitle: "Topic density in correspondence",
-                    color: item.color,
+                    color: barColor,
                   })
                 }
                 onMouseLeave={variant === "modal" ? onHideTooltip : undefined}
               >
-                {/* Label & Value */}
-                <div className="flex justify-between items-baseline mb-2">
-                  <span className="text-[11px] font-black text-[#1A2A40] uppercase tracking-widest transition-colors group-hover:text-[#4A7C59]">
+                <div className="flex justify-between items-end mb-1 md:mb-1.5">
+                  <span className={`text-[8px] md:text-[9px] font-black uppercase tracking-[0.15em] transition-colors truncate mr-2 ${isMatch ? "text-[#C24E42]" : "text-[#1A2A40]"}`}>
                     {item.topic}
                   </span>
-                  <span className="text-xs font-serif italic text-[#6B7280]">
+                  <span className="text-[10px] md:text-[11px] font-serif italic text-[#5A6472] shrink-0">
                     {item.value}%
                   </span>
                 </div>
 
-                {/* Archival Style Progress Bar */}
-                <div className="relative h-2 w-full bg-[#E8E4DC] border border-[#D4CFC4]/50 overflow-hidden shadow-inner">
+                <div className="h-1.5 md:h-2 w-full bg-[#E5E0D6] rounded-full overflow-hidden relative shadow-[inset_0_1px_2px_rgba(0,0,0,0.05)]">
                   <div
-                    className="absolute left-0 top-0 h-full transition-all duration-1000 ease-in-out"
+                    className="h-full rounded-full transition-all duration-1000 ease-out relative"
                     style={{
                       width: `${item.value}%`,
-                      backgroundColor: item.color,
-                      opacity: 0.8, // Slightly muted to blend with parchment
+                      backgroundColor: barColor,
                     }}
-                  />
+                  >
+                     <div className="absolute top-0 left-0 w-full h-[1px] bg-white/20"></div>
+                  </div>
                 </div>
               </div>
             );
           })}
         </div>
 
-        {/* Scholarly Methodology Footer */}
-        <footer className="mt-6 pt-4 border-t border-dashed border-[#D4CFC4] flex justify-between items-center text-[9px] font-bold uppercase tracking-widest text-[#9CA3AF]">
-          <span>NLP Analysis</span>
-          <span className="italic font-serif lowercase tracking-normal text-[#6B7280]">
+        {/* --- 4. FOOTER --- */}
+        <footer className="mt-6 md:mt-8 pt-3 md:pt-4 border-t border-dashed border-[#D4CFC4] flex flex-col md:flex-row justify-between items-start md:items-center gap-2 md:gap-0 text-[7px] md:text-[8px] font-bold uppercase tracking-[0.2em] text-[#A67C52]/60">
+          <span>NLP ANALYSIS v1.2</span>
+          <span className="font-serif italic capitalize tracking-normal text-[#5A6472]">
             weighted by mention frequency
           </span>
         </footer>
+
+        {/* --- 5. ANIMATION STYLES --- */}
+        <style jsx>{`
+          @keyframes loading {
+            0% { width: 0%; }
+            50% { width: 60%; }
+            100% { width: 100%; }
+          }
+        `}</style>
       </div>
     );
   };
@@ -907,34 +954,34 @@ export default function ChartRenderer({
     const mapHeight = variant === "modal" ? "h-full" : "h-[220px]";
     const layoutClass =
       variant === "modal"
-        ? "grid grid-cols-2 gap-6 flex-1 min-h-0"
+        ? "flex flex-col md:grid md:grid-cols-2 gap-4 md:gap-6 flex-1 min-h-0"
         : "flex flex-col gap-4 flex-1 min-h-0";
 
     return (
       <div
-        className={`flex flex-col bg-[#F5F0E8] border border-[#D4CFC4] rounded-lg p-6 ${
+        className={`flex flex-col bg-[#F5F0E8] border border-[#D4CFC4] rounded-lg p-4 md:p-6 ${
           variant === "modal" ? "h-[560px]" : "h-[520px]"
         }`}
       >
-        <div className="flex items-start justify-between mb-5">
-          <div>
-            <h4 className="text-[10px] font-black text-[#6B7280] uppercase tracking-[0.2em] mb-1">
+        <div className="flex flex-col md:flex-row items-start md:items-start justify-between gap-3 md:gap-0 mb-4 md:mb-5">
+          <div className="flex-1 min-w-0">
+            <h4 className="text-[9px] md:text-[10px] font-black text-[#6B7280] uppercase tracking-[0.2em] mb-1">
               Spatial Proximity
             </h4>
-            <p className="text-sm font-serif italic text-[#4B5563]">
+            <p className="text-xs md:text-sm font-serif italic text-[#4B5563]">
               Distance between Asquith and Venetia locations over time
             </p>
           </div>
 
-          <div className="text-right">
-            <span className="block text-[10px] font-bold text-[#4A7C59] uppercase tracking-widest">
+          <div className="text-left md:text-right shrink-0">
+            <span className="block text-[9px] md:text-[10px] font-bold text-[#4A7C59] uppercase tracking-widest">
               {displayDate}
             </span>
-            <span className="text-sm font-serif text-[#1A2A40]">
+            <span className="text-xs md:text-sm font-serif text-[#1A2A40]">
               {selected.distance_km.toFixed(1)} km
             </span>
             {selected.status ? (
-              <span className="block text-[9px] font-bold text-[#6B7280] uppercase tracking-widest mt-1">
+              <span className="block text-[8px] md:text-[9px] font-bold text-[#6B7280] uppercase tracking-widest mt-1">
                 {selected.status}
               </span>
             ) : null}
@@ -942,8 +989,8 @@ export default function ChartRenderer({
         </div>
 
         <div className={layoutClass} style={{ minHeight: 0 }}>
-          <div className="min-h-0">
-            <div className="mb-2 text-[9px] font-bold uppercase tracking-widest text-[#9CA3AF]">
+          <div className="min-h-0 flex-1">
+            <div className="mb-2 text-[8px] md:text-[9px] font-bold uppercase tracking-widest text-[#9CA3AF]">
               Timeline (click to pin)
             </div>
             <ProximityTimeline
@@ -959,7 +1006,7 @@ export default function ChartRenderer({
               onHoverDate={setProximityHoverDate}
               onSelectDate={setProximityPinnedDate}
             />
-            <div className="mt-2 text-[14px] text-[#6B7280] font-serif italic">
+            <div className="mt-2 text-xs md:text-[14px] text-[#6B7280] font-serif italic">
               {pmLabel || venLabel ? (
                 <>
                   <span className="font-bold not-italic text-[#1A2A40]">
@@ -968,7 +1015,7 @@ export default function ChartRenderer({
                   {pmLabel ? `${pmLabel}` : "—"};{" "}
                   <span className="font-bold not-italic text-[#1A2A40]">
                     Venetia:
-                  </span>{" "}                  
+                  </span>{" "}
                   {venLabel ? `${venLabel}` : "—"}
                 </>
               ) : (
@@ -977,8 +1024,8 @@ export default function ChartRenderer({
             </div>
           </div>
 
-          <div className={`min-h-0 ${mapHeight}`}>
-            <div className="mb-2 text-[9px] font-bold uppercase tracking-widest text-[#9CA3AF]">
+          <div className={`min-h-0 flex-1 ${mapHeight}`}>
+            <div className="mb-2 text-[8px] md:text-[9px] font-bold uppercase tracking-widest text-[#9CA3AF]">
               Map (selected day)
             </div>
             <div className="h-full">
@@ -990,7 +1037,7 @@ export default function ChartRenderer({
           </div>
         </div>
 
-        <footer className="mt-4 pt-3 border-t border-dashed border-[#D4CFC4] flex justify-between text-[9px] font-bold uppercase tracking-widest text-[#9CA3AF]">
+        <footer className="mt-3 md:mt-4 pt-2 md:pt-3 border-t border-dashed border-[#D4CFC4] flex flex-col md:flex-row justify-between items-start md:items-center gap-2 md:gap-0 text-[8px] md:text-[9px] font-bold uppercase tracking-widest text-[#9CA3AF]">
           <span>Total: {points.length} days</span>
           <span className="italic font-serif lowercase tracking-normal text-[#6B7280]">
             derived from daily_records

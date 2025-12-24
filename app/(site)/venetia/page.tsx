@@ -203,8 +203,8 @@ export default function VenetiaPage() {
     <div className="h-full bg-[#E8E4DC]">
       <div className="mx-auto max-w-7xl">
         {/* 1. Hero Section */}
-        <section className="w-full bg-[#050505] py-16 md:py-24 lg:py-32 border-b border-white/10">
-          <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12 lg:gap-20">
+        <section className="w-full bg-[#050505] py-12 md:py-16 lg:py-24 xl:py-32 border-b border-white/10">
+          <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-8 md:gap-12 lg:gap-20">
 
             {/* LEFT COL: The Portrait */}
             <div className="w-full md:w-1/2 flex justify-center md:justify-start z-10">
@@ -222,20 +222,20 @@ export default function VenetiaPage() {
             </div>
 
             {/* RIGHT COL: The Text */}
-            <div className="w-full md:w-1/2 text-left space-y-8 z-10">
+            <div className="w-full md:w-1/2 text-left space-y-6 md:space-y-8 z-10">
               <div>
-                <h1 className="text-5xl md:text-7xl font-serif font-bold text-[#F5F0E8] mb-6 leading-none tracking-tight drop-shadow-lg">
+                <h1 className="text-3xl md:text-5xl lg:text-7xl font-serif font-bold text-[#F5F0E8] mb-4 md:mb-6 leading-none tracking-tight drop-shadow-lg">
                   The Enigma of <br/><span className="text-[#8B4513]">Venetia Stanley</span>
                 </h1>
                 {/* Decorative line */}
-                <div className="w-32 h-[3px] bg-[#8B4513] mb-8 opacity-80" />
+                <div className="w-24 md:w-32 h-[2px] md:h-[3px] bg-[#8B4513] mb-6 md:mb-8 opacity-80" />
               </div>
 
-              <p className="text-2xl md:text-3xl text-[#E8E4DC] italic font-serif leading-snug drop-shadow-md">
+              <p className="text-xl md:text-2xl lg:text-3xl text-[#E8E4DC] italic font-serif leading-snug drop-shadow-md">
                 The &quot;Poll-star&quot; of the Edwardian Era—Intellectual, Hedonist, and &quot;Uncertain Prop.&quot;
               </p>
 
-              <p className="text-lg md:text-xl text-gray-200 font-normal leading-relaxed tracking-wide max-w-xl border-t border-white/20 pt-8 drop-shadow-md">
+              <p className="text-base md:text-lg lg:text-xl text-gray-200 font-normal leading-relaxed tracking-wide max-w-xl border-t border-white/20 pt-6 md:pt-8 drop-shadow-md">
                 In an era of rigid social codes and impending war, she was a brilliant anomaly. A woman who commanded the obsession of the most powerful men in the Empire, leaving a trail of burned letters and broken hearts in her wake.
               </p>
             </div>
@@ -247,9 +247,9 @@ export default function VenetiaPage() {
 
 
         {/* 2. How Others Saw Her - Full-Width Carousel */}
-        <section className="w-full bg-[#F5F0E8] py-16">
-          <div className="px-6 mb-8">
-            <h2 className="text-4xl font-serif font-bold text-[#1A2A40] mb-2 text-center">
+        <section className="w-full bg-[#F5F0E8] py-12 md:py-16">
+          <div className="px-4 md:px-6 mb-6 md:mb-8">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-[#1A2A40] mb-2 text-center">
               The Object of Obsession
             </h2>
           </div>
@@ -257,20 +257,20 @@ export default function VenetiaPage() {
           <div className="relative w-full" ref={carouselRef}>
             {/* Navigation Buttons (anchored to content width) */}
             <div className="pointer-events-none absolute inset-0 z-20">
-              <div className="relative h-full px-6">
+              <div className="relative h-full px-4 md:px-6">
                 <button
                   onClick={prevSlide}
-                  className="pointer-events-auto absolute left-0 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-[#1A2A40] rounded-full p-3 md:p-4 shadow-lg transition-all border border-[#D4CFC4]"
+                  className="pointer-events-auto absolute left-0 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-[#1A2A40] rounded-full p-2.5 md:p-3 lg:p-4 shadow-lg transition-all border border-[#D4CFC4] min-w-[44px] min-h-[44px] flex items-center justify-center"
                   aria-label="Previous slide"
                 >
-                  <ChevronLeft className="w-6 h-6" />
+                  <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
                 </button>
                 <button
                   onClick={nextSlide}
-                  className="pointer-events-auto absolute right-0 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-[#1A2A40] rounded-full p-3 md:p-4 shadow-lg transition-all border border-[#D4CFC4]"
+                  className="pointer-events-auto absolute right-0 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-[#1A2A40] rounded-full p-2.5 md:p-3 lg:p-4 shadow-lg transition-all border border-[#D4CFC4] min-w-[44px] min-h-[44px] flex items-center justify-center"
                   aria-label="Next slide"
                 >
-                  <ChevronRight className="w-6 h-6" />
+                  <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
                 </button>
               </div>
             </div>
@@ -283,7 +283,7 @@ export default function VenetiaPage() {
               >
                 {carouselSlides.map((slide) => (
                   <div key={slide.id} className="min-w-full flex">
-                    <div className="w-full px-6 flex flex-col md:flex-row gap-8 items-center">
+                    <div className="w-full px-4 md:px-6 flex flex-col md:flex-row gap-6 md:gap-8 items-center">
                       {/* Image - 1/3 */}
                       <div className="w-full md:w-1/3 flex-shrink-0">
                         <div className="relative aspect-[3/4] bg-[#1A2A40] rounded-lg overflow-hidden">
@@ -299,7 +299,7 @@ export default function VenetiaPage() {
                             />
                           ) : (
                             <div className="w-full h-full bg-gradient-to-br from-[#1A2A40] via-[#2D3648] to-[#4A7C59] flex items-center justify-center">
-                              <div className="text-6xl font-serif text-white/20">
+                              <div className="text-4xl md:text-6xl font-serif text-white/20">
                                 {slide.title.charAt(0)}
                               </div>
                             </div>
@@ -308,25 +308,25 @@ export default function VenetiaPage() {
                       </div>
 
                       {/* Text - 2/3 */}
-                      <div className="w-full md:w-2/3 flex-shrink-0 space-y-6">
+                      <div className="w-full md:w-2/3 flex-shrink-0 space-y-4 md:space-y-6">
                         <div>
-                          <h3 className="text-3xl font-serif font-bold text-[#1A2A40] mb-1">
+                          <h3 className="text-2xl md:text-3xl font-serif font-bold text-[#1A2A40] mb-1">
                             {slide.title}
                           </h3>
-                          <p className="text-lg text-[#6B7280] italic">
+                          <p className="text-base md:text-lg text-[#6B7280] italic">
                             {slide.subtitle}
                           </p>
                         </div>
-                        <div className="space-y-3">
+                        <div className="space-y-2 md:space-y-3">
                           {slide.quotes.map((quote, index) => (
-                            <blockquote key={index} className="text-lg font-serif italic text-[#1A2A40] border-l-4 border-[#4A7C59] pl-6 py-2">
-                              {'“'}
+                            <blockquote key={index} className="text-base md:text-lg font-serif italic text-[#1A2A40] border-l-4 border-[#4A7C59] pl-4 md:pl-6 py-2">
+                              {'"'}
                               {quote}
-                              {'”'}
+                              {'"'}
                             </blockquote>
                           ))}
                         </div>
-                        <p className="text-lg text-[#1A2A40] leading-relaxed">
+                        <p className="text-base md:text-lg text-[#1A2A40] leading-relaxed">
                           {slide.summary}
                         </p>
                       </div>
@@ -337,13 +337,13 @@ export default function VenetiaPage() {
             </div>
 
             {/* Slide Indicators */}
-            <div className="px-6">
-              <div className="flex justify-center gap-2 mt-8">
+            <div className="px-4 md:px-6">
+              <div className="flex justify-center gap-2 mt-6 md:mt-8">
                 {carouselSlides.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentSlide(index)}
-                    className={`h-2 rounded-full transition-all ${
+                    className={`h-2 rounded-full transition-all min-w-[8px] ${
                       index === currentSlide ? 'w-8 bg-[#4A7C59]' : 'w-2 bg-[#D4CFC4]'
                     }`}
                     aria-label={`Go to slide ${index + 1}`}
@@ -355,13 +355,13 @@ export default function VenetiaPage() {
         </section>
 
         {/* 3. Private Life - Split Section */}
-        <section className="w-full bg-[#E8E4DC] py-16">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
+        <section className="w-full bg-[#E8E4DC] py-12 md:py-16">
+          <div className="max-w-7xl mx-auto px-4 md:px-6">
+            <div className="flex flex-col lg:flex-row gap-8 md:gap-12 lg:gap-16">
               
               {/* Left Column (2/3): In Her Own Words - OVERLAP LAYOUT */}
-              <div className="w-full lg:w-2/3 space-y-8">
-                <h3 className="text-3xl font-serif font-bold text-[#1A2A40] mb-8 border-b border-[#1A2A40]/10 pb-4">
+              <div className="w-full lg:w-2/3 space-y-6 md:space-y-8">
+                <h3 className="text-2xl md:text-3xl font-serif font-bold text-[#1A2A40] mb-6 md:mb-8 border-b border-[#1A2A40]/10 pb-3 md:pb-4">
                   In Her Own Words
                 </h3>
                 
@@ -383,41 +383,41 @@ export default function VenetiaPage() {
 
                   {/* 2. The Quote Card (Top Layer) - Overlapping */}
 {/* 2. The Quote Card (Top Layer) - Overlapping */}
-<div className="w-full md:w-8/12 z-10 -mt-8 md:mt-12 md:-ml-16">
+<div className="w-full md:w-8/12 z-10 -mt-6 md:-mt-8 md:mt-12 md:-ml-16">
   {/* FIXED: Changed bg from dark to light (#F5F0E8) */}
-  <div className="relative bg-[#F5F0E8] rounded-sm p-8 md:p-10 shadow-xl border-l-4 border-[#1A2A40]">
+  <div className="relative bg-[#F5F0E8] rounded-sm p-6 md:p-8 lg:p-10 shadow-xl border-l-4 border-[#1A2A40]">
     
     {/* FIXED: Changed quote mark color to be subtle on light bg */}
-    <div className="absolute top-4 right-6 text-9xl font-serif text-[#1A2A40]/5 leading-none pointer-events-none">
-      ”
+    <div className="absolute top-3 md:top-4 right-4 md:right-6 text-6xl md:text-9xl font-serif text-[#1A2A40]/5 leading-none pointer-events-none">
+      "
     </div>
 
-    <div className="relative z-10 space-y-6 min-h-[220px] flex flex-col justify-center">
+    <div className="relative z-10 space-y-4 md:space-y-6 min-h-[180px] md:min-h-[220px] flex flex-col justify-center">
       {/* The "Lens" Label */}
-      <div className="flex items-center gap-3 mb-2">
-         <span className="h-[1px] w-8 bg-[#8B4513]"></span>
+      <div className="flex items-center gap-2 md:gap-3 mb-2">
+         <span className="h-[1px] w-6 md:w-8 bg-[#8B4513]"></span>
          {/* FIXED: Ensure label text is a readable color */}
-         <p className="text-xs font-bold text-[#8B4513] uppercase tracking-[0.2em]">
+         <p className="text-[10px] md:text-xs font-bold text-[#8B4513] uppercase tracking-[0.2em]">
            {handwrittenQuotes[currentQuote].category}
          </p>
       </div>
 
       {/* FIXED: Changed quote text color to dark (#1A2A40) for high contrast */}
-      <p className="text-xl md:text-2xl font-serif text-[#1A2A40] leading-relaxed">
+      <p className="text-lg md:text-xl lg:text-2xl font-serif text-[#1A2A40] leading-relaxed">
         {handwrittenQuotes[currentQuote].quote}
       </p>
     </div>
     
     {/* Navigation Controls */}
     {/* FIXED: Changed border color to be visible on light bg */}
-    <div className="flex items-center justify-between mt-8 pt-6 border-t border-[#1A2A40]/10">
+    <div className="flex items-center justify-between mt-6 md:mt-8 pt-4 md:pt-6 border-t border-[#1A2A40]/10">
       <div className="flex gap-1.5">
         {handwrittenQuotes.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentQuote(index)} 
             /* FIXED: Updated dot colors for light background */
-            className={`h-1.5 rounded-full transition-all duration-300 ${
+            className={`h-1.5 rounded-full transition-all duration-300 min-w-[6px] ${
               index === currentQuote ? 'w-8 bg-[#1A2A40]' : 'w-1.5 bg-[#1A2A40]/20 hover:bg-[#1A2A40]/40'
             }`}
             aria-label={`Go to quote ${index + 1}`}
@@ -429,14 +429,16 @@ export default function VenetiaPage() {
         <button
           onClick={prevQuote}
           /* FIXED: Updated arrow button colors for light background */
-          className="p-2 text-[#1A2A40] hover:bg-[#1A2A40]/5 rounded-full transition-colors border border-[#1A2A40]/20"
+          className="p-2 text-[#1A2A40] hover:bg-[#1A2A40]/5 rounded-full transition-colors border border-[#1A2A40]/20 min-w-[44px] min-h-[44px] flex items-center justify-center"
+          aria-label="Previous quote"
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
         <button
           onClick={nextQuote}
           /* FIXED: Updated arrow button colors for light background */
-          className="p-2 text-[#1A2A40] hover:bg-[#1A2A40]/5 rounded-full transition-colors border border-[#1A2A40]/20"
+          className="p-2 text-[#1A2A40] hover:bg-[#1A2A40]/5 rounded-full transition-colors border border-[#1A2A40]/20 min-w-[44px] min-h-[44px] flex items-center justify-center"
+          aria-label="Next quote"
         >
           <ChevronRight className="w-4 h-4" />
         </button>
@@ -449,12 +451,12 @@ export default function VenetiaPage() {
               </div>
 
               {/* Right Column (1/3): A Day in the Life */}
-              <div className="w-full lg:w-1/3 border-l border-[#1A2A40]/10 lg:pl-12 space-y-8">
+              <div className="w-full lg:w-1/3 border-t lg:border-t-0 lg:border-l border-[#1A2A40]/10 lg:pl-8 xl:pl-12 pt-8 lg:pt-0 space-y-6 md:space-y-8">
                 <div>
-                    <h3 className="text-xl font-serif font-bold text-[#1A2A40] mb-2">
+                    <h3 className="text-lg md:text-xl font-serif font-bold text-[#1A2A40] mb-2">
                       A Day in the Life
                     </h3>
-                    <p className="text-xs text-[#5A6472] uppercase tracking-wider mb-6">
+                    <p className="text-[10px] md:text-xs text-[#5A6472] uppercase tracking-wider mb-4 md:mb-6">
                       1912–1915 • Based on Asquith's Poem
                     </p>
                 </div>
@@ -488,12 +490,12 @@ export default function VenetiaPage() {
           </div>
         </section>
         {/* 4. The Cultural Life - Split Section */}
-        <section className="w-full bg-[#E8E4DC] py-20 border-t border-[#1A2A40]/10">
-          <div className="max-w-7xl mx-auto px-6">
+        <section className="w-full bg-[#E8E4DC] py-12 md:py-16 lg:py-20 border-t border-[#1A2A40]/10">
+          <div className="max-w-7xl mx-auto px-4 md:px-6">
             
-            <div className="mb-16 text-center">
-              <h3 className="text-4xl font-serif font-bold text-[#1A2A40] mb-3">Intellect & Vice</h3>
-              <p className="text-[#5A6472] font-serif italic text-lg">"A whetted appetite and zest for the pleasures of the world"</p>
+            <div className="mb-10 md:mb-12 lg:mb-16 text-center">
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-[#1A2A40] mb-2 md:mb-3">Intellect & Vice</h3>
+              <p className="text-[#5A6472] font-serif italic text-base md:text-lg">"A whetted appetite and zest for the pleasures of the world"</p>
             </div>
 
             <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
