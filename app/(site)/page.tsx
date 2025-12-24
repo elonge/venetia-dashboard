@@ -14,6 +14,7 @@ import {
 import type { DayData } from "@/components/daily";
 import DataRoom from "@/components/data-room/DataRoom";
 import ChaptersGrid from "@/components/home/ChaptersGrid";
+import DataRoomPreview from "@/components/data-room/DataRoomPreview";
 
 export default function Home() {
   const router = useRouter();
@@ -160,11 +161,11 @@ export default function Home() {
 
           {/* Data Room + Simulation Lab (1/3) */}
           <section className="space-y-4 md:space-y-6">
-            <DataRoom previewVariant="compact" />
+            <DataRoomPreview />
 
             <Link
               href="/lab"
-              className="block min-h-[160px] md:min-h-[180px] rounded-md border border-white/10 bg-[#0D1B2A] p-4 md:p-6 shadow-2xl hover:border-[#63D29A]/50 transition-all relative overflow-hidden group"
+              className="block min-h-[160px] md:min-h-[180px] rounded-md border border-white/10 bg-[#0D1B2A] p-4 md:p-6 ring-1 ring-black/10 ring-inset shadow-[0_2px_8px_rgba(0,0,0,0.12),0_16px_36px_rgba(0,0,0,0.16)] hover:-translate-y-px hover:border-[#2A3D5D] hover:shadow-[0_18px_44px_rgba(0,0,0,0.14)] transition-all relative overflow-hidden group"
               style={{
                 backgroundImage: `
       linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px), 
