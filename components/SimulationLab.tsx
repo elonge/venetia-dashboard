@@ -700,7 +700,7 @@ const VenetiaSimulationLab = () => {
         <div className="w-[380px] flex flex-col gap-4 border-2 border-[#A67C52]/30 rounded-lg p-4 bg-[#EBE7DF]/30 h-fit">
           {/* Audio Section Explanation */}
           <div className="bg-[#EBE7DF] rounded-2xl p-6 border border-[#C4BFAF] shadow-sm">
-            <h2 className="text-base font-bold text-[#1A2A40] mb-3">Audio Reconstruction</h2>
+            <h2 className="text-4xl font-bold text-[#1A2A40] tracking-light mb-3">Audio Reconstruction</h2>
             <p className="text-sm text-[#4B5563] leading-relaxed mb-3">
               <strong className="text-[#1A2A40]">What is this?</strong> This is an audio reconstruction of Asquith 
               reading one of his famous letters to Venetia. 
@@ -749,7 +749,7 @@ const VenetiaSimulationLab = () => {
         <div className="w-[380px] flex flex-col gap-4 border-2 border-[#1A2A40]/30 rounded-lg p-4 bg-white/30 h-fit">
           {/* Instagram Section Explanation */}
           <div className="bg-white rounded-2xl p-6 border border-[#C4BFAF] shadow-sm">
-            <h2 className="text-base font-bold text-[#1A2A40] mb-3">Instagram Displacement</h2>
+            <h2 className="text-4xl font-bold text-[#1A2A40] tracking-light mb-3">Instagram Displacement</h2>
             <p className="text-sm text-[#4B5563] leading-relaxed mb-3">
               <strong className="text-[#1A2A40]">What is this?</strong> This is a speculative Instagram feed for 
               Venetia Stanley, translating her historical experiences and personality into contemporary social media 
