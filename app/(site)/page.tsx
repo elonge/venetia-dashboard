@@ -210,7 +210,7 @@ export default function Home() {
           <section className="min-w-0">
             <Link
               href="/venetia"
-              className="block min-h-[200px] md:min-h-62.5 rounded-md overflow-hidden border border-white/10 shadow-2xl hover:border-[#4A7C59]/50 transition-all relative group"
+              className="block min-h-[200px] md:min-h-62.5 rounded-md overflow-hidden border border-white/10 shadow-2xl hover:border-[#4A7C59]/50 hover:scale-102 transition-all relative group duration-700"
               style={{
                 backgroundImage: "url('/asquith_venetia_split_screen2.jpg')",
                 backgroundSize: "cover",
