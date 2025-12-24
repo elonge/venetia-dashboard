@@ -160,7 +160,7 @@ export const PODCASTS: Array<{
     {
         "title": "Introduction: The Asquith-Stanley Letters",
         "description": "An overview of the intimate correspondence between Prime Minister H.H. Asquith and Venetia Stanley, revealing the personal and political dynamics of early 20th-century Britain.",
-        "duration": 486,
+        "duration": 238,
         "chapter_id": "the_letters"
     },
     {

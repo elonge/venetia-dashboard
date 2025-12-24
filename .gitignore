@@ -3,3 +3,5 @@ node_modules/
 .DS_Store
 .env.local
 .next/dev/build/postcss.js.map
+tsconfig.tsbuildinfo
+tsconfig.tsbuildinfo
