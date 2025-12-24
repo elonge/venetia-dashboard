@@ -125,6 +125,14 @@ export default function AboutPage() {
               </div>
 
               <div>
+                <h3 className="text-xl font-serif font-semibold text-[#1A2A40] mb-2">ElevenLabs</h3>
+                <p className="text-[#6B7280]">
+                  To generate the audio reconstruction of Asquith reading his letters.
+                </p>
+              </div>
+
+
+              <div>
                 <h3 className="text-xl font-serif font-semibold text-[#1A2A40] mb-2">Base44</h3>
                 <p className="text-[#6B7280]">
                   Used heavily for vibe-coding the entire interface: iterating layouts, UI components, design decisions, and stylistic polish.

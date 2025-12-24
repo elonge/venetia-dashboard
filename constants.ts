@@ -237,7 +237,7 @@ export const PODCASTS: Array<{
       }
     
     ]
-    export const sourceNameMapping: Record<string, string> = {
+export const sourceNameMapping: Record<string, string> = {
         // Asquith & Family
         "asquith-letters-full.txt": "Asquith Letters",
         "The_Asquiths_Book-full.txt": "The Asquiths Book",
@@ -260,7 +260,7 @@ export const PODCASTS: Array<{
         
         // Data Folders (if needed)
         "hansard_data_notebooklm_ready": "Hansard Data Records"
-      };
+};
       
       // Helper function to safely get the name
 export const getRealSourceName = (filename: string): string => {

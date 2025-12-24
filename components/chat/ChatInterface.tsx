@@ -2,8 +2,7 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Send, Loader2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Send, Loader2, Sparkles, ArrowRight, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import MessageBubble, { Message } from './MessageBubble';
 import type { Question, QuestionAnswer } from '@/lib/questions';
@@ -45,7 +44,7 @@ export default function ChatInterface() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, isLoading]);
 
   // Load popular questions for empty state
   useEffect(() => {
@@ -111,7 +110,6 @@ export default function ChatInterface() {
 
   // Persist chat history across pages
   useEffect(() => {
-    // Persist only completed messages to avoid keeping stale "Thinking..." states
     const completedMessages = messages.filter((msg) => !msg.isStreaming);
     if (completedMessages.length > 0) {
       localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(completedMessages));
@@ -129,9 +127,8 @@ export default function ChatInterface() {
       content: questionToSend,
     };
 
-    // Capture current history before adding the new user/assistant messages
     const historyToSend = messages
-      .filter((m) => !m.isStreaming) // Exclude streaming messages
+      .filter((m) => !m.isStreaming)
       .map((m) => ({
         role: m.role,
         content: m.content,
@@ -143,14 +140,12 @@ export default function ChatInterface() {
       historyPreview: historyToSend.slice(-2),
     });
 
-    // Add placeholder for assistant response
     const assistantMessage: Message = {
       role: 'assistant',
       content: '',
       isStreaming: true,
     };
 
-    // Append both user and assistant placeholder together using the current snapshot
     setMessages((prev) => [...prev, userMessage, assistantMessage]);
     if (!questionOverride) {
       setInput('');
@@ -191,7 +186,7 @@ export default function ChatInterface() {
       let fullContent = '';
       let lastUpdateTime = 0;
       let pendingUpdate: number | null = null;
-      const UPDATE_THROTTLE_MS = 50; // Update at most every 50ms to reduce flickering
+      const UPDATE_THROTTLE_MS = 50;
 
       const updateMessage = (
         content: string, 
@@ -236,10 +231,8 @@ export default function ChatInterface() {
             try {
               const data = JSON.parse(line.slice(6));
               
-              // Handle loading state during JSON streaming
               if (data.loading && !data.done) {
-                // Show loading message during streaming
-                const displayContent = 'Generating answer...';
+                const displayContent = ''; // Keep empty to let the UI show "Consulting Sources" loader
                 const now = Date.now();
                 if (now - lastUpdateTime >= UPDATE_THROTTLE_MS) {
                   if (pendingUpdate) {
@@ -257,12 +250,10 @@ export default function ChatInterface() {
                 }
               }
               
-              // Handle content (for backward compatibility with non-JSON responses)
               if (data.content && !data.loading) {
                 fullContent += data.content;
               }
               
-              // If done, update immediately with all data
               if (data.done) {
                 if (pendingUpdate) {
                   cancelAnimationFrame(pendingUpdate);
@@ -274,7 +265,6 @@ export default function ChatInterface() {
                 if (data.answers && Array.isArray(data.answers)) {
                   answers = data.answers;
                 }
-                // When done, clear content if we have structured answers
                 const finalContent = answers && answers.length > 0 ? '' : fullContent;
                 updateMessage(finalContent, true, sources, answers);
               }
@@ -287,17 +277,15 @@ export default function ChatInterface() {
                 answers = data.answers;
               }
             } catch {
-              // Ignore JSON parse errors for incomplete chunks
+              // Ignore JSON parse errors
             }
           }
         }
       }
 
-      // Ensure final update is applied
       if (pendingUpdate) {
         cancelAnimationFrame(pendingUpdate);
       }
-      // When done, clear the content if we have structured answers (they will be displayed instead)
       const finalContent = answers && answers.length > 0 ? '' : fullContent;
       updateMessage(finalContent, true, sources, answers);
     } catch (error) {
@@ -318,12 +306,10 @@ export default function ChatInterface() {
     }
   }, [isLoading, input, messages]);
 
-  // Auto-send question from URL parameter
   useEffect(() => {
     const question = searchParams.get('q');
     if (question && !hasAutoSentRef.current && messages.length === 0 && !isLoading) {
       hasAutoSentRef.current = true;
-      // Small delay to ensure component is fully mounted
       setTimeout(() => {
         handleSend(question);
       }, 100);
@@ -338,98 +324,108 @@ export default function ChatInterface() {
   };
 
   return (
-    <div className="flex flex-col h-full rounded-2xl border border-[#D4CFC4] bg-[#F5F0E8] shadow-[0_18px_44px_rgba(0,0,0,0.14)] overflow-hidden">
-      {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto px-6 py-5">
-        {messages.length === 0 ? (
-          <div className="flex items-center justify-center h-full">
-            <div className="w-full max-w-sm">
-              <h2 className="text-center text-lg font-serif text-[#1A2A40] mb-2">
-                Chat with Historical Documents
-              </h2>
-              <p className="text-center text-sm leading-relaxed text-[#2D3648]">
-                Ask questions about Venetia Stanley, H.H. Asquith, Edwin Montagu,
-                and the political events of 1912-1916. I&apos;ll search through the
-                primary sources to provide accurate answers.
-              </p>
+    <div className="flex flex-col h-full bg-[#F5F0E8] border-l border-[#D4CFC4] shadow-[-10px_0_30px_rgba(0,0,0,0.02)] font-sans relative overflow-hidden">
+      
+      {/* 1. HEADER: Specialized Terminal Look */}
+      <div className="px-6 py-5 border-b border-[#D4CFC4] bg-[#FAF7F2] flex items-center gap-3 z-10 shadow-sm">
+        <div className="w-8 h-8 bg-[#1A2A40] rounded-sm flex items-center justify-center shadow-sm">
+          <Sparkles size={14} className="text-[#F5F0E8]" />
+        </div>
+        <div>
+          <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-[#1A2A40]">
+            Primary Source Query
+          </h3>
+          <p className="text-[10px] text-[#8B4513]/60 font-serif italic">
+            Searching 1912–1916 Archive
+          </p>
+        </div>
+      </div>
 
-              <div className="mt-8 flex flex-col gap-3">
-                {isLoadingPopularQuestions ? (
-                  Array.from({ length: DEFAULT_SUGGESTED_QUESTIONS_COUNT }).map(
-                    (_, index) => (
-                      <div
-                        key={index}
-                        className="h-9 w-full rounded-full border border-[#D4CFC4] bg-white/60"
-                        aria-hidden="true"
-                      />
-                    )
-                  )
-                ) : suggestedQuestions.length > 0 ? (
-                  suggestedQuestions.map((q) => (
-                    <button
-                      key={q._id}
-                      type="button"
-                      onClick={() => handleSend(q.Question)}
-                      className="w-full rounded-full border border-[#D4CFC4] bg-[#FDFBF7] px-4 py-2 text-sm font-serif text-[#1A2A40] shadow-[0_1px_0_rgba(0,0,0,0.05)] hover:bg-[#E8E4DC] transition-colors"
-                      disabled={isLoading}
-                      title="Ask this question"
-                    >
-                      {q.Question}
-                    </button>
-                  ))
-                ) : (
-                  FALLBACK_SUGGESTED_QUESTIONS.slice(
-                    0,
-                    DEFAULT_SUGGESTED_QUESTIONS_COUNT
-                  ).map((question) => (
-                    <button
-                      key={question}
-                      type="button"
-                      onClick={() => handleSend(question)}
-                      className="w-full rounded-full border border-[#D4CFC4] bg-[#FDFBF7] px-4 py-2 text-sm font-serif text-[#1A2A40] shadow-[0_1px_0_rgba(0,0,0,0.05)] hover:bg-[#E8E4DC] transition-colors"
-                      disabled={isLoading}
-                      title="Ask this question"
-                    >
-                      {question}
-                    </button>
-                  ))
-                )}
-              </div>
+      {/* 2. MESSAGES AREA */}
+      <div className="flex-1 overflow-y-auto px-6 py-6 scroll-smooth space-y-6">
+        {messages.length === 0 ? (
+          // --- EMPTY STATE ---
+          <div className="h-full flex flex-col justify-center items-center text-center animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-forwards">
+            <div className="w-16 h-16 bg-[#D4CFC4]/30 rounded-full flex items-center justify-center mb-6 border border-[#D4CFC4]/50">
+              <Search size={24} className="text-[#8B4513]/40" />
+            </div>
+            <h2 className="font-serif text-2xl text-[#1A2A40] mb-3">
+              Chat with History
+            </h2>
+            <p className="text-sm text-[#5A6472] max-w-[280px] leading-relaxed mb-8">
+              Ask questions about Venetia Stanley, H.H. Asquith, and the political events of 1912–1916. I verify every answer against the primary sources.
+            </p>
+
+            <div className="w-full max-w-sm space-y-2.5">
+              {isLoadingPopularQuestions ? (
+                Array.from({ length: DEFAULT_SUGGESTED_QUESTIONS_COUNT }).map((_, i) => (
+                  <div key={i} className="h-12 w-full bg-white/50 border border-[#D4CFC4] rounded-sm animate-pulse" />
+                ))
+              ) : (suggestedQuestions.length > 0 ? suggestedQuestions.map(q => q.Question) : FALLBACK_SUGGESTED_QUESTIONS.slice(0, DEFAULT_SUGGESTED_QUESTIONS_COUNT)).map((qText, i) => (
+                <button
+                  key={i}
+                  onClick={() => handleSend(qText)}
+                  className="w-full text-left p-3.5 bg-white border border-[#D4CFC4] rounded-sm hover:border-[#4A7C59] hover:bg-[#4A7C59]/5 transition-all group flex items-center justify-between shadow-sm"
+                >
+                  <span className="text-[11px] font-bold text-[#1A2A40] group-hover:text-[#4A7C59] transition-colors line-clamp-1">
+                    {qText}
+                  </span>
+                  <ArrowRight size={12} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#4A7C59]" />
+                </button>
+              ))}
             </div>
           </div>
         ) : (
-          <div>
+          // --- CHAT MESSAGES ---
+          <div className="space-y-8 pb-4">
             {messages.map((message, index) => (
               <MessageBubble key={index} message={message} />
             ))}
+            
+            {/* Thinking Indicator */}
+            {isLoading && messages[messages.length - 1]?.role !== 'assistant' && (
+               <div className="flex flex-col items-start animate-in fade-in duration-300 ml-1">
+                  <div className="flex items-center gap-2 mb-2">
+                      <div className="w-4 h-4 bg-[#A67C59] rounded-full flex items-center justify-center animate-pulse">
+                        <div className="w-2 h-2 bg-white rounded-full" />
+                      </div>
+                      <span className="text-[9px] font-black uppercase tracking-widest text-[#A67C59]">Consulting Sources...</span>
+                  </div>
+               </div>
+            )}
             <div ref={messagesEndRef} />
           </div>
         )}
       </div>
 
-      {/* Input Area */}
-      <div className="border-t border-[#D4CFC4] bg-[#F5F0E8] px-6 py-4">
-        <div className="flex gap-2">
+      {/* 3. INPUT AREA */}
+      <div className="p-5 bg-[#F5F0E8] border-t border-[#D4CFC4] relative z-20">
+        <div className="relative flex items-center shadow-sm group">
           <Input
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyPress={handleKeyPress}
-            placeholder="Type your question..."
+            onKeyDown={handleKeyPress}
+            placeholder="Ask a question about the archive..."
             disabled={isLoading}
-            className="flex-1"
+            className="w-full bg-white border border-[#D4CFC4] text-[#1A2A40] placeholder:text-[#D4CFC4] text-sm px-4 py-6 rounded-sm pr-14 focus-visible:ring-1 focus-visible:ring-[#1A2A40]/20 focus-visible:border-[#1A2A40] transition-all font-serif"
           />
-          <Button
+          <button
             onClick={() => handleSend()}
             disabled={isLoading || !input.trim()}
-            size="icon"
+            className="absolute right-2 p-2 bg-[#1A2A40] text-white rounded-sm hover:bg-[#4A7C59] disabled:bg-[#D4CFC4] disabled:cursor-not-allowed transition-colors"
           >
             {isLoading ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
+               <Loader2 className="w-4 h-4 animate-spin" />
             ) : (
-              <Send className="w-4 h-4" />
+               <Send size={16} />
             )}
-          </Button>
+          </button>
+        </div>
+        <div className="text-center mt-3">
+           <span className="text-[8px] font-bold text-[#D4CFC4] uppercase tracking-[0.2em]">
+             Reconstructed from Sources • Assisted by AI
+           </span>
         </div>
       </div>
     </div>
