@@ -36,7 +36,7 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
   if (isUser) {
     return (
       <div className="flex justify-end mb-4 md:mb-6 animate-in slide-in-from-bottom-2 fade-in duration-300">
-        <div className="bg-[#1A2A40] text-[#F5F0E8] px-4 md:px-5 py-3 md:py-3.5 rounded-2xl rounded-br-sm max-w-[90%] md:max-w-[85%] shadow-md text-xs md:text-sm leading-relaxed font-medium tracking-wide">
+        <div className="bg-[#1A2A40] text-[#F5F0E8] px-4 md:px-5 py-3 md:py-3.5 rounded-sm rounded-br-sm max-w-[90%] md:max-w-[85%] shadow-md text-xs md:text-sm leading-relaxed font-medium tracking-wide">
           {replaceSourceNames(message.content)}
         </div>
       </div>
@@ -53,7 +53,7 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
     : [];
     
   return (
-    <div className="flex justify-start mb-6 md:mb-8 w-full animate-in slide-in-from-bottom-2 fade-in duration-500">
+    <div className="flex justify-start mb-6 md:mb-8 w-full animate-in slide-in-from-bottom-2 fade-in duration-500 rounded-sm">
       <div className="max-w-[95%] w-full">
         
         {/* A. The "Persona" Header */}

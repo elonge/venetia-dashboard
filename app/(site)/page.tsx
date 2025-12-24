@@ -141,7 +141,7 @@ export default function Home() {
           {/* Daily view (2/3) */}
           <section className="min-w-0">
             {loadingDays ? (
-              <div className="bg-[#F5F0E8] rounded-2xl p-4 md:p-6 text-center text-[#2D3648] border border-[#D4CFC4] min-h-[200px] md:min-h-[250px] flex items-center justify-center shadow-[0_14px_34px_rgba(0,0,0,0.08)]">
+              <div className="bg-[#F5F0E8] rounded-md p-4 md:p-6 text-center text-[#2D3648] border border-[#D4CFC4] min-h-[200px] md:min-h-[250px] flex items-center justify-center shadow-[0_14px_34px_rgba(0,0,0,0.08)]">
                 <span className="text-sm md:text-base">Loading today's date in 1912–1915...</span>
               </div>
             ) : todayInHistory ? (
@@ -164,7 +164,7 @@ export default function Home() {
 
             <Link
               href="/lab"
-              className="block min-h-[160px] md:min-h-[180px] rounded-sm border border-white/10 bg-[#0D1B2A] p-4 md:p-6 shadow-2xl hover:border-[#63D29A]/50 transition-all relative overflow-hidden group"
+              className="block min-h-[160px] md:min-h-[180px] rounded-md border border-white/10 bg-[#0D1B2A] p-4 md:p-6 shadow-2xl hover:border-[#63D29A]/50 transition-all relative overflow-hidden group"
               style={{
                 backgroundImage: `
       linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px), 
@@ -208,7 +208,7 @@ export default function Home() {
           <section className="min-w-0">
             <Link
               href="/venetia"
-              className="block min-h-[200px] md:min-h-62.5 rounded-sm overflow-hidden border border-white/10 shadow-2xl hover:border-[#4A7C59]/50 transition-all relative group"
+              className="block min-h-[200px] md:min-h-62.5 rounded-md overflow-hidden border border-white/10 shadow-2xl hover:border-[#4A7C59]/50 transition-all relative group"
               style={{
                 backgroundImage: "url('/asquith_venetia_split_screen2.jpg')",
                 backgroundSize: "cover",
@@ -248,7 +248,7 @@ export default function Home() {
 
           {/* Fun Facts (1/3) */}
           <section>
-            <div className="relative rounded-2xl border border-amber-200 bg-[#F6E39A] p-4 md:p-6 shadow-[0_14px_34px_rgba(0,0,0,0.10)] rotate-[0.6deg] overflow-hidden">
+            <div className="relative rounded-md border min-h-70 border-amber-200 bg-[#F6E39A] p-4 md:p-6 shadow-[0_14px_34px_rgba(0,0,0,0.10)] rotate-[0.6deg] overflow-hidden">
               <div
                 className="absolute inset-0 pointer-events-none opacity-45"
                 style={{
@@ -274,7 +274,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={handleShuffleFunFact}
-                    className="inline-flex h-9 w-9 md:h-9 md:w-9 items-center justify-center rounded-xl border border-amber-200 bg-white/60 text-amber-900 hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed shrink-0 min-w-[44px] min-h-[44px]"
+                    className="inline-flex h-9 w-9 md:h-9 md:w-9 items-center justify-center rounded-md border border-amber-200 bg-white/60 text-amber-900 hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed shrink-0 min-w-[44px] min-h-[44px]"
                     disabled={
                       loadingFunFacts || !funFacts || funFacts.length === 0
                     }

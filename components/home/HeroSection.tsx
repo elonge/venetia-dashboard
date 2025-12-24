@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function HeroSection() {
   return (
-    <div className="bg-[#F5F0E8] rounded-2xl overflow-hidden mb-4 md:mb-6 border border-black/10 shadow-[0_18px_44px_rgba(0,0,0,0.16)]">
+    <div className="bg-[#F5F0E8] rounded-md overflow-hidden mb-4 md:mb-6 border border-black/10 shadow-[0_18px_44px_rgba(0,0,0,0.16)]">
       <div className="relative w-full">
         <img 
           src="/asquith_venetia_split_screen.jpg"

@@ -122,14 +122,14 @@ export default function ChaptersGrid() {
         {['a', 'b', 'c', 'd', 'e', 'f'].map((key) => (
           <div
             key={key}
-            className="rounded-2xl border border-[#D4CFC4] bg-[#F5F0E8] p-5 shadow-[0_12px_28px_rgba(0,0,0,0.08)]"
+            className="rounded-md border border-[#D4CFC4] bg-[#F5F0E8] p-5 shadow-[0_12px_28px_rgba(0,0,0,0.08)]"
           >
-            <div className="h-4 w-24 rounded bg-black/10" />
-            <div className="mt-3 h-5 w-3/4 rounded bg-black/10" />
+            <div className="h-4 w-24 rounded-md bg-black/10" />
+            <div className="mt-3 h-5 w-3/4 rounded-md bg-black/10" />
             <div className="mt-3 space-y-2">
-              <div className="h-3 w-full rounded bg-black/10" />
-              <div className="h-3 w-11/12 rounded bg-black/10" />
-              <div className="h-3 w-10/12 rounded bg-black/10" />
+              <div className="h-3 w-full rounded-md bg-black/10" />
+              <div className="h-3 w-11/12 rounded-md bg-black/10" />
+              <div className="h-3 w-10/12 rounded-md bg-black/10" />
             </div>
           </div>
         ))}
@@ -139,7 +139,7 @@ export default function ChaptersGrid() {
 
   if (sortedChapters.length === 0) {
     return (
-      <div className="rounded-2xl border border-[#D4CFC4] bg-[#F5F0E8] p-6 text-center text-[#2D3648]">
+      <div className="rounded-md border border-[#D4CFC4] bg-[#F5F0E8] p-6 text-center text-[#2D3648]">
         No chapters available.
       </div>
     );
@@ -163,7 +163,7 @@ function ChapterCard({ chapter, index }: { chapter: Chapter, index: number }) {
 
   return (
     // Theoretical Component Structure
-<Link className="group relative overflow-hidden rounded-xl aspect-video cursor-pointer shadow-md" href={`/chapter?chapter_id=${encodeURIComponent(chapter.chapter_id)}`}>
+<Link className="group relative overflow-hidden rounded-lg aspect-video cursor-pointer shadow-md" href={`/chapter?chapter_id=${encodeURIComponent(chapter.chapter_id)}`}>
   
   {/* 1. BACKGROUND IMAGE */}
   <img 
@@ -180,7 +180,7 @@ function ChapterCard({ chapter, index }: { chapter: Chapter, index: number }) {
     
     {/* Top Badge: Chapter ID or Number */}
     <div className="absolute top-3 md:top-4 left-3 md:left-4">
-      <span className="px-1.5 md:px-2 py-0.5 md:py-1 text-[9px] md:text-[10px] font-bold tracking-widest text-white/80 bg-black/30 backdrop-blur-sm rounded border border-white/10 uppercase">
+      <span className="px-1.5 md:px-2 py-0.5 md:py-1 text-[9px] md:text-[10px] font-bold tracking-widest text-white/80 bg-black/30 backdrop-blur-sm rounded-md border border-white/10 uppercase">
         Chapter {index + 1}
       </span>
       

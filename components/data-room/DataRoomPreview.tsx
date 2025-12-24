@@ -61,7 +61,7 @@ export default function DataRoomPreview({
       <Link
         href={href}
         aria-label="Open Data Room"
-        className={`group relative block w-full overflow-hidden rounded-2xl border border-[#1F3350] text-left transition-all ${
+        className={`group relative block w-full overflow-hidden rounded-md border border-[#1F3350] text-left transition-all ${
           isCompact ? 'min-h-[140px] md:min-h-27.5 p-3 md:p-4' : 'min-h-[200px] md:min-h-62.5 p-4 md:p-6'
         } hover:-translate-y-px hover:border-[#2A3D5D] shadow-[0_14px_34px_rgba(0,0,0,0.10)] hover:shadow-[0_18px_44px_rgba(0,0,0,0.14)]`}
       >

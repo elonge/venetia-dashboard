@@ -324,7 +324,7 @@ export default function ChatInterface() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#F5F0E8] border-l border-[#D4CFC4] shadow-[-10px_0_30px_rgba(0,0,0,0.02)] font-sans relative overflow-hidden">
+    <div className="flex flex-col h-full rounded-md bg-[#F5F0E8] border-l border-[#D4CFC4] shadow-[-10px_0_30px_rgba(0,0,0,0.02)] font-sans relative overflow-hidden">
       
       {/* 1. HEADER: Specialized Terminal Look */}
       <div className="px-4 md:px-6 py-4 md:py-5 border-b border-[#D4CFC4] bg-[#FAF7F2] flex items-center gap-2 md:gap-3 z-10 shadow-sm">
@@ -413,7 +413,7 @@ export default function ChatInterface() {
           <button
             onClick={() => handleSend()}
             disabled={isLoading || !input.trim()}
-            className="absolute right-2 p-2 md:p-2.5 bg-[#1A2A40] text-white rounded-sm hover:bg-[#4A7C59] disabled:bg-[#D4CFC4] disabled:cursor-not-allowed transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="absolute right-2 p-2! md:p-2.5! bg-[#1A2A40] text-white rounded-sm hover:bg-[#4A7C59] disabled:bg-[#D4CFC4] disabled:cursor-not-allowed transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
             aria-label="Send message"
           >
             {isLoading ? (
