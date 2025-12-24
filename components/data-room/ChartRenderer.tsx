@@ -272,7 +272,7 @@ export default function ChartRenderer({
         placeholder="Track emotional motif (e.g. longing, guilty, despair)..."
         disabled={termLoading}
         /* Increased width to avoid cutting off your long placeholder */
-        className="h-8 w-[380px] bg-transparent text-[12px] font-serif italic text-[#1A2A40] placeholder:text-[#A67C52] placeholder:opacity-70 focus:outline-none disabled:opacity-50"
+        className="h-8 w-[380px] bg-transparent text-[12px] font-serif italic text-[#1A2A40] placeholder:text-[#A67C52]! placeholder:opacity-70 focus:outline-none disabled:opacity-50"
         maxLength={80}
       />
     {/* The Fixed Button: Solid background for visibility */}
