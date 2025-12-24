@@ -167,13 +167,13 @@ export const PODCASTS: Array<{
     {
         "title": "Introduction: The Asquith-Stanley Letters",
         "description": "An overview of the intimate correspondence between Prime Minister H.H. Asquith and Venetia Stanley, revealing the personal and political dynamics of early 20th-century Britain.",
-        "duration": 238,
+        "duration": 413,
         "chapter_id": "the_letters"
     },
     {
         "title": "Sicily 1912: The Prime Minister's Holiday",
         "description": "A sun-drenched trip to Sicily reveals the shifting dynamics of Asquith's inner circle and the dawn of his obsession with Venetia Stanley.",
-        "duration": 317,
+        "duration": 379,
         "chapter_id": "sicily",
       },
       {
