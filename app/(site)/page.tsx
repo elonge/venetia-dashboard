@@ -106,7 +106,8 @@ export default function Home() {
           fact: string;
         }>;
         setFunFacts(data);
-        setFunFactIndex(0);
+        // Start with a random fact instead of 0
+        setFunFactIndex(Math.floor(Math.random() * data.length));
       } catch (error) {
         console.error("Error loading fun facts:", error);
         setFunFacts(null);
