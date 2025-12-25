@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Shuffle } from "lucide-react";
+import { ArrowRight, Shuffle, FlaskConical } from "lucide-react";
 import HeroSection from "@/components/home/HeroSection";
 import { useChatVisibility } from "@/components/chat/useChatVisibility";
 import {
@@ -165,65 +165,43 @@ export default function Home() {
           <section className="space-y-4 md:space-y-6">
             <DataRoomPreview />
             <Link
-  href="/lab"
-  className="relative block min-h-[160px] md:min-h-[180px] w-full overflow-hidden rounded-lg bg-[#0B0F19] p-6 group transition-all duration-500 hover:shadow-[0_0_50px_-12px_rgba(124,58,237,0.4)] border border-white/5 hover:border-violet-500/40"
->
-  {/* 1. THE "COSMIC" BACKGROUND */}
-  <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-     
-     {/* The Deep Void Gradient */}
-     <div className="absolute inset-0 bg-gradient-to-br from-[#0B0F19] via-[#111827] to-[#1E1B4B]" />
+              href="/lab"
+              className="relative block min-h-[160px] md:min-h-[180px] w-full overflow-hidden rounded-md bg-card-bg p-6 group transition-all duration-300 border border-dashed border-accent-brown/30 hover:border-accent-brown hover:shadow-[0_8px_30px_rgba(120,53,15,0.06)] hover:bg-[#FDFBF7]"
+            >
+              {/* Abstract "Blueprint" Background */}
+              <div 
+                className="absolute inset-0 pointer-events-none opacity-[0.03]" 
+                style={{ 
+                  backgroundImage: 'radial-gradient(circle, #78350F 1px, transparent 1px)', 
+                  backgroundSize: '16px 16px' 
+                }} 
+              />
+              
+              <div className="relative z-10 flex flex-col h-full justify-between">
+                <div>
+                  <div className="flex items-center gap-2 mb-3">
+                     <div className="px-2 py-0.5 rounded-full bg-accent-brown/10 border border-accent-brown/20 text-[9px] font-sans font-bold uppercase tracking-widest text-accent-brown flex items-center gap-1.5">
+                       <FlaskConical size={10} className="stroke-[2.5]" />
+                       <span>Experimental</span>
+                     </div>
+                  </div>
 
-     {/* The "Constellation" Nodes (Static for reliability, or subtle pulse) */}
-     <div className="absolute top-0 right-0 w-64 h-64 bg-violet-600/10 rounded-full blur-[80px] group-hover:bg-violet-600/20 transition-all duration-1000" />
-     <div className="absolute bottom-0 left-0 w-48 h-48 bg-indigo-500/10 rounded-full blur-[60px] group-hover:bg-indigo-500/20 transition-all duration-1000" />
-     
-     {/* Subtle Star/Data Points Pattern */}
-     <div className="absolute inset-0 opacity-30" 
-          style={{ backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px)', backgroundSize: '20px 20px' }} 
-     />
-  </div>
+                  <h3 className="text-xl md:text-2xl font-serif font-bold text-navy mb-2 group-hover:text-accent-brown transition-colors">
+                    The Speculative Studio
+                  </h3>
 
-  {/* 2. CONTENT LAYER */}
-  <div className="relative z-10 flex flex-col h-full justify-between">
-    
-    <div>
-      {/* The "Experimental" Tag - Looks like a museum label, not code */}
-      <div className="flex items-center gap-2 mb-3">
-        <span className="flex h-2 w-2 relative">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-500"></span>
-        </span>
-        <span className="text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-violet-300/80">
-          Experimental Feature
-        </span>
-      </div>
+                  <p className="text-sm text-slate font-sans leading-relaxed max-w-[90%]">
+                    What if history happened differently? Use AI to fill the gaps and reconstruct missing timelines.
+                  </p>
+                </div>
 
-      {/* Title: Clean & Modern */}
-      <h3 className="text-xl md:text-2xl font-sans font-bold text-white mb-2 tracking-tight group-hover:text-violet-200 transition-colors">
-        Simulation Lab
-      </h3>
-
-      {/* Description: Human-readable, inviting */}
-      <p className="text-sm text-gray-400 font-sans leading-relaxed max-w-[90%] group-hover:text-gray-300 transition-colors">
-        What if history happened differently? Use AI to fill the gaps and reconstruct missing timelines.
-      </p>
-    </div>
-
-    {/* 3. VISUAL HOOK: The "Sparkle" Icon */}
-    <div className="flex justify-end mt-2">
-      <div className="p-2 rounded-full bg-white/5 border border-white/5 group-hover:bg-violet-500/20 group-hover:border-violet-500/30 transition-all text-gray-400 group-hover:text-violet-200 shadow-sm">
-        {/* Sparkles Icon */}
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
-          <path d="M17 4a2 2 0 0 0 2 2a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2a2 2 0 0 0 2 -2" />
-          <path d="M19 11h2m-1 -1v2" />
-        </svg>
-      </div>
-    </div>
-
-  </div>
-</Link>
+                <div className="flex justify-end mt-2">
+                  <div className="p-2 rounded-full bg-accent-brown/5 group-hover:bg-accent-brown/10 transition-colors text-accent-brown">
+                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </div>
+            </Link>
           </section>
 
           {/* Who is Venetia? (2/3) */}

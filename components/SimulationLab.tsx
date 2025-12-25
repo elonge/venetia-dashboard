@@ -4,50 +4,26 @@ import React, { useCallback, useRef, useState } from 'react';
 import { Play, Pause, Heart, MessageCircle, Send, Bookmark, MoreHorizontal, Camera, Info, Sparkles, Terminal, Cpu, FlaskConical } from 'lucide-react';
 import { PEOPLE_IMAGES } from '@/constants';
 
-const VenetiaSimulationLab = () => {
-  const reconstructionAudioRef = useRef<HTMLAudioElement>(null);
-  const [isReconstructionPlaying, setIsReconstructionPlaying] = useState(false);
-  
-  const [expandedLogic, setExpandedLogic] = useState<Record<number, boolean>>({});
-
-  const toggleLogic = (id: number) => {
-    setExpandedLogic(prev => ({ ...prev, [id]: !prev[id] }));
-  };
-
-  const handlePlayReconstruction = useCallback(() => {
-    const audio = reconstructionAudioRef.current;
-    if (!audio) return;
-
-    if (audio.paused) {
-      audio.currentTime = 0;
-      void audio.play().catch(() => undefined);
-      return;
-    }
-
-    audio.pause();
-  }, []);
-
-  // Historical Correspondence Data
-  const correspondenceData = [
-    {
-      id: 31,
-      venetiaHeader: "Alderley Park, Chelford, Cheshire — Feb 4th 1914",
-      venetia: "My dearest H. Thank you for your letter. It sounds as if you are having a fierce time with the Cabinet and the King. I must say I envy you, I should like to be you with your 'crowded hours' and excitement, instead of staying here where nothing happens and one day is exactly like another. I was wondering what had happened to the paragraph, the one you wrote when you were here. Has it gone in? I suppose I ought to have asked to see it, but I didn’t like to bother you. I am going to hunt tomorrow if it is fine. I hope you are winning at Bridge. Yrs Venetia",
-      asquithHeader: "10 Downing Street, Whitehall — Feb 5th 1914",
-      asquith: "My darling Venetia, Thank you for your 'very dear letter' received this morning. When you say you would like to be me, with 'crowded hours' &c, I wonder if you realise what it means... to have to tackle (1) your Cabinet (2) your deep-sea fishes (3) your Sovereign.",
-      logic: `• "Crowded hours": In Letter 31, Asquith writes: "When you say you would like to be me, with 'crowded hours' &c, I wonder if you realise what it means... to have to tackle (1) your Cabinet (2) your deep-sea fishes (3) your Sovereign."
+const correspondenceData = [
+  {
+    id: 31,
+    venetiaHeader: "Alderley Park, Chelford, Cheshire — Feb 4th 1914",
+    venetia: "My dearest H. Thank you for your letter. It sounds as if you are having a fierce time with the Cabinet and the King. I must say I envy you, I should like to be you with your 'crowded hours' and excitement, instead of staying here where nothing happens and one day is exactly like another. I was wondering what had happened to the paragraph, the one you wrote when you were here. Has it gone in? I suppose I ought to have asked to see it, but I didn’t like to bother you. I am going to hunt tomorrow if it is fine. I hope you are winning at Bridge. Yrs Venetia",
+    asquithHeader: "10 Downing Street, Whitehall — Feb 5th 1914",
+    asquith: "My darling Venetia, Thank you for your 'very dear letter' received this morning. When you say you would like to be me, with 'crowded hours' &c, I wonder if you realise what it means... to have to tackle (1) your Cabinet (2) your deep-sea fishes (3) your Sovereign.",
+    logic: `• "Crowded hours": In Letter 31, Asquith writes: "When you say you would like to be me, with 'crowded hours' &c, I wonder if you realise what it means... to have to tackle (1) your Cabinet (2) your deep-sea fishes (3) your Sovereign."
 
 • The Paragraph: In Letter 31, Asquith responds: "Of course I would have shewn you the 'paragraph', if you had given me a hint that you wanted to see it." Later, in Letter 35, he confirms: "Yes—that was the Alderley paragraph... composed... in a rather gloomy half-hour at Alderley." This refers to a paragraph regarding Home Rule inserted into the King's Speech.
 
 • Tone and Style: Venetia's letters often contrasted her "dull" country life with the excitement of London. For example, she writes elsewhere: "My life has continued in the same peaceful, uneventful way... I have hunted once... I have been very busy and for almost the first time in my life have had too much to do" and "I should like to see you sometime... I long to hear all your news". She often signed simply "Yrs Venetia" or "Yrs V."`
-    },
-    {
-      id: 126,
-      venetiaHeader: "Penrhos, Holyhead — Aug 19th 1914",
-      venetia: "My darling, Thank you for your letter. You ask what I am doing. It seems very peaceful here compared to your life. I have been yawning up to the waist all the morning, and this afternoon I rode my unbroken horse. Now I am sitting in the little square garden writing my letters. I have just been reading over your letters, and I do not find them too long! They are a great joy to me. Yrs Venetia",
-      asquithHeader: "10 Downing Street, Whitehall — Aug 20th 1914",
-      asquith: "My darling Venetia, I received your 'most delicious letter' this morning. I can see you clearly: yawning up to the waist all the morning, riding your unbroken horse in the afternoon, sitting in the little square garden... writing your letters.",
-      logic: `• "Yawning up to the waist...": In Letter 126, Asquith explicitly recaps her description: "I like to have the picture of your daily life — yawning up to the waist all the morning..."
+  },
+  {
+    id: 126,
+    venetiaHeader: "Penrhos, Holyhead — Aug 19th 1914",
+    venetia: "My darling, Thank you for your letter. You ask what I am doing. It seems very peaceful here compared to your life. I have been yawning up to the waist all the morning, and this afternoon I rode my unbroken horse. Now I am sitting in the little square garden writing my letters. I have just been reading over your letters, and I do not find them too long! They are a great joy to me. Yrs Venetia",
+    asquithHeader: "10 Downing Street, Whitehall — Aug 20th 1914",
+    asquith: "My darling Venetia, I received your 'most delicious letter' this morning. I can see you clearly: yawning up to the waist all the morning, riding your unbroken horse in the afternoon, sitting in the little square garden... writing your letters.",
+    logic: `• "Yawning up to the waist...": In Letter 126, Asquith explicitly recaps her description: "I like to have the picture of your daily life — yawning up to the waist all the morning..."
 
 • "Riding your unbroken horse": Asquith continues his summary of her day: "...riding your unbroken horse in the afternoon..."
 
@@ -58,24 +34,24 @@ const VenetiaSimulationLab = () => {
 • Location: Venetia was at Penrhos, Holyhead at this time; Asquith mentions in Letter 123 (August 17) that she was on her "long journey" there, and in Letter 124 (August 18) he hopes to hear from her from Penrhos.
 
 • Style: The reconstruction adopts Venetia's habit of brief, factual recitations of her day (often involving physical activity like riding or tennis) and her affectionate but relatively understated closing style found in her letters to Edwin Montagu. [venetia_edwin_letters.txt]`
-    },
-    {
-      id: 140,
-      venetiaHeader: "Penrhos, Holyhead — Sunday [Aug 30th 1914]",
-      venetia: "My dearest H. Thank you for your letter. I feel very far away from the centre of things here. While you are living through such great events, I feel I am doing nothing of any use. I seem to be reduced to running a crèche for the children. I even went to Church this morning! That shows you how desperate I am for occupation. I long to see you. Yrs Venetia",
-      asquithHeader: "10 Downing Street, Whitehall — Aug 31st 1914",
-      asquith: "My darling Venetia, Thank you for your letter. It is sad to think that in these soul-stirring days you are reduced to running a crèche. And you have even taken to Church-going!",
-      logic: `• "Running a Crèche": In Letter 140, Asquith writes: "It is sad to think that in these soul-stirring days you are reduced to running a crèche." This indicates she had described her current daily activities as looking after children (likely her nephews and nieces at the family estate) and contrasted her mundane life with the momentous events ("soul-stirring days") Asquith was managing in London.
+  },
+  {
+    id: 140,
+    venetiaHeader: "Penrhos, Holyhead — Sunday [Aug 30th 1914]",
+    venetia: "My dearest H. Thank you for your letter. I feel very far away from the centre of things here. While you are living through such great events, I feel I am doing nothing of any use. I seem to be reduced to running a crèche for the children. I even went to Church this morning! That shows you how desperate I am for occupation. I long to see you. Yrs Venetia",
+    asquithHeader: "10 Downing Street, Whitehall — Aug 31st 1914",
+    asquith: "My darling Venetia, Thank you for your letter. It sad to think that in these soul-stirring days you are reduced to running a crèche. And you have even taken to Church-going!",
+    logic: `• "Running a Crèche": In Letter 140, Asquith writes: "It is sad to think that in these soul-stirring days you are reduced to running a crèche." This indicates she had described her current daily activities as looking after children (likely her nephews and nieces at the family estate) and contrasted her mundane life with the momentous events ("soul-stirring days") Asquith was managing in London.
 
 • "Taken to Church-going": Asquith adds: "And you have even taken to Church-going!" This comment suggests she had mentioned attending a service, which was unusual enough for her to note and for him to remark upon with an exclamation point. Asquith proceeds to describe his own attendance at a "little Church at Lympne" in response.
 
 • Location: Venetia was at Penrhos, her family's home in Holyhead, during this period in August 1914.
 
 • Tone: The reconstruction reflects Venetia's tendency to describe her country life as dull or trivial compared to the excitement of London, a theme present in her letters to Edwin Montagu (e.g., "My life has continued in the same peaceful, uneventful way"). Her lack of religious fervor is also well-documented, making her attendance at church a notable sign of boredom or conformity to family pressure. [venetia_edwin_letters.txt, Letter 60; naomi_levine-full.txt, Chapter 17]`
-    }
-  ];
+  }
+];
 
-  const instagramPosts = [
+const instagramPosts = [
   {
     id: 0,
     user: "venetia_official",
@@ -589,9 +565,36 @@ const VenetiaSimulationLab = () => {
   }
 ];
 
+const VenetiaSimulationLab = () => {
+  const reconstructionAudioRef = useRef<HTMLAudioElement>(null);
+  const [isReconstructionPlaying, setIsReconstructionPlaying] = useState(false);
+  
+  const [expandedLogic, setExpandedLogic] = useState<Record<number, boolean>>({});
+
+  const toggleLogic = (id: number) => {
+    setExpandedLogic(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const handlePlayReconstruction = useCallback(() => {
+    const audio = reconstructionAudioRef.current;
+    if (!audio) return;
+
+    if (audio.paused) {
+      audio.currentTime = 0;
+      void audio.play().catch(() => undefined);
+      return;
+    }
+
+    audio.pause();
+  }, []);
+
+  const Tape = ({ color = "bg-neon-cyan/40", className = "" }) => (
+    <div className={`absolute h-8 w-20 ${color} backdrop-blur-sm border-x border-white/20 z-20 pointer-events-none shadow-sm ${className}`} 
+         style={{ clipPath: 'polygon(0% 0%, 100% 0%, 95% 50%, 100% 100%, 0% 100%, 5% 50%)' }} />
+  );
 
   return (
-    <div className="min-h-screen bg-section-bg flex flex-col md:flex-row font-serif p-4 md:p-8 gap-4 md:gap-8 overflow-hidden">
+    <div className="min-h-screen bg-section-bg flex flex-col font-serif overflow-hidden">
       <audio
         ref={reconstructionAudioRef}
         src="/lab_instagram/asquith_reading_letter2.mp3"
@@ -600,230 +603,247 @@ const VenetiaSimulationLab = () => {
         onPause={() => setIsReconstructionPlaying(false)}
         onEnded={() => setIsReconstructionPlaying(false)}
       />
+
+      {/* Main Page Header */}
+      <header className="px-6 md:px-12 py-6 md:py-8 flex-shrink-0 border-b border-border-beige shadow-sm bg-page-bg/50 relative overflow-hidden group/studio">
+        <div className="absolute inset-0 bg-accent-green/5 opacity-0 group-hover/studio:opacity-100 transition-opacity duration-1000"></div>
+        <div className="relative z-10">
+          <h1 className="text-3xl md:text-5xl font-bold text-navy tracking-tighter">
+            The Speculative Studio
+          </h1>
+          <span className="text-accent-green font-mono font-bold uppercase tracking-[0.3em] text-[9px]">
+            Where history meets imagination
+          </span>
+        </div>
+      </header>
       
-      {/* Left Column: Generative Correspondence */}
-      <section className="flex-1 max-w-4xl overflow-y-auto md:pr-6 custom-scrollbar border-2 border-accent-green/30 rounded-lg p-4 md:p-6 bg-page-bg/30">
-        <header className="mb-6 md:mb-12">
-          <p className="text-accent-green font-black uppercase tracking-[0.3em] text-[9px] md:text-[10px] mb-2">The Venetia Project Simulation Lab</p>
-          <h1 className="text-2xl md:text-4xl font-bold text-navy mb-2 tracking-tight">Generative Correspondence</h1>
-          <div className="h-1 w-20 md:w-24 bg-accent-green"></div>
-          <p className="mt-3 md:mt-4 text-xs md:text-sm italic text-muted-gray">Chronicle Displacement: Reconstructing the dialogue between Venetia Stanley and the Prime Minister.</p>
-        </header>
+      <div className="flex flex-col md:flex-row flex-1 overflow-hidden p-4 md:p-8 gap-4 md:gap-8">
+        
+        {/* Left Column: Generative Correspondence */}
+        <section className="flex-1 max-w-4xl overflow-y-auto md:pr-6 custom-scrollbar border-2 border-accent-green/30 rounded-lg p-4 md:p-6 bg-page-bg/30">
+          <header className="mb-6 md:mb-12">
+            <h2 className="text-2xl md:text-4xl font-bold text-navy tracking-light mb-2 md:mb-3">Generative Correspondence</h2>
+            <div className="h-1 w-20 md:w-24 bg-accent-green"></div>
+            <p className="mt-3 md:mt-4 text-xs md:text-sm italic text-muted-gray">Chronicle Displacement: Reconstructing the dialogue between Venetia Stanley and the Prime Minister.</p>
+          </header>
 
-        {/* Section Explanation */}
-        <div className="mb-6 md:mb-12 p-4 md:p-6 bg-page-bg border-l-4 border-accent-green rounded-r-lg">
-          <h2 className="text-base md:text-lg font-bold text-navy mb-2 md:mb-3">What is this?</h2>
-          <p className="text-xs md:text-sm text-slate leading-relaxed mb-3 md:mb-4">
-            This section reconstructs three of Venetia Stanley&apos;s lost letters to H.H. Asquith by analyzing his responses. 
-            The historical record preserves Asquith&apos;s letters, but Venetia&apos;s side of the correspondence was destroyed. 
-            By carefully examining what Asquith quotes, references, and responds to, we can infer the content and tone 
-            of her original letters.
-          </p>
-          <h2 className="text-base md:text-lg font-bold text-navy mb-2 md:mb-3">Why did we do this?</h2>
-          <p className="text-xs md:text-sm text-slate leading-relaxed">
-            Because sometimes it is easier to imagine Venetia when she is writing.
-            Her letters are lost, but her presence in the correspondence is not. 
-            When reading Asquith&apos;s replies closely, one begins to sense her tone, her provocations, her restraint, her economy of feeling. 
-            Thinking about what she might have written — sentence by sentence — makes her feel less abstract and less mythic.
-          </p>
-        </div>
+          {/* Section Explanation */}
+          <div className="mb-6 md:mb-12 p-4 md:p-6 bg-page-bg border-l-4 border-accent-green rounded-r-lg relative group">
+            <Tape className="-top-4 -left-4 rotate-[-15deg] bg-neon-pink/30" />
+            <h2 className="text-base md:text-lg font-bold text-navy mb-2 md:mb-3">What is this?</h2>
+            <p className="text-xs md:text-sm text-slate leading-relaxed mb-3 md:mb-4">
+              This section reconstructs three of Venetia Stanley&apos;s lost letters to H.H. Asquith by analyzing his responses. 
+              The historical record preserves Asquith&apos;s letters, but Venetia&apos;s side of the correspondence was destroyed. 
+              By carefully examining what Asquith quotes, references, and responds to, we can infer the content and tone 
+              of her original letters.
+            </p>
+            <h2 className="text-base md:text-lg font-bold text-navy mb-2 md:mb-3">Why did we do this?</h2>
+            <p className="text-xs md:text-sm text-slate leading-relaxed">
+              Because sometimes it is easier to imagine Venetia when she is writing.
+              Her letters are lost, but her presence in the correspondence is not. 
+              When reading Asquith&apos;s replies closely, one begins to sense her tone, her provocations, her restraint, her economy of feeling. 
+              Thinking about what she might have written — sentence by sentence — makes her feel less abstract and less mythic.
+            </p>
+          </div>
 
-        <div className="space-y-12 md:space-y-24 pb-16 md:pb-32">
-          {correspondenceData.map((pair) => (
-            <div key={pair.id} className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 relative items-start">
-              
-              {/* Venetia Simulated Letter */}
-              <div className="flex flex-col gap-2">
-                <div className="bg-page-bg p-4 md:p-8 border border-dashed border-accent-brown/40 shadow-sm relative -rotate-1 hover:rotate-0 transition-transform duration-500">
-                  <div className="absolute -top-2 md:-top-3 left-3 md:left-4 bg-accent-brown text-white text-[7px] md:text-[8px] px-1.5 md:px-2 py-0.5 rounded uppercase font-black tracking-widest">
-                    Simulated Precursor
-                  </div>
-                  <div className="text-[9px] md:text-[10px] uppercase tracking-widest text-accent-brown/60 mb-3 md:mb-4 font-sans font-bold">
-                    {pair.venetiaHeader}
-                  </div>
-                  <div className="font-serif italic text-sm md:text-base text-slate leading-relaxed">
-                    &quot;{pair.venetia}&quot;
-                  </div>
-                  
-                  {/* Logic Toggle Button */}
-                  <button 
-                    onClick={() => toggleLogic(pair.id)}
-                    className="mt-4 md:mt-6 flex items-center gap-1.5 text-[9px] md:text-[10px] font-sans font-bold text-accent-brown uppercase tracking-wider hover:text-accent-brown/80 transition-colors min-h-[44px]"
-                  >
-                    <Info size={11} className="md:w-3 md:h-3" /> 
-                    <span className="text-left">{expandedLogic[pair.id] ? "Hide Reconstruction Logic" : "View Reconstruction Logic"}</span>
-                  </button>
-                  
-                  {/* Expandable Logic Panel */}
-                  {expandedLogic[pair.id] && (
-                    <div className="mt-3 p-3 bg-accent-brown/5 border-l-2 border-accent-brown text-[10px] md:text-[11px] font-sans text-accent-brown leading-snug animate-in fade-in slide-in-from-top-2">
-                      <strong className="block mb-2 opacity-80 uppercase tracking-widest text-[8px] md:text-[9px]">Basis of Reconstruction:</strong> 
-                      <ul className="space-y-2 list-none pl-0">
-                        {pair.logic.split('\n').filter(line => line.trim()).map((line, index) => (
-                          <li key={index} className="flex gap-2">
-                            <span className="text-accent-brown font-bold shrink-0">•</span>
-                            <span className="flex-1">{line.trim().replace(/^•\s*/, '')}</span>
-                          </li>
-                        ))}
-                      </ul>
+          <div className="space-y-12 md:space-y-24 pb-16 md:pb-32">
+            {correspondenceData.map((pair) => (
+              <div key={pair.id} className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 relative items-start">
+                
+                {/* Venetia Simulated Letter */}
+                <div className="flex flex-col gap-2 group/venetia">
+                  <div className="bg-page-bg p-4 md:p-8 border border-dashed border-accent-brown/40 shadow-sm relative rotate-[-1.5deg] group-hover/venetia:rotate-0 transition-transform duration-500">
+                    <Tape className="-top-3 -right-6 rotate-[10deg] bg-neon-cyan/30" />
+                    <div className="absolute -top-2 md:-top-3 left-3 md:left-4 bg-accent-brown text-white text-[7px] md:text-[8px] px-1.5 md:px-2 py-0.5 rounded uppercase font-black tracking-widest">
+                      Simulated Precursor
                     </div>
-                  )}
-
-                  <p className="mt-4 md:mt-6 text-[10px] md:text-xs font-bold text-accent-brown/60 font-sans tracking-widest text-right">— V.S.</p>
-                </div>
-              </div>
-
-              {/* Asquith Verified Letter */}
-              <div className="bg-card-bg p-4 md:p-8 border border-border-beige shadow-md relative rotate-1 hover:rotate-0 transition-transform duration-500">
-                <div className="absolute -top-2 md:-top-3 left-3 md:left-4 bg-accent-green text-white text-[7px] md:text-[8px] px-1.5 md:px-2 py-0.5 rounded uppercase font-black tracking-widest">
-                  Verified Archive
-                </div>
-                <div className="text-[9px] md:text-[10px] uppercase tracking-widest text-accent-green/60 mb-3 md:mb-4 font-sans font-bold">
-                  {pair.asquithHeader}
-                </div>
-                <h3 className="font-bold text-navy mb-2 tracking-wide uppercase text-[10px] md:text-xs">H.H. Asquith</h3>
-                <div className="font-serif text-sm md:text-base text-navy leading-relaxed">
-                  &quot;{pair.asquith}&quot;
-                </div>
-                <p className="mt-4 md:mt-6 text-[8px] md:text-[9px] text-muted-gray uppercase tracking-tighter font-sans border-t pt-3 md:pt-4 border-dotted">
-                  Source: record group 1912.b-16 // Folio {pair.id}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Right Column: Media Stack (Horizontal on XL+) */}
-      <div className="flex flex-col xl:flex-row gap-4 md:gap-6 w-full xl:w-auto flex-shrink-0 overflow-y-auto custom-scrollbar pb-20 xl:pb-0">
-        {/* Audio Section */}
-        <div className="w-full md:w-[380px] flex flex-col gap-4 border-2 border-accent-brown/30 rounded-lg p-4 bg-page-bg/30 h-fit flex-shrink-0">
-          {/* Audio Section Explanation */}
-          <div className="bg-page-bg rounded-2xl p-4 md:p-6 border border-border-beige shadow-sm">
-            <h2 className="text-2xl md:text-4xl font-bold text-navy tracking-light mb-2 md:mb-3">Audio Reconstruction</h2>
-            <p className="text-xs md:text-sm text-slate leading-relaxed mb-3">
-              <strong className="text-navy">What is this?</strong> This is an audio reconstruction of Asquith 
-              reading one of his famous letters to Venetia. 
-              The recording was created by modelling Asquith&apos;s voice using surviving audio from a public speech he delivered in 1909, and applying it to the text of a letter preserved in the archive.
-            </p>
-            <p className="text-xs md:text-sm text-slate leading-relaxed">
-              <strong className="text-navy">Why did we do this?</strong> The written word captures only part of 
-              the intimacy of these letters. Hearing them read aloud—with the pauses, emphasis, and emotional tone— 
-              brings us closer to understanding how these words were meant to be received. It transforms the archival 
-              document into a living moment of communication.
-            </p>
-          </div>
-
-          {/* Video Reconstruction Box */}
-          <div className="bg-page-bg rounded-2xl p-4 md:p-6 border border-border-beige shadow-sm">
-             <p className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-muted-gray mb-3 md:mb-4 text-center">Audio Reconstruction</p>
-            <div className="aspect-square rounded-full border-8 md:border-[12px] border-navy overflow-hidden shadow-2xl relative bg-black group ring-2 md:ring-4 ring-accent-brown/20 max-w-[280px] md:max-w-none mx-auto">
-              <img 
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Asquith_Q_42036_%28cropped%29%28b%29.jpg/250px-Asquith_Q_42036_%28cropped%29%28b%29.jpg" 
-                className="w-full h-full object-cover opacity-60 grayscale group-hover:opacity-80 transition-all duration-700"
-                alt="H.H. Asquith"
-                />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <button
-                    type="button"
-                    aria-label={isReconstructionPlaying ? "Pause reconstruction audio" : "Play reconstruction audio"}
-                    onClick={handlePlayReconstruction}
-                    className="bg-white/20 hover:bg-white/40 p-4 md:p-5 rounded-full backdrop-blur-md border border-white/30 transition-all transform hover:scale-110 shadow-lg min-w-[44px] min-h-[44px] flex items-center justify-center"
-                  >
-                    {isReconstructionPlaying ? (
-                      <Pause className="text-white fill-current" size={24} />
-                    ) : (
-                      <Play className="text-white fill-current translate-x-0.5" size={24} />
+                    <div className="text-[9px] md:text-[10px] uppercase tracking-widest text-accent-brown/60 mb-3 md:mb-4 font-sans font-bold">
+                      {pair.venetiaHeader}
+                    </div>
+                    <div className="font-serif italic text-sm md:text-base text-slate leading-relaxed">
+                      &quot;{pair.venetia}&quot;
+                    </div>
+                    
+                    <button 
+                      onClick={() => toggleLogic(pair.id)}
+                      className="mt-4 md:mt-6 flex items-center gap-1.5 text-[9px] md:text-[10px] font-sans font-bold text-accent-brown uppercase tracking-wider hover:text-accent-brown/80 transition-colors min-h-[44px]"
+                    >
+                      <Info size={11} className="md:w-3 md:h-3" /> 
+                      <span className="text-left">{expandedLogic[pair.id] ? "Hide Reconstruction Logic" : "View Reconstruction Logic"}</span>
+                    </button>
+                    
+                    {expandedLogic[pair.id] && (
+                      <div className="mt-3 p-3 bg-accent-brown/5 border-l-2 border-accent-brown text-[10px] md:text-[11px] font-sans text-accent-brown leading-snug animate-in fade-in slide-in-from-top-2">
+                        <strong className="block mb-2 opacity-80 uppercase tracking-widest text-[8px] md:text-[9px]">Basis of Reconstruction:</strong> 
+                        <ul className="space-y-2 list-none pl-0">
+                          {pair.logic.split('\n').filter(line => line.trim()).map((line, index) => (
+                            <li key={index} className="flex gap-2">
+                              <span className="text-accent-brown font-bold shrink-0">•</span>
+                              <span className="flex-1">{line.trim().replace(/^•\s*/, '')}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     )}
-                  </button>
-                </div>
-              </div>
-              <p className="text-center mt-4 md:mt-6 text-navy font-serif italic text-xs md:text-sm font-bold leading-tight px-2 md:px-4">
-              &quot;Engagement Day Message&quot; <br/>
-              <span className="text-[9px] md:text-[10px] not-italic font-sans text-slate uppercase tracking-widest">Reconstructed: 12.05.1915</span>
-            </p>
-          </div>
-        </div>
 
-        {/* Instagram Section */}
-        <div className="w-full md:w-[380px] flex flex-col gap-4 border-2 border-navy/30 rounded-lg p-4 bg-card-bg/30 h-fit flex-shrink-0">
-          {/* Instagram Section Explanation */}
-          <div className="bg-card-bg rounded-2xl p-4 md:p-6 border border-border-beige shadow-sm">
-            <h2 className="text-2xl md:text-4xl font-bold text-navy tracking-light mb-2 md:mb-3">Instagram Displacement</h2>
-            <p className="text-xs md:text-sm text-slate leading-relaxed mb-3">
-              <strong className="text-navy">What is this?</strong> This is a speculative Instagram feed for 
-              Venetia Stanley, translating her historical experiences and personality into contemporary social media 
-              format. The posts capture moments from her life—boredom in the country, shopping trips, social activities— 
-              as she might have shared them today.
-            </p>
-            <p className="text-xs md:text-sm text-slate leading-relaxed">
-              <strong className="text-navy">Why did we do this?</strong> Because it was <strong>fun</strong> - as Venetia probably would have said.
-              And because, in the process, it exposes a difference that is easy to overlook. 
-              It is difficult, from a contemporary standpoint, to imagine caring so little about public self-presentation. 
-              For Venetia and her world, the private and the public were not continuously performed, curated, and revised.
-            </p>
-          </div>
-
-          {/* Instagram Displacement Box */}
-          <div className="bg-card-bg rounded-[20px] md:rounded-[40px] border-4 md:border-[10px] border-navy h-[500px] md:h-[640px] shadow-2xl flex flex-col overflow-hidden relative">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 md:w-32 h-4 md:h-6 bg-navy rounded-b-xl md:rounded-b-2xl z-20 shadow-sm"></div>
-          
-          <div className="flex-1 overflow-y-auto mt-4 md:mt-6 no-scrollbar">
-            {/* Header */}
-            <div className="px-3 md:px-4 py-3 md:py-4 border-b border-border-beige flex items-center justify-between">
-              <div className="flex items-center gap-2 md:gap-3">
-                <div className="w-7 h-7 md:w-9 md:h-9 rounded-full border-2 border-accent-green p-0.5 shrink-0">
-                    <div className="w-full h-full rounded-full bg-[url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Venetia_Stanley.jpg/220px-Venetia_Stanley.jpg')] bg-cover bg-center"></div>
-                </div>
-                <div className="flex flex-col min-w-0">
-                  <span className="text-[10px] md:text-xs font-bold font-sans tracking-tight truncate">venetia_official</span>
-                  <span className="text-[8px] md:text-[9px] text-muted-gray font-sans font-medium uppercase tracking-tighter">Simulation Feed</span>
-                </div>
-              </div>
-              <MoreHorizontal size={16} className="md:w-[18px] md:h-[18px] text-muted-gray shrink-0" />
-            </div>
-
-            {/* Post Content */}
-            {instagramPosts.map(post => (
-              <div key={post.id} className="pb-3 md:pb-4">
-                <div className="aspect-square bg-page-bg/50 overflow-hidden relative">
-                  <img src={post.image} className="w-full h-full object-cover sepia-[0.2] contrast-110" alt="Post" />
-                  <div className="absolute top-2 md:top-3 right-2 md:right-3 bg-black/20 backdrop-blur-sm p-1 md:p-1.5 rounded-full">
-                     <Camera size={12} className="md:w-[14px] md:h-[14px] text-white" />
+                    <p className="mt-4 md:mt-6 text-[10px] md:text-xs font-bold text-accent-brown/60 font-sans tracking-widest text-right">— V.S.</p>
                   </div>
                 </div>
-                <div className="p-3 md:p-4">
-                  <div className="flex gap-3 md:gap-4 mb-2 md:mb-3">
-                    <Heart size={20} className="md:w-[22px] md:h-[22px] hover:text-accent-red cursor-pointer transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center" />
-                    <MessageCircle size={20} className="md:w-[22px] md:h-[22px] hover:text-slate transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center" />
-                    <Send size={20} className="md:w-[22px] md:h-[22px] min-w-[44px] min-h-[44px] flex items-center justify-center" />
-                    <div className="ml-auto"><Bookmark size={20} className="md:w-[22px] md:h-[22px] min-w-[44px] min-h-[44px] flex items-center justify-center" /></div>
-                  </div>
-                  <p className="text-[11px] md:text-[12px] font-bold font-sans mb-1 md:mb-1.5 text-slate">{post.likes} likes</p>
-                  <p className="text-[11px] md:text-[12px] font-sans leading-relaxed">
-                    <span className="font-bold mr-2 text-navy">{post.user}</span>
-                    {post.caption}
-                  </p>
-                  
-                  <div className="mt-3 md:mt-4 space-y-1.5 md:space-y-2 border-l-2 border-border-beige pl-2 md:pl-3">
-                    {post.comments.map((comment, i) => (
-                      <p key={i} className="text-[10px] md:text-[11px] font-sans leading-snug">
-                        <span className="font-bold mr-2 text-navy">{comment.user}</span>
-                        <span className="text-slate">{comment.text}</span>
-                      </p>
-                    ))}
+
+                {/* Asquith Verified Letter */}
+                <div className="flex flex-col gap-2 group/asquith">
+                  <div className="bg-card-bg p-4 md:p-8 border border-border-beige shadow-md relative rotate-[1.2deg] group-hover/asquith:rotate-0 transition-transform duration-500">
+                    <Tape className="-bottom-4 -left-6 rotate-[165deg] bg-neon-pink/20" />
+                    <div className="absolute -top-2 md:-top-3 left-3 md:left-4 bg-accent-green text-white text-[7px] md:text-[8px] px-1.5 md:px-2 py-0.5 rounded uppercase font-black tracking-widest">
+                      Verified Archive
+                    </div>
+                    <div className="text-[9px] md:text-[10px] uppercase tracking-widest text-accent-green/60 mb-3 md:mb-4 font-sans font-bold">
+                      {pair.asquithHeader}
+                    </div>
+                    <h3 className="font-bold text-navy mb-2 tracking-wide uppercase text-[10px] md:text-xs">H.H. Asquith</h3>
+                    <div className="font-serif text-sm md:text-base text-navy leading-relaxed">
+                      &quot;{pair.asquith}&quot;
+                    </div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
+        </section>
 
-          {/* Nav Bar */}
-          <div className="border-t border-border-beige py-3 md:py-4 flex justify-around items-center bg-page-bg mt-auto">
-             <div className="w-5 h-5 md:w-6 md:h-6 rounded-md border-2 border-border-beige"></div>
-             <div className="w-8 md:w-10 h-1 bg-border-beige rounded-full"></div>
-             <div className="w-4 h-4 md:w-5 md:h-5 bg-border-beige rounded-sm rotate-45"></div>
+        {/* Right: Media Section (Side-by-Side on XL) */}
+        <div className="flex flex-col xl:flex-row gap-4 md:gap-6 w-full xl:w-auto flex-shrink-0 overflow-y-auto custom-scrollbar pb-24 xl:pb-0">
+          
+          {/* Audio Section */}
+          <div className="w-full md:w-[380px] flex flex-col gap-4 border-2 border-accent-brown/30 rounded-lg p-4 bg-page-bg/30 h-fit flex-shrink-0 relative group/audio rotate-[0.5deg] hover:rotate-0 transition-transform duration-500">
+            <Tape className="-top-2 -right-4 rotate-[15deg] bg-neon-cyan/40" />
+            
+            {/* Audio Section Explanation */}
+            <div className="bg-page-bg rounded-2xl p-4 md:p-6 border border-border-beige shadow-sm">
+              <h2 className="text-2xl md:text-4xl font-bold text-navy tracking-light mb-2 md:mb-3">Audio Reconstruction</h2>
+              <p className="text-xs md:text-sm text-slate leading-relaxed mb-3">
+                <strong className="text-navy">What is this?</strong> This is an audio reconstruction of Asquith 
+                reading one of his famous letters to Venetia. 
+                The recording was created by modelling Asquith&apos;s voice using surviving audio from a public speech.
+              </p>
+              <p className="text-xs md:text-sm text-slate leading-relaxed">
+                <strong className="text-navy">Why did we do this?</strong> Hearing them read aloud—with the pauses, emphasis, and emotional tone— 
+                brings us closer to understanding how these words were meant to be received.
+              </p>
+            </div>
+
+            {/* Video Reconstruction Box */}
+            <div className="bg-page-bg rounded-2xl p-4 md:p-6 border border-border-beige shadow-sm">
+               <p className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-muted-gray mb-3 md:mb-4 text-center">Audio Reconstruction</p>
+              <div className="aspect-square rounded-full border-8 md:border-[12px] border-navy shadow-2xl relative group ring-2 md:ring-4 ring-accent-brown/20 max-w-[280px] md:max-w-none mx-auto">
+                <img 
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Asquith_Q_42036_%28cropped%29%28b%29.jpg/250px-Asquith_Q_42036_%28cropped%29%28b%29.jpg" 
+                  className="w-full h-full object-cover brightness-50 grayscale group-hover:brightness-90 transition-all duration-700 rounded-full"
+                  alt="H.H. Asquith"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <button
+                      type="button"
+                      aria-label={isReconstructionPlaying ? "Pause reconstruction audio" : "Play reconstruction audio"}
+                      onClick={handlePlayReconstruction}
+                      className="bg-white/20 hover:bg-white/40 p-4 md:p-5 rounded-full backdrop-blur-md border border-white/30 transition-all transform hover:scale-110 shadow-lg min-w-[44px] min-h-[44px] flex items-center justify-center"
+                    >
+                      {isReconstructionPlaying ? (
+                        <Pause className="text-white fill-current" size={24} />
+                      ) : (
+                        <Play className="text-white fill-current translate-x-0.5" size={24} />
+                      )}
+                    </button>
+                  </div>
+                </div>
+                <p className="text-center mt-4 md:mt-6 text-navy font-serif italic text-xs md:text-sm font-bold leading-tight px-2 md:px-4">
+                &quot;Engagement Day Message&quot; <br/>
+                <span className="text-[9px] md:text-[10px] not-italic font-sans text-slate uppercase tracking-widest">Reconstructed: 12.05.1915</span>
+              </p>
+            </div>
           </div>
+
+          {/* Instagram Section */}
+          <div className="w-full md:w-[380px] flex flex-col gap-4 border-2 border-navy/30 rounded-lg p-4 bg-card-bg/30 h-fit flex-shrink-0 relative group/insta rotate-[-0.8deg] hover:rotate-0 transition-transform duration-500">
+            <Tape className="-bottom-4 -left-4 rotate-[-10deg] bg-neon-pink/40" />
+            
+            {/* Instagram Section Explanation */}
+            <div className="bg-card-bg rounded-2xl p-4 md:p-6 border border-border-beige shadow-sm">
+              <h2 className="text-2xl md:text-4xl font-bold text-navy tracking-light mb-2 md:mb-3">Instagram Displacement</h2>
+              <p className="text-xs md:text-sm text-slate leading-relaxed mb-3">
+                <strong className="text-navy">What is this?</strong> This is a speculative Instagram feed for 
+                Venetia Stanley, translating her historical experiences and personality into contemporary social media 
+                format.
+              </p>
+              <p className="text-xs md:text-sm text-slate leading-relaxed">
+                <strong className="text-navy">Why did we do this?</strong> Because it creates a friction so profoundly anachronistic it reveals how truly difficult it is for us to step into their unperformed shoes.
+              </p>
+            </div>
+
+            {/* Instagram Displacement Box */}
+            <div className="bg-card-bg rounded-[20px] md:rounded-[40px] border-4 md:border-[10px] border-navy h-[500px] md:h-[640px] shadow-2xl flex flex-col overflow-hidden relative">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 md:w-32 h-4 md:h-6 bg-navy rounded-b-xl md:rounded-b-2xl z-20 shadow-sm"></div>
+            
+            <div className="flex-1 overflow-y-auto mt-4 md:mt-6 no-scrollbar">
+              {/* Header */}
+              <div className="px-3 md:px-4 py-3 md:py-4 border-b border-border-beige flex items-center justify-between">
+                <div className="flex items-center gap-2 md:gap-3">
+                  <div className="w-7 h-7 md:w-9 md:h-9 rounded-full border-2 border-accent-green p-0.5 shrink-0">
+                      <div 
+                        className="w-full h-full rounded-full bg-cover bg-center" 
+                        style={{ backgroundImage: `url(${PEOPLE_IMAGES['Venetia Stanley']})` }}
+                      ></div>
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-[10px] md:text-xs font-bold font-sans tracking-tight truncate">venetia_official</span>
+                    <span className="text-[8px] md:text-[9px] text-muted-gray font-sans font-medium uppercase tracking-tighter">Simulation Feed</span>
+                  </div>
+                </div>
+                <MoreHorizontal size={16} className="md:w-[18px] md:h-[18px] text-muted-gray shrink-0" />
+              </div>
+
+              {/* Post Content */}
+              {instagramPosts.map(post => (
+                <div key={post.id} className="pb-3 md:pb-4">
+                  <div className="aspect-square bg-page-bg/50 overflow-hidden relative">
+                    <img src={post.image} className="w-full h-full object-cover sepia-[0.2] contrast-110" alt="Post" />
+                    <div className="absolute top-2 md:top-3 right-2 md:right-3 bg-black/20 backdrop-blur-sm p-1 md:p-1.5 rounded-full">
+                       <Camera size={12} className="md:w-[14px] md:h-[14px] text-white" />
+                    </div>
+                  </div>
+                  <div className="p-3 md:p-4">
+                    <div className="flex gap-3 md:gap-4 mb-2 md:mb-3">
+                      <Heart size={20} className="md:w-[22px] md:h-[22px] hover:text-accent-red cursor-pointer transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center" />
+                      <MessageCircle size={20} className="md:w-[22px] md:h-[22px] hover:text-slate transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center" />
+                      <Send size={20} className="md:w-[22px] md:h-[22px] min-w-[44px] min-h-[44px] flex items-center justify-center" />
+                      <div className="ml-auto"><Bookmark size={20} className="md:w-[22px] md:h-[22px] min-w-[44px] min-h-[44px] flex items-center justify-center" /></div>
+                    </div>
+                    <p className="text-[11px] md:text-[12px] font-bold font-sans mb-1 md:mb-1.5 text-slate">{post.likes} likes</p>
+                    <p className="text-[11px] md:text-[12px] font-sans leading-relaxed">
+                      <span className="font-bold mr-2 text-navy">{post.user}</span>
+                      {post.caption}
+                    </p>
+                    
+                    <div className="mt-3 md:mt-4 space-y-1.5 md:space-y-2 border-l-2 border-border-beige pl-2 md:pl-3">
+                      {post.comments.map((comment, i) => (
+                        <p key={i} className="text-[10px] md:text-[11px] font-sans leading-snug">
+                          <span className="font-bold mr-2 text-navy">{comment.user}</span>
+                          <span className="text-slate">{comment.text}</span>
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Nav Bar */}
+            <div className="border-t border-border-beige py-3 md:py-4 flex justify-around items-center bg-page-bg mt-auto">
+               <div className="w-5 h-5 md:w-6 md:h-6 rounded-md border-2 border-border-beige"></div>
+               <div className="w-8 md:w-10 h-1 bg-border-beige rounded-full"></div>
+               <div className="w-4 h-4 md:w-5 md:h-5 bg-border-beige rounded-sm rotate-45"></div>
+            </div>
+            </div>
           </div>
         </div>
       </div>

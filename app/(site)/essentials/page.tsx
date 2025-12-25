@@ -92,7 +92,7 @@ export default function EssentialsPage() {
                 </div>
                 <div className="mt-6 border-t border-border-beige/50 pt-4 text-center">
                     <span className="text-[10px] font-black uppercase tracking-widest text-accent-red group-hover/link-card:tracking-[0.2em] transition-all duration-500">
-                        Read Biography
+                        Read Her Story
                     </span>
                 </div>
               </Link>

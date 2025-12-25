@@ -429,7 +429,7 @@ export default function DailyPopup({
                         {/* Header Info */}
                         <div className="flex items-center justify-between text-[10px] md:text-[11px] font-bold uppercase tracking-widest text-accent-brown">
                           <span>Letter #{letter.letter_number}</span>
-                          <span className="truncate ml-2">{letter.time_of_day || "Unknown time"}</span>
+                          <span className="truncate ml-2">{letter.time_of_day || "Time not recorded"}</span>
                         </div>
 
                         {/* THE QUOTE: Large and Impactful */}
