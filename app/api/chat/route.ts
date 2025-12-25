@@ -1,12 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
-import { searchSimilarChunks, SearchResult } from '@/lib/vector-search';
+import { 
+  searchSimilarChunks, 
+  searchPrimaryEntries, 
+  SearchIntent, 
+  SearchResult 
+} from '@/lib/vector-search';
 import { QuestionAnswer } from '@/lib/questions';
 
 const SYSTEM_PROMPT = `You are an expert historian specializing in early 20th century British politics, particularly the Asquith government, World War I, and the relationships between Venetia Stanley, H.H. Asquith, and Edwin Montagu. 
 
 Answer questions based on the provided context from primary sources. When citing information, reference the specific source documents. Be precise and accurate, and if information is not available in the context, say so clearly.
-
+STRICT RULE: Only state that a letter exists if the provided context explicitly shows a non-empty date tag from a PRIMARY SOURCE. If you find a date in a SECONDARY SOURCE (Book), you must state 'According to [Book Name]...' and not claim it is a direct letter date unless verified
 IMPORTANT: You must respond with a valid JSON object in the following format:
 {
   "answers": [
@@ -31,6 +36,57 @@ interface Message {
 interface ChatRequest {
   message: string;
   conversationHistory?: Message[];
+}
+
+async function analyzeIntent(query: string, openai: OpenAI): Promise<SearchIntent> {
+const analysisPrompt = `
+    Analyze the user's historical query about Asquith, Venetia, and Montagu.
+    Return a JSON object with:
+    - type: 'specific_date', 'timeline', 'sentiment_trend', or 'general_context'
+    - dateRange: { start: 'YYYY-MM-DD', end: 'YYYY-MM-DD' } (or null)
+    - sentiment: 'positive', 'negative', or null
+    - author: The name of the person writing the letter (e.g., 'Asquith', 'Montagu', 'Venetia') if specified.
+    - recipient: The name of the person receiving the letter if specified.
+    - requiresSecondary: boolean
+    
+    Query: "${query}"
+`;
+try {
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini", // Fast & cheap
+      messages: [{ role: "system", content: "You are a precise query analyzer." }, { role: "user", content: analysisPrompt }],
+      response_format: { type: "json_object" },
+      temperature: 0
+    });
+
+    return JSON.parse(completion.choices[0].message.content || '{}') as SearchIntent;
+  } catch (e) {
+    console.error("Intent analysis failed:", e);
+    // Fallback intent
+    return { type: 'general_context', requiresSecondary: true };
+  }
+}
+
+function buildCombinedContext(primaryResults: any[], vectorResults: any[]): string {
+  let context = "";
+
+  if (primaryResults.length > 0) {
+    context += "--- PRIMARY SOURCES (Letters/Diaries/Timeline) ---\n";
+    primaryResults.forEach(r => {
+      const dateStr = r.date ? new Date(r.date).toISOString().split('T')[0] : 'Unknown Date';
+      context += `[Author: ${r.author || 'Unknown'}] [Recipient: ${r.recipient || 'Unknown'}] [Date: ${dateStr}] [Sentiment: ${r.sentiment}]\n`;
+      context += `Content: ${r.content.substring(0, 1500)}\n\n`;      
+    });
+  }
+
+  if (vectorResults.length > 0) {
+    context += "\n--- SECONDARY/CONTEXT SOURCES ---\n";
+    vectorResults.forEach((r, i) => {
+      context += `[Source: ${r.metadata?.documentTitle || r.source}]\n${r.content}\n\n`;
+    });
+  }
+
+  return context || "No relevant documents found.";
 }
 
 // Build context from search results
@@ -95,76 +151,88 @@ function formatSources(searchResults: SearchResult[]): Array<{
 export async function POST(request: NextRequest) {
   try {
     if (!process.env.OPENAI_API_KEY) {
-      return NextResponse.json(
-        { error: 'OpenAI API key not configured' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'OpenAI API key not configured' }, { status: 500 });
     }
 
     const body: ChatRequest = await request.json();
     const { message, conversationHistory = [] } = body;
+    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-    console.log('Chat API received request', {
-      messagePreview: message?.slice?.(0, 120),
-      historyCount: conversationHistory.length,
-      historyPreview: conversationHistory.slice(-2),
-    });
-
-    if (!message || typeof message !== 'string') {
-      return NextResponse.json(
-        { error: 'Message is required' },
-        { status: 400 }
-      );
+    if (!message) {
+      return NextResponse.json({ error: 'Message is required' }, { status: 400 });
     }
 
-    // Build query with conversation context for better embedding search
+    console.log('📝 Processing Query:', message.slice(0, 50));
+
+    // 1. Analyze Intent
+    const intent = await analyzeIntent(message, openai);
+    console.log("🧠 Intent detected:", intent);
+
+    // 2. Prepare Parallel Searches
+    const promises: Promise<any>[] = [];
+
+    // Track A: Primary/Metadata Search (Dates/Timeline/Sentiment)
+    if (intent.type !== 'general_context' || intent.dateRange) {
+        const limit = intent.type === 'timeline' ? 30 : 15;
+        promises.push(searchPrimaryEntries(intent, limit));
+    } else {
+        promises.push(Promise.resolve([]));
+    }
+
+    // Track B: Vector Search (Contextual)
+    // We use the "history-aware" query for better vector matching
     const queryWithContext = buildQueryWithContext(message, conversationHistory);
+    // If strict date search found nothing, or intent explicitly asks for context, ensure we search wide
+    promises.push(searchSimilarChunks(queryWithContext, 8)); 
+
+    const [primaryResults, vectorResults] = await Promise.all(promises);
+
+    // 3. Combine Results
+    const context = buildCombinedContext(primaryResults, vectorResults);
     
-    // Search for relevant chunks using the contextualized query
-    const searchResults = await searchSimilarChunks(queryWithContext, 8);
-    
-    if (searchResults.length === 0) {
+    // Quick exit if absolutely nothing found
+    if (primaryResults.length === 0 && vectorResults.length === 0) {
       return NextResponse.json({
-        message: "I couldn't find any relevant information in the documents to answer your question. Please try rephrasing your query or asking about a different topic.",
+        message: "I couldn't find any relevant information in the documents matching that specific timeline or criteria.",
         sources: [],
       });
     }
 
-    // Build context from search results
-    const context = buildContext(searchResults);
-    
-    // Build conversation messages
-    // conversationHistory already contains all previous messages (user + assistant)
-    // We just need to add the current user message
+    // 4. Combine Sources for Frontend (Normalization)
+    // The frontend expects a specific structure for the "Sources" dropdown
+    const combinedSources = [
+      ...primaryResults.map((r: any) => ({
+          source: r.source,
+          documentTitle: r.metadata.documentTitle,
+          chunkIndex: 0,
+          score: 1.0 // High confidence for exact matches
+      })),
+      ...vectorResults.map((r: any) => ({
+           source: r.source,
+           documentTitle: r.metadata?.documentTitle,
+           chunkIndex: r.chunkIndex,
+           score: r.score
+      }))
+    ];
+
+    // 5. Build Final Messages
     const messages: Message[] = [
       { role: 'system', content: SYSTEM_PROMPT },
-      {
-        role: 'system',
-        content: `Use the following context from primary sources to answer the question. If the answer cannot be found in the context, say so.\n\nContext:\n${context}`,
-      },
+      { role: 'system', content: `Context:\n${context}` },
       ...(conversationHistory || []).filter(m => m.role !== 'system'),
       { role: 'user', content: message },
     ];
 
-    // Initialize OpenAI client
-    const openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
-    });
-
-    // Determine model - try GPT-5, fallback to GPT-4o
+    // 6. Streaming Generation
     const model = process.env.OPENAI_MODEL || 'gpt-4o';
-    
-    // Create streaming response
-    console.log('messages', messages);
     const stream = await openai.chat.completions.create({
       model,
       messages: messages as any,
       stream: true,
-      max_completion_tokens: 2000,
+      max_completion_tokens: 4000,
       response_format: { type: 'json_object' },
     });
 
-    // Create a readable stream for the response
     const encoder = new TextEncoder();
     const readable = new ReadableStream({
       async start(controller) {
@@ -176,58 +244,45 @@ export async function POST(request: NextRequest) {
             const content = chunk.choices[0]?.delta?.content || '';
             if (content) {
               fullResponse += content;
-              // Don't stream raw JSON - just send a loading indicator
-              // The structured format will be sent at the end
+              // Stream loading indicator
               controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content: '', loading: true })}\n\n`));
             }
           }
           
-          // Parse the complete JSON response
+          // Parse final JSON
           try {
             const jsonResponse = JSON.parse(fullResponse);
             if (jsonResponse.answers && Array.isArray(jsonResponse.answers)) {
-              // Map the answers and assign sources
               parsedAnswers = jsonResponse.answers.map((answer: any) => {
-                // If link is provided, use it; otherwise find matching source from searchResults
+                // Link Resolution Logic
                 let link = answer.link || '';
                 
-                if (!link && searchResults.length > 0) {
-                  // Try to match by document title or source name
-                  const matchingSource = searchResults.find(
-                    (result) =>
-                      result.metadata.documentTitle === answer.link ||
-                      result.source === answer.link ||
-                      result.metadata.documentTitle?.toLowerCase().includes(answer.link?.toLowerCase() || '')
-                  );
-                  
-                  if (matchingSource) {
-                    link = matchingSource.metadata.documentTitle || matchingSource.source;
-                  } else {
-                    // Fallback to first source
-                    link = searchResults[0].metadata.documentTitle || searchResults[0].source;
-                  }
+                // Try to find a matching source title in our combined results
+                if (!link && combinedSources.length > 0) {
+                    const match = combinedSources.find(s => 
+                        s.documentTitle === link || s.source === link
+                    );
+                    link = match ? (match.documentTitle || match.source) : (combinedSources[0].documentTitle || combinedSources[0].source);
                 }
                 
                 return {
                   text: answer.text || '',
-                  link: link || (searchResults[0]?.metadata.documentTitle || searchResults[0]?.source || ''),
+                  link: link || ''
                 };
               });
             }
           } catch (parseError) {
-            console.error('Failed to parse JSON response:', parseError);
-            console.log('Raw response:', fullResponse);
-            // Fall back to plain text - will be handled by frontend
+            console.error('Failed to parse JSON response:', fullResponse);
           }
           
-          // Send sources and structured answers at the end
-          const sources = formatSources(searchResults);
+          // Final Payload
           controller.enqueue(encoder.encode(`data: ${JSON.stringify({ 
-            sources, 
+            sources: combinedSources, 
             answers: parsedAnswers,
             done: true 
           })}\n\n`));
           controller.close();
+
         } catch (error) {
           console.error('Streaming error:', error);
           controller.error(error);
@@ -245,17 +300,7 @@ export async function POST(request: NextRequest) {
 
   } catch (error) {
     console.error('Error in chat API:', error);
-    
-    if (error instanceof Error) {
-      return NextResponse.json(
-        { error: error.message },
-        { status: 500 }
-      );
-    }
-    
-    return NextResponse.json(
-      { error: 'An unexpected error occurred' },
-      { status: 500 }
-    );
+    const msg = error instanceof Error ? error.message : 'An unexpected error occurred';
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }

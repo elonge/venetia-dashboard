@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Play, Headphones, ExternalLink, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { PEOPLE_IMAGES, PODCASTS, getRealSourceName } from '@/constants';
+import { PEOPLE_IMAGES, PODCASTS, getRealSourceName, sourceNameMapping } from '@/constants';
 import { useChatVisibility } from '@/components/chat/useChatVisibility';
 
 // Dynamically import SicilyMap with SSR disabled
@@ -46,6 +46,14 @@ function ChapterContent() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   useChatVisibility(false);
+
+  const replaceSourceNames = (text: string): string => {
+    const entries = Object.entries(sourceNameMapping).sort(([a], [b]) => b.length - a.length);
+    return entries.reduce((acc, [sourceName, displayName]) => {
+      if (!sourceName) return acc;
+      return acc.split(sourceName).join(displayName);
+    }, text);
+  };
 
   useEffect(() => {
     async function fetchChapter() {
@@ -147,7 +155,7 @@ function ChapterContent() {
                   The Context
                 </span>
                 <p className="font-serif text-[15px] leading-relaxed text-[#1A2A40]">
-                  {chapterData.main_story}
+                  {replaceSourceNames(chapterData.main_story)}
                 </p>
               </div>
 
@@ -255,12 +263,12 @@ function ChapterContent() {
                         <h3 className="font-serif text-lg font-semibold text-[#1A2A40] mb-2">
                           {perspective.character}
                         </h3>
-                        <p className="text-[#4B5563] leading-relaxed">
-                          {perspective.description}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+	                        <p className="text-[#4B5563] leading-relaxed">
+	                          {replaceSourceNames(perspective.description)}
+	                        </p>
+	                      </div>
+	                    </div>
+	                  ))}
                 </div>
               </section>
             )}
@@ -276,10 +284,10 @@ function ChapterContent() {
                     Fun Fact
                   </h2>
                 </div>
-                {/* Dark navy text for body */}
-                <p className="text-lg font-serif leading-relaxed text-[#1A2A40]">
-                  {chapterData.fun_fact}
-                </p>
+	                {/* Dark navy text for body */}
+	                <p className="text-lg font-serif leading-relaxed text-[#1A2A40]">
+	                  {replaceSourceNames(chapterData.fun_fact)}
+	                </p>
                 {/* Optional: Corner tape visual */}
                 <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#D4CFC4]/80 rotate-45 shadow-sm"></div>
               </section>

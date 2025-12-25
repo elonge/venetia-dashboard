@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Send, Loader2, Sparkles, ArrowRight, Search } from 'lucide-react';
-import { Input } from '@/components/ui/input';
 import MessageBubble, { Message } from './MessageBubble';
 import type { Question, QuestionAnswer } from '@/lib/questions';
 
@@ -36,7 +35,7 @@ export default function ChatInterface() {
   const [isLoadingPopularQuestions, setIsLoadingPopularQuestions] = useState(true);
   const hasAutoSentRef = useRef(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -316,7 +315,7 @@ export default function ChatInterface() {
     }
   }, [searchParams, messages.length, handleSend, isLoading]);
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
@@ -400,20 +399,21 @@ export default function ChatInterface() {
 
       {/* 3. INPUT AREA */}
       <div className="p-4 md:p-5 bg-[#F5F0E8] border-t border-[#D4CFC4] relative z-20">
-        <div className="relative flex items-center shadow-sm group">
-          <Input
+        <div className="relative flex items-end shadow-sm group">
+          <textarea
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyPress}
             placeholder="Ask a question about the archive..."
             disabled={isLoading}
-            className="w-full bg-white border border-[#D4CFC4] text-[#1A2A40] placeholder:text-[#D4CFC4] text-sm px-4 py-4 md:py-6 rounded-md pr-12 md:pr-14 focus-visible:ring-1 focus-visible:ring-[#1A2A40]/20 focus-visible:border-[#1A2A40] transition-all font-serif"
+            rows={3}
+            className="w-full bg-white border border-[#D4CFC4] text-[#1A2A40] placeholder:text-[#D4CFC4] text-sm px-4 py-3 rounded-md pr-14 md:pr-16 focus-visible:ring-1 focus-visible:ring-[#1A2A40]/20 focus-visible:border-[#1A2A40] transition-all font-serif resize-none leading-5"
           />
           <button
             onClick={() => handleSend()}
             disabled={isLoading || !input.trim()}
-            className="absolute right-2 p-2! md:p-2.5! bg-[#1A2A40] text-white rounded-md hover:bg-[#4A7C59] disabled:bg-[#D4CFC4] disabled:cursor-not-allowed transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="absolute right-2 bottom-2 p-2! md:p-2.5! bg-[#1A2A40] text-white rounded-md hover:bg-[#4A7C59] disabled:bg-[#D4CFC4] disabled:cursor-not-allowed transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
             aria-label="Send message"
           >
             {isLoading ? (

@@ -163,47 +163,66 @@ export default function Home() {
           {/* Data Room + Simulation Lab (1/3) */}
           <section className="space-y-4 md:space-y-6">
             <DataRoomPreview />
-
             <Link
-              href="/lab"
-              className="block min-h-[160px] md:min-h-[180px] rounded-md border border-white/10 bg-[#0D1B2A] p-4 md:p-6 ring-1 ring-black/10 ring-inset shadow-[0_2px_8px_rgba(0,0,0,0.12),0_16px_36px_rgba(0,0,0,0.16)] hover:-translate-y-px hover:border-[#2A3D5D] hover:shadow-[0_18px_44px_rgba(0,0,0,0.14)] transition-all relative overflow-hidden group"
-              style={{
-                backgroundImage: `
-      linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px), 
-      linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px)
-    `,
-                backgroundSize: "24px 24px",
-              }}
-            >
-              {/* The "Radar" Radial Glow - Using Bright Mint for higher contrast */}
-              <div className="absolute -right-12 -bottom-12 h-32 md:h-48 w-32 md:w-48 rounded-full border border-[#63D29A]/20 bg-[#63D29A]/5 blur-sm pointer-events-none group-hover:scale-110 transition-transform duration-700" />
+  href="/lab"
+  className="relative block min-h-[160px] md:min-h-[180px] w-full overflow-hidden rounded-lg bg-[#0B0F19] p-6 group transition-all duration-500 hover:shadow-[0_0_50px_-12px_rgba(124,58,237,0.4)] border border-white/5 hover:border-violet-500/40"
+>
+  {/* 1. THE "COSMIC" BACKGROUND */}
+  <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+     
+     {/* The Deep Void Gradient */}
+     <div className="absolute inset-0 bg-gradient-to-br from-[#0B0F19] via-[#111827] to-[#1E1B4B]" />
 
-              {/* Icon: Using a muted blue-white to avoid competing with the header */}
-              <div className="absolute right-4 md:right-6 bottom-4 md:bottom-6 text-[#C8D5EA]/10 group-hover:text-[#63D29A]/30 transition-colors duration-500 pointer-events-none">
-                <Cog className="h-8 w-8 md:h-12 md:w-12 animate-[spin_12s_linear_infinite]" />
-              </div>
+     {/* The "Constellation" Nodes (Static for reliability, or subtle pulse) */}
+     <div className="absolute top-0 right-0 w-64 h-64 bg-violet-600/10 rounded-full blur-[80px] group-hover:bg-violet-600/20 transition-all duration-1000" />
+     <div className="absolute bottom-0 left-0 w-48 h-48 bg-indigo-500/10 rounded-full blur-[60px] group-hover:bg-indigo-500/20 transition-all duration-1000" />
+     
+     {/* Subtle Star/Data Points Pattern */}
+     <div className="absolute inset-0 opacity-30" 
+          style={{ backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px)', backgroundSize: '20px 20px' }} 
+     />
+  </div>
 
-              <div className="relative flex h-full flex-col justify-between z-10">
-                <div>
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-2 md:gap-3">
-                      {/* Pulse Indicator: Now glows with more intensity */}
-                      <div className="w-2 h-2 md:w-2.5 md:h-2.5 bg-[#63D29A] rounded-full animate-pulse shadow-[0_0_10px_#63D29A]" />
-                      <div className="font-serif font-semibold uppercase tracking-[0.14em] text-white/95 text-base md:text-[18px]">
-                        Simulation Lab
-                      </div>
-                    </div>
-                    <ArrowRight className="h-4 w-4 md:h-5 md:w-5 text-[#C8D5EA]/30 group-hover:text-[#63D29A] group-hover:translate-x-1 transition-all shrink-0" />
-                  </div>
+  {/* 2. CONTENT LAYER */}
+  <div className="relative z-10 flex flex-col h-full justify-between">
+    
+    <div>
+      {/* The "Experimental" Tag - Looks like a museum label, not code */}
+      <div className="flex items-center gap-2 mb-3">
+        <span className="flex h-2 w-2 relative">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-500"></span>
+        </span>
+        <span className="text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-violet-300/80">
+          Experimental Feature
+        </span>
+      </div>
 
-                  {/* Main Text: High-contrast Off-White */}
-                  <p className="mt-3 md:mt-4 text-sm md:text-[16px] text-white/95 font-serif italic leading-relaxed max-w-[28ch]">
-                    Fill the gaps with generative AI reconstructions
-                  </p>
-                </div>
+      {/* Title: Clean & Modern */}
+      <h3 className="text-xl md:text-2xl font-sans font-bold text-white mb-2 tracking-tight group-hover:text-violet-200 transition-colors">
+        Simulation Lab
+      </h3>
 
-              </div>
-            </Link>
+      {/* Description: Human-readable, inviting */}
+      <p className="text-sm text-gray-400 font-sans leading-relaxed max-w-[90%] group-hover:text-gray-300 transition-colors">
+        What if history happened differently? Use AI to fill the gaps and reconstruct missing timelines.
+      </p>
+    </div>
+
+    {/* 3. VISUAL HOOK: The "Sparkle" Icon */}
+    <div className="flex justify-end mt-2">
+      <div className="p-2 rounded-full bg-white/5 border border-white/5 group-hover:bg-violet-500/20 group-hover:border-violet-500/30 transition-all text-gray-400 group-hover:text-violet-200 shadow-sm">
+        {/* Sparkles Icon */}
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+          <path d="M17 4a2 2 0 0 0 2 2a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2a2 2 0 0 0 2 -2" />
+          <path d="M19 11h2m-1 -1v2" />
+        </svg>
+      </div>
+    </div>
+
+  </div>
+</Link>
           </section>
 
           {/* Who is Venetia? (2/3) */}

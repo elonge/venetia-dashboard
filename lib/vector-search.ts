@@ -5,6 +5,25 @@ const DB_NAME = 'venetia_project';
 const COLLECTION_NAME = 'document_chunks';
 const INDEX_NAME = process.env.VECTOR_SEARCH_INDEX_NAME || 'vector_index';
 const EMBEDDING_MODEL = process.env.EMBEDDING_MODEL || 'text-embedding-3-large';
+const ENTRIES_COLLECTION = 'primary_sources'; // The new collection for letters/diaries
+
+export interface SearchIntent {
+  type: 'specific_date' | 'timeline' | 'sentiment_trend' | 'general_context';
+  dateRange?: { start: string; end: string };
+  sentiment?: 'positive' | 'negative' | null;
+  topics?: string[];
+  requiresSecondary?: boolean;
+  author?: string;    // ADDED
+  recipient?: string; // ADDED
+}
+export interface PrimaryEntryResult {
+  content: string;
+  date: Date;
+  source: string;
+  sentiment: number;
+  score: number; // Artificial score for ranking
+  metadata: any;
+}
 
 export interface SearchResult {
   content: string;
@@ -46,6 +65,80 @@ async function generateQueryEmbedding(
   } catch (error) {
     console.error('Error generating query embedding:', error);
     throw error;
+  }
+}
+
+export async function searchPrimaryEntries(
+  intent: SearchIntent,
+  limit: number = 10
+): Promise<PrimaryEntryResult[]> {
+  try {
+    const client = await clientPromise;
+    const db = client.db(DB_NAME);
+    const collection = db.collection(ENTRIES_COLLECTION);
+
+    const query: any = { source_type: 'primary_entry' };
+
+    // 1. Date Filter (The "Calendar" Logic)
+    if (intent.dateRange) {
+      const start = new Date(intent.dateRange.start);
+      // If end is the same day, make it end of day
+      let end = new Date(intent.dateRange.end);
+      if (intent.dateRange.start === intent.dateRange.end) {
+          end.setDate(end.getDate() + 1); 
+      }
+      
+      query.date = { 
+        $gte: start, 
+        $lte: end 
+      };
+    }
+
+    // 2. Sentiment Filter (The "Mood" Logic)
+    if (intent.sentiment === 'negative') {
+      query.sentiment_score = { $lt: -0.4 };
+    } else if (intent.sentiment === 'positive') {
+      query.sentiment_score = { $gt: 0.4 };
+    }
+
+    if (intent.author) {
+      query.author = { $regex: intent.author, $options: 'i' };
+    }
+    if (intent.recipient) {
+      query.recipient = { $regex: intent.recipient, $options: 'i' };
+    }
+    // 3. Topic Keyword Filter (Optional fallback if specific topics requested)
+    // Note: Ideally, this would use a text index or simple regex if volume is low
+    if (intent.topics && intent.topics.length > 0) {
+       // Simple regex for topic keywords if provided
+       // query.$or = intent.topics.map(t => ({ full_text: { $regex: t, $options: 'i' } }));
+    }
+
+    console.log('📅 Executing Primary Search:', JSON.stringify(query));
+
+    const docs = await collection
+      .find(query)
+      .sort({ date: 1 }) // Chronological order
+      .limit(limit)
+      .toArray();
+
+    return docs.map(doc => ({
+      content: doc.full_text,
+      date: doc.date,
+      source: doc.source_type, // or doc.filename
+      sentiment: doc.sentiment_score || 0,
+      author: doc.author,      
+      recipient: doc.recipient,
+      score: 1.0, // High confidence because it's an exact metadata match
+      metadata: {
+        documentTitle: `Letter/Entry: ${doc.date ? doc.date.toISOString().split('T')[0] : 'Unknown'}`,
+        topics: doc.topics
+      }
+    }));
+
+  } catch (error) {
+    console.error('Error in primary entry search:', error);
+    return [];
   }
 }
 
