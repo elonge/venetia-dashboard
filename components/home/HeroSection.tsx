@@ -51,6 +51,15 @@ export default function HeroSection() {
             Stanley shared a daily, mutual correspondence revealing a secret
             intellectual and romantic partnership.
           </p>
+          <div className="mt-4">
+            <Link
+              href="/essentials"
+              className="pointer-events-auto group inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 hover:border-white/30 rounded-md text-white text-sm md:text-base font-serif transition-all duration-300 hover:shadow-lg"
+            >
+              <span>The Essentials</span>
+              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
         </div>
       </div>
     </div>
