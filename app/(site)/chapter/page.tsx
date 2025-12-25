@@ -30,7 +30,7 @@ interface Chapter {
     title: string;
     duration: string;
     description: string;
-    spotify_url?: string; // NEW FIELD
+    spotify_url?: string;
   };
   video?: {
     title: string;
@@ -83,20 +83,20 @@ function ChapterContent() {
 
   if (loading) {
     return (
-      <div className="h-full bg-[#E8E4DC] flex items-center justify-center">
-        <div className="text-[#1A2A40]">Loading chapter...</div>
+      <div className="h-full bg-page-bg flex items-center justify-center">
+        <div className="text-navy">Loading chapter...</div>
       </div>
     );
   }
 
   if (error || !chapterData) {
     return (
-      <div className="h-full bg-[#E8E4DC]">
+      <div className="h-full bg-page-bg">
         <main className="max-w-5xl mx-auto p-8">
-          <div className="text-[#1A2A40] text-center">
+          <div className="text-navy text-center">
             <p className="text-lg mb-4">{error || 'Chapter not found'}</p>
             <Link href="/">
-              <Button className="bg-[#1A2A40] hover:bg-[#2A3A50] text-white">
+              <Button className="bg-navy hover:bg-navy/80 text-white">
                 Return to Home
               </Button>
             </Link>
@@ -106,7 +106,6 @@ function ChapterContent() {
     );
   }
 
-  // --- DATA PREPARATION ---
   const perspectivesArray = Object.entries(chapterData.perspectives).map(([character, description]) => ({
     character,
     description,
@@ -115,7 +114,6 @@ function ChapterContent() {
 
   const podcastData = PODCASTS.find(p => p.chapter_id === chapterData.chapter_id);
   const hasPodcast = !!(podcastData || chapterData.podcast);
-  // Merge podcast data to check for spotify_url in either source
   const activePodcast = podcastData || chapterData.podcast;
   const spotifyUrl = activePodcast?.spotify_url || (podcastData as any)?.spotify_url;
 
@@ -133,14 +131,14 @@ function ChapterContent() {
     : 'N/A';
 
   return (
-    <div className="h-full bg-[#E8E4DC]">
+    <div className="h-full bg-page-bg">
       <div className="flex relative h-full">
         <main className="p-8 transition-all overflow-y-auto flex-1 min-w-[300px]">
           <div className="max-w-5xl mx-auto">
             
             {/* 1. MAIN TITLE */}
             <div className="mb-8">
-              <h1 className="text-4xl font-serif font-bold text-[#1A2A40] leading-tight">
+              <h1 className="text-4xl font-serif font-bold text-navy leading-tight">
                 {chapterData.chapter_title}
               </h1>
             </div>
@@ -149,12 +147,12 @@ function ChapterContent() {
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mb-12 items-start">
               
               {/* LEFT: STORY */}
-              <div className={`${hasPodcast ? 'md:col-span-7' : 'md:col-span-12'} bg-[#F5F0E8] border border-[#D4CFC4] p-8 rounded-sm shadow-sm relative overflow-hidden`}>
-                <div className="absolute top-0 left-0 w-1 h-full bg-[#C24E42]/80" />
-                <span className="text-[9px] font-black text-[#8B4513] uppercase tracking-[0.25em] mb-4 block">
+              <div className={`${hasPodcast ? 'md:col-span-7' : 'md:col-span-12'} bg-card-bg border border-border-beige p-8 rounded-sm shadow-sm relative overflow-hidden`}>
+                <div className="absolute top-0 left-0 w-1 h-full bg-accent-red/80" />
+                <span className="text-[9px] font-black text-accent-brown uppercase tracking-[0.25em] mb-4 block">
                   The Context
                 </span>
-                <p className="font-serif text-[15px] leading-relaxed text-[#1A2A40]">
+                <p className="font-serif text-[15px] leading-relaxed text-navy">
                   {replaceSourceNames(chapterData.main_story)}
                 </p>
               </div>
@@ -162,24 +160,24 @@ function ChapterContent() {
               {/* RIGHT: PODCAST CARD */}
               {hasPodcast && activePodcast && (
                 <div className="md:col-span-5 h-full">
-                  <div className="bg-[#EBE5DA] border border-[#D4CFC4] p-6 rounded-sm shadow-md h-full flex flex-col relative group">
+                  <div className="bg-section-bg border border-border-beige p-6 rounded-sm shadow-md h-full flex flex-col relative group">
                     
                     {/* Header */}
                     <div className="flex items-center justify-between mb-4">
-                      <span className="text-[9px] font-black text-[#1A2A40] uppercase tracking-[0.25em] flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-[#4A7C59] animate-pulse"></span>
+                      <span className="text-[9px] font-black text-navy uppercase tracking-[0.25em] flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-accent-green animate-pulse"></span>
                         Audio Guide
                       </span>
-                      <span className="text-[10px] font-mono text-[#5A6472]">{podcastDuration}</span>
+                      <span className="text-[10px] font-mono text-muted-gray">{podcastDuration}</span>
                     </div>
 
                     {/* Title */}
-                    <h3 className="font-serif text-lg text-[#1A2A40] leading-tight mb-2">
+                    <h3 className="font-serif text-lg text-navy leading-tight mb-2">
                       {activePodcast.title}
                     </h3>
                     
                     {activePodcast.description && (
-                      <p className="text-xs text-[#5A6472] mb-4 line-clamp-2">
+                      <p className="text-xs text-muted-gray mb-4 line-clamp-2">
                         {activePodcast.description}
                       </p>
                     )}
@@ -197,7 +195,7 @@ function ChapterContent() {
 
                     {/* SPOTIFY BUTTON (The Alternative) */}
                     {spotifyUrl && (
-                      <div className="mt-auto border-t border-[#D4CFC4]/50 pt-3">
+                      <div className="mt-auto border-t border-border-beige/50 pt-3">
                         <a 
                           href={spotifyUrl} 
                           target="_blank" 
@@ -213,7 +211,7 @@ function ChapterContent() {
                     )}
 
                     {/* Paper Clip Visual */}
-                    <div className="absolute -top-3 right-8 w-4 h-8 border-2 border-[#D4CFC4] border-b-0 rounded-t-full z-0 opacity-50 hidden md:block" />
+                    <div className="absolute -top-3 right-8 w-4 h-8 border-2 border-border-beige border-b-0 rounded-t-full z-0 opacity-50 hidden md:block" />
                   </div>
                 </div>
               )}
@@ -221,7 +219,7 @@ function ChapterContent() {
 
             {/* 3. TIMELINE / MAP */}
             {chapterData.locations && chapterData.locations.length > 0 ? (
-              <section className="mb-6 border-t border-dashed border-[#D4CFC4] pt-8">
+              <section className="mb-6 border-t border-dashed border-border-beige pt-8">
                 <SicilyMap 
                   locations={chapterData.locations}
                   title="Chapter Locations"
@@ -229,7 +227,7 @@ function ChapterContent() {
                 />
               </section>
             ) : chapterData.timeline && chapterData.timeline.length > 0 ? (
-              <section className="mb-6 border-t border-dashed border-[#D4CFC4] pt-8">
+              <section className="mb-6 border-t border-dashed border-border-beige pt-8">
                 <Timeline 
                   events={chapterData.timeline}
                   title="Chapter Timeline"
@@ -241,70 +239,66 @@ function ChapterContent() {
             {/* 4. PERSPECTIVES */}
             {perspectivesArray.length > 0 && (
               <section className="mb-8">
-                <h2 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider mb-4">
+                <h2 className="text-xs font-semibold text-muted-gray uppercase tracking-wider mb-4">
                   Character Perspectives
-                  <span className="text-[#9CA3AF] font-normal ml-2">(How each character saw that)</span>
+                  <span className="text-muted-gray/60 font-normal ml-2">(How each character saw that)</span>
                 </h2>
                 <div className="space-y-4">
                   {perspectivesArray.map((perspective, idx) => (
                     <div 
                       key={idx}
-                      className="bg-[#F5F0E8] rounded-lg p-5 flex gap-4"
+                      className="bg-card-bg border border-border-beige/50 shadow-sm rounded-lg p-5 flex gap-4"
                     >
                       {perspective.image && (
                         <img 
                           src={perspective.image}
                           alt={perspective.character}
-                          className="w-16 h-16 rounded-full object-cover border-2 border-[#D4CFC4] flex-shrink-0"
+                          className="w-16 h-16 rounded-full object-cover border-2 border-border-beige flex-shrink-0"
                           onError={(e) => { e.currentTarget.style.display = 'none'; }}
                         />
                       )}
                       <div>
-                        <h3 className="font-serif text-lg font-semibold text-[#1A2A40] mb-2">
+                        <h3 className="font-serif text-lg font-semibold text-navy mb-2">
                           {perspective.character}
                         </h3>
-	                        <p className="text-[#4B5563] leading-relaxed">
-	                          {replaceSourceNames(perspective.description)}
-	                        </p>
-	                      </div>
-	                    </div>
-	                  ))}
+                        <p className="text-slate leading-relaxed">
+                          {replaceSourceNames(perspective.description)}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </section>
             )}
 
             {/* 5. FUN FACT */}
             {chapterData.fun_fact && (
-              // Changed to solid light parchment color with a border, dark text
-              <section className="bg-[#EBE5DA] border-2 border-[#A67C52]/50 rounded-lg p-6 mb-8 shadow-md relative">
+              <section className="bg-section-bg border-2 border-accent-brown/20 rounded-lg p-6 mb-8 shadow-md relative">
                 <div className="flex items-center gap-2 mb-3">
-                  <Sparkles className="w-5 h-5 text-[#A67C52]" />
-                  {/* Darker brown text for title */}
-                  <h2 className="text-xs font-semibold uppercase tracking-wider text-[#8B4513]">
+                  <Sparkles className="w-5 h-5 text-accent-brown" />
+                  <h2 className="text-xs font-semibold uppercase tracking-wider text-accent-brown">
                     Fun Fact
                   </h2>
                 </div>
-	                {/* Dark navy text for body */}
-	                <p className="text-lg font-serif leading-relaxed text-[#1A2A40]">
-	                  {replaceSourceNames(chapterData.fun_fact)}
-	                </p>
-                {/* Optional: Corner tape visual */}
-                <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#D4CFC4]/80 rotate-45 shadow-sm"></div>
+                <p className="text-lg font-serif leading-relaxed text-navy">
+                  {replaceSourceNames(chapterData.fun_fact)}
+                </p>
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-border-beige/80 rotate-45 shadow-sm"></div>
               </section>
             )}
 
             {/* 6. VIDEO */}
             {podcastData?.video_exists && (
-              <section className="mb-8 bg-[#F5F0E8] rounded-lg overflow-hidden border border-[#D4CFC4]">
+              <section className="mb-8 bg-card-bg rounded-lg overflow-hidden border border-border-beige shadow-sm">
                 <div className="p-6">
                   <div className="flex items-center gap-2 mb-4">
-                    <Play className="w-5 h-5 text-[#6B2D3C]" />
-                    <h2 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider">
+                    <Play className="w-5 h-5 text-accent-burgundy" />
+                    <h2 className="text-xs font-semibold text-muted-gray uppercase tracking-wider">
                       Visual Reconstruction
                     </h2>
                   </div>
                   
-                  <div className="rounded-lg overflow-hidden bg-[#1A2A40] mb-4 shadow-lg">
+                  <div className="rounded-lg overflow-hidden bg-navy mb-4 shadow-lg">
                     <video 
                       controls
                       className="w-full aspect-video"
@@ -315,7 +309,7 @@ function ChapterContent() {
                     </video>
                   </div>
                   
-                  <h3 className="font-serif text-lg font-semibold text-[#1A2A40] mb-1">
+                  <h3 className="font-serif text-lg font-semibold text-navy mb-1">
                     {chapterData.video?.title || "Archival Footage"}
                   </h3>
                 </div>
@@ -324,16 +318,16 @@ function ChapterContent() {
 
             {/* 7. SOURCES */}
             {chapterData.sources && chapterData.sources.length > 0 && (
-              <section className="bg-[#F5F0E8] rounded-lg p-4 mb-12">
+              <section className="bg-card-bg border border-border-beige/50 rounded-lg p-4 mb-12">
                 <div className="flex items-start gap-2">
-                  <ExternalLink className="w-4 h-4 text-[#6B7280] mt-0.5" />
+                  <ExternalLink className="w-4 h-4 text-muted-gray mt-0.5" />
                   <div>
-                    <h2 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider mb-2">
+                    <h2 className="text-xs font-semibold text-muted-gray uppercase tracking-wider mb-2">
                       Sources
                     </h2>
                     <ul className="space-y-1">
                       {chapterData.sources.map((source, idx) => (
-                        <li key={idx} className="text-sm text-[#4B5563]">
+                        <li key={idx} className="text-sm text-slate">
                           • {getRealSourceName(source)}
                         </li>
                       ))}
@@ -353,8 +347,8 @@ function ChapterContent() {
 export default function Chapter() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-[#E8E4DC] flex items-center justify-center">
-        <div className="text-[#1A2A40]">Loading...</div>
+      <div className="min-h-screen bg-page-bg flex items-center justify-center">
+        <div className="text-navy">Loading...</div>
       </div>
     }>
       <ChapterContent />

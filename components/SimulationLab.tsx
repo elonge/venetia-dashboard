@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useCallback, useRef, useState } from 'react';
-import { Play, Pause, Heart, MessageCircle, Send, Bookmark, MoreHorizontal, Camera, Info } from 'lucide-react';
+import { Play, Pause, Heart, MessageCircle, Send, Bookmark, MoreHorizontal, Camera, Info, Sparkles, Terminal, Cpu, FlaskConical } from 'lucide-react';
+import { PEOPLE_IMAGES } from '@/constants';
 
 const VenetiaSimulationLab = () => {
   const reconstructionAudioRef = useRef<HTMLAudioElement>(null);
   const [isReconstructionPlaying, setIsReconstructionPlaying] = useState(false);
   
-  // State for toggling the logic panels
   const [expandedLogic, setExpandedLogic] = useState<Record<number, boolean>>({});
 
   const toggleLogic = (id: number) => {
@@ -27,7 +27,7 @@ const VenetiaSimulationLab = () => {
     audio.pause();
   }, []);
 
-  // Historical Correspondence Data with Logic Added
+  // Historical Correspondence Data
   const correspondenceData = [
     {
       id: 31,
@@ -79,7 +79,7 @@ const VenetiaSimulationLab = () => {
   {
     id: 0,
     user: "venetia_official",
-    image: "/lab_instagram/instagram_sicily.jpg", // Placeholder filename
+    image: "/lab_instagram/instagram_sicily.jpg",
     caption: "Ruins and Romans. 🏛️ The Prime is very happy bird-watching and listing women’s names beginning with P. Edwin is being Tante-ish about the food. 🍊☀️ #sicily #syracuse #vacation",
     likes: 142,
     comments: [
@@ -591,7 +591,7 @@ const VenetiaSimulationLab = () => {
 
 
   return (
-    <div className="min-h-screen bg-[#DED9D0] flex flex-col md:flex-row font-serif p-4 md:p-8 gap-4 md:gap-8 overflow-hidden">
+    <div className="min-h-screen bg-section-bg flex flex-col md:flex-row font-serif p-4 md:p-8 gap-4 md:gap-8 overflow-hidden">
       <audio
         ref={reconstructionAudioRef}
         src="/lab_instagram/asquith_reading_letter2.mp3"
@@ -602,29 +602,29 @@ const VenetiaSimulationLab = () => {
       />
       
       {/* Left Column: Generative Correspondence */}
-      <section className="flex-1 max-w-4xl overflow-y-auto md:pr-6 custom-scrollbar border-2 border-[#4A7C59]/30 rounded-lg p-4 md:p-6 bg-[#F5F3EF]/30">
+      <section className="flex-1 max-w-4xl overflow-y-auto md:pr-6 custom-scrollbar border-2 border-accent-green/30 rounded-lg p-4 md:p-6 bg-page-bg/30">
         <header className="mb-6 md:mb-12">
-          <p className="text-[#4A7C59] font-black uppercase tracking-[0.3em] text-[9px] md:text-[10px] mb-2">The Venetia Project Simulation Lab</p>
-          <h1 className="text-2xl md:text-4xl font-bold text-[#1A2A40] mb-2 tracking-tight">Generative Correspondence</h1>
-          <div className="h-1 w-20 md:w-24 bg-[#4A7C59]"></div>
-          <p className="mt-3 md:mt-4 text-xs md:text-sm italic text-[#6B7280]">Chronicle Displacement: Reconstructing the dialogue between Venetia Stanley and the Prime Minister.</p>
+          <p className="text-accent-green font-black uppercase tracking-[0.3em] text-[9px] md:text-[10px] mb-2">The Venetia Project Simulation Lab</p>
+          <h1 className="text-2xl md:text-4xl font-bold text-navy mb-2 tracking-tight">Generative Correspondence</h1>
+          <div className="h-1 w-20 md:w-24 bg-accent-green"></div>
+          <p className="mt-3 md:mt-4 text-xs md:text-sm italic text-muted-gray">Chronicle Displacement: Reconstructing the dialogue between Venetia Stanley and the Prime Minister.</p>
         </header>
 
         {/* Section Explanation */}
-        <div className="mb-6 md:mb-12 p-4 md:p-6 bg-[#F5F3EF] border-l-4 border-[#4A7C59] rounded-r-lg">
-          <h2 className="text-base md:text-lg font-bold text-[#1A2A40] mb-2 md:mb-3">What is this?</h2>
-          <p className="text-xs md:text-sm text-[#4B5563] leading-relaxed mb-3 md:mb-4">
-            This section reconstructs three of Venetia Stanley's lost letters to H.H. Asquith by analyzing his responses. 
-            The historical record preserves Asquith's letters, but Venetia's side of the correspondence was destroyed. 
+        <div className="mb-6 md:mb-12 p-4 md:p-6 bg-page-bg border-l-4 border-accent-green rounded-r-lg">
+          <h2 className="text-base md:text-lg font-bold text-navy mb-2 md:mb-3">What is this?</h2>
+          <p className="text-xs md:text-sm text-slate leading-relaxed mb-3 md:mb-4">
+            This section reconstructs three of Venetia Stanley&apos;s lost letters to H.H. Asquith by analyzing his responses. 
+            The historical record preserves Asquith&apos;s letters, but Venetia&apos;s side of the correspondence was destroyed. 
             By carefully examining what Asquith quotes, references, and responds to, we can infer the content and tone 
             of her original letters.
           </p>
-          <h2 className="text-base md:text-lg font-bold text-[#1A2A40] mb-2 md:mb-3">Why did we do this?</h2>
-          <p className="text-xs md:text-sm text-[#4B5563] leading-relaxed">
+          <h2 className="text-base md:text-lg font-bold text-navy mb-2 md:mb-3">Why did we do this?</h2>
+          <p className="text-xs md:text-sm text-slate leading-relaxed">
             Because sometimes it is easier to imagine Venetia when she is writing.
             Her letters are lost, but her presence in the correspondence is not. 
-            When reading Asquith's replies closely, one begins to sense her tone, her provocations, her restraint, her economy of feeling. 
-            Thinking about what she might have written — sentence by sentence — makes her feel less abstract and less mythic..
+            When reading Asquith&apos;s replies closely, one begins to sense her tone, her provocations, her restraint, her economy of feeling. 
+            Thinking about what she might have written — sentence by sentence — makes her feel less abstract and less mythic.
           </p>
         </div>
 
@@ -634,21 +634,21 @@ const VenetiaSimulationLab = () => {
               
               {/* Venetia Simulated Letter */}
               <div className="flex flex-col gap-2">
-                <div className="bg-[#FAF7F2] p-4 md:p-8 border border-dashed border-[#A67C52]/40 shadow-sm relative -rotate-1 hover:rotate-0 transition-transform duration-500">
-                  <div className="absolute -top-2 md:-top-3 left-3 md:left-4 bg-[#A67C52] text-white text-[7px] md:text-[8px] px-1.5 md:px-2 py-0.5 rounded uppercase font-black tracking-widest">
+                <div className="bg-page-bg p-4 md:p-8 border border-dashed border-accent-brown/40 shadow-sm relative -rotate-1 hover:rotate-0 transition-transform duration-500">
+                  <div className="absolute -top-2 md:-top-3 left-3 md:left-4 bg-accent-brown text-white text-[7px] md:text-[8px] px-1.5 md:px-2 py-0.5 rounded uppercase font-black tracking-widest">
                     Simulated Precursor
                   </div>
-                  <div className="text-[9px] md:text-[10px] uppercase tracking-widest text-[#A67C52]/60 mb-3 md:mb-4 font-sans font-bold">
+                  <div className="text-[9px] md:text-[10px] uppercase tracking-widest text-accent-brown/60 mb-3 md:mb-4 font-sans font-bold">
                     {pair.venetiaHeader}
                   </div>
-                  <div className="font-serif italic text-sm md:text-base text-[#4B5563] leading-relaxed">
-                    "{pair.venetia}"
+                  <div className="font-serif italic text-sm md:text-base text-slate leading-relaxed">
+                    &quot;{pair.venetia}&quot;
                   </div>
                   
                   {/* Logic Toggle Button */}
                   <button 
                     onClick={() => toggleLogic(pair.id)}
-                    className="mt-4 md:mt-6 flex items-center gap-1.5 text-[9px] md:text-[10px] font-sans font-bold text-[#A67C52] uppercase tracking-wider hover:text-[#8C6B4A] transition-colors min-h-[44px]"
+                    className="mt-4 md:mt-6 flex items-center gap-1.5 text-[9px] md:text-[10px] font-sans font-bold text-accent-brown uppercase tracking-wider hover:text-accent-brown/80 transition-colors min-h-[44px]"
                   >
                     <Info size={11} className="md:w-3 md:h-3" /> 
                     <span className="text-left">{expandedLogic[pair.id] ? "Hide Reconstruction Logic" : "View Reconstruction Logic"}</span>
@@ -656,12 +656,12 @@ const VenetiaSimulationLab = () => {
                   
                   {/* Expandable Logic Panel */}
                   {expandedLogic[pair.id] && (
-                    <div className="mt-3 p-3 bg-[#A67C52]/5 border-l-2 border-[#A67C52] text-[10px] md:text-[11px] font-sans text-[#7a5a3a] leading-snug animate-in fade-in slide-in-from-top-2">
+                    <div className="mt-3 p-3 bg-accent-brown/5 border-l-2 border-accent-brown text-[10px] md:text-[11px] font-sans text-accent-brown leading-snug animate-in fade-in slide-in-from-top-2">
                       <strong className="block mb-2 opacity-80 uppercase tracking-widest text-[8px] md:text-[9px]">Basis of Reconstruction:</strong> 
                       <ul className="space-y-2 list-none pl-0">
                         {pair.logic.split('\n').filter(line => line.trim()).map((line, index) => (
                           <li key={index} className="flex gap-2">
-                            <span className="text-[#A67C52] font-bold shrink-0">•</span>
+                            <span className="text-accent-brown font-bold shrink-0">•</span>
                             <span className="flex-1">{line.trim().replace(/^•\s*/, '')}</span>
                           </li>
                         ))}
@@ -669,23 +669,23 @@ const VenetiaSimulationLab = () => {
                     </div>
                   )}
 
-                  <p className="mt-4 md:mt-6 text-[10px] md:text-xs font-bold text-[#A67C52]/60 font-sans tracking-widest text-right">— V.S.</p>
+                  <p className="mt-4 md:mt-6 text-[10px] md:text-xs font-bold text-accent-brown/60 font-sans tracking-widest text-right">— V.S.</p>
                 </div>
               </div>
 
               {/* Asquith Verified Letter */}
-              <div className="bg-white p-4 md:p-8 border border-[#D4CFC4] shadow-md relative rotate-1 hover:rotate-0 transition-transform duration-500">
-                <div className="absolute -top-2 md:-top-3 left-3 md:left-4 bg-[#4A7C59] text-white text-[7px] md:text-[8px] px-1.5 md:px-2 py-0.5 rounded uppercase font-black tracking-widest">
+              <div className="bg-card-bg p-4 md:p-8 border border-border-beige shadow-md relative rotate-1 hover:rotate-0 transition-transform duration-500">
+                <div className="absolute -top-2 md:-top-3 left-3 md:left-4 bg-accent-green text-white text-[7px] md:text-[8px] px-1.5 md:px-2 py-0.5 rounded uppercase font-black tracking-widest">
                   Verified Archive
                 </div>
-                <div className="text-[9px] md:text-[10px] uppercase tracking-widest text-[#4A7C59]/60 mb-3 md:mb-4 font-sans font-bold">
+                <div className="text-[9px] md:text-[10px] uppercase tracking-widest text-accent-green/60 mb-3 md:mb-4 font-sans font-bold">
                   {pair.asquithHeader}
                 </div>
-                <h3 className="font-bold text-[#1A2A40] mb-2 tracking-wide uppercase text-[10px] md:text-xs">H.H. Asquith</h3>
-                <div className="font-serif text-sm md:text-base text-[#1A2A40] leading-relaxed">
-                  "{pair.asquith}"
+                <h3 className="font-bold text-navy mb-2 tracking-wide uppercase text-[10px] md:text-xs">H.H. Asquith</h3>
+                <div className="font-serif text-sm md:text-base text-navy leading-relaxed">
+                  &quot;{pair.asquith}&quot;
                 </div>
-                <p className="mt-4 md:mt-6 text-[8px] md:text-[9px] text-[#6B7280] uppercase tracking-tighter font-sans border-t pt-3 md:pt-4 border-dotted">
+                <p className="mt-4 md:mt-6 text-[8px] md:text-[9px] text-muted-gray uppercase tracking-tighter font-sans border-t pt-3 md:pt-4 border-dotted">
                   Source: record group 1912.b-16 // Folio {pair.id}
                 </p>
               </div>
@@ -697,17 +697,17 @@ const VenetiaSimulationLab = () => {
       {/* Right Column: Media Stack */}
       <div className="flex flex-col md:flex-col gap-4 md:gap-6 w-full md:w-[380px] flex-shrink-0 overflow-y-auto custom-scrollbar">
         {/* Audio Section */}
-        <div className="w-full md:w-[380px] flex flex-col gap-4 border-2 border-[#A67C52]/30 rounded-lg p-4 bg-[#EBE7DF]/30 h-fit">
+        <div className="w-full md:w-[380px] flex flex-col gap-4 border-2 border-accent-brown/30 rounded-lg p-4 bg-page-bg/30 h-fit">
           {/* Audio Section Explanation */}
-          <div className="bg-[#EBE7DF] rounded-2xl p-4 md:p-6 border border-[#C4BFAF] shadow-sm">
-            <h2 className="text-2xl md:text-4xl font-bold text-[#1A2A40] tracking-light mb-2 md:mb-3">Audio Reconstruction</h2>
-            <p className="text-xs md:text-sm text-[#4B5563] leading-relaxed mb-3">
-              <strong className="text-[#1A2A40]">What is this?</strong> This is an audio reconstruction of Asquith 
+          <div className="bg-page-bg rounded-2xl p-4 md:p-6 border border-border-beige shadow-sm">
+            <h2 className="text-2xl md:text-4xl font-bold text-navy tracking-light mb-2 md:mb-3">Audio Reconstruction</h2>
+            <p className="text-xs md:text-sm text-slate leading-relaxed mb-3">
+              <strong className="text-navy">What is this?</strong> This is an audio reconstruction of Asquith 
               reading one of his famous letters to Venetia. 
-              The recording was created by modelling Asquith's voice using surviving audio from a public speech he delivered in 1909, and applying it to the text of a letter preserved in the archive.
+              The recording was created by modelling Asquith&apos;s voice using surviving audio from a public speech he delivered in 1909, and applying it to the text of a letter preserved in the archive.
             </p>
-            <p className="text-xs md:text-sm text-[#4B5563] leading-relaxed">
-              <strong className="text-[#1A2A40]">Why did we do this?</strong> The written word captures only part of 
+            <p className="text-xs md:text-sm text-slate leading-relaxed">
+              <strong className="text-navy">Why did we do this?</strong> The written word captures only part of 
               the intimacy of these letters. Hearing them read aloud—with the pauses, emphasis, and emotional tone— 
               brings us closer to understanding how these words were meant to be received. It transforms the archival 
               document into a living moment of communication.
@@ -715,9 +715,9 @@ const VenetiaSimulationLab = () => {
           </div>
 
           {/* Video Reconstruction Box */}
-          <div className="bg-[#EBE7DF] rounded-2xl p-4 md:p-6 border border-[#C4BFAF] shadow-sm">
-             <p className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-[#6B7280] mb-3 md:mb-4 text-center">Audio Reconstruction</p>
-            <div className="aspect-square rounded-full border-8 md:border-[12px] border-[#3D2B1F] overflow-hidden shadow-2xl relative bg-black group ring-2 md:ring-4 ring-[#A67C52]/20 max-w-[280px] md:max-w-none mx-auto">
+          <div className="bg-page-bg rounded-2xl p-4 md:p-6 border border-border-beige shadow-sm">
+             <p className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-muted-gray mb-3 md:mb-4 text-center">Audio Reconstruction</p>
+            <div className="aspect-square rounded-full border-8 md:border-[12px] border-navy overflow-hidden shadow-2xl relative bg-black group ring-2 md:ring-4 ring-accent-brown/20 max-w-[280px] md:max-w-none mx-auto">
               <img 
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Asquith_Q_42036_%28cropped%29%28b%29.jpg/250px-Asquith_Q_42036_%28cropped%29%28b%29.jpg" 
                 className="w-full h-full object-cover opacity-60 grayscale group-hover:opacity-80 transition-all duration-700"
@@ -738,26 +738,26 @@ const VenetiaSimulationLab = () => {
                   </button>
                 </div>
               </div>
-              <p className="text-center mt-4 md:mt-6 text-[#1A2A40] font-serif italic text-xs md:text-sm font-bold leading-tight px-2 md:px-4">
-              "Engagement Day Message" <br/>
-              <span className="text-[9px] md:text-[10px] not-italic font-sans text-gray-500 uppercase tracking-widest">Reconstructed: 12.05.1915</span>
+              <p className="text-center mt-4 md:mt-6 text-navy font-serif italic text-xs md:text-sm font-bold leading-tight px-2 md:px-4">
+              &quot;Engagement Day Message&quot; <br/>
+              <span className="text-[9px] md:text-[10px] not-italic font-sans text-slate uppercase tracking-widest">Reconstructed: 12.05.1915</span>
             </p>
           </div>
         </div>
 
         {/* Instagram Section */}
-        <div className="w-full md:w-[380px] flex flex-col gap-4 border-2 border-[#1A2A40]/30 rounded-lg p-4 bg-white/30 h-fit">
+        <div className="w-full md:w-[380px] flex flex-col gap-4 border-2 border-navy/30 rounded-lg p-4 bg-card-bg/30 h-fit">
           {/* Instagram Section Explanation */}
-          <div className="bg-white rounded-2xl p-4 md:p-6 border border-[#C4BFAF] shadow-sm">
-            <h2 className="text-2xl md:text-4xl font-bold text-[#1A2A40] tracking-light mb-2 md:mb-3">Instagram Displacement</h2>
-            <p className="text-xs md:text-sm text-[#4B5563] leading-relaxed mb-3">
-              <strong className="text-[#1A2A40]">What is this?</strong> This is a speculative Instagram feed for 
+          <div className="bg-card-bg rounded-2xl p-4 md:p-6 border border-border-beige shadow-sm">
+            <h2 className="text-2xl md:text-4xl font-bold text-navy tracking-light mb-2 md:mb-3">Instagram Displacement</h2>
+            <p className="text-xs md:text-sm text-slate leading-relaxed mb-3">
+              <strong className="text-navy">What is this?</strong> This is a speculative Instagram feed for 
               Venetia Stanley, translating her historical experiences and personality into contemporary social media 
               format. The posts capture moments from her life—boredom in the country, shopping trips, social activities— 
               as she might have shared them today.
             </p>
-            <p className="text-xs md:text-sm text-[#4B5563] leading-relaxed">
-              <strong className="text-[#1A2A40]">Why did we do this?</strong> Because it was <strong>fun</strong> - as Venetia probably would have said.
+            <p className="text-xs md:text-sm text-slate leading-relaxed">
+              <strong className="text-navy">Why did we do this?</strong> Because it was <strong>fun</strong> - as Venetia probably would have said.
               And because, in the process, it exposes a difference that is easy to overlook. 
               It is difficult, from a contemporary standpoint, to imagine caring so little about public self-presentation. 
               For Venetia and her world, the private and the public were not continuously performed, curated, and revised.
@@ -765,28 +765,28 @@ const VenetiaSimulationLab = () => {
           </div>
 
           {/* Instagram Displacement Box */}
-          <div className="bg-white rounded-[20px] md:rounded-[40px] border-4 md:border-[10px] border-[#1A2A40] h-[500px] md:h-[640px] shadow-2xl flex flex-col overflow-hidden relative">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 md:w-32 h-4 md:h-6 bg-[#1A2A40] rounded-b-xl md:rounded-b-2xl z-20 shadow-sm"></div>
+          <div className="bg-card-bg rounded-[20px] md:rounded-[40px] border-4 md:border-[10px] border-navy h-[500px] md:h-[640px] shadow-2xl flex flex-col overflow-hidden relative">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 md:w-32 h-4 md:h-6 bg-navy rounded-b-xl md:rounded-b-2xl z-20 shadow-sm"></div>
           
           <div className="flex-1 overflow-y-auto mt-4 md:mt-6 no-scrollbar">
             {/* Header */}
-            <div className="px-3 md:px-4 py-3 md:py-4 border-b flex items-center justify-between">
+            <div className="px-3 md:px-4 py-3 md:py-4 border-b border-border-beige flex items-center justify-between">
               <div className="flex items-center gap-2 md:gap-3">
-                <div className="w-7 h-7 md:w-9 md:h-9 rounded-full border-2 border-[#4A7C59] p-0.5 shrink-0">
+                <div className="w-7 h-7 md:w-9 md:h-9 rounded-full border-2 border-accent-green p-0.5 shrink-0">
                     <div className="w-full h-full rounded-full bg-[url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Venetia_Stanley.jpg/220px-Venetia_Stanley.jpg')] bg-cover bg-center"></div>
                 </div>
                 <div className="flex flex-col min-w-0">
                   <span className="text-[10px] md:text-xs font-bold font-sans tracking-tight truncate">venetia_official</span>
-                  <span className="text-[8px] md:text-[9px] text-gray-400 font-sans font-medium uppercase tracking-tighter">Simulation Feed</span>
+                  <span className="text-[8px] md:text-[9px] text-muted-gray font-sans font-medium uppercase tracking-tighter">Simulation Feed</span>
                 </div>
               </div>
-              <MoreHorizontal size={16} className="md:w-[18px] md:h-[18px] text-gray-400 shrink-0" />
+              <MoreHorizontal size={16} className="md:w-[18px] md:h-[18px] text-muted-gray shrink-0" />
             </div>
 
             {/* Post Content */}
             {instagramPosts.map(post => (
               <div key={post.id} className="pb-3 md:pb-4">
-                <div className="aspect-square bg-gray-100 overflow-hidden relative">
+                <div className="aspect-square bg-page-bg/50 overflow-hidden relative">
                   <img src={post.image} className="w-full h-full object-cover sepia-[0.2] contrast-110" alt="Post" />
                   <div className="absolute top-2 md:top-3 right-2 md:right-3 bg-black/20 backdrop-blur-sm p-1 md:p-1.5 rounded-full">
                      <Camera size={12} className="md:w-[14px] md:h-[14px] text-white" />
@@ -794,22 +794,22 @@ const VenetiaSimulationLab = () => {
                 </div>
                 <div className="p-3 md:p-4">
                   <div className="flex gap-3 md:gap-4 mb-2 md:mb-3">
-                    <Heart size={20} className="md:w-[22px] md:h-[22px] hover:text-red-500 cursor-pointer transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center" />
-                    <MessageCircle size={20} className="md:w-[22px] md:h-[22px] hover:text-gray-600 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center" />
+                    <Heart size={20} className="md:w-[22px] md:h-[22px] hover:text-accent-red cursor-pointer transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center" />
+                    <MessageCircle size={20} className="md:w-[22px] md:h-[22px] hover:text-slate transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center" />
                     <Send size={20} className="md:w-[22px] md:h-[22px] min-w-[44px] min-h-[44px] flex items-center justify-center" />
                     <div className="ml-auto"><Bookmark size={20} className="md:w-[22px] md:h-[22px] min-w-[44px] min-h-[44px] flex items-center justify-center" /></div>
                   </div>
-                  <p className="text-[11px] md:text-[12px] font-bold font-sans mb-1 md:mb-1.5 text-gray-800">{post.likes} likes</p>
+                  <p className="text-[11px] md:text-[12px] font-bold font-sans mb-1 md:mb-1.5 text-slate">{post.likes} likes</p>
                   <p className="text-[11px] md:text-[12px] font-sans leading-relaxed">
-                    <span className="font-bold mr-2 text-gray-900">{post.user}</span>
+                    <span className="font-bold mr-2 text-navy">{post.user}</span>
                     {post.caption}
                   </p>
                   
-                  <div className="mt-3 md:mt-4 space-y-1.5 md:space-y-2 border-l-2 border-gray-100 pl-2 md:pl-3">
+                  <div className="mt-3 md:mt-4 space-y-1.5 md:space-y-2 border-l-2 border-border-beige pl-2 md:pl-3">
                     {post.comments.map((comment, i) => (
                       <p key={i} className="text-[10px] md:text-[11px] font-sans leading-snug">
-                        <span className="font-bold mr-2 text-gray-900">{comment.user}</span>
-                        <span className="text-gray-600">{comment.text}</span>
+                        <span className="font-bold mr-2 text-navy">{comment.user}</span>
+                        <span className="text-slate">{comment.text}</span>
                       </p>
                     ))}
                   </div>
@@ -819,10 +819,10 @@ const VenetiaSimulationLab = () => {
           </div>
 
           {/* Nav Bar */}
-          <div className="border-t py-3 md:py-4 flex justify-around items-center bg-gray-50 mt-auto">
-             <div className="w-5 h-5 md:w-6 md:h-6 rounded-md border-2 border-gray-300"></div>
-             <div className="w-8 md:w-10 h-1 bg-gray-300 rounded-full"></div>
-             <div className="w-4 h-4 md:w-5 md:h-5 bg-gray-300 rounded-sm rotate-45"></div>
+          <div className="border-t border-border-beige py-3 md:py-4 flex justify-around items-center bg-page-bg mt-auto">
+             <div className="w-5 h-5 md:w-6 md:h-6 rounded-md border-2 border-border-beige"></div>
+             <div className="w-8 md:w-10 h-1 bg-border-beige rounded-full"></div>
+             <div className="w-4 h-4 md:w-5 md:h-5 bg-border-beige rounded-sm rotate-45"></div>
           </div>
           </div>
         </div>

@@ -1,32 +1,70 @@
 @import "tailwindcss";
 
 :root {
+  /* Core Brand Colors */
+  --color-page-bg: #F5F0E8;    /* Lighter, warmer parchment - Base background */
+  --color-section-bg: #E8E4DC; /* Slightly darker depth color - for alternating sections */
+  --color-card-bg: #FFFFFF;    /* Pure white for cards to pop */
+  --color-navy: #1A2A40;
+  --color-slate: #2D3648;
+  --color-ink: #241B15;
+  
+  /* Accent Colors */
+  --color-accent-red: #C24E42;
+  --color-accent-brown: #8B4513;
+  --color-accent-green: #4A7C59;
+  --color-accent-amber: #F6E39A;
+  --color-accent-burgundy: #6B2D3C;
+  
+  /* UI Helper Colors */
+  --color-border-beige: #D4CFC4;
+  --color-muted-gray: #5A6472;
+
+  /* Legacy / System Variables */
   --background: #ffffff;
   --foreground: #171717;
-  --page-bg: #f4f0e6;
-  --ink: #241b15;
+  --page-bg: var(--color-page-bg);
+  --ink: var(--color-ink);
   --font-serif: var(--font-playfair, "Playfair Display");
   --font-size-base: clamp(13px, 0.30vw + 11px, 15px);
   --line-height-base: 1.6;
 }
 
-/* Add this to the bottom of global.css */
-::selection {
-  background-color: rgba(74, 124, 89, 0.4) !important; /* Thematic Green */
-  color: #ffffff !important; /* Force white text during selection for contrast */
-}
-
-/* Ensure it works for Firefox as well */
-::-moz-selection {
-  background-color: rgba(74, 124, 89, 0.4) !important;
-  color: #ffffff !important;
-}
 @theme inline {
+  /* Register Tokens in Tailwind v4 */
+  --color-page-bg: var(--color-page-bg);
+  --color-section-bg: var(--color-section-bg);
+  --color-card-bg: var(--color-card-bg);
+  --color-navy: var(--color-navy);
+  --color-slate: var(--color-slate);
+  --color-ink: var(--color-ink);
+  
+  --color-accent-red: var(--color-accent-red);
+  --color-accent-brown: var(--color-accent-brown);
+  --color-accent-green: var(--color-accent-green);
+  --color-accent-amber: var(--color-accent-amber);
+  --color-accent-burgundy: var(--color-accent-burgundy);
+  
+  --color-border-beige: var(--color-border-beige);
+  --color-muted-gray: var(--color-muted-gray);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-playfair);
+}
+
+/* Selection color */
+::selection {
+  background-color: rgba(74, 124, 89, 0.4) !important;
+  color: #ffffff !important;
+}
+
+::-moz-selection {
+  background-color: rgba(74, 124, 89, 0.4) !important;
+  color: #ffffff !important;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -140,12 +178,6 @@ html {
   isolation: isolate;
   position: relative;
 }
-
-/* Ensure text content in DataRoom stays above any potential timeline lines */
-/* .dataroom-shell [class*="text-"] {
-  position: relative;
-  z-index: 1;
-} */
 
 /* DataRoom Preview Animations */
 @keyframes wave {

@@ -146,13 +146,13 @@ export default function ChapterCarousel({ chapters, loading }: ChapterCarouselPr
 
   if (loading) {
     return (
-      <div className="text-sm text-[#E5E8F0] p-3">Loading chapters...</div>
+      <div className="text-sm text-slate/50 p-3">Loading chapters...</div>
     );
   }
 
   if (sortedChapters.length === 0) {
     return (
-      <div className="text-sm text-[#E5E8F0] p-3">No chapters available</div>
+      <div className="text-sm text-slate/50 p-3">No chapters available</div>
     );
   }
 
@@ -162,7 +162,7 @@ export default function ChapterCarousel({ chapters, loading }: ChapterCarouselPr
       {canScrollLeft && (
         <button
           onClick={() => scroll('left')}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-[#1A2A40] hover:bg-[#252F3F] text-white rounded-full p-1.5 shadow-lg transition-all opacity-90 hover:opacity-100"
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-navy hover:bg-navy/80 text-white rounded-full p-1.5 shadow-lg transition-all opacity-90 hover:opacity-100"
           aria-label="Scroll left"
         >
           <ChevronLeft className="w-4 h-4" />
@@ -171,7 +171,7 @@ export default function ChapterCarousel({ chapters, loading }: ChapterCarouselPr
       {canScrollRight && (
         <button
           onClick={() => scroll('right')}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-[#1A2A40] hover:bg-[#252F3F] text-white rounded-full p-1.5 shadow-lg transition-all opacity-90 hover:opacity-100"
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-navy hover:bg-navy/80 text-white rounded-full p-1.5 shadow-lg transition-all opacity-90 hover:opacity-100"
           aria-label="Scroll right"
         >
           <ChevronRight className="w-4 h-4" />
@@ -198,7 +198,7 @@ export default function ChapterCarousel({ chapters, loading }: ChapterCarouselPr
           <Link
             key={chapter._id}
             href={`/chapter?chapter_id=${encodeURIComponent(chapter.chapter_id)}`}
-            className="shrink-0 w-80 bg-[#F5F0E8] text-[#1A2A40] rounded-lg p-4 cursor-pointer hover:bg-[#E8E4DC] transition-all hover:shadow-md group hover:no-underline"
+            className="shrink-0 w-80 bg-card-bg text-navy rounded-lg p-4 cursor-pointer hover:bg-section-bg transition-all hover:shadow-md group hover:no-underline border border-border-beige/50"
             onClick={(e) => {
               // Prevent navigation if user was dragging
               if (isDragging) {
@@ -206,17 +206,17 @@ export default function ChapterCarousel({ chapters, loading }: ChapterCarouselPr
               }
             }}
           >
-            <h4 className="font-serif text-black text-base font-medium leading-tight mb-2 group-hover:text-[#4A7C59]">
+            <h4 className="font-serif text-navy text-base font-medium leading-tight mb-2 group-hover:text-accent-green">
               {chapter.chapter_title}
             </h4>
             {chapter.main_story && (
-              <p className="text-sm text-[#2D3648] line-clamp-3 leading-relaxed">
+              <p className="text-sm text-slate line-clamp-3 leading-relaxed">
                 {chapter.main_story.substring(0, 150)}
                 {chapter.main_story.length > 150 ? '...' : ''}
               </p>
             )}
-            <div className="mt-3 pt-3 border-t border-[#D4CFC4]">
-              <span className="text-xs text-[#3E4A60] uppercase tracking-wider">
+            <div className="mt-3 pt-3 border-t border-border-beige">
+              <span className="text-xs text-muted-gray uppercase tracking-wider group-hover:text-navy transition-colors">
                 Listen & Read More →
               </span>
             </div>

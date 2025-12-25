@@ -42,7 +42,7 @@ export default function DailyPage() {
   }, [normalizedDate]);
 
   return (
-    <div className="h-full bg-[#E8E4DC]">
+    <div className="h-full bg-page-bg">
       <div className="max-w-7xl mx-auto px-6 py-6">
         {loadingDay ? (
           <DailyEntrySkeleton />
@@ -70,7 +70,7 @@ export default function DailyPage() {
             }}
           />
         ) : (
-          <div className="bg-[#F5F0E8] rounded-2xl p-6 text-center text-[#2D3648] border border-[#D4CFC4] min-h-[250px] flex items-center justify-center shadow-[0_14px_34px_rgba(0,0,0,0.08)]">
+          <div className="bg-card-bg rounded-2xl p-6 text-center text-slate border border-border-beige min-h-[250px] flex items-center justify-center shadow-[0_14px_34px_rgba(0,0,0,0.08)]">
             No data available for {normalizedDate}.
           </div>
         )}

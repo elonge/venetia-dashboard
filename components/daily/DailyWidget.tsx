@@ -94,16 +94,16 @@ export default function DailyWidget({ day, onClick }: DailyWidgetProps) {
     <button
       onClick={onClick}
       type="button"
-      className="w-full cursor-pointer rounded-md bg-[#F5F0E8] p-4 md:p-6 border border-[#E2D8C8] shadow-[0_18px_40px_rgba(0,0,0,0.12)] hover:-translate-y-[1px] hover:shadow-[0_26px_54px_rgba(0,0,0,0.14)] transition-all text-left group"
+      className="w-full cursor-pointer rounded-md bg-card-bg p-4 md:p-6 border border-border-beige shadow-[0_18px_40px_rgba(0,0,0,0.12)] hover:-translate-y-[1px] hover:shadow-[0_26px_54px_rgba(0,0,0,0.14)] transition-all text-left group"
     >
       {/* Header */}
       <div className="flex items-start justify-between gap-2 md:gap-4">
-        <div className="inline-flex items-center rounded-md bg-[#B58A2A] px-2 py-1 text-[10px] md:text-[11px] font-semibold tracking-[0.14em] uppercase text-[#FDFBF7] shadow-sm">
+        <div className="inline-flex items-center rounded-md bg-accent-brown px-2 py-1 text-[10px] md:text-[11px] font-semibold tracking-[0.14em] uppercase text-card-bg shadow-sm">
           Today in History
         </div>
         <div className="flex items-center gap-1.5 md:gap-2 shrink-0">
           {hasMeeting && (
-            <span className="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-1.5 md:px-2 py-0.5 md:py-1 text-[10px] md:text-[11px] font-medium text-emerald-800">
+            <span className="inline-flex items-center rounded-full border border-accent-green/20 bg-accent-green/10 px-1.5 md:px-2 py-0.5 md:py-1 text-[10px] md:text-[11px] font-medium text-accent-green">
               Met
             </span>
           )}
@@ -121,21 +121,21 @@ export default function DailyWidget({ day, onClick }: DailyWidgetProps) {
 
       {/* Date */}
       <div className="mt-2 md:mt-3">
-        <div className="font-serif text-2xl md:text-[34px] leading-[1.05] font-semibold tracking-tight text-[#1A2A40]">
+        <div className="font-serif text-2xl md:text-[34px] leading-[1.05] font-semibold tracking-tight text-navy">
           {formattedDate}
         </div>
-        <div className="mt-2 md:mt-3 h-px w-full bg-[#D8D1C6]" />
+        <div className="mt-2 md:mt-3 h-px w-full bg-border-beige opacity-50" />
       </div>
 
       {/* Content */}
       <div className="mt-4 md:mt-6 grid grid-cols-1 md:grid-cols-[1fr_280px] md:gap-8">
         {/* Left */}
         <div className="md:pr-2">
-          <div className="font-serif text-lg md:text-xl font-semibold text-[#1A2A40] leading-snug">
+          <div className="font-serif text-lg md:text-xl font-semibold text-navy leading-snug">
             {headline}
           </div>
 
-          <p className="mt-2 md:mt-3 font-serif italic text-sm md:text-[15px] text-[#1A2A40] leading-relaxed line-clamp-3 md:line-clamp-4 max-w-full">
+          <p className="mt-2 md:mt-3 font-serif italic text-sm md:text-[15px] text-navy leading-relaxed line-clamp-3 md:line-clamp-4 max-w-full">
             {previewText ? `"${previewText}"` : 'Read the entry for this day.'}
           </p>
 
@@ -143,7 +143,7 @@ export default function DailyWidget({ day, onClick }: DailyWidgetProps) {
             {topics.slice(0, 3).map((topic) => (
               <span
                 key={topic}
-                className="inline-flex items-center rounded-full border border-[#D8D1C6] bg-white/55 px-2 md:px-3 py-0.5 md:py-1 text-[10px] md:text-xs text-[#2D3648]"
+                className="inline-flex items-center rounded-full border border-border-beige bg-page-bg/55 px-2 md:px-3 py-0.5 md:py-1 text-[10px] md:text-xs text-slate"
               >
                 {topic}
               </span>
@@ -152,37 +152,37 @@ export default function DailyWidget({ day, onClick }: DailyWidgetProps) {
         </div>
 
         {/* Right */}
-        <div className="mt-4 md:mt-6 md:mt-0 md:border-l md:border-[#D8D1C6] md:pl-6 flex flex-col justify-between">
+        <div className="mt-4 md:mt-6 md:mt-0 md:border-l md:border-border-beige/50 md:pl-6 flex flex-col justify-between">
           <div>
             {primaryScore ? (
               <div>
                 <div className="flex items-baseline justify-between gap-3">
-                  <div className="text-xs font-semibold tracking-[0.12em] uppercase text-[#3E4A60]">
+                  <div className="text-xs font-semibold tracking-[0.12em] uppercase text-muted-gray">
                     {primaryScore.label}
                   </div>
-                  <div className="text-xs font-semibold tabular-nums text-[#1A2A40]">
+                  <div className="text-xs font-semibold tabular-nums text-navy">
                     {primaryScore.value}/10
                   </div>
                 </div>
-                <div className="mt-2 h-3 w-full rounded-full bg-[#E6DED2]">
+                <div className="mt-2 h-3 w-full rounded-full bg-section-bg">
                   <div
-                    className="h-3 rounded-full bg-[#6B4A2B]"
+                    className="h-3 rounded-full bg-accent-brown"
                     style={{ width: `${Math.max(0, Math.min(100, (primaryScore.value / 10) * 100))}%` }}
                   />
                 </div>
               </div>
             ) : (
-              <div className="text-xs font-medium text-[#3E4A60]">No score available</div>
+              <div className="text-xs font-medium text-muted-gray">No score available</div>
             )}
 
-            <div className="mt-4 md:mt-5 space-y-2 md:space-y-3 text-xs md:text-sm text-[#1A2A40]">
+            <div className="mt-4 md:mt-5 space-y-2 md:space-y-3 text-xs md:text-sm text-navy">
               {day.pm_location && (
                 <div className="flex items-start gap-1.5 md:gap-2">
                   <span className="mt-0.5 text-base md:text-lg" aria-hidden="true">
                     🏛️
                   </span>
                   <div className="min-w-0 flex-1">
-                    <span className="font-medium text-[#2D3648]">PM:</span>{' '}
+                    <span className="font-medium text-slate">PM:</span>{' '}
                     <span className="truncate">{day.pm_location}</span>
                   </div>
                 </div>
@@ -193,7 +193,7 @@ export default function DailyWidget({ day, onClick }: DailyWidgetProps) {
                     👩
                   </span>
                   <div className="min-w-0 flex-1">
-                    <span className="font-medium text-[#2D3648]">Venetia:</span>{' '}
+                    <span className="font-medium text-slate">Venetia:</span>{' '}
                     <span className="truncate">{day.venetia_location}</span>
                   </div>
                 </div>
@@ -204,7 +204,7 @@ export default function DailyWidget({ day, onClick }: DailyWidgetProps) {
                     📍
                   </span>
                   <div className="min-w-0 flex-1">
-                    <span className="font-medium text-[#2D3648]">Location:</span>{' '}
+                    <span className="font-medium text-slate">Location:</span>{' '}
                     <span className="truncate">{primaryLocation}</span>
                   </div>
                 </div>
@@ -216,7 +216,7 @@ export default function DailyWidget({ day, onClick }: DailyWidgetProps) {
                     ✉️
                   </span>
                   <div className="min-w-0 flex-1">
-                    <span className="font-medium text-[#2D3648]">Letters:</span>{' '}
+                    <span className="font-medium text-slate">Letters:</span>{' '}
                     <span className="tabular-nums">{letterCount}</span>
                   </div>
                 </div>
@@ -225,7 +225,7 @@ export default function DailyWidget({ day, onClick }: DailyWidgetProps) {
           </div>
 
           <div className="mt-4 md:mt-6 flex items-center justify-end">
-            <div className="text-xs md:text-sm font-semibold text-[#1A2A40] group-hover:text-[#6B2D3C] transition-colors whitespace-nowrap">
+            <div className="text-xs md:text-sm font-semibold text-navy group-hover:text-accent-burgundy transition-colors whitespace-nowrap">
               Read Full Analysis →
             </div>
           </div>

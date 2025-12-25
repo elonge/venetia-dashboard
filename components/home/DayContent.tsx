@@ -144,7 +144,7 @@ export default function DayContent({ currentDate }: DayContentProps) {
   if (loading) {
     return (
       <div className="space-y-4">
-        <div className="bg-[#F5F0E8] rounded-lg p-4 text-center text-[#2D3648]">
+        <div className="bg-card-bg rounded-lg p-4 text-center text-slate border border-border-beige shadow-sm">
           Loading...
         </div>
       </div>
@@ -154,18 +154,18 @@ export default function DayContent({ currentDate }: DayContentProps) {
   if (error || !timelineDay) {
     return (
       <div className="space-y-4">
-        <div className="bg-[#F5F0E8] rounded-lg p-12 text-center">
+        <div className="bg-card-bg rounded-lg p-12 text-center border border-border-beige shadow-sm">
           <div className="max-w-md mx-auto">
             <div className="mb-4">
-              <Calendar className="w-16 h-16 text-[#3E4A60] mx-auto mb-4" />
+              <Calendar className="w-16 h-16 text-slate mx-auto mb-4 opacity-50" />
             </div>
-            <h3 className="text-xl font-serif text-[#1A2A40] mb-2">
+            <h3 className="text-xl font-serif text-navy mb-2">
               No Historical Data Available
             </h3>
-            <p className="text-sm text-[#2D3648] mb-4">
-              We don't have any records for <span className="font-semibold text-[#1A2A40]">{currentDate}</span> in our archive.
+            <p className="text-sm text-slate mb-4">
+              We don't have any records for <span className="font-semibold text-navy">{currentDate}</span> in our archive.
             </p>
-            <p className="text-xs text-[#3E4A60]">
+            <p className="text-xs text-muted-gray">
               Try navigating to a different date using the Previous/Next buttons or the date picker above.
             </p>
           </div>
@@ -178,26 +178,23 @@ export default function DayContent({ currentDate }: DayContentProps) {
     <div className="space-y-4">
       {/* Meeting Indicator */}
       {timelineDay?.prime_minister?.meeting_with_venetia && (
-        <div className="bg-emerald-50 border-2 border-emerald-400 rounded-lg p-4 flex items-center gap-3">
+        <div className="bg-accent-green/10 border-2 border-accent-green/30 rounded-lg p-4 flex items-center gap-3">
           <div className="flex-shrink-0">
-            {/* Cameo icon: two heads/busts side-by-side */}
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-emerald-700">
-              {/* Left head */}
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-accent-green">
               <circle cx="10" cy="12" r="6" stroke="currentColor" strokeWidth="1.5" fill="currentColor" fillOpacity="0.1"/>
               <circle cx="10" cy="10" r="2" fill="currentColor"/>
               <path d="M8 14 Q10 15 12 14" stroke="currentColor" strokeWidth="1" fill="none"/>
-              {/* Right head */}
               <circle cx="22" cy="12" r="6" stroke="currentColor" strokeWidth="1.5" fill="currentColor" fillOpacity="0.1"/>
               <circle cx="22" cy="10" r="2" fill="currentColor"/>
               <path d="M20 14 Q22 15 24 14" stroke="currentColor" strokeWidth="1" fill="none"/>
             </svg>
           </div>
           <div className="flex-1">
-            <h3 className="text-base font-semibold text-emerald-800 mb-1">
+            <h3 className="text-base font-semibold text-accent-green mb-1">
               They Met Today
             </h3>
             {timelineDay.prime_minister.meeting_details && (
-              <p className="text-sm text-emerald-700">
+              <p className="text-sm text-accent-green/80 italic">
                 {timelineDay.prime_minister.meeting_details}
               </p>
             )}
@@ -207,8 +204,8 @@ export default function DayContent({ currentDate }: DayContentProps) {
 
       {/* Quote Card */}
       {displayData.quote.text && (
-        <div className="bg-[#F5F0E8] rounded-lg p-4 border-l-4 border-[#6B2D3C]">
-          <p className="font-serif text-lg text-[#1A2A40] italic mb-2">
+        <div className="bg-card-bg rounded-lg p-4 border-l-4 border-accent-burgundy shadow-sm border-y border-r border-border-beige/50">
+          <p className="font-serif text-lg text-navy italic mb-2">
             {displayData.quote.text}
           </p>
         </div>
@@ -222,12 +219,12 @@ export default function DayContent({ currentDate }: DayContentProps) {
           <div className="mt-2 space-y-1 text-xs">
             {displayData.locations.length > 0 ? (
               displayData.locations.map((loc, idx) => (
-                <div key={idx} className="text-[#4B5563]">
-                  <span className="font-semibold text-[#1A2A40]">{loc.person}:</span> {loc.location}
+                <div key={idx} className="text-slate">
+                  <span className="font-semibold text-navy">{loc.person}:</span> {loc.location}
                 </div>
               ))
             ) : (
-              <div className="text-[#4B5563]">No location data available</div>
+              <div className="text-muted-gray italic">No location data available</div>
             )}
           </div>
         </div>
@@ -235,45 +232,45 @@ export default function DayContent({ currentDate }: DayContentProps) {
         {/* Activity */}
         <div className="flex-1 space-y-3">
           {displayData.emotionalTone && (
-            <div className="bg-[#F5F0E8] rounded-lg p-4">
-              <h4 className="text-base font-semibold text-[#2D3648] uppercase tracking-wider mb-2">
+            <div className="bg-card-bg rounded-lg p-4 border border-border-beige/50 shadow-sm">
+              <h4 className="text-base font-semibold text-slate uppercase tracking-wider mb-2 text-[10px]">
                 Emotional Tone of Letter
               </h4>
-              <p className="text-sm text-[#1A2A40] leading-relaxed">
+              <p className="text-sm text-navy leading-relaxed italic">
                 {displayData.emotionalTone}
               </p>
             </div>
           )}
 
-          <div className="bg-[#F5F0E8] rounded-lg p-4">
-            <h4 className="text-base font-semibold text-[#2D3648] uppercase tracking-wider mb-1">
+          <div className="bg-card-bg rounded-lg p-4 border border-border-beige/50 shadow-sm">
+            <h4 className="text-base font-semibold text-slate uppercase tracking-wider mb-1 text-[10px]">
               Parliament Activity:
             </h4>
-            <p className="text-sm text-[#1A2A40]">{displayData.parliament}</p>
+            <p className="text-sm text-navy">{displayData.parliament}</p>
           </div>
 
-          <div className="bg-[#F5F0E8] rounded-lg p-4">
-            <h4 className="text-base font-semibold text-[#2D3648] uppercase tracking-wider mb-1">
+          <div className="bg-card-bg rounded-lg p-4 border border-border-beige/50 shadow-sm">
+            <h4 className="text-base font-semibold text-slate uppercase tracking-wider mb-1 text-[10px]">
               Cabinet Activity:
             </h4>
-            <p className="text-sm text-[#1A2A40]">{displayData.cabinet}</p>
+            <p className="text-sm text-navy">{displayData.cabinet}</p>
           </div>
         </div>
       </div>
 
       {/* What Others Did */}
-      <div className="bg-[#F5F0E8] rounded-lg overflow-hidden">
+      <div className="bg-card-bg rounded-lg overflow-hidden border border-border-beige/50 shadow-sm">
         <button
           onClick={() => setOthersExpanded(!othersExpanded)}
-          className="w-full p-4 flex items-center justify-between hover:bg-[#E8E4DC] transition-colors"
+          className="w-full p-4 flex items-center justify-between hover:bg-page-bg transition-colors"
         >
-          <h4 className="text-xs font-semibold text-[#2D3648] uppercase tracking-wider">
+          <h4 className="text-xs font-semibold text-slate uppercase tracking-wider">
             What Others Did
           </h4>
           {othersExpanded ? (
-            <ChevronUp className="w-4 h-4 text-[#2D3648]" />
+            <ChevronUp className="w-4 h-4 text-slate" />
           ) : (
-            <ChevronDown className="w-4 h-4 text-[#2D3648]" />
+            <ChevronDown className="w-4 h-4 text-slate" />
           )}
         </button>
         {othersExpanded && (
@@ -282,29 +279,28 @@ export default function DayContent({ currentDate }: DayContentProps) {
               displayData.otherPeople.map((person, idx) => {
                 const personImage = PEOPLE_IMAGES[person.name as keyof typeof PEOPLE_IMAGES];
                 return (
-                  <div key={idx} className="flex gap-3 items-start">
+                  <div key={idx} className="flex gap-3 items-start p-2 rounded-sm hover:bg-page-bg/50 transition-colors">
                     {personImage ? (
                       <img
                         src={personImage}
                         alt={person.name}
-                        className="w-16 h-16 rounded-full object-cover flex-shrink-0 border-2 border-[#D4CFC4]"
+                        className="w-16 h-16 rounded-full object-cover flex-shrink-0 border-2 border-border-beige"
                         onError={(e) => {
-                          // Hide image if it fails to load
                           e.currentTarget.style.display = 'none';
                         }}
                       />
                     ) : (
-                      <div className="w-12 h-12 rounded-full bg-[#E8E4DC] flex items-center justify-center flex-shrink-0 border-2 border-[#D4CFC4]">
-                        <span className="text-[#2D3648] text-xs font-semibold">
+                      <div className="w-12 h-12 rounded-full bg-section-bg flex items-center justify-center flex-shrink-0 border-2 border-border-beige">
+                        <span className="text-slate text-xs font-semibold">
                           {person.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
                         </span>
                       </div>
                     )}
                     <div className="flex-1 min-w-0">
-                      <span className="font-semibold text-[#1A2A40] text-sm block mb-1">
+                      <span className="font-semibold text-navy text-sm block mb-1">
                         {person.name}
                       </span>
-                      <span className="text-sm text-[#4B5563] leading-relaxed">
+                      <span className="text-sm text-slate leading-relaxed">
                         {person.action}
                       </span>
                     </div>
@@ -312,23 +308,11 @@ export default function DayContent({ currentDate }: DayContentProps) {
                 );
               })
             ) : (
-              <div className="text-sm text-[#4B5563]">No additional information available</div>
+              <div className="text-sm text-muted-gray italic">No additional information available</div>
             )}
           </div>
         )}
       </div>
-
-      {/* Newspaper Banner */}
-      {/* {displayData.newspaper && (
-        <div className="bg-[#8B3A3A] rounded-lg p-4 text-center">
-          <h4 className="text-xs font-semibold text-[#F5E6C8] uppercase tracking-wider mb-2">
-            Newspaper:
-          </h4>
-          <p className="text-white font-serif text-lg font-bold tracking-wide">
-            {displayData.newspaper}
-          </p>
-        </div>
-      )} */}
     </div>
   );
 }

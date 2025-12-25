@@ -122,7 +122,7 @@ export default function ChaptersGrid() {
         {['a', 'b', 'c', 'd', 'e', 'f'].map((key) => (
           <div
             key={key}
-            className="rounded-md border border-[#D4CFC4] bg-[#F5F0E8] p-5 shadow-[0_12px_28px_rgba(0,0,0,0.08)]"
+            className="rounded-md border border-border-beige bg-card-bg p-5 shadow-[0_12px_28px_rgba(0,0,0,0.08)]"
           >
             <div className="h-4 w-24 rounded-md bg-black/10" />
             <div className="mt-3 h-5 w-3/4 rounded-md bg-black/10" />
@@ -139,7 +139,7 @@ export default function ChaptersGrid() {
 
   if (sortedChapters.length === 0) {
     return (
-      <div className="rounded-md border border-[#D4CFC4] bg-[#F5F0E8] p-6 text-center text-[#2D3648]">
+      <div className="rounded-md border border-border-beige bg-card-bg p-6 text-center text-slate">
         No chapters available.
       </div>
     );

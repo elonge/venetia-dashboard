@@ -30,7 +30,6 @@ function QAContent() {
       try {
         const questionId = searchParams.get('id');
         
-        // Fetch all questions for related questions section
         const allQuestionsResponse = await fetch('/api/questions');
         let allData: Question[] = [];
         if (allQuestionsResponse.ok) {
@@ -38,20 +37,17 @@ function QAContent() {
           setAllQuestions(allData);
         }
         
-        // Fetch specific question if ID is provided
         if (questionId) {
           const questionResponse = await fetch(`/api/questions/${questionId}`);
           if (questionResponse.ok) {
             const questionData = await questionResponse.json();
             setQuestion(questionData);
           } else {
-            // If question not found, use first question as fallback
             if (allData.length > 0) {
               setQuestion(allData[0]);
             }
           }
         } else {
-          // If no ID provided, use first question
           if (allData.length > 0) {
             setQuestion(allData[0]);
           }
@@ -66,80 +62,74 @@ function QAContent() {
     fetchData();
   }, [searchParams]);
   
-  // Get related questions (exclude current question)
   const relatedQuestions = allQuestions
     .filter(q => q._id !== question?._id)
     .slice(0, 4);
   
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#E8E4DC] flex items-center justify-center">
-        <div className="text-[#1A2A40]">Loading...</div>
+      <div className="min-h-screen bg-page-bg flex items-center justify-center">
+        <div className="text-navy">Loading...</div>
       </div>
     );
   }
   
   if (!question) {
     return (
-      <div className="min-h-screen bg-[#E8E4DC] flex items-center justify-center">
-        <div className="text-[#1A2A40]">Question not found</div>
+      <div className="min-h-screen bg-page-bg flex items-center justify-center">
+        <div className="text-navy">Question not found</div>
       </div>
     );
   }
   
-  // Extract unique sources from answer links
   const sources = Array.from(new Set(question.Answer.map(a => a.link)));
 
   return (
-    <div className="h-full bg-[#E8E4DC]">
+    <div className="h-full bg-page-bg">
       <div className="flex relative h-full">
-        {/* Left Column: QA Content */}
         <main 
           className="p-8 transition-all overflow-y-auto flex-1 min-w-[300px]"
         >
-        {/* Question */}
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-3">
-            <MessageSquare className="w-5 h-5 text-[#6B2D3C]" />
-            <span className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider">
+            <MessageSquare className="w-5 h-5 text-accent-burgundy" />
+            <span className="text-xs font-semibold text-muted-gray uppercase tracking-wider">
               Question
             </span>
           </div>
-          <h1 className="text-4xl font-serif font-bold text-[#1A2A40]">
+          <h1 className="text-4xl font-serif font-bold text-navy">
             {question.Question}
           </h1>
         </div>
 
-        {/* Answer */}
-        <section className="bg-[#F5F0E8] rounded-lg p-6 mb-6 border-l-4 border-[#6B2D3C]">
-          <h2 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider mb-4">
+        <section className="bg-card-bg rounded-lg p-6 mb-6 border-l-4 border-accent-burgundy shadow-sm">
+          <h2 className="text-xs font-semibold text-muted-gray uppercase tracking-wider mb-4">
             Answer
           </h2>
           <div className="space-y-4">
             {question.Answer.map((answer, idx) => (
-              <div key={idx} className="text-[#1A2A40] leading-relaxed">
+              <div key={idx} className="text-navy leading-relaxed">
                 <p className="text-lg mb-1">{answer.text}</p>
                 {answer.link && (
-                  <p className="text-sm text-[#6B7280] italic">Source: {getRealSourceName(answer.link)}</p>
+                  <p className="text-sm text-muted-gray italic">Source: {getRealSourceName(answer.link)}</p>
                 )}
               </div>
             ))}
           </div>
         </section>
 
-        {/* Sources */}
         {sources.length > 0 && (
-          <section className="bg-[#F5F0E8] rounded-lg p-5 mb-6">
+          <section className="bg-card-bg rounded-lg p-5 mb-6 border border-border-beige/50">
             <div className="flex items-start gap-2">
-              <ExternalLink className="w-4 h-4 text-[#6B7280] mt-1" />
+              <ExternalLink className="w-4 h-4 text-muted-gray mt-1" />
               <div className="flex-1">
-                <h2 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider mb-3">
+                <h2 className="text-xs font-semibold text-muted-gray uppercase tracking-wider mb-3">
                   Sources
                 </h2>
                 <ul className="space-y-2">
                   {sources.map((source, idx) => (
-                    <li key={idx} className="text-sm text-[#4B5563] hover:text-[#1A2A40] cursor-pointer flex items-start gap-2">
-                      <span className="text-[#6B2D3C] font-bold">•</span>
+                    <li key={idx} className="text-sm text-slate hover:text-navy cursor-pointer flex items-start gap-2">
+                      <span className="text-accent-burgundy font-bold">•</span>
                       <span>{getRealSourceName(source)}</span>
                     </li>
                   ))}
@@ -149,10 +139,9 @@ function QAContent() {
           </section>
         )}
 
-        {/* Suggested Questions */}
         {relatedQuestions.length > 0 && (
           <section>
-            <h2 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider mb-4">
+            <h2 className="text-xs font-semibold text-muted-gray uppercase tracking-wider mb-4">
               Related Questions
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -160,9 +149,9 @@ function QAContent() {
                 <Link
                   key={relatedQ._id}
                   href={`/qa?id=${encodeURIComponent(relatedQ._id)}`}
-                  className="bg-[#F5F0E8] hover:bg-[#E8E4DC] rounded-lg p-4 transition-colors border border-transparent hover:border-[#D4CFC4] group"
+                  className="bg-card-bg hover:bg-section-bg rounded-lg p-4 transition-colors border border-border-beige shadow-sm group"
                 >
-                  <p className="text-sm text-[#1A2A40] group-hover:text-[#6B2D3C] font-medium">
+                  <p className="text-sm text-navy group-hover:text-accent-burgundy font-medium transition-colors">
                     {relatedQ.Question}
                   </p>
                 </Link>
@@ -179,8 +168,8 @@ function QAContent() {
 export default function QA() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-[#E8E4DC] flex items-center justify-center">
-        <div className="text-[#1A2A40]">Loading...</div>
+      <div className="min-h-screen bg-page-bg flex items-center justify-center">
+        <div className="text-navy">Loading...</div>
       </div>
     }>
       <QAContent />

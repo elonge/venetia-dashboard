@@ -129,22 +129,22 @@ export default function DayNavigation({ currentDate, setCurrentDate }: DayNaviga
   };
 
   return (
-    <div className="bg-[#F5F0E8] rounded-lg p-3 mb-4 flex items-center justify-between">
+    <div className="bg-card-bg rounded-lg p-3 mb-4 flex items-center justify-between border border-border-beige shadow-sm">
       <Button
         variant="ghost"
         onClick={handlePreviousDay}
         disabled={isNavigating}
-        className="text-[#1A2A40] hover:bg-[#E8E4DC] text-sm font-medium disabled:opacity-50">
+        className="text-navy hover:bg-page-bg text-sm font-medium disabled:opacity-50">
         <ChevronLeft className="w-4 h-4 mr-1" />
         PREVIOUS DAY
       </Button>
 
       <div className="flex items-center gap-4">
-        <h2 className="text-[#1A2A40] text-lg font-serif tracking-wide">
+        <h2 className="text-navy text-lg font-serif tracking-wide">
           A DAY IN HISTORY: <span className="font-bold">{currentDate}</span>
         </h2>
         <div className="flex flex-col items-end gap-1">
-          <div className="flex items-center gap-2 text-sm text-[#2D3648]">
+          <div className="flex items-center gap-2 text-sm text-slate">
             <span>JUMP TO DATE:</span>
             <div className="relative">
               <input
@@ -153,13 +153,13 @@ export default function DayNavigation({ currentDate, setCurrentDate }: DayNaviga
                 onChange={handleDateChange}
                 min="1900-01-01"
                 max="2000-12-31"
-                className="w-36 h-8 text-xs bg-white border border-[#D4CFC4] rounded px-2 pr-8 text-[#1A2A40] focus:outline-none focus:ring-2 focus:ring-[#4A7C59] focus:border-transparent cursor-pointer"
+                className="w-36 h-8 text-xs bg-card-bg border border-border-beige rounded px-2 pr-8 text-navy focus:outline-none focus:ring-2 focus:ring-accent-green focus:border-transparent cursor-pointer"
               />
-              <Calendar className="w-4 h-4 absolute right-2 top-1/2 -translate-y-1/2 text-[#2D3648] pointer-events-none" />
+              <Calendar className="w-4 h-4 absolute right-2 top-1/2 -translate-y-1/2 text-slate pointer-events-none" />
             </div>
           </div>
           {dateError && (
-            <span className="text-xs text-[#8B3A3A]">{dateError}</span>
+            <span className="text-xs text-accent-red">{dateError}</span>
           )}
         </div>
       </div>
@@ -168,7 +168,7 @@ export default function DayNavigation({ currentDate, setCurrentDate }: DayNaviga
         variant="ghost"
         onClick={handleNextDay}
         disabled={isNavigating}
-        className="text-[#1A2A40] hover:bg-[#E8E4DC] text-sm font-medium disabled:opacity-50">
+        className="text-navy hover:bg-page-bg text-sm font-medium disabled:opacity-50">
         NEXT DAY
         <ChevronRight className="w-4 h-4 ml-1" />
       </Button>

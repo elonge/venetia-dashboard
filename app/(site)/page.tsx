@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Cog, Shuffle } from "lucide-react";
+import { ArrowRight, Shuffle } from "lucide-react";
 import HeroSection from "@/components/home/HeroSection";
 import { useChatVisibility } from "@/components/chat/useChatVisibility";
 import {
@@ -136,7 +136,7 @@ export default function Home() {
   }, [funFacts]);
 
   return (
-    <div className="h-full bg-[#E8E4DC]">
+    <div className="h-full bg-page-bg">
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-6">
         <HeroSection />
 
@@ -144,8 +144,8 @@ export default function Home() {
           {/* Daily view (2/3) */}
           <section className="min-w-0">
             {loadingDays ? (
-              <div className="bg-[#F5F0E8] rounded-md p-4 md:p-6 text-center text-[#2D3648] border border-[#D4CFC4] min-h-[200px] md:min-h-[250px] flex items-center justify-center shadow-[0_14px_34px_rgba(0,0,0,0.08)]">
-                <span className="text-sm md:text-base">Loading today's date in 1912–1915...</span>
+              <div className="bg-card-bg rounded-md p-4 md:p-6 text-center text-slate border border-border-beige min-h-[200px] md:min-h-[250px] flex items-center justify-center shadow-[0_14px_34px_rgba(0,0,0,0.08)]">
+                <span className="text-sm md:text-base">Loading today&apos;s date in 1912–1915...</span>
               </div>
             ) : todayInHistory ? (
               <DailyWidget
@@ -155,8 +155,8 @@ export default function Home() {
                 }
               />
             ) : (
-              <div className="bg-[#F5F0E8] rounded-2xl p-4 md:p-6 text-center text-[#2D3648] border border-[#D4CFC4] min-h-[200px] md:min-h-[250px] flex items-center justify-center shadow-[0_14px_34px_rgba(0,0,0,0.08)]">
-                <span className="text-sm md:text-base">No interesting day found for today's date in 1912–1915.</span>
+              <div className="bg-card-bg rounded-2xl p-4 md:p-6 text-center text-slate border border-border-beige min-h-[200px] md:min-h-[250px] flex items-center justify-center shadow-[0_14px_34px_rgba(0,0,0,0.08)]">
+                <span className="text-sm md:text-base">No interesting day found for today&apos;s date in 1912–1915.</span>
               </div>
             )}
           </section>
@@ -230,7 +230,7 @@ export default function Home() {
           <section className="min-w-0">
             <Link
               href="/venetia"
-              className="block min-h-[200px] md:min-h-62.5 rounded-md overflow-hidden border border-white/10 shadow-2xl hover:border-[#4A7C59]/50 hover:scale-102 transition-all relative group duration-700"
+              className="block min-h-[200px] md:min-h-62.5 rounded-md overflow-hidden border border-white/10 shadow-2xl hover:border-accent-green/50 hover:scale-102 transition-all relative group duration-700"
               style={{
                 backgroundImage: "url('/asquith_venetia_split_screen2.jpg')",
                 backgroundSize: "cover",
@@ -250,11 +250,11 @@ export default function Home() {
                         Venetia
                       </div>
                     </div>
-                    <ArrowRight className="h-4 w-4 md:h-5 md:w-5 text-[#C8D5EA]/30 group-hover:text-[#4A7C59] group-hover:translate-x-1 transition-all shrink-0" />
+                    <ArrowRight className="h-4 w-4 md:h-5 md:w-5 text-[#C8D5EA]/30 group-hover:text-accent-green group-hover:translate-x-1 transition-all shrink-0" />
                   </div>
 
-                  {/* Main Text: Switched to Off-White (#F5F0E8) for maximum readability */}
-                  <p className="mt-3 md:mt-4 text-sm md:text-[16px] font-serif italic text-[#F5F0E8] leading-relaxed max-w-[28ch]">
+                  {/* Main Text: Switched to Off-White (card-bg) for maximum readability */}
+                  <p className="mt-3 md:mt-4 text-sm md:text-[16px] font-serif italic text-card-bg leading-relaxed max-w-[28ch]">
                     Reconstructed from primary sources
                   </p>
                 </div>
@@ -262,7 +262,7 @@ export default function Home() {
                 {/* The Call to Action: Switched from low-opacity blue to bright Off-White/Sage */}
                 <div className="mt-4 md:mt-6 inline-flex items-center gap-2 text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] text-[#C8D5EA] group-hover:text-white transition-colors">
                   <span>Enter the archive</span>
-                  <span className="text-[#4A7C59] font-black">→</span>
+                  <span className="text-accent-green font-black">→</span>
                 </div>
               </div>
             </Link>
@@ -271,7 +271,7 @@ export default function Home() {
 	          {/* Fun Facts (1/3) */}
 	          <section>
 	            <div
-	              className="relative cursor-pointer rounded-md border min-h-70 border-amber-200 bg-[#F6E39A] p-4 md:p-6 shadow-[0_14px_34px_rgba(0,0,0,0.10)] rotate-[0.6deg] overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-900/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#E8E4DC]"
+	              className="relative cursor-pointer rounded-md border min-h-70 border-accent-amber/50 bg-accent-amber p-4 md:p-6 shadow-[0_14px_34px_rgba(0,0,0,0.10)] rotate-[0.6deg] overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-900/40 focus-visible:ring-offset-2 focus-visible:ring-offset-page-bg"
 	              role="button"
 	              tabIndex={0}
 	              aria-label="Fun facts (click to shuffle)"
@@ -293,7 +293,7 @@ export default function Home() {
               />
 
               {/* Pin */}
-              <div className="absolute -top-2 left-1/2 -translate-x-1/2 h-5 w-5 rounded-full bg-amber-800 shadow-[0_10px_20px_rgba(120,53,15,0.35)] border border-amber-950/30" />
+              <div className="absolute -top-2 left-1/2 -translate-x-1/2 h-5 w-5 rounded-full bg-amber-800 shadow-[0_10px_20px_rgba(120, 53, 15, 0.35)] border border-amber-950/30" />
 
               <div className="relative">
                 <div className="flex items-start justify-between gap-3 md:gap-4">
@@ -311,7 +311,7 @@ export default function Home() {
 	                      e.stopPropagation();
 	                      handleShuffleFunFact();
 	                    }}
-	                    className="inline-flex h-9 w-9 md:h-9 md:w-9 items-center justify-center rounded-md border border-amber-200 bg-white/60 text-amber-900 hover:bg-white transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shrink-0 min-w-[44px] min-h-[44px]"
+	                    className="inline-flex h-9 w-9 md:h-9 md:w-9 items-center justify-center rounded-md border border-accent-amber/50 bg-white/60 text-amber-900 hover:bg-white transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shrink-0 min-w-[44px] min-h-[44px]"
 	                    disabled={
 	                      loadingFunFacts || !funFacts || funFacts.length === 0
 	                    }
@@ -333,7 +333,7 @@ export default function Home() {
                     </p>
                   ) : (
                     <p className="text-sm md:text-[15px] leading-relaxed text-amber-950">
-                      In 1914, the UK's Parliament was debating crises at home
+                      In 1914, the UK&apos;s Parliament was debating crises at home
                       and abroad—while private letters carried entirely
                       different stakes.
                     </p>
@@ -346,7 +346,7 @@ export default function Home() {
           {/* Chapters (full width) */}
           <section className="min-w-0 lg:col-span-2">
             <div className="flex items-baseline justify-between gap-4">
-              <h2 className="text-[#1A2A40] font-serif text-xl md:text-2xl font-semibold">
+              <h2 className="text-navy font-serif text-xl md:text-2xl font-semibold">
                 Chapters
               </h2>
             </div>

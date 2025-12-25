@@ -51,7 +51,7 @@ function DataRoomContent() {
   );
 
   return (
-    <div className="bg-[#E8E4DC] md:h-full">
+    <div className="bg-page-bg md:h-full">
       <main className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-6 md:h-full">
         <DataRoomFull
           initialChartIndex={initialChartIndex}
@@ -66,8 +66,8 @@ export default function DataRoomPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-[#E8E4DC] flex items-center justify-center">
-          <div className="text-[#1A2A40]">Loading...</div>
+        <div className="min-h-screen bg-page-bg flex items-center justify-center">
+          <div className="text-navy">Loading...</div>
         </div>
       }
     >

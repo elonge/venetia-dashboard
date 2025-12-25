@@ -38,9 +38,9 @@ const locations: Array<{
 
 export default function LocationMap() {
   return (
-    <div className="bg-[#F5F0E8] rounded-lg overflow-hidden">
-      <div className="p-3 border-b border-[#D4CFC4]">
-        <h4 className="text-xs font-semibold text-[#2D3648] uppercase tracking-wider">
+    <div className="bg-card-bg rounded-lg overflow-hidden border border-border-beige shadow-sm">
+      <div className="p-3 border-b border-border-beige">
+        <h4 className="text-xs font-semibold text-slate uppercase tracking-wider">
           Location of People Involved
         </h4>
       </div>
@@ -60,8 +60,8 @@ export default function LocationMap() {
             <Marker key={idx} position={loc.coords}>
               <Popup>
                 <div className="text-sm">
-                  <p className="font-semibold text-[#1A2A40]">{loc.person}</p>
-                  <p className="text-xs text-[#2D3648]">{loc.location}</p>
+                  <p className="font-semibold text-navy">{loc.person}</p>
+                  <p className="text-xs text-slate">{loc.location}</p>
                 </div>
               </Popup>
             </Marker>
