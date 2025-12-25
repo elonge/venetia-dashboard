@@ -7,6 +7,7 @@ import {
   SearchResult 
 } from '@/lib/vector-search';
 import { QuestionAnswer } from '@/lib/questions';
+import { getWeather } from '@/lib/weather';
 
 const SYSTEM_PROMPT = `You are an expert historian specializing in early 20th century British politics, particularly the Asquith government, World War I, and the relationships between Venetia Stanley, H.H. Asquith, and Edwin Montagu. 
 
@@ -39,15 +40,48 @@ interface ChatRequest {
 }
 
 async function analyzeIntent(query: string, openai: OpenAI): Promise<SearchIntent> {
+const knowledgeBase = `
+    Use this knowledge base to resolve named events into date ranges:
+    - Marconi Scandal: 1912-04 to 1913-06-19 (Location: London)
+    - Sicily Trip: 1912-01-11 to 1912-01-30 (Location: Sicily)
+    - Asquith's Romantic Epiphany: 1912-02-25 (Location: Hurstly)
+    - Curragh Incident: 1914-03-20 to 1914-03-24 (Location: Ireland)
+    - Home Rule Crisis: 1914-07-21 to 1914-07-24 (Location: London)
+    - Outbreak of War: 1914-08-04 (Location: London)
+    - Fall of Antwerp: 1914-10-03 to 1914-10-10 (Location: Antwerp)
+    - Sinking of HMS Audacious: 1914-10-27 (Location: Ireland)
+    - Battle of Coronel: 1914-11-01 (Location: Chile)
+    - Battle of the Falklands: 1914-12-08 (Location: South Atlantic)
+    - Annus Mirabilis Letter: 1914-12-31 (Location: Walmer Castle)
+    - Venetia's Nursing: 1915-01 to 1915-05 (Location: London Hospital)
+    - Dardanelles Bombardment: 1915-02-19 to 1915-03-18 (Location: Turkey)
+    - Neuve Chapelle: 1915-03-10 to 1915-03-13 (Location: France)
+    - Shells Scandal: 1915-04-20 to 1915-05-14 (Location: London)
+    - Gallipoli Landings: 1915-04-25 (Location: Turkey)
+    - Sinking of Lusitania: 1915-05-07 (Location: Ireland)
+    - Venetia's Engagement: 1915-05-12 (Location: Wimereux/London)
+    - Resignation of Lord Fisher: 1915-05-15 (Location: London)
+    - May Crisis / Coalition: 1915-05-17 to 1915-05-26 (Location: London)
+    - Venetia's Marriage: 1915-07-12 to 1915-07-26 (Location: London)
+    - Conscription Crisis: 1915-10 to 1916-01-27 (Location: London)
+    - Death of Kitchener: 1916-06-05 (Location: Orkney)
+    - Death of Raymond Asquith: 1916-09-15 (Location: France)
+    - Fall of Asquith: 1916-12-01 to 1916-12-07 (Location: London)
+`;
+
 const analysisPrompt = `
     Analyze the user's historical query about Asquith, Venetia, and Montagu.
+    ${knowledgeBase}
+    
     Return a JSON object with:
     - type: 'specific_date', 'timeline', 'sentiment_trend', or 'general_context'
-    - dateRange: { start: 'YYYY-MM-DD', end: 'YYYY-MM-DD' } (or null)
+    - dateRange: { start: 'YYYY-MM-DD', end: 'YYYY-MM-DD' } (or null). 
     - sentiment: 'positive', 'negative', or null
     - author: The name of the person writing the letter (e.g., 'Asquith', 'Montagu', 'Venetia') if specified.
     - recipient: The name of the person receiving the letter if specified.
     - requiresSecondary: boolean
+    - requiresWeather: boolean (true if user asks about weather, rain, temperature, or if the conditions of a specific day are relevant)
+    - locationContext: 'London', 'Oxford', or 'Alderley' (default 'London' if not specified but weather requested. If event location is known, use it).
     
     Query: "${query}"
 `;
@@ -63,12 +97,24 @@ try {
   } catch (e) {
     console.error("Intent analysis failed:", e);
     // Fallback intent
-    return { type: 'general_context', requiresSecondary: true };
+    return { type: 'general_context', requiresSecondary: true, requiresWeather: false };
   }
 }
 
-function buildCombinedContext(primaryResults: any[], vectorResults: any[]): string {
+function buildCombinedContext(primaryResults: any[], vectorResults: any[], weatherData: any = null): string {
   let context = "";
+
+  if (weatherData) {
+    context += "--- WEATHER DATA ---\n";
+    if (Array.isArray(weatherData)) {
+      weatherData.forEach(w => {
+        context += `[Date: ${w.date}] [Location: ${w.location}] Temp: ${w.tmin}°C to ${w.tmax}°C (Avg: ${w.tavg}°C), Precipitation: ${w.prcp}mm\n`;
+      });
+    } else if (weatherData.info) {
+      context += `${weatherData.info}\n`;
+    }
+    context += "\n";
+  }
 
   if (primaryResults.length > 0) {
     context += "--- PRIMARY SOURCES (Letters/Diaries/Timeline) ---\n";
@@ -185,13 +231,20 @@ export async function POST(request: NextRequest) {
     // If strict date search found nothing, or intent explicitly asks for context, ensure we search wide
     promises.push(searchSimilarChunks(queryWithContext, 8)); 
 
-    const [primaryResults, vectorResults] = await Promise.all(promises);
+    // Track C: Weather Data
+    if (intent.requiresWeather && intent.dateRange) {
+        promises.push(getWeather(intent.dateRange.start, intent.dateRange.end, intent.locationContext));
+    } else {
+        promises.push(Promise.resolve(null));
+    }
+
+    const [primaryResults, vectorResults, weatherData] = await Promise.all(promises);
 
     // 3. Combine Results
-    const context = buildCombinedContext(primaryResults, vectorResults);
+    const context = buildCombinedContext(primaryResults, vectorResults, weatherData);
     
     // Quick exit if absolutely nothing found
-    if (primaryResults.length === 0 && vectorResults.length === 0) {
+    if (primaryResults.length === 0 && vectorResults.length === 0 && !weatherData) {
       return NextResponse.json({
         message: "I couldn't find any relevant information in the documents matching that specific timeline or criteria.",
         sources: [],
@@ -199,7 +252,6 @@ export async function POST(request: NextRequest) {
     }
 
     // 4. Combine Sources for Frontend (Normalization)
-    // The frontend expects a specific structure for the "Sources" dropdown
     const combinedSources = [
       ...primaryResults.map((r: any) => ({
           source: r.source,
@@ -214,6 +266,15 @@ export async function POST(request: NextRequest) {
            score: r.score
       }))
     ];
+
+    if (weatherData && !weatherData.info) {
+        combinedSources.push({
+            source: 'Historical Weather Records',
+            documentTitle: `Weather: ${intent.locationContext}`,
+            chunkIndex: 0,
+            score: 1.0
+        });
+    }
 
     // 5. Build Final Messages
     const messages: Message[] = [

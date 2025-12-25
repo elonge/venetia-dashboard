@@ -13,8 +13,10 @@ export interface SearchIntent {
   sentiment?: 'positive' | 'negative' | null;
   topics?: string[];
   requiresSecondary?: boolean;
-  author?: string;    // ADDED
-  recipient?: string; // ADDED
+  author?: string;    
+  recipient?: string; 
+  requiresWeather: boolean;
+  locationContext?: string;
 }
 export interface PrimaryEntryResult {
   content: string;
