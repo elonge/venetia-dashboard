@@ -694,10 +694,10 @@ const VenetiaSimulationLab = () => {
         </div>
       </section>
 
-      {/* Right Column: Media Stack */}
-      <div className="flex flex-col md:flex-col gap-4 md:gap-6 w-full md:w-[380px] flex-shrink-0 overflow-y-auto custom-scrollbar">
+      {/* Right Column: Media Stack (Horizontal on XL+) */}
+      <div className="flex flex-col xl:flex-row gap-4 md:gap-6 w-full xl:w-auto flex-shrink-0 overflow-y-auto custom-scrollbar pb-20 xl:pb-0">
         {/* Audio Section */}
-        <div className="w-full md:w-[380px] flex flex-col gap-4 border-2 border-accent-brown/30 rounded-lg p-4 bg-page-bg/30 h-fit">
+        <div className="w-full md:w-[380px] flex flex-col gap-4 border-2 border-accent-brown/30 rounded-lg p-4 bg-page-bg/30 h-fit flex-shrink-0">
           {/* Audio Section Explanation */}
           <div className="bg-page-bg rounded-2xl p-4 md:p-6 border border-border-beige shadow-sm">
             <h2 className="text-2xl md:text-4xl font-bold text-navy tracking-light mb-2 md:mb-3">Audio Reconstruction</h2>
@@ -746,7 +746,7 @@ const VenetiaSimulationLab = () => {
         </div>
 
         {/* Instagram Section */}
-        <div className="w-full md:w-[380px] flex flex-col gap-4 border-2 border-navy/30 rounded-lg p-4 bg-card-bg/30 h-fit">
+        <div className="w-full md:w-[380px] flex flex-col gap-4 border-2 border-navy/30 rounded-lg p-4 bg-card-bg/30 h-fit flex-shrink-0">
           {/* Instagram Section Explanation */}
           <div className="bg-card-bg rounded-2xl p-4 md:p-6 border border-border-beige shadow-sm">
             <h2 className="text-2xl md:text-4xl font-bold text-navy tracking-light mb-2 md:mb-3">Instagram Displacement</h2>
