@@ -207,14 +207,14 @@ export default function DataRoomFull({
                         : "bg-transparent border-transparent hover:bg-[#F5F0E8]/50"
                     }`}
                   >
-                    <div className={`shrink-0 ${isActive ? "text-[#4A7C59]" : "text-[#9CA3AF] group-hover:text-[#6B7280]"}`}>
+                    <div className={`shrink-0 ${isActive ? "text-[#4A7C59]" : "text-muted-gray group-hover:text-[#6B7280]"}`}>
                       {chartIcons[chart.id]}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className={`text-[11px] md:text-[12px] font-bold uppercase tracking-widest mb-1 ${isActive ? "text-[#1A2A40]" : "text-[#6B7280]"}`}>
                         {chart.label}
                       </div>
-                      <div className={`text-[10px] md:text-xs font-serif italic leading-snug ${isActive ? "text-[#4A7C59]" : "text-[#9CA3AF]"}`}>
+                      <div className={`text-[10px] md:text-xs font-serif italic leading-snug ${isActive ? "text-[#4A7C59]" : "text-muted-gray"}`}>
                         {chart.description}
                       </div>
                     </div>

@@ -722,13 +722,10 @@ const VenetiaSimulationLab = () => {
             <div className="bg-page-bg rounded-2xl p-4 md:p-6 border border-border-beige shadow-sm">
               <h2 className="text-2xl md:text-4xl font-bold text-navy tracking-light mb-2 md:mb-3">Audio Reconstruction</h2>
               <p className="text-xs md:text-sm text-slate leading-relaxed mb-3">
-                <strong className="text-navy">What is this?</strong> This is an audio reconstruction of Asquith 
-                reading one of his famous letters to Venetia. 
-                The recording was created by modelling Asquith&apos;s voice using surviving audio from a public speech.
+                <strong className="text-navy">What is this?</strong> This is an audio reconstruction of H. H. Asquith reading one of his letters to Venetia Stanley. The voice was modelled using surviving recordings of his public speeches.
               </p>
               <p className="text-xs md:text-sm text-slate leading-relaxed">
-                <strong className="text-navy">Why did we do this?</strong> Hearing them read aloud—with the pauses, emphasis, and emotional tone— 
-                brings us closer to understanding how these words were meant to be received.
+                <strong className="text-navy">Why did we do this?</strong> Because hearing the words aloud — with pauses, emphasis, and emotional weight — brings us closer to how these letters were meant to be received, not just read.
               </p>
             </div>
 

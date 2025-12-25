@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useChatVisibility } from '@/components/chat/useChatVisibility';
+import { BookOpen, Sparkles, Gem, Brain, Code, Terminal, Mic, Palette, Database } from 'lucide-react';
 
 export default function AboutPage() {
   useChatVisibility(false);
@@ -9,30 +10,25 @@ export default function AboutPage() {
   return (
     <div className="h-full bg-page-bg">
       {/* Content */}
-      <div className="max-w-4xl mx-auto px-6 py-12">
-        <div className="prose prose-lg max-w-none">
+      <div className="max-w-3xl mx-auto px-6 py-12">
+        <div className="prose prose-lg prose-p:text-navy prose-headings:text-navy prose-li:text-slate">
           <h1 className="text-4xl font-serif font-bold text-navy mb-8">
             What Is The Venetia Project?
           </h1>
-
-          <p className="text-xl text-muted-gray mb-8 italic">
-            When AI meets primary sources.
-          </p>
-
           <div className="space-y-6 text-navy leading-relaxed">
             <p>
-              The Venetia Project is a historical reconstruction experiment that blends archival research, data analysis, and modern AI tools to retell, day by day, the private world surrounding Venetia Stanley, Prime Minister H. H. Asquith, and Edwin Montagu during the turbulent years 1912–1916.
+              The Venetia Project is a historical reconstruction experiment that <span className="bg-accent-amber/60 font-semibold p-1 rounded-sm">blends archival research, data analysis, and modern AI tools</span> to retell, day by day, the private world surrounding Venetia Stanley, Prime Minister H. H. Asquith, and Edwin Montagu during the turbulent years 1912–1916.
             </p>
 
             <p>
-              It rebuilds history not as a summary, but as a living timeline of letters, diaries, Cabinet minutes, political pressures, emotional turning points, and shifting alliances.
+              It rebuilds history not as a summary, but as a <span className="bg-accent-amber/60 font-semibold p-1 rounded-sm">living timeline</span> of letters, diaries, Cabinet minutes, political pressures, emotional turning points, and shifting alliances.
             </p>
 
             <p>
               At its core, the project explores one question:
             </p>
 
-            <p className="text-lg font-medium italic text-accent-green">
+            <p className="text-xl font-medium italic text-navy text-center border-y border-border-beige py-6 my-8 leading-relaxed">
               What really happened—emotionally, politically, privately—on each day of this extraordinary relationship?
             </p>
 
@@ -41,7 +37,7 @@ export default function AboutPage() {
             </h2>
 
             <p>
-              Using the primary sources listed in the research brief—letters, diaries, Hansard debates, Cabinet papers, memoirs, and eyewitness writing—the system attempts to answer for every date:
+              Using the primary sources listed in the research brief—letters, diaries, Hansard debates, Cabinet papers, memoirs, and eyewitness writing—the system attempts to answer for <span className="bg-accent-amber/60 font-semibold p-1 rounded-sm">every day between 1912 and 1916</span>: 
             </p>
 
             <ul className="list-disc list-inside space-y-3 ml-4 mt-4 text-slate">
@@ -51,8 +47,7 @@ export default function AboutPage() {
               <li>What topics appeared—politics, affection, gossip, anxiety?</li>
               <li>What was happening in Parliament or Cabinet?</li>
               <li>What did contemporaries like Violet Asquith, Margot Asquith, Cynthia Asquith, and Diana Manners record in their diaries?</li>
-              <li>What did the newspapers report?</li>
-              <li>Were there noticeable shifts in mood, influence, or emotional distance?</li>
+              <li>Were there <span className="bg-accent-amber/60 font-semibold p-1 rounded-sm">noticeable shifts in mood, influence, or emotional distance?</span></li>
             </ul>
 
             <p className="mt-6">
@@ -70,7 +65,7 @@ export default function AboutPage() {
             </ul>
 
             <p className="mt-6">
-              It turns the scattered sources of 1912–1916 into a unified, interactive archive.
+              It turns the scattered sources of 1912–1916 into a <span className="bg-accent-amber/60 font-semibold p-1 rounded-sm">unified, interactive archive.</span>
             </p>
 
             <h2 className="text-3xl font-serif font-bold text-navy mt-12 mb-6">
@@ -81,61 +76,67 @@ export default function AboutPage() {
               This project was built through multiple AI tools working together, each chosen for its strengths.
             </p>
 
-            <div className="space-y-6 mt-6">
-              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm">
+            <div className="grid md:grid-cols-2 gap-6 mt-6">
+              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:border-accent-green/30">
                 <h3 className="text-xl font-serif font-semibold text-navy mb-2">NotebookLM</h3>
                 <p className="text-muted-gray text-sm">
-                  To summarize diaries, build daily timelines, and identify recurring themes across long documents.
+                  Served as the project&apos;s &quot;brain,&quot; ingesting historical documents to reason across raw data without the bias of hindsight.
                 </p>
               </div>
 
-              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm">
+              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:border-accent-green/30">
                 <h3 className="text-xl font-serif font-semibold text-navy mb-2">Gemini</h3>
                 <p className="text-muted-gray text-sm">
-                  For linguistic extraction, emotional modeling, and detecting tone shifts across letters.
+                  Functioned as the chief assistant for infrastructural work: writing Python code to download, scrape, and reconcile data from various sources.
                 </p>
               </div>
 
-              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm">
+              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:border-accent-green/30">
                 <h3 className="text-xl font-serif font-semibold text-navy mb-2">Gemini Gem</h3>
                 <p className="text-muted-gray text-sm">
-                  For structuring data, clustering topics, and generating comparative timelines.
+                  Configured as a history assistant to find additional primary sources by answering targeted questions about dates, authors, and corroborating materials.
                 </p>
               </div>
 
-              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm">
+              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:border-accent-green/30">
                 <h3 className="text-xl font-serif font-semibold text-navy mb-2">Claude</h3>
                 <p className="text-muted-gray text-sm">
-                  For contextual reasoning, resolving conflicting accounts, and reconstructing ambiguous or partial days.
+                  Acted as a &quot;thinking partner&quot; for reframing questions and resolving narrative difficulties when data models hit a wall.
                 </p>
               </div>
 
-              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm">
+              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:border-accent-green/30">
                 <h3 className="text-xl font-serif font-semibold text-navy mb-2">Codex</h3>
                 <p className="text-muted-gray text-sm">
-                  For generating scripts, data pipelines, and automations that processed the source material.
+                  Collaborated with Claude to stabilize the UI produced by Base44, transitioning exploratory designs into a functional platform.
                 </p>
               </div>
 
-              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm">
+              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:border-accent-green/30">
                 <h3 className="text-xl font-serif font-semibold text-navy mb-2">Cursor</h3>
                 <p className="text-muted-gray text-sm">
                   My main development environment—connecting AI-assisted reasoning directly to the codebase while building the site.
                 </p>
               </div>
 
-              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm">
+              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:border-accent-green/30">
                 <h3 className="text-xl font-serif font-semibold text-navy mb-2">ElevenLabs</h3>
                 <p className="text-muted-gray text-sm">
                   To generate the audio reconstruction of Asquith reading his letters.
                 </p>
               </div>
 
+              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:border-accent-green/30">
+                <h3 className="text-xl font-serif font-semibold text-navy mb-2">MongoDB</h3>
+                <p className="text-muted-gray text-sm">
+                  Underpins the archive with Vector Search, storing embeddings to facilitate live, conversational interaction across thousands of documents.
+                </p>
+              </div>
 
-              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm">
+              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm md:col-span-2 transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:border-accent-green/30">
                 <h3 className="text-xl font-serif font-semibold text-navy mb-2">Base44</h3>
                 <p className="text-muted-gray text-sm">
-                  Used heavily for vibe-coding the entire interface: iterating layouts, UI components, design decisions, and stylistic polish.
+                  Used heavily for &quot;vibe-coding&quot;: enabling rapid iteration on layout, structure, and UI to maintain flexibility as ideas evolved.
                 </p>
               </div>
             </div>
@@ -152,24 +153,24 @@ export default function AboutPage() {
               I built the Venetia Project for two reasons:
             </p>
 
-            <div className="space-y-4 mt-6">
-              <div className="bg-section-bg p-6 rounded-sm border-l-4 border-accent-brown">
-                <p className="font-bold text-navy mb-2 uppercase tracking-widest text-xs">1. I love history.</p>
-                <p className="text-slate text-sm">
+            <div className="space-y-6 mt-8">
+              <div className="bg-white p-8 rounded-sm border border-border-beige border-l-4 border-l-accent-brown shadow-sm transition-all hover:shadow-md">
+                <h3 className="font-serif font-bold text-navy text-xl md:text-2xl mb-3 tracking-tight">1. I love history.</h3>
+                <p className="text-navy text-base md:text-lg leading-relaxed italic">
                   Especially the moments when personal relationships intersect with political events — when private letters illuminate public decisions, and when human emotion reshapes the course of nations.
                 </p>
               </div>
 
-              <div className="bg-section-bg p-6 rounded-sm border-l-4 border-accent-green">
-                <p className="font-bold text-navy mb-2 uppercase tracking-widest text-xs">2. I love working with new AI technologies.</p>
-                <p className="text-slate text-sm">
+              <div className="bg-white p-8 rounded-sm border border-border-beige border-l-4 border-l-accent-green shadow-sm transition-all hover:shadow-md">
+                <h3 className="font-serif font-bold text-navy text-xl md:text-2xl mb-3 tracking-tight">2. I love working with new AI technologies.</h3>
+                <p className="text-navy text-base md:text-lg leading-relaxed italic">
                   This project allowed me to combine both passions: to take cutting-edge tools like Gemini, Claude, Cursor, Codex, NotebookLM, and Base44, and use them not to replace history, but to restructure it, explore it, and bring it to life.
                 </p>
               </div>
             </div>
 
             <p className="mt-6">
-              The result is a personal experiment — part research platform, part storytelling engine, part technical challenge — built out of curiosity, admiration for the past, and excitement for the future.
+              The result is a <span className="bg-accent-amber/60 font-semibold p-1 rounded-sm">personal experiment</span> — part research platform, part storytelling engine, part technical challenge — built out of curiosity, admiration for the past, and excitement for the future.
             </p>
 
             <h2 className="text-3xl font-serif font-bold text-navy mt-12 mb-6">
@@ -187,7 +188,7 @@ export default function AboutPage() {
             <div className="space-y-8 mt-6">
               <div>
                 <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  1. Hansard Parliamentary Debates (Various files from 1912–1915)
+                  1. Hansard Parliamentary Debates (Various files from 1912–1916)
                 </h4>
                 <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
                   Classification: High Reliability / Official Record
@@ -280,16 +281,21 @@ export default function AboutPage() {
                   These are raw transcripts of private letters. They are highly credible evidence of the personal relationship and social maneuvering between Venetia and Edwin.
                 </p>
               </div>
-            </div>
 
-            <h3 className="text-2xl font-serif font-semibold text-navy mt-12 mb-4">
-              Secondary Sources (Biographies and Histories)
-            </h3>
-
-            <div className="space-y-8 mt-6">
               <div>
                 <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  9. The Supreme Command 1914–1918 by Lord Hankey
+                  9. Champion Redoubtable / Lantern Slides (Violet Bonham Carter)
+                </h4>
+                <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
+                  Classification: High Credibility / Edited Primary Source
+                </p>
+                <p className="text-slate">
+                  These texts are edited selections of diaries and letters from Asquith&apos;s daughter, intensely loyal to the Asquithian liberal viewpoint.
+                </p>
+              </div>
+              <div>
+                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
+                  10. The Supreme Command 1914–1918 by Lord Hankey
                 </h4>
                 <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
                   Classification: High Reliability / Authoritative Memoir-History
@@ -301,31 +307,7 @@ export default function AboutPage() {
 
               <div>
                 <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  10. The Asquiths by Colin Clifford
-                </h4>
-                <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
-                  Classification: High Reliability / Secondary Biography
-                </p>
-                <p className="text-slate">
-                  Published in 2002, this is a synthesis of diaries and letters. It provides a reliable narrative overview, utilizing primary sources.
-                </p>
-              </div>
-
-              <div>
-                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  11. Politics, Religion and Love by Naomi B. Levine
-                </h4>
-                <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
-                  Classification: Good Reliability / Secondary Biography
-                </p>
-                <p className="text-slate">
-                  This text reconstructs the life of Edwin Montagu using his letters and other primary archives.
-                </p>
-              </div>
-
-              <div>
-                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  12. The Rainbow Comes and Goes by Lady Diana Cooper
+                  11. The Rainbow Comes and Goes by Lady Diana Cooper
                 </h4>
                 <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
                   Classification: Medium Reliability / Memoir
@@ -337,14 +319,85 @@ export default function AboutPage() {
 
               <div>
                 <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  13. Champion Redoubtable / Lantern Slides (Violet Bonham Carter)
+                  12. Weather Records (1912–1916)
                 </h4>
                 <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
-                  Classification: High Credibility / Edited Primary Source
+                  Classification: Highest Reliability / Official Meteorological Data
                 </p>
                 <p className="text-slate">
-                  These texts are edited selections of diaries and letters from Asquith&apos;s daughter, intensely loyal to the Asquithian liberal viewpoint.
+                  Historical weather data from the UK Met Office archives, used to contextualize daily events and confirm atmospheric details mentioned in letters.
                 </p>
+              </div>
+            </div>
+
+            <h3 className="text-2xl font-serif font-semibold text-navy mt-12 mb-4">
+              Secondary Sources (Biographies and Histories)
+            </h3>
+
+            <div className="space-y-8 mt-6">
+              <div>
+                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
+                  13. The Asquiths by Colin Clifford
+                </h4>
+                <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
+                  Classification: High Reliability / Secondary Biography
+                </p>
+                <p className="text-slate">
+                  Published in 2002, this is a synthesis of diaries and letters. It provides a reliable narrative overview, utilizing primary sources.
+                </p>
+              </div>
+
+              <div>
+                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
+                  14. Politics, Religion and Love by Naomi B. Levine
+                </h4>
+                <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
+                  Classification: Good Reliability / Secondary Biography
+                </p>
+                <p className="text-slate">
+                  This text reconstructs the life of Edwin Montagu using his letters and other primary archives.
+                </p>
+              </div>
+
+              <div>
+                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
+                  15. Asquith by Roy Jenkins
+                </h4>
+                <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
+                  Classification: High Credibility / Authoritative Biography
+                </p>
+                <p className="text-slate">
+                  A seminal biography written by a former Home Secretary and Chancellor. It offers deep political insight into Asquith's career and decisions.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-16 p-8 bg-section-bg/30 border-2 border-dashed border-border-beige rounded-md">
+              <h3 className="text-2xl font-serif font-bold text-navy mb-6">Future Archives</h3>
+              <p className="text-muted-gray italic mb-8">
+                The Venetia Project is an ongoing reconstruction. The following primary sources are currently being sought for integration into the daily timeline:
+              </p>
+              
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-2">
+                  <h4 className="font-serif font-bold text-navy">Raymond Asquith: Life and Letters</h4>
+                  <p className="text-sm text-slate">To integrate the perspective of the Prime Minister's eldest son—a core member of the Coterie whose wit and cynicism offer a vital counterpoint to his father's romanticism.</p>
+                </div>
+                
+                <div className="space-y-2">
+                  <h4 className="font-serif font-bold text-navy">Daily Newspaper Headlines</h4>
+                  <p className="text-sm text-slate">Digital archives of the Times and Daily Mail (1912–1916) to provide the daily public backdrop to the private correspondence.</p>
+                </div>
+                
+                <div className="space-y-2">
+                  <h4 className="font-serif font-bold text-navy">Edwin Montagu&apos;s Letters (Post-May 1912)</h4>
+                  <p className="text-sm text-slate">Locating the missing side of the correspondence between Edwin and Venetia during the critical years of their courtship and conversion.</p>
+                </div>
+                
+                <div className="space-y-2">
+                  <h4 className="font-serif font-bold text-navy">The Henley Archives</h4>
+                  <p className="text-sm text-slate">The private papers of Sylvia Henley and her husband; critical because they provide rare access to Asquith&apos;s personal state and correspondence after Venetia&apos;s engagement and his subsequent breakdown.</p>
+                </div>
               </div>
             </div>
 
