@@ -173,7 +173,7 @@ function ChapterCard({ chapter, index }: { chapter: Chapter, index: number }) {
   />
   
   {/* 2. GRADIENT OVERLAY (For text readability) */}
-  <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent" />
+  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
   {/* 3. CONTENT LAYER */}
   <div className="absolute inset-0 p-4 md:p-6 flex flex-col justify-end">
