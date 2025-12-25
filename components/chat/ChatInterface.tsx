@@ -334,7 +334,7 @@ export default function ChatInterface() {
           <h3 className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] text-[#1A2A40]">
             Primary Source Query
           </h3>
-          <p className="text-[9px] md:text-[10px] text-[#8B4513]/60 font-serif italic">
+          <p className="text-[9px] md:text-[10px] text-[#8B4513] font-serif italic">
             Searching 1912–1916 Archive
           </p>
         </div>
@@ -405,10 +405,10 @@ export default function ChatInterface() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyPress}
-            placeholder="Ask a question about the archive..."
+            placeholder="Is there evidence of Venetia's influence on Asquith's decisions?"
             disabled={isLoading}
             rows={3}
-            className="w-full bg-white border border-[#D4CFC4] text-[#1A2A40] placeholder:text-[#D4CFC4] text-sm px-4 py-3 rounded-md pr-14 md:pr-16 focus-visible:ring-1 focus-visible:ring-[#1A2A40]/20 focus-visible:border-[#1A2A40] transition-all font-serif resize-none leading-5"
+            className="w-full bg-white border border-border-beige text-navy placeholder:text-muted-gray text-sm px-4 py-3 rounded-md pr-14 md:pr-16 focus-visible:ring-1 focus-visible:ring-navy/20 focus-visible:border-navy transition-all font-serif resize-none leading-5"
           />
           <button
             onClick={() => handleSend()}
@@ -424,7 +424,7 @@ export default function ChatInterface() {
           </button>
         </div>
         <div className="text-center mt-2 md:mt-3">
-           <span className="text-[7px] md:text-[8px] font-bold text-[#D4CFC4] uppercase tracking-[0.2em]">
+           <span className="text-[7px] md:text-[8px] font-bold text-[#5A6472] uppercase tracking-[0.2em]">
              Reconstructed from Sources • Assisted by AI
            </span>
         </div>

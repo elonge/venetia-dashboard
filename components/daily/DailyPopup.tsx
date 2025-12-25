@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   X,
   ChevronLeft,
@@ -72,9 +72,9 @@ export default function DailyPopup({
   const [loading, setLoading] = useState(false);
   const [hasNext, setHasNext] = useState(false);
   const [hasPrevious, setHasPrevious] = useState(false);
-  const [showDatePicker, setShowDatePicker] = useState(false);
   const [dateInput, setDateInput] = useState("");
   const [datePickerError, setDatePickerError] = useState<string | null>(null);
+  const dateInputRef = useRef<HTMLInputElement>(null);
 
   // Get current date in YYYY-MM-DD format for date input
   const getCurrentDateInputValue = (): string => {
@@ -143,18 +143,12 @@ export default function DailyPopup({
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        if (showDatePicker) {
-          setShowDatePicker(false);
-          setDateInput("");
-          setDatePickerError(null);
-        } else {
-          onClose();
-        }
+        onClose();
       }
     };
     window.addEventListener("keydown", handleEscape);
     return () => window.removeEventListener("keydown", handleEscape);
-  }, [onClose, showDatePicker]);
+  }, [onClose]);
 
   // Handle date change from calendar picker
   const handleDateChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -162,7 +156,6 @@ export default function DailyPopup({
     setDateInput(selectedDate);
     setDatePickerError(null);
     if (!selectedDate) {
-      setDatePickerError("Please select a date");
       return;
     }
 
@@ -177,7 +170,6 @@ export default function DailyPopup({
 
         setCurrentDay(foundDay);
         onNavigateToDay?.(foundDay.date);
-        setShowDatePicker(false);
         setDateInput("");
         setDatePickerError(null);
         return;
@@ -192,7 +184,6 @@ export default function DailyPopup({
       const fetchedDay = (await response.json()) as DayData;
       setCurrentDay(fetchedDay);
       onNavigateToDay?.(fetchedDay.date);
-      setShowDatePicker(false);
       setDateInput("");
       setDatePickerError(null);
     } catch (error) {
@@ -295,7 +286,7 @@ export default function DailyPopup({
       <button
         onClick={handlePrevious}
         disabled={!hasPrevious || loading}
-        className="p-2 hover:bg-white rounded-sm transition-all text-navy disabled:opacity-20 disabled:cursor-not-allowed min-w-[44px] min-h-[44px] flex items-center justify-center"
+        className="p-2 hover:bg-page-bg hover:text-accent-brown rounded-sm transition-all text-navy disabled:opacity-20 disabled:cursor-not-allowed cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
         title="Previous Day"
         aria-label="Previous Day"
       >
@@ -305,7 +296,7 @@ export default function DailyPopup({
       <button
         onClick={handleNext}
         disabled={!hasNext || loading}
-        className="p-2 hover:bg-white rounded-sm transition-all text-navy disabled:opacity-20 disabled:cursor-not-allowed min-w-[44px] min-h-[44px] flex items-center justify-center"
+        className="p-2 hover:bg-page-bg hover:text-accent-brown rounded-sm transition-all text-navy disabled:opacity-20 disabled:cursor-not-allowed cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
         title="Next Day"
         aria-label="Next Day"
       >
@@ -313,29 +304,36 @@ export default function DailyPopup({
       </button>
     </div>
 
-    {/* Calendar Toggle */}
-    <button
-      onClick={() => {
-        setShowDatePicker(!showDatePicker);
-        setDateInput(getCurrentDateInputValue());
-        setDatePickerError(null);
-      }}
-      className={`p-2.5 rounded-sm border transition-all min-w-[44px] min-h-[44px] flex items-center justify-center ${
-        showDatePicker 
-          ? "bg-navy border-navy text-white shadow-inner" 
-          : "bg-white border-border-beige text-navy hover:bg-card-bg"
-      }`}
-      aria-label="Jump to date"
-      title="Open Archive Search"
-    >
-      <Calendar className="w-5 h-5 md:w-5.5 md:h-5.5" />
-    </button>
+    {/* Calendar Selector (Hidden Input + Trigger Button) */}
+    <div className="relative">
+      <input
+        ref={dateInputRef}
+        type="date"
+        value={dateInput || getCurrentDateInputValue()}
+        onChange={handleDateChange}
+        min={dateRange.min}
+        max={dateRange.max}
+        className="absolute inset-0 opacity-0 pointer-events-none"
+        aria-hidden="true"
+      />
+      <button
+        onClick={() => {
+          setDatePickerError(null);
+          dateInputRef.current?.showPicker();
+        }}
+        className="p-2.5 rounded-sm border transition-all cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center bg-white border-border-beige text-navy hover:bg-card-bg hover:text-accent-brown hover:border-accent-brown"
+        aria-label="Jump to date"
+        title="Open Archive Search"
+      >
+        <Calendar className="w-5 h-5 md:w-5.5 md:h-5.5" />
+      </button>
+    </div>
     
     {/* Close button for mobile */}
     {isModal && (
       <button
         onClick={onClose}
-        className="md:hidden p-2 rounded-sm border border-border-beige bg-white text-navy hover:bg-card-bg min-w-[44px] min-h-[44px] flex items-center justify-center"
+        className="md:hidden p-2 rounded-sm border border-border-beige bg-white text-navy hover:bg-card-bg cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
         aria-label="Close"
       >
         <X className="w-5 h-5" />
@@ -344,40 +342,10 @@ export default function DailyPopup({
   </div>
 </div>
 
-{/* Calendar Selector Drawer: Archival Search Style */}
-{showDatePicker && (
-  <div className="bg-section-bg border-b border-border-beige p-4 md:p-8 animate-in slide-in-from-top duration-300">
-    <div className="max-w-2xl mx-auto space-y-3 md:space-y-4">
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-2 md:gap-0">
-        <div className="flex flex-col min-w-0 flex-1">
-          <span className="text-[9px] md:text-[10px] font-black text-accent-brown uppercase tracking-[0.2em]">Archive Navigation</span>
-          <span className="text-[10px] md:text-[11px] text-muted-gray font-serif italic mt-0.5">Jump to a specific point in the correspondence...</span>
-        </div>
-        {allDays.length > 0 && (
-          <div className="text-[11px] md:text-[12px] font-bold text-muted-gray bg-white/40 px-2 py-1 rounded-sm border border-border-beige/50 shrink-0">
-            Valid Range: 1912 — 1916
-          </div>
-        )}
-      </div>
-
-      <div className="relative group shadow-sm">
-        <input
-          type="date"
-          value={dateInput || getCurrentDateInputValue()}
-          onChange={handleDateChange}
-          min={dateRange.min}
-          max={dateRange.max}
-          className="w-full bg-white border-2 border-border-beige rounded-sm px-4 md:px-5 py-3 md:py-4 text-base md:text-lg font-mono text-navy focus:outline-none focus:border-accent-brown transition-colors cursor-pointer min-h-[44px]"
-        />
-        <Calendar className="absolute right-4 md:right-5 top-1/2 -translate-y-1/2 w-5 h-5 md:w-6 md:h-6 text-border-beige pointer-events-none group-hover:text-accent-brown transition-colors" />
-      </div>
-
-      {datePickerError && (
-        <div className="text-center text-xs md:text-sm text-accent-red font-medium animate-pulse">
-          {datePickerError}
-        </div>
-      )}
-    </div>
+{/* Inline Error Display (if date selection fails) */}
+{datePickerError && (
+  <div className="bg-accent-red/10 border-b border-accent-red/20 py-2 px-4 text-center text-xs text-accent-red font-medium animate-in fade-in slide-in-from-top-1">
+    {datePickerError}
   </div>
 )}
         {/* Content - Scrollable */}
@@ -461,7 +429,7 @@ export default function DailyPopup({
                               <span className="text-accent-brown mr-2">
                                 Mentioned:
                               </span>
-                              <span className="opacity-80">
+                              <span>
                                 {letter.people_mentioned.join("  •  ")}
                               </span>
                             </div>
@@ -526,7 +494,7 @@ export default function DailyPopup({
                             {letter.topics.map((topic, topicIdx) => (
                               <span
                                 key={topicIdx}
-                                className="px-2 py-1 bg-navy text-card-bg text-[9px] font-bold uppercase tracking-wider rounded-sm shadow-sm"
+                                className="px-2 py-1 bg-navy text-card-bg text-[11px] font-bold uppercase tracking-wider rounded-sm shadow-sm transition-all duration-300 hover:bg-accent-brown hover:scale-105 cursor-default"
                               >
                                 {topic}
                               </span>
@@ -561,7 +529,7 @@ export default function DailyPopup({
 
                 {/* Background Status Tag */}
                 <div className="shrink-0 px-3 py-1 bg-section-bg border border-border-beige rounded-sm shadow-sm">
-                  <span className="text-[9px] font-bold text-muted-gray uppercase tracking-tighter">
+                  <span className="text-[11px] font-bold text-muted-gray uppercase tracking-tighter">
                     Gap in Correspondence
                   </span>
                 </div>

@@ -58,16 +58,16 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
         
         {/* A. The "Persona" Header */}
         <div className="flex items-center gap-1.5 md:gap-2 mb-2 ml-1">
-          <div className="w-3.5 h-3.5 md:w-4 md:h-4 bg-[#4A7C59] rounded-full flex items-center justify-center shadow-sm shrink-0">
+          <div className="w-3.5 h-3.5 md:w-4 md:h-4 bg-accent-green rounded-full flex items-center justify-center shadow-sm shrink-0">
              <div className="w-1 h-1 md:w-1.5 md:h-1.5 bg-white rounded-full" />
           </div>
-          <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-[#4A7C59]">
+          <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-accent-green">
             Archival Analysis
           </span>
         </div>
 
         {/* B. The "Document" Container */}
-        <div className="bg-white border border-[#D4CFC4] p-4 md:p-6 rounded-sm shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative">
+        <div className="bg-white border border-border-beige p-4 md:p-6 rounded-sm shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative">
           
           {/* C. Content Area */}
           <div className="font-serif text-[#1A2A40] leading-6 md:leading-7 text-sm md:text-[15px]">
@@ -85,7 +85,7 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
               <div className="whitespace-pre-wrap">
                 {replaceSourceNames(message.content || (message.isStreaming ? "Retrieving document data..." : ""))}
                 {message.isStreaming && (
-                  <span className="inline-block w-1.5 h-4 ml-1 bg-[#4A7C59] animate-pulse align-middle" />
+                  <span className="inline-block w-1.5 h-4 ml-1 bg-accent-green animate-pulse align-middle" />
                 )}
               </div>
             )}
@@ -94,8 +94,8 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
           {/* D. Footer: Sources & Citations */}
           {/* We render this if we have EITHER structured sources OR vector sources */}
           {((hasStructuredAnswers && structuredSources.length > 0) || (!hasStructuredAnswers && message.sources && message.sources.length > 0)) && (
-            <div className="mt-4 md:mt-6 pt-3 md:pt-4 border-t border-dashed border-[#D4CFC4] flex flex-col gap-2">
-              <span className="text-[8px] md:text-[9px] font-bold text-[#D4CFC4] uppercase tracking-widest mb-1">
+            <div className="mt-4 md:mt-6 pt-3 md:pt-4 border-t border-dashed border-border-beige flex flex-col gap-2">
+              <span className="text-[8px] md:text-[9px] font-bold text-muted-gray uppercase tracking-widest mb-1">
                 Verified Sources
               </span>
               
@@ -105,10 +105,10 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
                   structuredSources.map((link, idx) => (
                     <div 
                       key={idx} 
-                      className="flex items-center gap-1 md:gap-1.5 text-[9px] md:text-[10px] text-[#8B4513] font-bold uppercase tracking-wider bg-[#F5F0E8] border border-[#D4CFC4] px-2 md:px-2.5 py-1 md:py-1.5 rounded-sm hover:bg-[#E8E4D9] transition-colors cursor-help"
+                      className="flex items-center gap-1 md:gap-1.5 text-[9px] md:text-[10px] text-[#8B4513] font-bold uppercase tracking-wider bg-page-bg border border-border-beige px-2 md:px-2.5 py-1 md:py-1.5 rounded-sm hover:bg-[#E8E4D9] transition-colors cursor-help"
                       title={link as string}
                     >
-                      <ExternalLink size={9} className="md:w-[10px] md:h-[10px] text-[#4A7C59] shrink-0" />
+                      <ExternalLink size={9} className="md:w-[10px] md:h-[10px] text-accent-green shrink-0" />
                       <span className="truncate max-w-[120px] md:max-w-none">{getRealSourceName(link)}</span>
                     </div>
                   ))
