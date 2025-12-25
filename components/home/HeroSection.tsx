@@ -20,7 +20,7 @@ export default function HeroSection() {
             <div className="group flex items-center gap-3 bg-card-bg pl-5 pr-2 py-2.5 rounded-sm shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:-translate-y-0.5 transition-transform cursor-pointer border-l-[3px] border-accent-red">
               <div className="flex flex-col items-end text-right">
                 {/* The "Hook" Label */}
-                <span className="text-[8px] font-black text-accent-brown/70 uppercase tracking-[0.25em] mb-1">
+                <span className="text-[8px] font-black text-accent-brown uppercase tracking-[0.25em] mb-1">
                   The Venetia Project
                 </span>
 

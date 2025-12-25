@@ -249,7 +249,7 @@ export default function Home() {
 	          {/* Fun Facts (1/3) */}
 	          <section>
 	            <div
-	              className="relative cursor-pointer rounded-md border min-h-70 border-accent-amber/50 bg-accent-amber p-4 md:p-6 shadow-[0_14px_34px_rgba(0,0,0,0.10)] rotate-[0.6deg] overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-900/40 focus-visible:ring-offset-2 focus-visible:ring-offset-page-bg"
+	              className="relative cursor-pointer rounded-md border min-h-70 border-accent-amber/50 bg-accent-amber p-4 md:p-6 shadow-[0_14px_34px_rgba(0,0,0,0.10)] rotate-[0.6deg] overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-900/40 focus-visible:ring-offset-2 focus-visible:ring-offset-page-bg transition-all duration-500 hover:rotate-0 hover:shadow-2xl hover:-translate-y-1 group"
 	              role="button"
 	              tabIndex={0}
 	              aria-label="Fun facts (click to shuffle)"
@@ -271,7 +271,7 @@ export default function Home() {
               />
 
               {/* Pin */}
-              <div className="absolute -top-2 left-1/2 -translate-x-1/2 h-5 w-5 rounded-full bg-amber-800 shadow-[0_10px_20px_rgba(120, 53, 15, 0.35)] border border-amber-950/30" />
+              <div className="absolute -top-2 left-1/2 -translate-x-1/2 h-5 w-5 rounded-full bg-amber-800 shadow-[0_10px_20px_rgba(120, 53, 15, 0.35)] border border-amber-950/30 transition-all duration-500 group-hover:scale-110 group-hover:bg-amber-700" />
 
               <div className="relative">
                 <div className="flex items-start justify-between gap-3 md:gap-4">
