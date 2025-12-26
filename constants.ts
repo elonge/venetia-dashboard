@@ -160,7 +160,6 @@ export const PEOPLE_DESCRIPTIONS = {
 export const PODCASTS: Array<{
     title: string;
     description: string;
-    duration: number;
     chapter_id: string;
     video_exists?: boolean;
     spotify_url?: string;
@@ -168,92 +167,77 @@ export const PODCASTS: Array<{
     {
         "title": "Introduction: The Asquith-Stanley Letters",
         "description": "An overview of the intimate correspondence between Prime Minister H.H. Asquith and Venetia Stanley, revealing the personal and political dynamics of early 20th-century Britain.",
-        "duration": 413,
         "chapter_id": "the_letters",
         "spotify_url": "https://open.spotify.com/show/6sSEg9Sf5MHjcrqFVIb4SJ"
     },
     {
         "title": "Sicily 1912: The Prime Minister's Holiday",
         "description": "A sun-drenched trip to Sicily reveals the shifting dynamics of Asquith's inner circle and the dawn of his obsession with Venetia Stanley.",
-        "duration": 379,
         "chapter_id": "sicily",
       },
       {
         "title": "The Asquith family",
         "description": "Introducing the asquith family members and their dynamics that shaped the prime minister's world.",
         "chapter_id": "asquith_family",
-        "duration": 280,
       },
     {
         "title": "Marconi Scandal: The Razor Thin Defense",
         "description": "Uncovering the clever legal distinction that saved British ministers from a massive insider trading scandal in 1912.",
-        "duration": 394,
         "chapter_id": "marconi_scandal"
       },
       {
         "title": "The Friday Drives",
         "description": "Asquith's weekly escape: the intimate car rides with Venetia where state secrets were shared.",
         "chapter_id": "friday_drives",
-        "duration": 266,
       },
       {
         "title": "The Corrupt Coterie",
         "description": "Inside the brilliant, doomed circle of young aristocrats, including Violet Asquith and Diana Manners.",
         "chapter_id": "corrupt_coterie",
-        "duration": 341
       },
       {
         "title": "The Enchantress Cruise",
         "description": "Luxury meets impending doom on the Admiralty yacht as Churchill and Asquith sail the Mediterranean.",
         "chapter_id": "enchantress_cruise",
-        "duration": 333
       },
       {
         "title": "The Home Rule Crisis",
         "description": "Ireland on the brink of civil war, and the political firestorm consuming Asquith's government.",
         "chapter_id": "home_rule_crisis",
-        "duration": 397
       },
       {
         "title": "The End of Peace",
         "description": "The final, frantic days before WWI, as the lights go out all over Europe.",
         "chapter_id": "end_of_piece",
-        "duration": 342
       },
       {
         "title": "Venetia the Nurse",
         "description": "Venetia leaves high society for the harsh reality of training as a nurse at the London Hospital.",
         "chapter_id": "venetia_nurse",
-        "duration": 333,
       },
       {
         "title": "The Betrayal",
         "description": "The shock engagement to Edwin Montagu that broke the Prime Minister's heart and changed the war.",
         "chapter_id": "venetia_engagement",
-        "duration": 393,
       },
       {
         "title": "Fisher vs. Churchill",
         "description": "The explosive clash between the First Sea Lord and the First Lord of the Admiralty that rocked the war effort.",
         "chapter_id": "fisher_churchill_crisis",
-        "duration": 390
       },
       {
         "title": "The Shells Scandal",
         "description": "The munitions crisis that brought down the Liberal government and forced a coalition.",
         "chapter_id": "shells_scandal",
-        "duration": 392
       },
       {
         "title": "Venetia's Conversion",
         "description": "Venetia's controversial decision to convert to Judaism to marry Edwin Montagu.",
         "chapter_id": "venetia_conversion",
-        "duration": 404
       },
             {
         "title": "After the breakup: Asquith's Darkest Days",
         "description": "The emotional fallout of Venetia ending her correspondence with Asquith, coinciding with political turmoil and personal loss.",
-        "duration": 268,
         "chapter_id": "after_breakup"
       }
     

@@ -257,8 +257,9 @@ export default function VenetiaPage() {
                 <audio 
                   controls 
                   className="w-full h-8"
-                  src="/audio/venetia.mp3"
                 >
+                  <source src="/audio/venetia.mp3" type="audio/mpeg" />
+                  <source src="/audio/venetia.m4a" type="audio/mp4" />
                   Your browser does not support the audio element.
                 </audio>
               </div>

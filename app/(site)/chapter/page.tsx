@@ -4,7 +4,7 @@ import React, { useState, useEffect, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { Play, Headphones, ExternalLink, Sparkles } from 'lucide-react';
+import { Play, ExternalLink, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PEOPLE_IMAGES, PODCASTS, getRealSourceName, sourceNameMapping } from '@/constants';
 import { useChatVisibility } from '@/components/chat/useChatVisibility';
@@ -28,13 +28,11 @@ interface Chapter {
   sources: string[];
   podcast?: {
     title: string;
-    duration: string;
     description: string;
     spotify_url?: string;
   };
   video?: {
     title: string;
-    duration: string;
     thumbnail: string;
   };
 }
@@ -115,20 +113,7 @@ function ChapterContent() {
   const podcastData = PODCASTS.find(p => p.chapter_id === chapterData.chapter_id);
   const hasPodcast = !!(podcastData || chapterData.podcast);
   const activePodcast = podcastData || chapterData.podcast;
-  const spotifyUrl = activePodcast?.spotify_url || (podcastData as any)?.spotify_url;
-
-  const formatDuration = (val: string | number): string => {
-    if (typeof val === 'string') return val;
-    const mins = Math.floor(val / 60);
-    const secs = val % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  const podcastDuration = activePodcast?.duration 
-    ? typeof activePodcast.duration === 'number' 
-      ? formatDuration(activePodcast.duration)
-      : activePodcast.duration
-    : 'N/A';
+  const spotifyUrl = activePodcast?.spotify_url;
 
   return (
     <div className="h-full bg-page-bg">
@@ -168,7 +153,6 @@ function ChapterContent() {
                         <span className="w-2 h-2 rounded-full bg-accent-green animate-pulse"></span>
                         Audio Guide
                       </span>
-                      <span className="text-[10px] font-mono text-muted-gray">{podcastDuration}</span>
                     </div>
 
                     {/* Title */}
@@ -187,8 +171,9 @@ function ChapterContent() {
                       <audio 
                         controls 
                         className="w-full h-8"
-                        src={`/audio/${chapterData.chapter_id}.mp3`}
                       >
+                        <source src={`/audio/${chapterData.chapter_id}.mp3`} type="audio/mpeg" />
+                        <source src={`/audio/${chapterData.chapter_id}.m4a`} type="audio/mp4" />
                         Your browser does not support the audio element.
                       </audio>
                     </div>

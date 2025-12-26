@@ -597,12 +597,14 @@ const VenetiaSimulationLab = () => {
     <div className="min-h-screen bg-section-bg flex flex-col font-serif overflow-hidden">
       <audio
         ref={reconstructionAudioRef}
-        src="/lab_instagram/asquith_reading_letter2.mp3"
         preload="auto"
         onPlay={() => setIsReconstructionPlaying(true)}
         onPause={() => setIsReconstructionPlaying(false)}
         onEnded={() => setIsReconstructionPlaying(false)}
-      />
+      >
+        <source src="/lab_instagram/asquith_reading_letter2.mp3" type="audio/mpeg" />
+        <source src="/lab_instagram/asquith_reading_letter2.m4a" type="audio/mp4" />
+      </audio>
 
       {/* Main Page Header */}
       <header className="px-6 md:px-12 py-6 md:py-8 flex-shrink-0 border-b border-border-beige shadow-sm bg-page-bg/50 relative overflow-hidden group/studio">
