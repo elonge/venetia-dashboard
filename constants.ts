@@ -174,6 +174,7 @@ export const PODCASTS: Array<{
         "title": "Sicily 1912: The Prime Minister's Holiday",
         "description": "A sun-drenched trip to Sicily reveals the shifting dynamics of Asquith's inner circle and the dawn of his obsession with Venetia Stanley.",
         "chapter_id": "sicily",
+        "spotify_url": "https://open.spotify.com/episode/7AxobMLQMReieM3UneHWcV"
       },
       {
         "title": "The Asquith family",
