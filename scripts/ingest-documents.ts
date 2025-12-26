@@ -1,7 +1,4 @@
-// Load environment variables BEFORE any other imports
-// Using require() to ensure it runs before ES6 imports are hoisted
-require('dotenv').config({ path: require('path').resolve(process.cwd(), '.env.local') });
-
+import './load-env';
 import { readdir, readFile, stat } from 'fs/promises';
 import { join } from 'path';
 import OpenAI from 'openai';

@@ -12,6 +12,7 @@ export interface Message {
   sources?: Array<SourceCitationProps>;
   answers?: QuestionAnswer[];
   isStreaming?: boolean;
+  status?: string;
 }
 
 interface MessageBubbleProps {
@@ -83,7 +84,7 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
             ) : (
               // Plain Text / Streaming Content
               <div className="whitespace-pre-wrap">
-                {replaceSourceNames(message.content || (message.isStreaming ? "Retrieving document data..." : ""))}
+                {replaceSourceNames(message.content || (message.isStreaming ? (message.status || "Retrieving document data...") : ""))}
                 {message.isStreaming && (
                   <span className="inline-block w-1.5 h-4 ml-1 bg-accent-green animate-pulse align-middle" />
                 )}

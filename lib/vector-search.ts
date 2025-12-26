@@ -9,14 +9,17 @@ const ENTRIES_COLLECTION = 'primary_sources'; // The new collection for letters/
 
 export interface SearchIntent {
   type: 'specific_date' | 'timeline' | 'sentiment_trend' | 'general_context';
-  dateRange?: { start: string; end: string };
+  dateRange?: { start: string; end: string } | null;
   sentiment?: 'positive' | 'negative' | null;
-  topics?: string[];
-  requiresSecondary?: boolean;
-  author?: string;    
-  recipient?: string; 
+  topics?: string[] | null;
+  requiresSecondary?: boolean | null;
+  author?: 'Edwin Montagu' | 'H.H. Asquith' | 'Margot Asquith' | 'Venetia Stanley' | null;    // todo: need a better way to handle authors
+  recipient?: 'Venetia Stanley' | 'Edwin Montagu' | null; 
   requiresWeather: boolean;
-  locationContext?: string;
+  locationContext?: string | null;
+  entities?: string[] | null;
+  textRegex?: string | null;
+  semanticQuery?: string | null;
 }
 export interface PrimaryEntryResult {
   content: string;
@@ -42,7 +45,12 @@ export interface SearchResult {
 export interface SearchFilters {
   source?: string | string[];
   dateRange?: { start: string; end: string };
+  author?: string;
+  recipient?: string;
+  source_type?: string;
 }
+
+// ...
 
 // Generate embedding for query text
 async function generateQueryEmbedding(
@@ -109,11 +117,15 @@ export async function searchPrimaryEntries(
     if (intent.recipient) {
       query.recipient = { $regex: intent.recipient, $options: 'i' };
     }
-    // 3. Topic Keyword Filter (Optional fallback if specific topics requested)
-    // Note: Ideally, this would use a text index or simple regex if volume is low
+    // 3. Topic Keyword Filter (Simple Regex)
     if (intent.topics && intent.topics.length > 0) {
-       // Simple regex for topic keywords if provided
-       // query.$or = intent.topics.map(t => ({ full_text: { $regex: t, $options: 'i' } }));
+       // Create an OR condition: at least one of the topics must be present in full_text
+       query.$or = intent.topics.map(t => ({ full_text: { $regex: t, $options: 'i' } }));
+    }
+    
+    // 4. Explicit Text Regex (if provided)
+    if (intent.textRegex) {
+        query.full_text = { $regex: intent.textRegex, $options: 'i' };
     }
 
     console.log('📅 Executing Primary Search:', JSON.stringify(query));
@@ -133,7 +145,7 @@ export async function searchPrimaryEntries(
       recipient: doc.recipient,
       score: 1.0, // High confidence because it's an exact metadata match
       metadata: {
-        documentTitle: `Letter/Entry: ${doc.date ? doc.date.toISOString().split('T')[0] : 'Unknown'}`,
+        documentTitle: `Letter/Entry: ${doc.date ? doc.date.toISOString().split('T')[0] : 'Unknown'} `,
         topics: doc.topics
       }
     }));
@@ -166,6 +178,19 @@ function buildFilter(filters?: SearchFilters): any {
       },
     };
   }
+  
+  // Support for Primary Source metadata filtering
+  if (filters.author) {
+      mongoFilter['metadata.author'] = { $eq: filters.author };
+  }
+  if (filters.recipient) {
+      mongoFilter['metadata.recipient'] = { $eq: filters.recipient };
+  }
+  if (filters.source_type) {
+      mongoFilter['metadata.source_type'] = filters.source_type;
+  } else {
+      mongoFilter['metadata.source_type'] = { $eq: "primary_entry" };
+  }
 
   return mongoFilter;
 }
@@ -191,14 +216,21 @@ export async function searchSimilarChunks(
     const queryEmbedding = await generateQueryEmbedding(query);
 
     // Build the vector search aggregation pipeline
+    // We fetch more results initially (pre-filter limit) to allow for metadata filtering
+    // because standard $match happens AFTER vector search.
+    const preFilterLimit = limit;  // Fetch 20x the requested limit to ensure we find matches
+    
+    const mongoFilter = buildFilter(filters);
+    console.log('🔍 Executing Vector Search with filter:', JSON.stringify(mongoFilter));
     const pipeline: any[] = [
       {
         $vectorSearch: {
           index: INDEX_NAME,
           path: 'embedding',
           queryVector: queryEmbedding,
-          numCandidates: Math.max(limit * 10, 100), // Search more candidates for better results
-          limit: limit,
+          numCandidates: Math.max(preFilterLimit * 10, 500), 
+          limit: preFilterLimit,
+          filter: mongoFilter
         },
       },
       {
@@ -214,13 +246,15 @@ export async function searchSimilarChunks(
     ];
 
     // Apply filters if provided
-    const mongoFilter = buildFilter(filters);
-    if (Object.keys(mongoFilter).length > 0) {
-      // Add filter stage after vector search
-      pipeline.push({
-        $match: mongoFilter,
-      });
-    }
+    // if (Object.keys(mongoFilter).length > 0) {
+    //   // Add filter stage after vector search
+    //   pipeline.push({
+    //     $match: mongoFilter,
+    //   });
+    // }
+    
+    // Limit the final results to the requested amount
+    pipeline.push({ $limit: limit });
 
     const results = await collection.aggregate(pipeline).toArray();
 

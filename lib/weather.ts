@@ -1,7 +1,17 @@
 // lib/weather.ts
 import clientPromise from './mongodb';
 
-export async function getWeather(startDate: string, endDate?: string, location: string = 'London') {
+export interface WeatherRecord {
+  date: string;
+  location: string;
+  tmax: number | null;
+  tmin: number | null;
+  tavg: number | null;
+  prcp: number | null;
+  unit: string;
+}
+
+export async function getWeather(startDate: string, endDate?: string, location: string = 'London'): Promise<WeatherRecord[] | { info: string }> {
   const client = await clientPromise;
   const db = client.db('venetia_project');
   
@@ -35,9 +45,9 @@ export async function getWeather(startDate: string, endDate?: string, location: 
   return records.map(r => ({
     date: r.date.toISOString().split('T')[0],
     location: r.location,
-    tmax: r.tmax,
-    tmin: r.tmin,
-    tavg: r.tavg,
+    tmax: r.tmax !== null ? Math.round(r.tmax) : null,
+    tmin: r.tmin !== null ? Math.round(r.tmin) : null,
+    tavg: r.tavg !== null ? Math.round(r.tavg) : null,
     prcp: r.prcp,
     unit: r.temp_unit
   }));
