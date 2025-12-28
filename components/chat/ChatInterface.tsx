@@ -397,7 +397,7 @@ export default function ChatInterface() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyPress}
-            placeholder="Is there evidence of Venetia's influence on Asquith's decisions?"
+            placeholder="Ask the Venetia Project archive..."
             disabled={isLoading}
             rows={3}
             className="w-full bg-white border border-border-beige text-navy placeholder:text-muted-gray text-sm px-4 py-3 rounded-md pr-14 md:pr-16 focus-visible:ring-1 focus-visible:ring-navy/20 focus-visible:border-navy transition-all font-serif resize-none leading-5"
