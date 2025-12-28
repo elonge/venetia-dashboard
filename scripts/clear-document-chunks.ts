@@ -1,6 +1,4 @@
-// Load environment variables BEFORE any other imports
-require('dotenv').config({ path: require('path').resolve(process.cwd(), '.env.local') });
-
+import './load-env';
 import clientPromise from '../lib/mongodb';
 
 const DB_NAME = 'venetia_project';

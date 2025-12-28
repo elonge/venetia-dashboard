@@ -1,8 +1,4 @@
-// Load environment variables BEFORE any other imports
-require('dotenv').config({
-  path: require('path').resolve(process.cwd(), '.env.local'),
-});
-
+import './load-env';
 import { readFile } from 'fs/promises';
 import OpenAI from 'openai';
 import clientPromise from '../lib/mongodb';

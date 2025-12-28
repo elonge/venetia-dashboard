@@ -191,7 +191,8 @@ export default function ChatInterface() {
         content: string, 
         isDone: boolean, 
         finalSources?: typeof sources,
-        finalAnswers?: QuestionAnswer[]
+        finalAnswers?: QuestionAnswer[],
+        status?: string
       ) => {
         setMessages((prev) => {
           const newMessages = [...prev];
@@ -199,6 +200,9 @@ export default function ChatInterface() {
           if (lastMessage.role === 'assistant') {
             lastMessage.content = content;
             lastMessage.isStreaming = !isDone;
+            if (status) {
+              lastMessage.status = status;
+            }
             if (isDone) {
               if (finalSources) {
                 lastMessage.sources = finalSources.map((s) => ({
@@ -230,6 +234,10 @@ export default function ChatInterface() {
             try {
               const data = JSON.parse(line.slice(6));
               
+              if (data.status) {
+                updateMessage(fullContent, false, undefined, undefined, data.status);
+              }
+
               if (data.loading && !data.done) {
                 const displayContent = ''; // Keep empty to let the UI show "Consulting Sources" loader
                 const now = Date.now();

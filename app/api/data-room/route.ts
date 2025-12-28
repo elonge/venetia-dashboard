@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getAllTimelineDays } from '@/lib/timeline_days';
+import { getAllDailyRecords } from '@/lib/daily_records';
 import { getAsquithVenetiaProximitySeries } from '@/lib/daily_records';
 import { PEOPLE_DESCRIPTIONS } from '@/constants';
 
@@ -210,7 +210,7 @@ export async function GET() {
   try {
     // Generate sentiment data from timeline_days collection using scores field
     const generateSentimentData = async (): Promise<SentimentData> => {
-      const allDays = await getAllTimelineDays();
+      const allDays = await getAllDailyRecords();
       console.log('[DEBUG] Sentiment Data Generation - Total days fetched:', allDays.length);
       
       // Fixed date range: 1910 to 1915 (based on original mock data)
@@ -219,7 +219,7 @@ export async function GET() {
       
       // Filter days to only include dates within the graph range
       const filteredDays = allDays.filter(day => {
-        return day.date_string >= graphStartDateString && day.date_string <= graphEndDateString;
+        return day.date >= graphStartDateString && day.date <= graphEndDateString;
       });
       
       console.log('[DEBUG] Sentiment Data Generation - Filtered days (1910-1915):', filteredDays.length);
@@ -234,19 +234,28 @@ export async function GET() {
         };
       }
       
-      // Sort by date_string to ensure chronological order
-      filteredDays.sort((a, b) => a.date_string.localeCompare(b.date_string));
+      // Sort by date to ensure chronological order
+      filteredDays.sort((a, b) => a.date.localeCompare(b.date));
       
+      // Helper to extract scores from day
+      const getDayScores = (day: any) => {
+          if (!day.letters || day.letters.length === 0) return {};
+          // Find first letter with scores, or average them? Let's take the first non-null for now.
+          const letterWithScores = day.letters.find((l: any) => l.scores);
+          return letterWithScores?.scores || {};
+      };
+
       // Debug: Log sample scores from first few days
       console.log('[DEBUG] Sentiment Data Generation - Sample scores (first 5 days):');
       filteredDays.slice(0, 5).forEach((day, idx) => {
-        console.log(`  Day ${idx + 1} (${day.date_string}):`, {
-          political_unburdening: day.scores?.political_unburdening,
-          romantic_adoration: day.scores?.romantic_adoration,
-          emotional_desolation: day.scores?.emotional_desolation,
-          rawScores: day.scores,
-          scoresType: typeof day.scores,
-          scoresKeys: day.scores ? Object.keys(day.scores) : 'no scores'
+        const scores = getDayScores(day);
+        console.log(`  Day ${idx + 1} (${day.date}):`, {
+          political_unburdening: scores?.political_unburdening,
+          romantic_adoration: scores?.romantic_adoration,
+          emotional_desolation: scores?.emotional_desolation,
+          rawScores: scores,
+          scoresType: typeof scores,
+          scoresKeys: scores ? Object.keys(scores) : 'no scores'
         });
       });
       
@@ -256,7 +265,7 @@ export async function GET() {
       const allAnxietyScores: number[] = [];
       
       filteredDays.forEach(day => {
-        const scores = day.scores || {};
+        const scores = getDayScores(day);
         if (scores.political_unburdening !== undefined) {
           allTensionScores.push(scores.political_unburdening);
         }
@@ -293,7 +302,7 @@ export async function GET() {
       
       // Debug: Find and log days with non-zero scores
       const daysWithNonZeroScores = filteredDays.filter(day => {
-        const scores = day.scores || {};
+        const scores = getDayScores(day);
         return (scores.political_unburdening && scores.political_unburdening > 0) ||
                (scores.romantic_adoration && scores.romantic_adoration > 0) ||
                (scores.emotional_desolation && scores.emotional_desolation > 0);
@@ -303,10 +312,11 @@ export async function GET() {
       if (daysWithNonZeroScores.length > 0) {
         console.log('[DEBUG] Sample days with non-zero scores (first 5):');
         daysWithNonZeroScores.slice(0, 5).forEach((day, idx) => {
-          console.log(`  Day ${idx + 1} (${day.date_string}):`, {
-            political_unburdening: day.scores?.political_unburdening,
-            romantic_adoration: day.scores?.romantic_adoration,
-            emotional_desolation: day.scores?.emotional_desolation,
+          const scores = getDayScores(day);
+          console.log(`  Day ${idx + 1} (${day.date}):`, {
+            political_unburdening: scores?.political_unburdening,
+            romantic_adoration: scores?.romantic_adoration,
+            emotional_desolation: scores?.emotional_desolation,
           });
         });
       }
@@ -316,18 +326,20 @@ export async function GET() {
       const endPoint = Math.max(0, filteredDays.length - 5);
       console.log('[DEBUG] Sample scores from middle of dataset (around index', midPoint, '):');
       filteredDays.slice(midPoint, midPoint + 3).forEach((day, idx) => {
-        console.log(`  Day ${midPoint + idx} (${day.date_string}):`, {
-          political_unburdening: day.scores?.political_unburdening,
-          romantic_adoration: day.scores?.romantic_adoration,
-          emotional_desolation: day.scores?.emotional_desolation,
+        const scores = getDayScores(day);
+        console.log(`  Day ${midPoint + idx} (${day.date}):`, {
+          political_unburdening: scores?.political_unburdening,
+          romantic_adoration: scores?.romantic_adoration,
+          emotional_desolation: scores?.emotional_desolation,
         });
       });
       console.log('[DEBUG] Sample scores from end of dataset (last 3):');
       filteredDays.slice(endPoint).forEach((day, idx) => {
-        console.log(`  Day ${endPoint + idx} (${day.date_string}):`, {
-          political_unburdening: day.scores?.political_unburdening,
-          romantic_adoration: day.scores?.romantic_adoration,
-          emotional_desolation: day.scores?.emotional_desolation,
+        const scores = getDayScores(day);
+        console.log(`  Day ${endPoint + idx} (${day.date}):`, {
+          political_unburdening: scores?.political_unburdening,
+          romantic_adoration: scores?.romantic_adoration,
+          emotional_desolation: scores?.emotional_desolation,
         });
       });
       
@@ -349,8 +361,8 @@ export async function GET() {
       const totalDays = Math.floor((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
       
       // Calculate actual data range (first day to last day in filtered data)
-      const firstDataDay = filteredDays[0]?.date_string;
-      const lastDataDay = filteredDays[filteredDays.length - 1]?.date_string;
+      const firstDataDay = filteredDays[0]?.date;
+      const lastDataDay = filteredDays[filteredDays.length - 1]?.date;
       const firstDataDate = firstDataDay ? (() => {
         const [y, m, d] = firstDataDay.split('-').map(Number);
         return new Date(y, m - 1, d);
@@ -410,32 +422,32 @@ export async function GET() {
       for (const day of filteredDays) {
         // Calculate x based on actual data range (first day to last day)
         // This ensures the graph spans from x=0 to x=200
-        const daysSinceFirstData = getDaysSinceStart(day.date_string) - firstDataDaysSinceStart;
+        const daysSinceFirstData = getDaysSinceStart(day.date) - firstDataDaysSinceStart;
         const scaledX = actualDataRangeDays > 0 ? (daysSinceFirstData / actualDataRangeDays) * viewBoxWidth : 0;
         
-        const scores = day.scores || {};
+        const scores = getDayScores(day);
         
         // Tension (political_unburdening)
         if (scores.political_unburdening !== undefined) {
           const scaledY = scaleScore(scores.political_unburdening);
-          tensionPoints.push({ x: scaledX, y: scaledY, date: day.date_string });
-          tensionPointsWithScores.push({ x: scaledX, y: scaledY, score: scores.political_unburdening, date: day.date_string });
+          tensionPoints.push({ x: scaledX, y: scaledY, date: day.date });
+          tensionPointsWithScores.push({ x: scaledX, y: scaledY, score: scores.political_unburdening, date: day.date });
           daysWithTension++;
         }
         
         // Warmth (romantic_adoration)
         if (scores.romantic_adoration !== undefined) {
           const scaledY = scaleScore(scores.romantic_adoration);
-          warmthPoints.push({ x: scaledX, y: scaledY, date: day.date_string });
-          warmthPointsWithScores.push({ x: scaledX, y: scaledY, score: scores.romantic_adoration, date: day.date_string });
+          warmthPoints.push({ x: scaledX, y: scaledY, date: day.date });
+          warmthPointsWithScores.push({ x: scaledX, y: scaledY, score: scores.romantic_adoration, date: day.date });
           daysWithWarmth++;
         }
         
         // Anxiety (emotional_desolation)
         if (scores.emotional_desolation !== undefined) {
           const scaledY = scaleScore(scores.emotional_desolation);
-          anxietyPoints.push({ x: scaledX, y: scaledY, date: day.date_string });
-          anxietyPointsWithScores.push({ x: scaledX, y: scaledY, score: scores.emotional_desolation, date: day.date_string });
+          anxietyPoints.push({ x: scaledX, y: scaledY, date: day.date });
+          anxietyPointsWithScores.push({ x: scaledX, y: scaledY, score: scores.emotional_desolation, date: day.date });
           daysWithAnxiety++;
         }
       }
@@ -547,7 +559,7 @@ export async function GET() {
     // Generate topics frequency data from timeline_days collection
     const generateTopicsData = async () => {
       console.log('[DEBUG] Topics Data Generation - Starting...');
-      const allDays = await getAllTimelineDays();
+      const allDays = await getAllDailyRecords();
       console.log('[DEBUG] Topics Data Generation - Total days fetched:', allDays.length);
       
       // Map to track how many letters contain each topic (not occurrences)
@@ -564,7 +576,7 @@ export async function GET() {
       // Count each topic once per letter (even if it appears multiple times in the same letter)
       for (const day of allDays) {
         totalDaysProcessed++;
-        const letters = day.prime_minister?.letters || [];
+        const letters = day.letters || [];
         
         if (letters.length > 0) {
           daysWithLetters++;
@@ -694,11 +706,11 @@ export async function GET() {
       
       // Debug: Sample a few days with letters to see structure
       if (daysWithLetters > 0) {
-        const sampleDays = allDays.filter(day => (day.prime_minister?.letters || []).length > 0).slice(0, 3);
+        const sampleDays = allDays.filter(day => (day.letters || []).length > 0).slice(0, 3);
         console.log('[DEBUG] Topics Data Generation - Sample days with letters (first 3):');
         sampleDays.forEach((day, idx) => {
-          const letters = day.prime_minister?.letters || [];
-          console.log(`  Day ${idx + 1} (${day.date_string}):`);
+          const letters = day.letters || [];
+          console.log(`  Day ${idx + 1} (${day.date}):`);
           console.log(`    Letters: ${letters.length}`);
           letters.slice(0, 2).forEach((letter, letterIdx) => {
             const topics = letter.topics || [];
@@ -721,7 +733,7 @@ export async function GET() {
     // x = week number, y = total number of letters for that week
     // Graph covers 1/1/1912 to end of 1915
     const generateDailyLetterData = async () => {
-      const allDays = await getAllTimelineDays();
+      const allDays = await getAllDailyRecords();
       
       // Fixed date range: 1/1/1912 to 12/31/1915
       const graphStartDateString = '1912-01-01';
@@ -729,7 +741,7 @@ export async function GET() {
       
       // Filter days to only include dates within the graph range
       const filteredDays = allDays.filter(day => {
-        return day.date_string >= graphStartDateString && day.date_string <= graphEndDateString;
+        return day.date >= graphStartDateString && day.date <= graphEndDateString;
       });
       
       if (filteredDays.length === 0) {
@@ -742,7 +754,7 @@ export async function GET() {
       }
       
       // Sort by date_string to ensure chronological order
-      filteredDays.sort((a, b) => a.date_string.localeCompare(b.date_string));
+      filteredDays.sort((a, b) => a.date.localeCompare(b.date));
       
       // Use fixed start date (1/1/1912) for calculating week numbers
       const [startYearNum, startMonth, startDay] = graphStartDateString.split('-').map(Number);
@@ -778,17 +790,17 @@ export async function GET() {
       
       // Process each day and aggregate by week
       for (const day of filteredDays) {
-        const letterCount = day.prime_minister?.letters?.length || 0;
+        const letterCount = day.letters?.length || 0;
         totalLettersFromDB += letterCount;
         
-        const weekNumber = getWeekNumber(day.date_string);
+        const weekNumber = getWeekNumber(day.date);
         
         if (letterCount > 0) {
           daysWithLetters++;
         }
         
         if (!weeklyData.has(weekNumber)) {
-          weeklyData.set(weekNumber, { totalLetters: 0, weekStartDate: day.date_string });
+          weeklyData.set(weekNumber, { totalLetters: 0, weekStartDate: day.date });
         }
         
         const weekData = weeklyData.get(weekNumber)!;
@@ -895,12 +907,20 @@ export async function GET() {
     }
     // Generate people data from timeline_days collection
     const generatePeopleData = async (): Promise<PeopleData[]> => {
-      const allDays = await getAllTimelineDays();
+      const allDays = await getAllDailyRecords();
       const peopleFrequency = new Map<string, number>();
       
       // Aggregate all people_mentioned arrays from all timeline days
       for (const day of allDays) {
-        const peopleMentioned = day.people_mentioned || [];
+        // Collect people from all letters
+        const peopleMentioned = [];
+        if (day.letters) {
+            for (const letter of day.letters) {
+                if (letter.people_mentioned) {
+                    peopleMentioned.push(...letter.people_mentioned);
+                }
+            }
+        }
         for (const person of peopleMentioned) {
           if (person && person.trim()) {
             const normalizedPerson = normalizePersonName(person);
@@ -926,18 +946,21 @@ export async function GET() {
 
     // Generate meeting dates data from timeline_days collection
     const generateMeetingDatesData = async (): Promise<MeetingDatesData> => {
-      const allDays = await getAllTimelineDays();
+      console.log('[DEBUG] Generating Meeting Dates Data - Starting...');
+      const allDays = await getAllDailyRecords();
+      console.log('[DEBUG] Generating Meeting Dates Data - Total days fetched:', allDays.length);
       
+
       // Filter days where they met
       const meetingDays = allDays.filter(day => 
-        day.prime_minister?.meeting_with_venetia === true
+        day.met_venetia === true
       );
       
       // Extract dates with meeting details and sort by date
       const meetingDates = meetingDays
         .map(day => ({
-          date: day.date_string,
-          meeting_details: day.prime_minister?.meeting_details || ''
+          date: day.date,
+          meeting_details: day.meeting_reference || ''
         }))
         .sort((a, b) => a.date.localeCompare(b.date));
       

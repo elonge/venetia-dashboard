@@ -123,7 +123,9 @@ export default function ProximityTimeline({
           tick={{ fill: "#8B4513", fontSize: 8, fontFamily: 'serif' }}
           tickLine={false}
           axisLine={false}
-          width={35}
+          width={40}
+          allowDecimals={false}
+          tickFormatter={(val) => Math.round(val).toString()}
         />
         
         <Tooltip content={<ProximityTooltip />} cursor={{ stroke: "#8B4513", strokeWidth: 1, strokeDasharray: "4 4" }} />

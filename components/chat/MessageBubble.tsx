@@ -5,6 +5,8 @@ import SourceCitation, { SourceCitationProps } from './SourceCitation';
 import { QuestionAnswer } from '@/lib/questions';
 import { ExternalLink } from 'lucide-react';
 import { getRealSourceName, sourceNameMapping } from '@/constants';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 export interface Message {
   role: 'user' | 'assistant';
@@ -12,11 +14,47 @@ export interface Message {
   sources?: Array<SourceCitationProps>;
   answers?: QuestionAnswer[];
   isStreaming?: boolean;
+  status?: string;
 }
 
 interface MessageBubbleProps {
   message: Message;
 }
+
+const markdownComponents = {
+  p: ({ node, ...props }: any) => <p className="mb-4 last:mb-0" {...props} />,
+  ul: ({ node, ...props }: any) => <ul className="list-disc pl-5 mb-4 space-y-1" {...props} />,
+  ol: ({ node, ...props }: any) => <ol className="list-decimal pl-5 mb-4 space-y-1" {...props} />,
+  li: ({ node, ...props }: any) => <li className="pl-1" {...props} />,
+  h1: ({ node, ...props }: any) => <h1 className="text-lg font-bold mb-2 mt-4 text-[#1A2A40]" {...props} />,
+  h2: ({ node, ...props }: any) => <h2 className="text-base font-bold mb-2 mt-3 text-[#1A2A40]" {...props} />,
+  h3: ({ node, ...props }: any) => <h3 className="text-sm font-bold mb-1 mt-2 text-[#1A2A40]" {...props} />,
+  a: ({ node, ...props }: any) => (
+    <a 
+      className="text-[#8B4513] font-medium underline underline-offset-2 hover:text-accent-green transition-colors" 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      {...props} 
+    />
+  ),
+  blockquote: ({ node, ...props }: any) => (
+    <blockquote className="border-l-2 border-accent-green pl-4 italic my-4 text-muted-gray bg-[#F9F9F9] py-2 pr-2 rounded-r-sm" {...props} />
+  ),
+  code: ({ node, inline, ...props }: any) => 
+    inline 
+      ? <code className="bg-[#F5F0E8] px-1 py-0.5 rounded text-xs font-mono text-[#8B4513]" {...props} />
+      : <pre className="bg-[#F5F0E8] p-3 rounded-sm overflow-x-auto text-xs font-mono text-[#1A2A40] mb-4 border border-border-beige"><code {...props} /></pre>,
+  table: ({ node, ...props }: any) => (
+    <div className="overflow-x-auto mb-4 border border-border-beige rounded-sm">
+      <table className="w-full text-sm text-left" {...props} />
+    </div>
+  ),
+  thead: ({ node, ...props }: any) => <thead className="bg-[#F5F0E8] text-[#1A2A40] font-bold uppercase text-xs tracking-wider" {...props} />,
+  tbody: ({ node, ...props }: any) => <tbody className="divide-y divide-border-beige" {...props} />,
+  tr: ({ node, ...props }: any) => <tr className="hover:bg-gray-50/50 transition-colors" {...props} />,
+  th: ({ node, ...props }: any) => <th className="px-4 py-2" {...props} />,
+  td: ({ node, ...props }: any) => <td className="px-4 py-2" {...props} />,
+};
 
 export default function MessageBubble({ message }: MessageBubbleProps) {
   const isUser = message.role === 'user';
@@ -76,16 +114,22 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
               <div className="space-y-6">
                 {message.answers!.map((answer, idx) => (
                   <div key={idx} className="relative">
-                     <p>{replaceSourceNames(answer.text)}</p>
+                     <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+                        {replaceSourceNames(answer.text)}
+                     </ReactMarkdown>
                   </div>
                 ))}
               </div>
             ) : (
               // Plain Text / Streaming Content
-              <div className="whitespace-pre-wrap">
-                {replaceSourceNames(message.content || (message.isStreaming ? "Retrieving document data..." : ""))}
+              <div className="markdown-container">
+                <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+                  {replaceSourceNames(message.content || (message.isStreaming ? (message.status || "Retrieving document data...") : ""))}
+                </ReactMarkdown>
                 {message.isStreaming && (
-                  <span className="inline-block w-1.5 h-4 ml-1 bg-accent-green animate-pulse align-middle" />
+                  <div className="mt-2">
+                     <span className="inline-block w-1.5 h-4 bg-accent-green animate-pulse align-middle" />
+                  </div>
                 )}
               </div>
             )}

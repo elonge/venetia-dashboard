@@ -824,6 +824,7 @@ export default function ChartRenderer({
     );
   };
   const renderMeetingDates = () => {
+    console.log("Rendering meeting dates with data:", dataRoomData?.meetingDates);
     if (!dataRoomData?.meetingDates?.dates.length) return null;
 
     const meetings = dataRoomData.meetingDates.dates;

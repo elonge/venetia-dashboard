@@ -1,5 +1,6 @@
 import clientPromise from './mongodb';
 import OpenAI from 'openai';
+import { type SearchIntent } from '@/types/chat';
 
 const DB_NAME = 'venetia_project';
 const COLLECTION_NAME = 'document_chunks';
@@ -7,17 +8,8 @@ const INDEX_NAME = process.env.VECTOR_SEARCH_INDEX_NAME || 'vector_index';
 const EMBEDDING_MODEL = process.env.EMBEDDING_MODEL || 'text-embedding-3-large';
 const ENTRIES_COLLECTION = 'primary_sources'; // The new collection for letters/diaries
 
-export interface SearchIntent {
-  type: 'specific_date' | 'timeline' | 'sentiment_trend' | 'general_context';
-  dateRange?: { start: string; end: string };
-  sentiment?: 'positive' | 'negative' | null;
-  topics?: string[];
-  requiresSecondary?: boolean;
-  author?: string;    
-  recipient?: string; 
-  requiresWeather: boolean;
-  locationContext?: string;
-}
+export type { SearchIntent };
+
 export interface PrimaryEntryResult {
   content: string;
   date: Date;
@@ -36,13 +28,21 @@ export interface SearchResult {
     documentTitle?: string;
     dateRange?: { start: string; end: string };
     pageNumber?: number;
+    date?: string | Date;
+    author?: string;
+    recipient?: string;
   };
 }
 
 export interface SearchFilters {
   source?: string | string[];
   dateRange?: { start: string; end: string };
+  author?: string;
+  recipient?: string;
+  source_type?: string;
 }
+
+// ...
 
 // Generate embedding for query text
 async function generateQueryEmbedding(
@@ -79,7 +79,7 @@ export async function searchPrimaryEntries(
     const db = client.db(DB_NAME);
     const collection = db.collection(ENTRIES_COLLECTION);
 
-    const query: any = { source_type: 'primary_entry' };
+    const query: any = {  };
 
     // 1. Date Filter (The "Calendar" Logic)
     if (intent.dateRange) {
@@ -109,11 +109,15 @@ export async function searchPrimaryEntries(
     if (intent.recipient) {
       query.recipient = { $regex: intent.recipient, $options: 'i' };
     }
-    // 3. Topic Keyword Filter (Optional fallback if specific topics requested)
-    // Note: Ideally, this would use a text index or simple regex if volume is low
+    // 3. Topic Keyword Filter (Simple Regex)
     if (intent.topics && intent.topics.length > 0) {
-       // Simple regex for topic keywords if provided
-       // query.$or = intent.topics.map(t => ({ full_text: { $regex: t, $options: 'i' } }));
+       // Create an OR condition: at least one of the topics must be present in full_text
+       query.$or = intent.topics.map(t => ({ full_text: { $regex: t, $options: 'i' } }));
+    }
+    
+    // 4. Explicit Text Regex (if provided)
+    if (intent.textRegex) {
+        query.full_text = { $regex: intent.textRegex, $options: 'i' };
     }
 
     console.log('📅 Executing Primary Search:', JSON.stringify(query));
@@ -133,7 +137,7 @@ export async function searchPrimaryEntries(
       recipient: doc.recipient,
       score: 1.0, // High confidence because it's an exact metadata match
       metadata: {
-        documentTitle: `Letter/Entry: ${doc.date ? doc.date.toISOString().split('T')[0] : 'Unknown'}`,
+        documentTitle: `Letter/Entry: ${doc.date ? doc.date.toISOString().split('T')[0] : 'Unknown'} `,
         topics: doc.topics
       }
     }));
@@ -152,19 +156,36 @@ function buildFilter(filters?: SearchFilters): any {
 
   if (filters.source) {
     if (Array.isArray(filters.source)) {
-      mongoFilter.source = { $in: filters.source };
+      mongoFilter['new_metadata.source'] = { $in: filters.source };
     } else {
-      mongoFilter.source = filters.source;
+      mongoFilter['new_metadata.source'] = filters.source;
     }
   }
 
   if (filters.dateRange) {
-    mongoFilter['metadata.dateRange'] = {
-      $elemMatch: {
-        start: { $lte: filters.dateRange.end },
-        end: { $gte: filters.dateRange.start },
-      },
+    // Queries against new_metadata.date (single date)
+    const start = new Date(filters.dateRange.start);
+    const end = new Date(filters.dateRange.end);
+    // Ensure full day coverage if same day
+    if (filters.dateRange.start === filters.dateRange.end) {
+       end.setDate(end.getDate() + 1);
+    }
+
+    mongoFilter['new_metadata.date'] = {
+      $gte: start, 
+      $lte: end 
     };
+  }
+  
+  // Support for Primary Source metadata filtering
+  if (filters.author) {
+      mongoFilter['new_metadata.author'] = { $eq: filters.author };
+  }
+  if (filters.recipient) {
+      mongoFilter['new_metadata.recipient'] = { $eq: filters.recipient };
+  }
+  if (filters.source_type) {
+      mongoFilter['new_metadata.source_type'] = filters.source_type;
   }
 
   return mongoFilter;
@@ -191,45 +212,57 @@ export async function searchSimilarChunks(
     const queryEmbedding = await generateQueryEmbedding(query);
 
     // Build the vector search aggregation pipeline
+    // We fetch more results initially (pre-filter limit) to allow for metadata filtering
+    // because standard $match happens AFTER vector search.
+    const preFilterLimit = limit;  // Fetch 20x the requested limit to ensure we find matches
+    
+    const mongoFilter = buildFilter(filters);
+    console.log('🔍 Executing Vector Search with filter:', JSON.stringify(mongoFilter));
     const pipeline: any[] = [
       {
         $vectorSearch: {
           index: INDEX_NAME,
           path: 'embedding',
           queryVector: queryEmbedding,
-          numCandidates: Math.max(limit * 10, 100), // Search more candidates for better results
-          limit: limit,
+          numCandidates: Math.max(preFilterLimit * 10, 500), 
+          limit: preFilterLimit,
+          filter: mongoFilter
         },
       },
       {
         $project: {
           _id: 0,
           content: 1,
-          source: 1,
-          chunkIndex: 1,
-          metadata: 1,
+          new_metadata: 1,
           score: { $meta: 'vectorSearchScore' },
         },
       },
     ];
 
     // Apply filters if provided
-    const mongoFilter = buildFilter(filters);
-    if (Object.keys(mongoFilter).length > 0) {
-      // Add filter stage after vector search
-      pipeline.push({
-        $match: mongoFilter,
-      });
-    }
+    // if (Object.keys(mongoFilter).length > 0) {
+    //   // Add filter stage after vector search
+    //   pipeline.push({
+    //     $match: mongoFilter,
+    //   });
+    // }
+    
+    // Limit the final results to the requested amount
+    pipeline.push({ $limit: limit });
 
     const results = await collection.aggregate(pipeline).toArray();
 
     return results.map((result) => ({
       content: result.content,
-      source: result.source,
-      chunkIndex: result.chunkIndex,
+      source: result.new_metadata?.source || 'Unknown',
+      chunkIndex: 0, 
       score: result.score || 0,
-      metadata: result.metadata || {},
+      metadata: {
+        documentTitle: result.new_metadata?.source || 'Untitled',
+        author: result.new_metadata?.author,
+        recipient: result.new_metadata?.recipient,
+        date: result.new_metadata?.date
+      },
     }));
   } catch (error) {
     console.error('Error in vector search:', error);
@@ -275,10 +308,15 @@ async function fallbackKeywordSearch(
 
     return results.map((result) => ({
       content: result.content,
-      source: result.source,
-      chunkIndex: result.chunkIndex,
+      source: result.new_metadata?.source || 'Unknown',
+      chunkIndex: 0,
       score: 0.5, // Default score for keyword search
-      metadata: result.metadata || {},
+      metadata: {
+        documentTitle: result.new_metadata?.source || 'Untitled',
+        author: result.new_metadata?.author,
+        recipient: result.new_metadata?.recipient,
+        date: result.new_metadata?.date
+      },
     }));
   } catch (error) {
     console.error('Error in fallback keyword search:', error);
@@ -295,7 +333,7 @@ export async function getAvailableSources(): Promise<string[]> {
     const db = client.db(DB_NAME);
     const collection = db.collection(COLLECTION_NAME);
 
-    const sources = await collection.distinct('source');
+    const sources = await collection.distinct('new_metadata.source');
     return sources.sort();
   } catch (error) {
     console.error('Error fetching sources:', error);
