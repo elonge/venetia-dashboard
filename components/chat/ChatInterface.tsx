@@ -374,7 +374,7 @@ export default function ChatInterface() {
               Ask questions about Venetia Stanley, H.H. Asquith, and the political events of 1912–1916. I verify every answer against the primary sources.
             </p>
 
-            <div className="w-full max-w-sm space-y-2 md:space-y-2.5 px-4">
+            <div className="w-full max-w-sm md:max-w-2xl space-y-2 md:space-y-2.5 px-4">
               {isLoadingPopularQuestions ? (
                 Array.from({ length: DEFAULT_SUGGESTED_QUESTIONS_COUNT }).map((_, i) => (
                   <div key={i} className="h-12 w-full bg-white/50 border border-[#D4CFC4] rounded-md animate-pulse" />
@@ -385,7 +385,7 @@ export default function ChatInterface() {
                   onClick={() => handleSend(qText)}
                   className="cursor-pointer w-full text-left p-3 md:p-3.5 bg-white border border-[#D4CFC4] rounded-md hover:border-[#4A7C59] hover:bg-[#4A7C59]/5 transition-all group flex items-center justify-between shadow-sm min-h-[44px]"
                 >
-                  <span className="text-[10px] md:text-[11px] font-bold text-[#1A2A40] group-hover:text-[#4A7C59] transition-colors line-clamp-2 md:line-clamp-1 flex-1">
+                  <span className="text-[10px] md:text-base font-bold text-[#1A2A40] group-hover:text-[#4A7C59] transition-colors line-clamp-2 md:line-clamp-1 flex-1">
                     {qText}
                   </span>
                   <ArrowRight size={12} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#4A7C59] shrink-0 ml-2" />
