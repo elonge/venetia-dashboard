@@ -164,32 +164,36 @@ function buildFilter(filters?: SearchFilters): any {
 
   if (filters.source) {
     if (Array.isArray(filters.source)) {
-      mongoFilter.source = { $in: filters.source };
+      mongoFilter['new_metadata.source'] = { $in: filters.source };
     } else {
-      mongoFilter.source = filters.source;
+      mongoFilter['new_metadata.source'] = filters.source;
     }
   }
 
   if (filters.dateRange) {
-    mongoFilter['metadata.dateRange'] = {
-      $elemMatch: {
-        start: { $lte: filters.dateRange.end },
-        end: { $gte: filters.dateRange.start },
-      },
+    // Queries against new_metadata.date (single date)
+    const start = new Date(filters.dateRange.start);
+    const end = new Date(filters.dateRange.end);
+    // Ensure full day coverage if same day
+    if (filters.dateRange.start === filters.dateRange.end) {
+       end.setDate(end.getDate() + 1);
+    }
+
+    mongoFilter['new_metadata.date'] = {
+      $gte: start, 
+      $lte: end 
     };
   }
   
   // Support for Primary Source metadata filtering
   if (filters.author) {
-      mongoFilter['metadata.author'] = { $eq: filters.author };
+      mongoFilter['new_metadata.author'] = { $eq: filters.author };
   }
   if (filters.recipient) {
-      mongoFilter['metadata.recipient'] = { $eq: filters.recipient };
+      mongoFilter['new_metadata.recipient'] = { $eq: filters.recipient };
   }
   if (filters.source_type) {
-      mongoFilter['metadata.source_type'] = filters.source_type;
-  } else {
-      mongoFilter['metadata.source_type'] = { $eq: "primary_entry" };
+      mongoFilter['new_metadata.source_type'] = filters.source_type;
   }
 
   return mongoFilter;
@@ -237,9 +241,7 @@ export async function searchSimilarChunks(
         $project: {
           _id: 0,
           content: 1,
-          source: 1,
-          chunkIndex: 1,
-          metadata: 1,
+          new_metadata: 1,
           score: { $meta: 'vectorSearchScore' },
         },
       },
@@ -260,10 +262,15 @@ export async function searchSimilarChunks(
 
     return results.map((result) => ({
       content: result.content,
-      source: result.source,
-      chunkIndex: result.chunkIndex,
+      source: result.new_metadata?.source || 'Unknown',
+      chunkIndex: 0, 
       score: result.score || 0,
-      metadata: result.metadata || {},
+      metadata: {
+        documentTitle: result.new_metadata?.source || 'Untitled',
+        author: result.new_metadata?.author,
+        recipient: result.new_metadata?.recipient,
+        date: result.new_metadata?.date
+      },
     }));
   } catch (error) {
     console.error('Error in vector search:', error);
@@ -309,10 +316,15 @@ async function fallbackKeywordSearch(
 
     return results.map((result) => ({
       content: result.content,
-      source: result.source,
-      chunkIndex: result.chunkIndex,
+      source: result.new_metadata?.source || 'Unknown',
+      chunkIndex: 0,
       score: 0.5, // Default score for keyword search
-      metadata: result.metadata || {},
+      metadata: {
+        documentTitle: result.new_metadata?.source || 'Untitled',
+        author: result.new_metadata?.author,
+        recipient: result.new_metadata?.recipient,
+        date: result.new_metadata?.date
+      },
     }));
   } catch (error) {
     console.error('Error in fallback keyword search:', error);
@@ -329,7 +341,7 @@ export async function getAvailableSources(): Promise<string[]> {
     const db = client.db(DB_NAME);
     const collection = db.collection(COLLECTION_NAME);
 
-    const sources = await collection.distinct('source');
+    const sources = await collection.distinct('new_metadata.source');
     return sources.sort();
   } catch (error) {
     console.error('Error fetching sources:', error);

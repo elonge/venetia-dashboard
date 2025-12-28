@@ -84,14 +84,16 @@ async function main() {
 
   console.log(`Reading from ${SOURCE_COLLECTION}...`);
   const cursor = sourceColl.find({});
+  // const cursor = sourceColl.find({"recipient": "Violet Asquith"});
   
   // Clear existing primary chunks to avoid duplicates if re-running
   // We assume primary sources in document_chunks are marked with source_type='primary_entry'
   // Actually, we should probably delete by specific source name if possible, but 'primary_entry' is generic.
   // For safety, let's delete strictly where metadata.source_type is 'primary_entry'.
   
-  const deleteResult = await targetColl.deleteMany({ "metadata.source_type": "primary_entry" });
-  console.log(`Cleared ${deleteResult.deletedCount} existing primary source chunks.`);
+  console.log(`Skipping clearing existing primary source chunks for this specific run...`);
+  // const deleteResult = await targetColl.deleteMany({ "metadata.source_type": "primary_entry" });
+  // console.log(`Cleared ${deleteResult.deletedCount} existing primary source chunks.`);
 
   let processed = 0;
   let chunkCount = 0;
@@ -107,20 +109,35 @@ async function main() {
         chunks.map(chunk => generateEmbedding(openai, chunk))
     );
 
-    const newDocs = chunks.map((content, idx) => ({
-      content,
-      embedding: embeddings[idx],
-      source: `Primary: ${doc.author} to ${doc.recipient}`, // Descriptive source name
-      chunkIndex: idx,
-      metadata: {
-        documentTitle: `Letter: ${doc.author} to ${doc.recipient} (${doc.date ? new Date(doc.date).toISOString().split('T')[0] : 'Unknown'})`,
-        source_type: 'primary_entry',
-        author: doc.author,
-        recipient: doc.recipient,
+    const newDocs = chunks.map((content, idx) => {
+      // Determine type based on recipient presence
+      const isLetter = !!doc.recipient; 
+      const new_metadata = {
+        source: isLetter ? `primary_letter_${doc.author}_${doc.recipient}` : `primary_diary_${doc.author}`,
+        source_type: isLetter ? 'letter' : 'diary',
+        is_primary: true,
         date: doc.date,
-        original_id: doc._id
-      }
-    }));
+        original_id: doc._id,
+        author: doc.author,
+        recipient: doc.recipient
+      };
+
+      return {
+        content,
+        embedding: embeddings[idx],
+        source: `Primary: ${doc.author} to ${doc.recipient}`, // Legacy source name
+        chunkIndex: idx,
+        metadata: {
+          documentTitle: `Letter: ${doc.author} to ${doc.recipient} (${doc.date ? new Date(doc.date).toISOString().split('T')[0] : 'Unknown'})`,
+          source_type: 'primary_entry',
+          author: doc.author,
+          recipient: doc.recipient,
+          date: doc.date,
+          original_id: doc._id
+        },
+        new_metadata
+      };
+    });
 
     if (newDocs.length > 0) {
       await targetColl.insertMany(newDocs);

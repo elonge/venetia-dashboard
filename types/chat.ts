@@ -5,12 +5,39 @@ export const AuthorEnum = z.enum([
   'Edwin Montagu',
   'H.H. Asquith',
   'Margot Asquith',
-  'Venetia Stanley'
+  'Venetia Stanley',
+  'Violet Asquith',
+  'M.B.C.',
+  'Hugh Godley',
+  'Venetia Montagu',
+  'Arnold Ward',
+  'Archie Gordon',
+  'Arthur Asquith',
+  'Raymond Asquith',
+  'A Suffragette',
+  'Alick Carmichael',
+  'Arthur Godley',
+  'Augustine Birrell',
+  'Dudley Gordon',
+  'Eddie Marsh',
+  'Lord Murray',
+  'Roderick Meiklejohn',
+  'Rufus Isaacs',
+  'Winston Churchill'
 ]);
 
 export const RecipientEnum = z.enum([
   'Venetia Stanley',
-  'Edwin Montagu'
+  'Edwin Montagu',
+  'Margot Asquith',
+  'Violet Asquith',
+  'M.B.C.',
+  'Hugh Godley',
+  'Arnold Ward',
+  'Archie Gordon',
+  'H.H. Asquith',
+  'Katharine Asquith',
+  'Winston Churchill',
 ]);
 
 export const SearchIntentSchema = z.object({
