@@ -1,7 +1,6 @@
 'use client';
 
-import React, { Suspense, useCallback, useEffect, useMemo, useState } from 'react';
-import Link from 'next/link';
+import React, { Suspense, useCallback, useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { ArrowLeft, MessageCircle, X } from 'lucide-react';
 import ChatInterface from '@/components/chat/ChatInterface';
@@ -9,7 +8,7 @@ import { ChatLayoutContext } from '@/components/chat/chat-layout-context';
 import { useIsMobile } from '@/lib/useMediaQuery';
 
 const CHAT_MIN_WIDTH = 300;
-const CHAT_MAX_WIDTH = 600;
+const CHAT_MAX_WIDTH = 1200;
 const CHAT_DEFAULT_WIDTH = 400;
 
 export default function SiteLayout({
@@ -31,10 +30,10 @@ export default function SiteLayout({
   // Ensure chat is closed on mobile by default
   useEffect(() => {
     if (isMobile) {
-      setShowChat(false);
-      setIsChatOpen(false);
+      if (showChat) setShowChat(false);
+      if (isChatOpen) setIsChatOpen(false);
     }
-  }, [isMobile]);
+  }, [isMobile, showChat, isChatOpen]);
 
   // On mobile, never auto-open the chat drawer across route changes.
   useEffect(() => {
@@ -45,11 +44,17 @@ export default function SiteLayout({
     const savedChatWidth = localStorage.getItem('chatWidth');
     if (savedChatWidth) {
       const width = parseInt(savedChatWidth, 10);
-      if (width >= CHAT_MIN_WIDTH && width <= CHAT_MAX_WIDTH) {
+      if (width >= CHAT_MIN_WIDTH && width <= CHAT_MAX_WIDTH && width !== chatWidth) {
         setChatWidth(width);
       }
+    } else if (typeof window !== 'undefined') {
+      const preferredWidth = Math.floor(window.innerWidth * 0.33);
+      const clampedWidth = Math.max(CHAT_MIN_WIDTH, Math.min(CHAT_MAX_WIDTH, preferredWidth));
+      if (clampedWidth !== chatWidth) {
+        setChatWidth(clampedWidth);
+      }
     }
-  }, []);
+  }, [chatWidth]);
 
   useEffect(() => {
     if (chatWidth !== CHAT_DEFAULT_WIDTH) {

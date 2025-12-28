@@ -29,8 +29,8 @@ export async function POST(request: NextRequest) {
           
           // 3. Send Final Result
           controller.enqueue(encoder.encode(`data: ${JSON.stringify({ 
-            sources: result.sources, 
-            answers: result.answers,
+            markdownText: result.markdownText,
+            footnotes: result.footnotes,
             done: true 
           })}\n\n`));
           

@@ -1,6 +1,9 @@
 import { Agent, run } from '@openai/agents';
 import { z } from 'zod';
 import { KNOWLEDGE_BASE } from './knowledge';
+import {
+  FinalAnswerSchema,
+} from './formatFinalAnswers';
 import { 
   createGetCorrespondenceMetricsTool,
   createGetParliamentChunksTool,
@@ -17,13 +20,6 @@ export interface Message {
   role: 'user' | 'assistant' | 'system';
   content: string;
 }
-
-export const AnswerSchema = z.object({
-  answers: z.array(z.object({
-    text: z.string().describe('The answer text, formatted as a paragraph.'),
-    link: z.string().describe('The name of the source document referenced (e.g. "Letter to Venetia, 1915-05-12").')
-  }))
-});
 
 // --- System Prompt ---
 const SYSTEM_PROMPT = `You are an expert historian specializing in early 20th century British politics, specifically the Asquith-Venetia Stanley correspondence.
@@ -42,7 +38,7 @@ ${KNOWLEDGE_BASE}
 6.  **get_daily_locations_and_proximity**: Get geo-spatial data. Use for "where were they?", "were they together?", or mapping movements.
 7.  **find_dates_of_venetia_asquith_correspondance**: Find specific dates of letters matching a topic.
 8.  **get_weather_records**: Check historical weather.
-9.  **format_final_response**: Use this to reformat your synthesized answer into a clear, structured response with bullet points.
+9.  **format_final_response**: Use this to polish your synthesized findings into a clear, academic structure with Markdown and footnotes.
 
 **Strategy:**
 - **Triangulate**: If asked about an event (e.g. Shells Scandal), check *Personal* (letters), *Cabinet* (reality), and *Historian* (analysis) sources to compare perspectives.
@@ -50,9 +46,11 @@ ${KNOWLEDGE_BASE}
 - **Contextualize**: If asked about "Why...", use *Historian* opinions + *Personal* letters.
 
 **Output:**
-- **Refine**: Once you have synthesized your answer from tool outputs, ALWAYS call 'format_final_response' with your synthesized text to ensure clear formatting (bullets, paragraphs) before returning.
-- Answer clearly and cite your sources in the 'link' field of your response.
-- If you use multiple tools, synthesize the findings into a coherent narrative.
+- **Refine**: Once you have synthesized your answer from tool outputs, call 'format_final_response' to ensure clear formatting and academic footnotes.
+- Return a response containing "markdownText" and "footnotes".
+- Only cite verified sources (i.e., sources that came back from tool outputs); do not invent sources.
+- If you include any direct quotation, use a Markdown footnote marker (e.g. [^1]).
+- synthesize the findings into a coherent narrative.
 `;
 
 // --- Runner ---
@@ -72,11 +70,6 @@ export async function runAgentWorkflow(
     { role: 'user' as const, content: message }
   ];
 
-  // Note: createGetWeatherRecordsTool was in previous file but I need to make sure it exists or re-add it to tools.ts
-  // I will check tools.ts content again. I might have missed exporting it in the previous step.
-  // Ideally, I should re-add it to tools.ts if I want to use it.
-  // For now I will comment it out if it's missing, but the prompt mentions it.
-  
   const tools = [
     createGetCorrespondenceMetricsTool(onStatus),
     createGetParliamentChunksTool(onStatus),
@@ -94,7 +87,7 @@ export async function runAgentWorkflow(
     instructions: SYSTEM_PROMPT,
     model: 'gpt-4o-mini', 
     tools: tools,
-    outputType: AnswerSchema
+    outputType: FinalAnswerSchema
   });
 
   try {
@@ -152,14 +145,7 @@ export async function runAgentWorkflow(
       } catch (_e) {}
     }
 
-    const uniqueSources = Array.from(
-      new Map(sources.map((s) => [s.source + s.chunkIndex, s])).values()
-    );
-
-    return {
-      answers: result.finalOutput.answers,
-      sources: uniqueSources
-    };
+    return result.finalOutput;
   } catch (error) {
     console.error("Agent workflow error:", error);
     throw error;

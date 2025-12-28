@@ -6,6 +6,11 @@ import { getAsquithVenetiaProximitySeries } from "@/lib/daily_records";
 import OpenAI from "openai";
 import { AuthorEnum, RecipientEnum } from "@/types/chat";
 import { KNOWLEDGE_BASE } from "./knowledge";
+import {
+  formatFinalAnswers,
+  UnformatedAnswerSchema,
+  type VerifiedSourceItem,
+} from "./formatFinalAnswers";
 
 // --- Helper Functions ---
 
@@ -238,14 +243,6 @@ export const createGetPersonalChunksTool = (
         JSON.stringify(args)
       );
 
-      // Use vector search restricted to primary sources for semantic query capability
-      // searchPrimaryEntries is good for metadata/regex, searchSimilarChunks is better for "meaning"
-      // But searchPrimaryEntries supports textRegex.
-      // If query is semantic "opinion on...", vector search is better.
-      // We will use searchSimilarChunks with source_type='primary_entry' (implied or explicit)
-
-      // Wait, searchSimilarChunks supports filtering by author/recipient/source_type='primary_entry' via buildFilter
-
       const results = await searchSimilarChunks(args.query, 15, {
         dateRange: { start: args.start_date, end: args.end_date },
         author: args.author || undefined,
@@ -260,11 +257,9 @@ export const createGetPersonalChunksTool = (
         );
         const primaryDocs = await searchPrimaryEntries(
           {
-            type: "general_context",
             dateRange: { start: args.start_date, end: args.end_date },
-            author: args.author,
-            recipient: args.recipient,
-            requiresWeather: false,
+            author: args.author as string | undefined,
+            recipient: args.recipient as string | undefined,
             textRegex: args.query, // Naive use of query as regex
           },
           10
@@ -434,39 +429,16 @@ export const createFormatFinalResponseTool = (
   tool({
     name: "format_final_response",
     description:
-      "Format the internal synthesized answer into a clear, reader-friendly structure using bullet points and paragraphs. ALWAYS run this as the last step before finishing.",
-    parameters: z.object({
-      raw_answer: z
-        .string()
-        .describe("The synthesized answer from previous tool outputs."),
-    }),
-    execute: async ({ raw_answer }) => {
-      onStatus?.("Finalizing response formatting...");
-      console.log("✨ [Tool: format_final_response] Formatting response...");
-
-      if (!process.env.OPENAI_API_KEY) return raw_answer;
-      const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
-      try {
-        const response = await openai.chat.completions.create({
-          model: "gpt-4o-mini",
-          messages: [
-            {
-              role: "system",
-              content: `You are a professional historical editor. Using the following knowledge base for context:
-${KNOWLEDGE_BASE}
-
-Reformat the provided historical analysis into a clear, structured response. Use bullet points for lists of facts or events. Ensure paragraphs are distinct. Keep the tone academic yet accessible. Do NOT add new information.`,
-            },
-            { role: "user", content: raw_answer },
-          ],
-          temperature: 0.2,
-        });
-        const formatted = response.choices[0].message.content || raw_answer;
-        console.log("✨ [Tool: format_final_response] Formatting complete.");
-        return formatted;
-      } catch (_e) {
-        return raw_answer;
-      }
+      "Format the synthesized findings into a clear, academic structure using Markdown and adding footnotes for direct quotes.",
+    // NOTE: Tools are registered with strict JSON schemas; all properties must be required.
+    parameters: UnformatedAnswerSchema,
+    execute: async (args) => {
+      console.log("✨ [Tool: format_final_response] Formatting structured answers...", args.answer);
+      const formatted = await formatFinalAnswers(
+        args,
+        onStatus
+      );
+      console.log("✨ [Tool: format_final_response] Formatting complete.", formatted);
+      return JSON.stringify(formatted);
     },
   });

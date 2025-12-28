@@ -40,38 +40,6 @@ export const RecipientEnum = z.enum([
   'Winston Churchill',
 ]);
 
-export const SearchIntentSchema = z.object({
-  type: z.enum(['specific_date', 'timeline', 'sentiment_trend', 'general_context'])
-    .describe('The type of search intent.'),
-  dateRange: z.object({
-    start: z.string().describe('YYYY-MM-DD'),
-    end: z.string().describe('YYYY-MM-DD'),
-  }).nullable().optional()
-    .describe('Date range for the query. Required for specific_date and timeline types.'),
-  sentiment: z.enum(['positive', 'negative']).nullable().optional()
-    .describe('Filter for positive or negative sentiment.'),
-  author: AuthorEnum.nullable().optional()
-    .describe('The author of the letter/diary entry.'),
-  recipient: RecipientEnum.nullable().optional()
-    .describe('The recipient of the letter.'),
-  requiresSecondary: z.boolean().nullable().optional()
-    .describe('Whether secondary sources (books, articles) are required/allowed.'),
-  requiresWeather: z.boolean()
-    .describe('True if the user asks about weather, rain, temperature, or if the conditions of a specific day are relevant.'),
-  locationContext: z.string().nullable().optional()
-    .describe("Location for weather lookup (e.g., 'London', 'Oxford', 'Alderley'). Default to 'London' if weather is required but location unspecified."),
-  topics: z.array(z.string()).nullable().optional()
-    .describe('List of topics or keywords to filter by.'),
-  entities: z.array(z.string()).nullable().optional()
-    .describe('List of named entities (people, places) mentioned.'),
-  textRegex: z.string().nullable().optional()
-    .describe('Regex pattern for text matching.'),
-  semanticQuery: z.string().nullable().optional()
-    .describe('A concise string optimized for VECTOR SEARCH if the user asks about a TOPIC, SECRET, OPINION, or EVENT content. Exclude dates/authors from this string if captured in other fields. If purely date-based, leave null.'),
-});
-
-export type SearchIntent = z.infer<typeof SearchIntentSchema>;
-
 export const AgentPlanStepSchema = z.discriminatedUnion('kind', [
   z.object({
     kind: z.literal('tool'),
@@ -95,14 +63,3 @@ export const PlanSchema = z.object({
 
 export type AgentPlan = z.infer<typeof PlanSchema>;
 export type AgentPlanStep = z.infer<typeof AgentPlanStepSchema>;
-
-export const AnswersSchema = z.object({
-  answers: z.array(
-    z.object({
-      text: z.string(),
-      link: z.string().default(''),
-    })
-  ),
-});
-
-export type Answers = z.infer<typeof AnswersSchema>;

@@ -249,7 +249,9 @@ export const sourceNameMapping: Record<string, string> = {
         "asquith_letters_full.txt": "Asquith Letters",
         "Asquith - Roy Jenkins.txt": "Asquith (Roy Jenkins)",
         "The_Asquiths_Book-full.txt": "The Asquiths Book",
+        "the_asquiths_book_full": "The Asquiths Book",
         "violet-full.txt": "Violet Asquith Diaries",
+        "violet-diaries.txt": "Violet Asquith Diaries",
         "Margot Asquith's Great War Diary - Michael Brock.txt": "Margot Asquith's Great War Diary",
       
         // Venetia Stanley & Montagu
@@ -260,7 +262,7 @@ export const sourceNameMapping: Record<string, string> = {
         "cynthia-diaries-full.txt": "Cynthia Diaries",
         "Diana_Cooper-full.txt": "Diana Cooper",
         "Frances_Stevenson-full.txt": "Frances Stevenson",
-        "naomi_levine-full.txt": "Naomi Levine",
+        "naomi_levine_full.txt": "Naomi Levine",
         "Lord_Riddel-full.txt": "Lord Riddell",
         "Maurice_Hankey-full.txt": "Maurice Hankey",
         "maurice_hunkey_man_of_secrets_relevant_years.txt": "Maurice Hankey: Man of Secrets",
@@ -272,16 +274,20 @@ export const sourceNameMapping: Record<string, string> = {
         "Winston_Churchill_CAB_Part_3.2_1915_1916-full.txt": "Churchill Cabinet Papers (1915–1916)",
         
         // Data Folders (if needed)
-        "hansard_data_notebooklm_ready": "Hansard Data Records"
+        "hansard_data_notebooklm_ready": "Hansard Data Records",
+        "Hansard 1912-1916.txt": "Hansard 1912-1916",
         
 };
       
       // Helper function to safely get the name
 export const getRealSourceName = (name: string): string => {
+  console.log("Original source name:", name, sourceNameMapping[name]);
     if (!name) return 'Unknown Source';
     
     // 1. Check direct mapping
     if (sourceNameMapping[name]) return sourceNameMapping[name];
+    if (sourceNameMapping[name.toLowerCase()]) return sourceNameMapping[name.toLowerCase()];
+    if (sourceNameMapping[name + ".txt"]) return sourceNameMapping[name + ".txt"];
 
     let displayName = name;
 

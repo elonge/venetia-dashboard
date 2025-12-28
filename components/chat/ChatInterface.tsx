@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Send, Loader2, Sparkles, ArrowRight, Search } from 'lucide-react';
 import MessageBubble, { Message } from './MessageBubble';
-import type { Question, QuestionAnswer } from '@/lib/questions';
+import type { Question } from '@/lib/questions';
 
 const CHAT_STORAGE_KEY = 'chatMessages';
 const DEFAULT_SUGGESTED_QUESTIONS_COUNT = 3;
@@ -93,8 +93,8 @@ export default function ChatInterface() {
             .map((msg) => ({
               role: msg.role === 'assistant' ? 'assistant' : 'user',
               content: msg.content,
-              sources: msg.sources,
-              answers: msg.answers,
+              markdownText: msg.markdownText,
+              footnotes: msg.footnotes,
               isStreaming: msg.isStreaming,
             }));
           if (sanitizedMessages.length > 0) {
@@ -169,13 +169,8 @@ export default function ChatInterface() {
 
       const reader = response.body?.getReader();
       const decoder = new TextDecoder();
-      let sources: Array<{
-        source: string;
-        documentTitle?: string;
-        chunkIndex: number;
-        score: number;
-      }> = [];
-      let answers: QuestionAnswer[] | undefined = undefined;
+      let markdownText: string | undefined = undefined;
+      let footnotes: Array<{ sourceId: string; date: string | null }> | undefined = undefined;
 
       if (!reader) {
         throw new Error('No response body');
@@ -190,9 +185,9 @@ export default function ChatInterface() {
       const updateMessage = (
         content: string, 
         isDone: boolean, 
-        finalSources?: typeof sources,
-        finalAnswers?: QuestionAnswer[],
-        status?: string
+        status?: string,
+        finalMarkdownText?: string,
+        finalFootnotes?: typeof footnotes
       ) => {
         setMessages((prev) => {
           const newMessages = [...prev];
@@ -204,16 +199,11 @@ export default function ChatInterface() {
               lastMessage.status = status;
             }
             if (isDone) {
-              if (finalSources) {
-                lastMessage.sources = finalSources.map((s) => ({
-                  source: s.source,
-                  documentTitle: s.documentTitle,
-                  chunkIndex: s.chunkIndex,
-                  score: s.score,
-                }));
+              if (finalMarkdownText) {
+                lastMessage.markdownText = finalMarkdownText;
               }
-              if (finalAnswers) {
-                lastMessage.answers = finalAnswers;
+              if (finalFootnotes) {
+                lastMessage.footnotes = finalFootnotes;
               }
             }
           }
@@ -235,7 +225,7 @@ export default function ChatInterface() {
               const data = JSON.parse(line.slice(6));
               
               if (data.status) {
-                updateMessage(fullContent, false, undefined, undefined, data.status);
+                updateMessage(fullContent, false, data.status);
               }
 
               if (data.loading && !data.done) {
@@ -260,28 +250,29 @@ export default function ChatInterface() {
               if (data.content && !data.loading) {
                 fullContent += data.content;
               }
+
+              if (data.markdownText) {
+                markdownText = data.markdownText;
+              }
+              if (data.footnotes) {
+                footnotes = data.footnotes;
+              }
               
               if (data.done) {
                 if (pendingUpdate) {
                   cancelAnimationFrame(pendingUpdate);
                   pendingUpdate = null;
                 }
-                if (data.sources) {
-                  sources = data.sources;
+                if (data.markdownText) {
+                    markdownText = data.markdownText;
                 }
-                if (data.answers && Array.isArray(data.answers)) {
-                  answers = data.answers;
+                if (data.footnotes) {
+                    footnotes = data.footnotes;
                 }
-                const finalContent = answers && answers.length > 0 ? '' : fullContent;
-                updateMessage(finalContent, true, sources, answers);
-              }
 
-              if (data.sources && !data.done) {
-                sources = data.sources;
-              }
-              
-              if (data.answers && !data.done && Array.isArray(data.answers)) {
-                answers = data.answers;
+                console.log('Final markdownText:', markdownText, footnotes);
+                const finalContent = markdownText ? '' : fullContent;
+                updateMessage(finalContent, true, undefined, markdownText, footnotes);
               }
             } catch {
               // Ignore JSON parse errors
@@ -293,8 +284,8 @@ export default function ChatInterface() {
       if (pendingUpdate) {
         cancelAnimationFrame(pendingUpdate);
       }
-      const finalContent = answers && answers.length > 0 ? '' : fullContent;
-      updateMessage(finalContent, true, sources, answers);
+      const finalContent = markdownText ? '' : fullContent;
+      updateMessage(finalContent, true, undefined, markdownText, footnotes);
     } catch (error) {
       console.error('Error sending message:', error);
       setMessages((prev) => {

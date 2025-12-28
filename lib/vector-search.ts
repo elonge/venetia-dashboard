@@ -1,6 +1,5 @@
 import clientPromise from './mongodb';
 import OpenAI from 'openai';
-import { type SearchIntent } from '@/types/chat';
 
 const DB_NAME = 'venetia_project';
 const COLLECTION_NAME = 'document_chunks';
@@ -8,7 +7,6 @@ const INDEX_NAME = process.env.VECTOR_SEARCH_INDEX_NAME || 'vector_index';
 const EMBEDDING_MODEL = process.env.EMBEDDING_MODEL || 'text-embedding-3-large';
 const ENTRIES_COLLECTION = 'primary_sources'; // The new collection for letters/diaries
 
-export type { SearchIntent };
 
 export interface PrimaryEntryResult {
   content: string;
@@ -19,18 +17,30 @@ export interface PrimaryEntryResult {
   metadata: any;
 }
 
+export interface PrimaryEntryFilter {
+  dateRange?: { start: string; end: string }; // ISO date strings
+  sentiment?: 'positive' | 'negative'; // Sentiment filter
+  topics?: string[]; // Topics/keywords to search for
+  author?: string; // Author name filter
+  recipient?: string; // Recipient name filter
+  textRegex?: string; // Optional regex to match in text content
+}
+
+
+
 export interface SearchResult {
   content: string;
   source: string;
   chunkIndex: number;
   score: number;
   metadata: {
-    documentTitle?: string;
     dateRange?: { start: string; end: string };
     pageNumber?: number;
     date?: string | Date;
     author?: string;
     recipient?: string;
+    source_type?: string;
+    source?: string;
   };
 }
 
@@ -71,7 +81,7 @@ async function generateQueryEmbedding(
 }
 
 export async function searchPrimaryEntries(
-  intent: SearchIntent,
+  filter: PrimaryEntryFilter,
   limit: number = 10
 ): Promise<PrimaryEntryResult[]> {
   try {
@@ -82,11 +92,11 @@ export async function searchPrimaryEntries(
     const query: any = {  };
 
     // 1. Date Filter (The "Calendar" Logic)
-    if (intent.dateRange) {
-      const start = new Date(intent.dateRange.start);
+    if (filter.dateRange) {
+      const start = new Date(filter.dateRange.start);
       // If end is the same day, make it end of day
-      let end = new Date(intent.dateRange.end);
-      if (intent.dateRange.start === intent.dateRange.end) {
+      let end = new Date(filter.dateRange.end);
+      if (filter.dateRange.start === filter.dateRange.end) {
           end.setDate(end.getDate() + 1); 
       }
       
@@ -97,27 +107,27 @@ export async function searchPrimaryEntries(
     }
 
     // 2. Sentiment Filter (The "Mood" Logic)
-    if (intent.sentiment === 'negative') {
+    if (filter.sentiment === 'negative') {
       query.sentiment_score = { $lt: -0.4 };
-    } else if (intent.sentiment === 'positive') {
+    } else if (filter.sentiment === 'positive') {
       query.sentiment_score = { $gt: 0.4 };
     }
 
-    if (intent.author) {
-      query.author = { $regex: intent.author, $options: 'i' };
+    if (filter.author) {
+      query.author = { $regex: filter.author, $options: 'i' };
     }
-    if (intent.recipient) {
-      query.recipient = { $regex: intent.recipient, $options: 'i' };
+    if (filter.recipient) {
+      query.recipient = { $regex: filter.recipient, $options: 'i' };
     }
     // 3. Topic Keyword Filter (Simple Regex)
-    if (intent.topics && intent.topics.length > 0) {
+    if (filter.topics && filter.topics.length > 0) {
        // Create an OR condition: at least one of the topics must be present in full_text
-       query.$or = intent.topics.map(t => ({ full_text: { $regex: t, $options: 'i' } }));
+       query.$or = filter.topics.map(t => ({ full_text: { $regex: t, $options: 'i' } }));
     }
     
     // 4. Explicit Text Regex (if provided)
-    if (intent.textRegex) {
-        query.full_text = { $regex: intent.textRegex, $options: 'i' };
+    if (filter.textRegex) {
+        query.full_text = { $regex: filter.textRegex, $options: 'i' };
     }
 
     console.log('📅 Executing Primary Search:', JSON.stringify(query));
@@ -234,19 +244,12 @@ export async function searchSimilarChunks(
           _id: 0,
           content: 1,
           new_metadata: 1,
+          chunkIndex: 1,
           score: { $meta: 'vectorSearchScore' },
         },
       },
     ];
 
-    // Apply filters if provided
-    // if (Object.keys(mongoFilter).length > 0) {
-    //   // Add filter stage after vector search
-    //   pipeline.push({
-    //     $match: mongoFilter,
-    //   });
-    // }
-    
     // Limit the final results to the requested amount
     pipeline.push({ $limit: limit });
 
@@ -254,14 +257,15 @@ export async function searchSimilarChunks(
 
     return results.map((result) => ({
       content: result.content,
-      source: result.new_metadata?.source || 'Unknown',
-      chunkIndex: 0, 
+      source: result.new_metadata?.source || '',
+      chunkIndex: result.chunkIndex, 
       score: result.score || 0,
       metadata: {
-        documentTitle: result.new_metadata?.source || 'Untitled',
         author: result.new_metadata?.author,
         recipient: result.new_metadata?.recipient,
-        date: result.new_metadata?.date
+        date: result.new_metadata?.date,
+        source_type: result.new_metadata?.source_type,
+        source: result.new_metadata?.source || '',
       },
     }));
   } catch (error) {
