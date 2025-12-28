@@ -29,48 +29,9 @@ export interface Metrics {
   sharing_score?: number;
 }
 
-export interface PrimeMinister {
-  location?: string;
-  meeting_with_venetia?: boolean;
-  meeting_details?: string;
-  letters_count?: number;
-  letters: Letter[];
-  metrics?: Metrics;
-}
-
-export interface Venetia {
-  location?: string;
-  activities?: string;
-  letters_to_edwin?: EdwinLetter[];
-  inferred_letter_to_pm?: boolean;
-}
-
 export interface Context {
   public_hansard?: string;
   secret_churchill?: string;
-}
-
-export interface DiaryEntry {
-  author: string;
-  is_diary_entry: boolean;
-  location?: string;
-  entry: string;
-  pm_mood_observation?: string;
-  venetia_mention?: string;
-  source?: string;
-}
-
-export interface TimelineDayDocument {
-  _id: string; // Serialized from ObjectId
-  date: string; // Serialized from Date
-  date_string: string;
-  prime_minister: PrimeMinister;
-  venetia: Venetia;
-  context: Context;
-  diaries?: DiaryEntry[];
-  excerpt?: string;
-  people_mentioned?: string[];
-  scores: Scores;
 }
 
 export interface DailyRecordLocation {
@@ -125,27 +86,31 @@ export interface DailyRecordWeatherShort {
   london?: string | null;
 }
 
+export interface AsquithVenetiaProximity {
+  distance_km?: number | null;
+  status?: string | null;
+  calculated_from?: {
+    pm?: string | null;
+    venetia?: string | null;
+  } | null;
+  geo_coords?: {
+    pm?: { lat?: number | null; lng?: number | null } | null;
+    venetia?: { lat?: number | null; lng?: number | null } | null;
+  } | null; 
+}
+
 export interface DailyRecordDocument {
   _id?: ObjectId;
-  date?: string | Date | null;
-  date_string?: string | null;
+  date: string | Date ;
+  date_string: string;
   pm_activities?: string[] | null;
   venetia_activities?: string[] | null;
   pm_location?: DailyRecordLocation | null;
   venetia_location?: DailyRecordLocation | null;
+  met_venetia?: boolean | null;
   meeting_reference?: string | null;
-  asquith_venetia_proximity?: {
-    distance_km?: number | null;
-    status?: string | null;
-    calculated_from?: {
-      pm?: string | null;
-      venetia?: string | null;
-    } | null;
-    geo_coords?: {
-      pm?: { lat?: number | null; lng?: number | null } | null;
-      venetia?: { lat?: number | null; lng?: number | null } | null;
-    } | null;
-  } | null;
+  meeting_details?: string | null;
+  asquith_venetia_proximity?: AsquithVenetiaProximity | null
   letters?: DailyRecordLetter[] | null;
   politics?: DailyRecordPolitics | null;
   diaries?: DailyRecordDiary[] | null;
