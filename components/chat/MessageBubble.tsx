@@ -148,7 +148,30 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
 
   // Prepare content with footnotes appended if necessary
   let renderedContent = null;
-  if (hasMarkdownText) {
+  if (message.isStreaming && !message.content && !message.markdownText) {
+    renderedContent = (
+      <div className="py-2 animate-in fade-in duration-500">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="relative shrink-0">
+            <div className="w-5 h-5 border-2 border-accent-green/20 border-t-accent-green rounded-full animate-spin" />
+            <div className="absolute inset-0 bg-accent-green/5 rounded-full animate-pulse" />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-accent-green animate-pulse">
+              {message.status || "Archival Search in Progress"}
+            </span>
+          </div>
+        </div>
+        
+        <div className="space-y-3 opacity-40">
+          <div className="h-2 bg-[#F5F0E8] rounded-full w-[95%] animate-pulse" />
+          <div className="h-2 bg-[#F5F0E8] rounded-full w-[80%] animate-pulse" style={{ animationDelay: '150ms' }} />
+          <div className="h-2 bg-[#F5F0E8] rounded-full w-[85%] animate-pulse" style={{ animationDelay: '300ms' }} />
+          <div className="h-2 bg-[#F5F0E8] rounded-full w-[60%] animate-pulse" style={{ animationDelay: '450ms' }} />
+        </div>
+      </div>
+    );
+  } else if (hasMarkdownText) {
      const footnotesBlock = message.footnotes?.map((f, i) => `[^${i + 1}]: ${f.sourceId}`).join('\n') || '';
      const contentWithFootnotes = replaceSourceNames(message.markdownText!) + '\n\n' + footnotesBlock;
      renderedContent = (

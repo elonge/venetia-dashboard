@@ -51,6 +51,7 @@ ${KNOWLEDGE_BASE}
 - Only cite verified sources (i.e., sources that came back from tool outputs); do not invent sources.
 - If you include any direct quotation, use a Markdown footnote marker (e.g. [^1]).
 - synthesize the findings into a coherent narrative.
+- At the end of your response, suggest a follow-up question or topic for further exploration.
 `;
 
 // --- Runner ---

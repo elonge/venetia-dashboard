@@ -2,37 +2,43 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Send, Loader2, Sparkles, ArrowRight, Search, Trash2, AlertTriangle } from 'lucide-react';
+import { Send, Loader2, Sparkles, Search, Trash2, AlertTriangle, ArrowRight } from 'lucide-react';
 import MessageBubble, { Message } from './MessageBubble';
-import type { Question } from '@/lib/questions';
 
 const CHAT_STORAGE_KEY = 'chatMessages';
-const DEFAULT_SUGGESTED_QUESTIONS_COUNT = 3;
-const FALLBACK_SUGGESTED_QUESTIONS: string[] = [
-  'Why did Asquith write so often?',
-  'Why did Asquith mawl Venetia so often?',
-  'What were the key political events of 1912–1916?',
-];
 
-function pickRandomUnique<T>(items: T[], count: number): T[] {
-  if (count <= 0) return [];
-  if (items.length <= count) return items.slice();
-
-  const indices = new Set<number>();
-  while (indices.size < count) {
-    indices.add(Math.floor(Math.random() * items.length));
+const SUGGESTED_QUESTIONS = [
+  {
+    category: "The Letters & Romance",
+    questions: [
+      "Why did Asquith write to Venetia?",
+      "Did Venetia love Asquith?",
+      "What happened to the letters?"
+    ]
+  },
+  {
+    category: "Politics & War",
+    questions: [
+      "How did the government collapse in 1915?",
+      "What was the Shells Scandal?",
+      "Did Asquith share secrets with Venetia?"
+    ]
+  },
+  {
+    category: "The Social Circle",
+    questions: [
+      "Who were 'The Coterie'?",
+      "What was Edwin Montagu's role?",
+      "Did others know about the affair?"
+    ]
   }
-  return Array.from(indices).map((i) => items[i]);
-}
+];
 
 export default function ChatInterface() {
   const searchParams = useSearchParams();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [popularQuestions, setPopularQuestions] = useState<Question[]>([]);
-  const [suggestedQuestions, setSuggestedQuestions] = useState<Question[]>([]);
-  const [isLoadingPopularQuestions, setIsLoadingPopularQuestions] = useState(true);
   const [isClearConfirmOpen, setIsClearConfirmOpen] = useState(false);
   const hasAutoSentRef = useRef(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -45,42 +51,6 @@ export default function ChatInterface() {
   useEffect(() => {
     scrollToBottom();
   }, [messages, isLoading]);
-
-  // Load popular questions for empty state
-  useEffect(() => {
-    let isActive = true;
-
-    async function loadPopularQuestions() {
-      try {
-        const response = await fetch('/api/questions');
-        if (!response.ok) return;
-
-        const data = (await response.json()) as Question[];
-        if (!isActive || !Array.isArray(data)) return;
-
-        setPopularQuestions(data);
-      } catch (error) {
-        console.error('Error fetching popular questions:', error);
-      } finally {
-        if (isActive) setIsLoadingPopularQuestions(false);
-      }
-    }
-
-    loadPopularQuestions();
-    return () => {
-      isActive = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (popularQuestions.length > 0) {
-      setSuggestedQuestions(
-        pickRandomUnique(popularQuestions, DEFAULT_SUGGESTED_QUESTIONS_COUNT)
-      );
-    } else {
-      setSuggestedQuestions([]);
-    }
-  }, [popularQuestions]);
 
   // Restore chat history on mount
   useEffect(() => {
@@ -364,7 +334,7 @@ export default function ChatInterface() {
         {messages.length === 0 ? (
           // --- EMPTY STATE ---
           <div className="h-full flex flex-col justify-center items-center text-center animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-forwards">
-            <div className="w-16 h-16 bg-[#D4CFC4]/30 rounded-full flex items-center justify-center mb-6 border border-[#D4CFC4]/50">
+            <div className="w-16 h-16 bg-[#D4CFC4]/30 rounded-full flex items-center justify-center mb-6 border border-[#D4CFC4]/50 mt-8 md:mt-0">
               <Search size={24} className="text-[#8B4513]/40" />
             </div>
             <h2 className="font-serif text-xl md:text-2xl text-[#1A2A40] mb-3">
@@ -374,22 +344,25 @@ export default function ChatInterface() {
               Ask questions about Venetia Stanley, H.H. Asquith, and the political events of 1912–1916. I verify every answer against the primary sources.
             </p>
 
-            <div className="w-full max-w-sm md:max-w-2xl space-y-2 md:space-y-2.5 px-4">
-              {isLoadingPopularQuestions ? (
-                Array.from({ length: DEFAULT_SUGGESTED_QUESTIONS_COUNT }).map((_, i) => (
-                  <div key={i} className="h-12 w-full bg-white/50 border border-[#D4CFC4] rounded-md animate-pulse" />
-                ))
-              ) : (suggestedQuestions.length > 0 ? suggestedQuestions.map(q => q.Question) : FALLBACK_SUGGESTED_QUESTIONS.slice(0, DEFAULT_SUGGESTED_QUESTIONS_COUNT)).map((qText, i) => (
-                <button
-                  key={i}
-                  onClick={() => handleSend(qText)}
-                  className="cursor-pointer w-full text-left p-3 md:p-3.5 bg-white border border-[#D4CFC4] rounded-md hover:border-[#4A7C59] hover:bg-[#4A7C59]/5 transition-all group flex items-center justify-between shadow-sm min-h-[44px]"
-                >
-                  <span className="text-[10px] md:text-base font-bold text-[#1A2A40] group-hover:text-[#4A7C59] transition-colors line-clamp-2 md:line-clamp-1 flex-1">
-                    {qText}
-                  </span>
-                  <ArrowRight size={12} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#4A7C59] shrink-0 ml-2" />
-                </button>
+            <div className="w-full max-w-4xl px-4 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-left mt-2 md:mt-4">
+              {SUGGESTED_QUESTIONS.map((section, idx) => (
+                <div key={idx} className="space-y-3 animate-in fade-in slide-in-from-bottom-3 duration-500" style={{ animationDelay: `${idx * 100}ms` }}>
+                  <h4 className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] text-[#8B4513] border-b border-[#D4CFC4] pb-2 mb-2">
+                    {section.category}
+                  </h4>
+                  <div className="space-y-2">
+                    {section.questions.map((q, qIdx) => (
+                      <button
+                        key={qIdx}
+                        onClick={() => handleSend(q)}
+                        className="w-full text-left p-2.5 md:p-3 text-xs md:text-sm text-[#1A2A40] bg-white/50 border border-transparent hover:border-[#D4CFC4] hover:bg-white hover:shadow-sm rounded-md transition-all duration-200 group flex items-start justify-between"
+                      >
+                        <span className="group-hover:text-[#4A7C59] transition-colors pr-2 leading-relaxed">{q}</span>
+                        <ArrowRight size={10} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#4A7C59] shrink-0 mt-1" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           </div>

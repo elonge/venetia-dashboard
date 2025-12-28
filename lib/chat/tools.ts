@@ -295,7 +295,7 @@ export const createGetHistorianOpinionTool = (
         ),
     }),
     execute: async (args) => {
-      onStatus?.("Consulting historian views...");
+      onStatus?.("Checking scholarly perspectives...");
       console.log(
         "📚 [Tool: get_historian_opinion] Consulting historians for:",
         JSON.stringify(args)

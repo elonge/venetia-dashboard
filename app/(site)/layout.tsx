@@ -27,13 +27,13 @@ export default function SiteLayout({
 
   const isHome = pathname === '/';
 
-  // Ensure chat is closed on mobile by default
+  // Ensure chat is closed on mobile by default when switching views
   useEffect(() => {
     if (isMobile) {
-      if (showChat) setShowChat(false);
-      if (isChatOpen) setIsChatOpen(false);
+      setShowChat(false);
+      setIsChatOpen(false);
     }
-  }, [isMobile, showChat, isChatOpen]);
+  }, [isMobile]);
 
   // On mobile, never auto-open the chat drawer across route changes.
   useEffect(() => {
