@@ -179,12 +179,12 @@ function ChapterCard({ chapter, index }: { chapter: Chapter, index: number }) {
   <div className="absolute inset-0 p-4 md:p-6 flex flex-col justify-end">
     
     {/* Top Badge: Chapter ID or Number */}
-    <div className="absolute top-3 md:top-4 left-3 md:left-4">
+    {/* <div className="absolute top-3 md:top-4 left-3 md:left-4">
       <span className="px-1.5 md:px-2 py-0.5 md:py-1 text-[9px] md:text-[10px] font-bold tracking-widest text-white/80 bg-black/30 backdrop-blur-sm rounded-md border border-white/10 uppercase">
         Chapter {index + 1}
       </span>
       
-    </div>
+    </div> */}
 
     {/* Title */}
     <h3 className="text-lg md:text-xl lg:text-2xl font-serif text-white mb-1.5 md:mb-2 leading-tight">

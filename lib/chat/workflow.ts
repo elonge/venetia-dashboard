@@ -1,5 +1,6 @@
 import { Agent, run } from '@openai/agents';
 import { z } from 'zod';
+import { KNOWLEDGE_BASE } from './knowledge';
 import { 
   createGetCorrespondenceMetricsTool,
   createGetParliamentChunksTool,
@@ -28,6 +29,9 @@ export const AnswerSchema = z.object({
 const SYSTEM_PROMPT = `You are an expert historian specializing in early 20th century British politics, specifically the Asquith-Venetia Stanley correspondence.
 
 Your goal is to answer user questions by intelligently selecting and combining information from multiple specialized tools.
+
+**Core Knowledge Base:**
+${KNOWLEDGE_BASE}
 
 **Available Tools:**
 1.  **get_correspondence_metrics**: Analyze sentiment trends (e.g. "romantic intensity", "anxiety"). Use this for questions about feelings, "mood", or correlations between events and emotions.

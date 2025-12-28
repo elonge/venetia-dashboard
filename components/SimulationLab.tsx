@@ -602,8 +602,7 @@ const VenetiaSimulationLab = () => {
         onPause={() => setIsReconstructionPlaying(false)}
         onEnded={() => setIsReconstructionPlaying(false)}
       >
-        <source src="/lab_instagram/asquith_reading_letter2.mp3" type="audio/mpeg" />
-        <source src="/lab_instagram/asquith_reading_letter2.m4a" type="audio/mp4" />
+        <source src="/lab_instagram/asquith_reading_poem.mp3" type="audio/mpeg" />
       </audio>
 
       {/* Main Page Header */}
@@ -756,8 +755,8 @@ const VenetiaSimulationLab = () => {
                   </div>
                 </div>
                 <p className="text-center mt-4 md:mt-6 text-navy font-serif italic text-xs md:text-sm font-bold leading-tight px-2 md:px-4">
-                &quot;Engagement Day Message&quot; <br/>
-                <span className="text-[9px] md:text-[10px] not-italic font-sans text-slate uppercase tracking-widest">Reconstructed: 12.05.1915</span>
+                &quot;I fence with Mistress Katharine&quot; <br/>
+                <span className="text-[9px] md:text-[10px] not-italic font-sans text-slate uppercase tracking-widest">Reconstructed: 01.07.1913</span>
               </p>
             </div>
           </div>

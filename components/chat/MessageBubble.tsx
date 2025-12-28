@@ -60,6 +60,15 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
   const isUser = message.role === 'user';
 
   const replaceSourceNames = (text: string): string => {
+    if (!text) return text;
+    
+    // 1. Regex for dynamic patterns like primary_letter_..., hansard_..., churchill_cabinet_...
+    // This catches patterns like "primary_letter_h_h_asquith_venetia_stanley, 1915-01-20"
+    let processedText = text.replace(/(?:primary_letter_|hansard_|churchill_cabinet_)[a-zA-Z0-9_\-]+(?:, \d{4}-\d{2}-\d{2})?/g, (match) => {
+        return getRealSourceName(match);
+    });
+
+    // 2. Direct mappings from sourceNameMapping
     const entries = Object.entries(sourceNameMapping).sort(
       ([a], [b]) => b.length - a.length
     );
@@ -67,7 +76,7 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
     return entries.reduce((acc, [sourceName, displayName]) => {
       if (!sourceName) return acc;
       return acc.split(sourceName).join(displayName);
-    }, text);
+    }, processedText);
   };
   
   // 1. USER MESSAGE: Solid Navy, Modern, Direct

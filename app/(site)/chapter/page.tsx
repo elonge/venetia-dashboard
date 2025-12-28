@@ -305,9 +305,8 @@ function ChapterContent() {
             {chapterData.sources && chapterData.sources.length > 0 && (
               <section className="bg-card-bg border border-border-beige/50 rounded-lg p-4 mb-12">
                 <div className="flex items-start gap-2">
-                  <ExternalLink className="w-4 h-4 text-muted-gray mt-0.5" />
                   <div>
-                    <h2 className="text-xs font-semibold text-muted-gray uppercase tracking-wider mb-2">
+                    <h2 className="text-base font-semibold text-muted-gray uppercase tracking-wider mb-2">
                       Sources
                     </h2>
                     <ul className="space-y-1">

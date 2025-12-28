@@ -1,3 +1,4 @@
+export const KNOWLEDGE_BASE = `
 Here is a Knowledge Base list of the top 25 pivotal events and moments derived from the sources, covering the political, personal, and military aspects of the story.
 
 ### **1. The Marconi Scandal**
@@ -57,11 +58,11 @@ Here is a Knowledge Base list of the top 25 pivotal events and moments derived f
 *   **Sources:** *Winston_Churchill_CAB_Part_2.3_1911_1914-full.txt; The_Asquiths_Book-full.txt*
 
 ### **8. Sinking of HMS Audacious**
-*   **Official Name:** Loss of HMS *Audacious*
+*   **Official Name:** Loss of HMS Audacious
 *   **Common/Slang Names:** "The Audacious"
 *   **Exact Date Range:** 1914-10-27
 *   **Location:** Lough Swilly, Northern Ireland
-*   **Significance:** A super-dreadnought sunk by a mine. The government attempted to keep the loss secret, though American passengers on the *Olympic* witnessed it.
+*   **Significance:** A super-dreadnought sunk by a mine. The government attempted to keep the loss secret, though American passengers on the Olympic witnessed it.
 *   **Sources:** *Winston_Churchill_CAB_Part_2.3_1911_1914-full.txt; asquith_letters_full.txt*
 
 ### **9. Battle of Coronel**
@@ -129,7 +130,7 @@ Here is a Knowledge Base list of the top 25 pivotal events and moments derived f
 *   **Sources:** *Winston_Churchill_CAB_Part_3.1_1914_1915-full.txt; The_Asquiths_Book-full.txt*
 
 ### **17. Sinking of the Lusitania**
-*   **Official Name:** Sinking of the RMS *Lusitania*
+*   **Official Name:** Sinking of the RMS Lusitania
 *   **Common/Slang Names:** "The Lusitania"
 *   **Exact Date Range:** 1915-05-07
 *   **Location:** Off the Old Head of Kinsale, Ireland
@@ -177,7 +178,7 @@ Here is a Knowledge Base list of the top 25 pivotal events and moments derived f
 *   **Sources:** *Margot Asquith's Great War Diary - Michael Brock.txt; Lord_Riddel-full.txt*
 
 ### **23. Death of Lord Kitchener**
-*   **Official Name:** Sinking of HMS *Hampshire*
+*   **Official Name:** Sinking of HMS Hampshire
 *   **Common/Slang Names:** "K's Death", "The Hampshire"
 *   **Exact Date Range:** 1916-06-05
 *   **Location:** Off the Orkney Islands
@@ -202,21 +203,22 @@ Here is a Knowledge Base list of the top 25 pivotal events and moments derived f
 
 ### The First Marriage: Helen Melland
 
-In 1877, Asquith married **Helen Melland**, 
+In 1877, Asquith married Helen Melland, 
 Together they produced a remarkable brood of children, known for their collective intelligence and insular family loyalty:
 
-- **Raymond**: The eldest and most brilliant, a scholar of Balliol and All Souls, who possessed a cynical wit and great promise.
-- **Herbert (“Beb”)**: A poet and lawyer who married Lady Cynthia Charteris.
-- **Arthur (“Oc”)**: A man of action who served in the Sudan Civil Service and became a distinguished soldier.
-- **Violet**: H.H.A.’s only daughter by Helen; she possessed a fierce intellect and was passionately devoted to her father.
-- **Cyril (“Cys”)**: A brilliant scholar and future Law Lord.
+- Raymond: The eldest and most brilliant, a scholar of Balliol and All Souls, who possessed a cynical wit and great promise.
+- Herbert (“Beb”): A poet and lawyer who married Lady Cynthia Charteris.
+- Arthur (“Oc”): A man of action who served in the Sudan Civil Service and became a distinguished soldier.
+- Violet: H.H.A.’s only daughter by Helen; she possessed a fierce intellect and was passionately devoted to her father.
+- Cyril (“Cys”): A brilliant scholar and future Law Lord.
 
 Helen died of typhoid in 1891, a tragedy that left Asquith a widower with five young children.
 
 ### The Second Marriage: Margot Tennant
 
-In 1894, Asquith married **Margot Tennant**, a union that surprised many due to their differing backgrounds. Margot was the daughter of Sir Charles Tennant, a wealthy Scottish industrialist. She was a central figure in the aristocratic and intellectual set known as “The Souls,” famous for her “restless energies,” extravagance, and lack of inhibition.
+In 1894, Asquith married Margot Tennant, a union that surprised many due to their differing backgrounds. Margot was the daughter of Sir Charles Tennant, a wealthy Scottish industrialist. She was a central figure in the aristocratic and intellectual set known as “The Souls,” famous for her “restless energies,” extravagance, and lack of inhibition.
 
-- **Family dynamic**: Margot struggled in the role of stepmother, particularly with Violet, with whom she had a relationship of “chronic misunderstanding”. The Asquith stepchildren were often cool and detached toward her, while she was frequently critical of them.
-- **Children**: Margot and H.H.A. had five children, but only two survived infancy: Elizabeth (later Princess Bibesco) and Anthony (“Puffin,” later a film director).
-- **Lifestyle**: The marriage introduced Asquith to a more lavish social world of country houses and high society, though the family was often plagued by financial worries, relying partly on Margot’s allowance from her father.
+- Family dynamic: Margot struggled in the role of stepmother, particularly with Violet, with whom she had a relationship of “chronic misunderstanding”. The Asquith stepchildren were often cool and detached toward her, while she was frequently critical of them.
+- Children: Margot and H.H.A. had five children, but only two survived infancy: Elizabeth (later Princess Bibesco) and Anthony (“Puffin,” later a film director).
+- Lifestyle: The marriage introduced Asquith to a more lavish social world of country houses and high society, though the family was often plagued by financial worries, relying partly on Margot’s allowance from her father.
+`;

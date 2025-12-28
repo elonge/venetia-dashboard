@@ -277,6 +277,56 @@ export const sourceNameMapping: Record<string, string> = {
 };
       
       // Helper function to safely get the name
-export const getRealSourceName = (filename: string): string => {
-    return sourceNameMapping[filename] || filename; // Fallback to filename if not found
+export const getRealSourceName = (name: string): string => {
+    if (!name) return 'Unknown Source';
+    
+    // 1. Check direct mapping
+    if (sourceNameMapping[name]) return sourceNameMapping[name];
+
+    let displayName = name;
+
+    // 2. Handle "primary_letter_author_recipient, date" pattern
+    if (displayName.startsWith('primary_letter_')) {
+        const parts = displayName.replace('primary_letter_', '').split(', ');
+        const slug = parts[0];
+        const dateStr = parts[1];
+
+        let interaction = slug;
+        if (slug === 'h_h_asquith_venetia_stanley') {
+            interaction = 'Asquith to Venetia';
+        } else if (slug === 'venetia_stanley_h_h_asquith') {
+            interaction = 'Venetia to Asquith';
+        } else if (slug === 'edwin_montagu_venetia_stanley') {
+            interaction = 'Edwin to Venetia';
+        } else {
+            // Fallback: cleanup underscores and capitalize
+            interaction = slug.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+        }
+
+        if (dateStr) {
+            return `Letter: ${interaction} (${dateStr})`;
+        }
+        return `Letter: ${interaction}`;
+    }
+
+    // 3. Handle Hansard / Cabinet prefixes
+    if (displayName.startsWith('hansard_')) {
+        return displayName.replace('hansard_', 'Hansard: ').replace(/_/g, ' ');
+    }
+    if (displayName.startsWith('churchill_cabinet_')) {
+        return displayName.replace('churchill_cabinet_', 'Cabinet: ').replace(/_/g, ' ');
+    }
+
+    // 4. General cleanup for anything else
+    displayName = displayName
+        .replace(/\.txt$/, '')
+        .replace(/_/g, ' ')
+        .replace(/-/g, ' ');
+
+    // Capitalize words if it looks like a slug
+    if (displayName === displayName.toLowerCase()) {
+        displayName = displayName.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    }
+
+    return displayName;
 };

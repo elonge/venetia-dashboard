@@ -494,7 +494,7 @@ export default function DailyPopup({
                             {letter.topics.map((topic, topicIdx) => (
                               <span
                                 key={topicIdx}
-                                className="px-2 py-1 bg-navy text-card-bg text-[11px] font-bold uppercase tracking-wider rounded-sm shadow-sm transition-all duration-300 hover:bg-accent-brown hover:scale-105 cursor-default"
+                                className="px-2 py-1 bg-navy text-card-bg text-[11px] font-bold uppercase tracking-wider rounded-sm shadow-sm transition-all duration-300 cursor-default"
                               >
                                 {topic}
                               </span>

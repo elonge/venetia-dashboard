@@ -210,7 +210,7 @@ export default function Home() {
               href="/venetia"
               className="block min-h-[200px] md:min-h-62.5 rounded-md overflow-hidden border border-white/10 shadow-2xl hover:border-accent-green/50 hover:scale-102 transition-all relative group duration-700"
               style={{
-                backgroundImage: "url('/asquith_venetia_split_screen2.jpg')",
+                backgroundImage: "url('/asquith_venetia_split_screen3.png')",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}

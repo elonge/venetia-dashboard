@@ -1,4 +1,5 @@
 import OpenAI from 'openai';
+import { KNOWLEDGE_BASE } from './chat/knowledge';
 
 export const DEFAULT_DB_NAME = 'venetia_project';
 export const DEFAULT_BUCKET_COLLECTION = 'asquith_bucket_embeddings';
@@ -104,6 +105,9 @@ export async function expandConceptOnce(
   const prompt = [
     'You are helping build a semantic search time-series over H.H. Asquith letters.',
     'Given a user-provided concept term, produce a compact concept expansion that will be embedded.',
+    'Use the following knowledge base for context on historical events and people:',
+    KNOWLEDGE_BASE,
+    '',
     'Return ONLY valid JSON with keys: term, definition, synonyms, indicators, exclusions.',
     '',
     'Guidelines:',

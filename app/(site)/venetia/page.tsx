@@ -184,11 +184,11 @@ export default function VenetiaPage() {
   const carouselRef = React.useRef<HTMLDivElement>(null);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % carouselSlides.length);
+    setCurrentSlide((prev) => Math.min(prev + 1, carouselSlides.length - 1));
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + carouselSlides.length) % carouselSlides.length);
+    setCurrentSlide((prev) => Math.max(prev - 1, 0));
   };
 
   const nextQuote = () => {
@@ -276,7 +276,7 @@ export default function VenetiaPage() {
         <section className="w-full bg-page-bg py-12 md:py-16">
           <div className="px-4 md:px-6 mb-6 md:mb-8">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-navy mb-2 text-center">
-              The Object of Obsession
+              How Others Saw Her
             </h2>
           </div>
           
@@ -286,14 +286,16 @@ export default function VenetiaPage() {
               <div className="relative h-full px-4 md:px-6">
                 <button
                   onClick={prevSlide}
-                  className="pointer-events-auto absolute left-0 top-1/2 -translate-y-1/2 bg-card-bg/90 hover:bg-card-bg text-navy rounded-full p-2.5 md:p-3 lg:p-4 shadow-lg transition-all border border-border-beige min-w-[44px] min-h-[44px] flex items-center justify-center"
+                  disabled={currentSlide === 0}
+                  className="cursor-pointer pointer-events-auto absolute left-0 top-1/2 -translate-y-1/2 bg-card-bg/90 hover:bg-card-bg text-navy disabled:opacity-30 disabled:cursor-not-allowed rounded-full p-2.5 md:p-3 lg:p-4 shadow-lg transition-all border border-border-beige min-w-[44px] min-h-[44px] flex items-center justify-center"
                   aria-label="Previous slide"
                 >
                   <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
                 </button>
                 <button
                   onClick={nextSlide}
-                  className="pointer-events-auto absolute right-0 top-1/2 -translate-y-1/2 bg-card-bg/90 hover:bg-card-bg text-navy rounded-full p-2.5 md:p-3 lg:p-4 shadow-lg transition-all border border-border-beige min-w-[44px] min-h-[44px] flex items-center justify-center"
+                  disabled={currentSlide === carouselSlides.length - 1}
+                  className="cursor-pointer pointer-events-auto absolute right-0 top-1/2 -translate-y-1/2 bg-card-bg/90 hover:bg-card-bg text-navy disabled:opacity-30 disabled:cursor-not-allowed rounded-full p-2.5 md:p-3 lg:p-4 shadow-lg transition-all border border-border-beige min-w-[44px] min-h-[44px] flex items-center justify-center"
                   aria-label="Next slide"
                 >
                   <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
@@ -404,7 +406,7 @@ export default function VenetiaPage() {
                   </div>
 
                   {/* 2. The Quote Card (Top Layer) - Overlapping */}
-                  <div className="w-full md:w-8/12 z-10 -mt-6 md:-mt-8 md:mt-12 md:-ml-16">
+                  <div className="w-full md:w-8/12 z-10 -mt-12 md:-mt-8 md:mt-12 md:-ml-8">
                     <div className="relative bg-page-bg rounded-sm p-6 md:p-8 lg:p-10 shadow-xl border-l-4 border-navy">
                       
                       <div className="absolute top-3 md:top-4 right-4 md:right-6 text-6xl md:text-9xl font-serif text-navy/5 leading-none pointer-events-none">
@@ -468,7 +470,7 @@ export default function VenetiaPage() {
                       A Day in the Life
                     </h3>
                     <p className="text-[10px] md:text-xs text-muted-gray uppercase tracking-wider mb-4 md:mb-6">
-                      1912–1915 • Based on Asquith&apos;s Poem
+                      1912–1915 • Based on Asquith&apos;s Poem (July 1, 1913)
                     </p>
                 </div>
 
