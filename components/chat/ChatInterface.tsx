@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Send, Loader2, Sparkles, ArrowRight, Search } from 'lucide-react';
+import { Send, Loader2, Sparkles, ArrowRight, Search, Trash2, AlertTriangle } from 'lucide-react';
 import MessageBubble, { Message } from './MessageBubble';
 import type { Question } from '@/lib/questions';
 
@@ -33,6 +33,7 @@ export default function ChatInterface() {
   const [popularQuestions, setPopularQuestions] = useState<Question[]>([]);
   const [suggestedQuestions, setSuggestedQuestions] = useState<Question[]>([]);
   const [isLoadingPopularQuestions, setIsLoadingPopularQuestions] = useState(true);
+  const [isClearConfirmOpen, setIsClearConfirmOpen] = useState(false);
   const hasAutoSentRef = useRef(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -116,6 +117,12 @@ export default function ChatInterface() {
       localStorage.removeItem(CHAT_STORAGE_KEY);
     }
   }, [messages]);
+
+  const handleClearChat = () => {
+    setMessages([]);
+    localStorage.removeItem(CHAT_STORAGE_KEY);
+    setIsClearConfirmOpen(false);
+  };
 
   const handleSend = useCallback(async (questionOverride?: string) => {
     const questionToSend = questionOverride || input.trim();
@@ -325,18 +332,31 @@ export default function ChatInterface() {
     <div className="flex flex-col h-full rounded-md bg-[#F5F0E8] border-l border-[#D4CFC4] shadow-[-10px_0_30px_rgba(0,0,0,0.02)] font-sans relative overflow-hidden">
       
       {/* 1. HEADER: Specialized Terminal Look */}
-      <div className="px-4 md:px-6 py-4 md:py-5 border-b border-[#D4CFC4] bg-[#FAF7F2] flex items-center gap-2 md:gap-3 z-10 shadow-sm">
-        <div className="w-7 h-7 md:w-8 md:h-8 bg-[#1A2A40] rounded-md flex items-center justify-center shadow-sm shrink-0">
-          <Sparkles size={12} className="md:w-[14px] md:h-[14px] text-[#F5F0E8]" />
+      <div className="px-4 md:px-6 py-4 md:py-5 border-b border-[#D4CFC4] bg-[#FAF7F2] flex items-center justify-between z-10 shadow-sm">
+        <div className="flex items-center gap-2 md:gap-3">
+          <div className="w-7 h-7 md:w-8 md:h-8 bg-[#1A2A40] rounded-md flex items-center justify-center shadow-sm shrink-0">
+            <Sparkles size={12} className="md:w-[14px] md:h-[14px] text-[#F5F0E8]" />
+          </div>
+          <div className="min-w-0">
+            <h3 className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] text-[#1A2A40]">
+              Primary Source Query
+            </h3>
+            <p className="text-[9px] md:text-[10px] text-[#8B4513] font-serif italic">
+              Searching 1912–1916 Archive
+            </p>
+          </div>
         </div>
-        <div className="min-w-0">
-          <h3 className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] text-[#1A2A40]">
-            Primary Source Query
-          </h3>
-          <p className="text-[9px] md:text-[10px] text-[#8B4513] font-serif italic">
-            Searching 1912–1916 Archive
-          </p>
-        </div>
+
+        {/* Clear Chat Button */}
+        {messages.length > 0 && (
+             <button
+               onClick={() => setIsClearConfirmOpen(true)}
+               className="p-2 text-[#5A6472] hover:text-[#C24E42] hover:bg-[#C24E42]/10 rounded-md transition-colors"
+               title="Clear chat history"
+             >
+               <Trash2 size={16} />
+             </button>
+        )}
       </div>
 
       {/* 2. MESSAGES AREA */}
@@ -363,7 +383,7 @@ export default function ChatInterface() {
                 <button
                   key={i}
                   onClick={() => handleSend(qText)}
-                  className="w-full text-left p-3 md:p-3.5 bg-white border border-[#D4CFC4] rounded-md hover:border-[#4A7C59] hover:bg-[#4A7C59]/5 transition-all group flex items-center justify-between shadow-sm min-h-[44px]"
+                  className="cursor-pointer w-full text-left p-3 md:p-3.5 bg-white border border-[#D4CFC4] rounded-md hover:border-[#4A7C59] hover:bg-[#4A7C59]/5 transition-all group flex items-center justify-between shadow-sm min-h-[44px]"
                 >
                   <span className="text-[10px] md:text-[11px] font-bold text-[#1A2A40] group-hover:text-[#4A7C59] transition-colors line-clamp-2 md:line-clamp-1 flex-1">
                     {qText}
@@ -428,6 +448,35 @@ export default function ChatInterface() {
            </span>
         </div>
       </div>
+
+      {/* Clear Chat Confirmation Modal */}
+      {isClearConfirmOpen && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#F5F0E8]/80 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+           <div className="bg-white border border-[#D4CFC4] shadow-xl rounded-md p-6 max-w-sm w-full mx-4 animate-in zoom-in-95 duration-200">
+              <div className="flex items-center gap-3 mb-4 text-[#C24E42]">
+                 <AlertTriangle size={24} />
+                 <h3 className="text-lg font-bold font-serif text-[#1A2A40]">Clear History?</h3>
+              </div>
+              <p className="text-sm text-[#5A6472] mb-6 leading-relaxed">
+                 This will permanently remove your conversation history from this device. Are you sure?
+              </p>
+              <div className="flex justify-end gap-3">
+                 <button 
+                    onClick={() => setIsClearConfirmOpen(false)}
+                    className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#5A6472] hover:bg-[#F5F0E8] rounded-md transition-colors"
+                 >
+                    Cancel
+                 </button>
+                 <button 
+                    onClick={handleClearChat}
+                    className="px-4 py-2 bg-[#C24E42] text-white text-xs font-bold uppercase tracking-wider rounded-md hover:bg-[#A0352A] shadow-sm transition-colors"
+                 >
+                    Clear All
+                 </button>
+              </div>
+           </div>
+        </div>
+      )}
     </div>
   );
 }
