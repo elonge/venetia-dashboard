@@ -96,58 +96,65 @@ export async function runAgentWorkflow(
   try {
     console.log('🤖 [Agent] Executing workflow for message:', message);
     const result = await run(historianAgent, inputs);
+
+    if (!result.finalOutput) {
+      throw new Error('Agent run completed without a final output.');
+    }
     
     const sources: any[] = [];
     console.log('📝 [Agent] Final Answer Generated');
 
     for (const msg of result.history) {
-       if (msg.role === 'tool' && msg.content) {
-          try {
-             const data = JSON.parse(msg.content as string);
-             if (Array.isArray(data)) {
-                data.forEach((item: any) => {
-                   // Adapt to different tool return shapes
-                   // get_correspondence_metrics returns { date, sender, scores } -> Treat as source?
-                   // get_daily_locations returns points -> Treat as source?
-                   
-                   // Standard chunks
-                   if (item.content && (item.source || item.metadata)) {
-                      sources.push({
-                         source: item.source || item.metadata?.documentTitle || 'Unknown',
-                         documentTitle: item.metadata?.documentTitle || item.source,
-                         chunkIndex: item.chunkIndex || 0,
-                         score: item.score || 1.0,
-                         content: item.content
-                      });
-                   }
-                   // Daily location points
-                   else if (item.date && item.geo_coords) {
-                       sources.push({
-                           source: 'Daily Locations',
-                           documentTitle: `Location Data: ${item.date}`,
-                           chunkIndex: 0,
-                           score: 1.0
-                       });
-                   }
-                   // Metrics
-                   else if (item.scores) {
-                       sources.push({
-                           source: 'Sentiment Analysis',
-                           documentTitle: `Analysis: ${item.date}`,
-                           chunkIndex: 0,
-                                                     score: 1.0
-                                                  });
-                                              }
-                                           });
-                                        }
-                                     } catch (_e) {}
-                                  }
-                                }
-                               const uniqueSources = Array.from(new Map(sources.map(s => [s.source + s.chunkIndex, s])).values());
+      if (msg.type !== 'function_call_result') continue;
+
+      const outputText =
+        typeof msg.output === 'string'
+          ? msg.output
+          : msg.output && typeof msg.output === 'object' && 'type' in msg.output && msg.output.type === 'text'
+            ? msg.output.text
+            : null;
+
+      if (!outputText) continue;
+
+      try {
+        const data = JSON.parse(outputText);
+        if (!Array.isArray(data)) continue;
+
+        for (const item of data) {
+          if (item?.content && (item.source || item.metadata)) {
+            sources.push({
+              source: item.source || item.metadata?.documentTitle || 'Unknown',
+              documentTitle: item.metadata?.documentTitle || item.source,
+              chunkIndex: item.chunkIndex || 0,
+              score: item.score || 1.0,
+              content: item.content
+            });
+          } else if (item?.date && item.geo_coords) {
+            sources.push({
+              source: 'Daily Locations',
+              documentTitle: `Location Data: ${item.date}`,
+              chunkIndex: 0,
+              score: 1.0
+            });
+          } else if (typeof item?.score === 'number') {
+            sources.push({
+              source: 'Sentiment Analysis',
+              documentTitle: `Analysis: ${item.date}`,
+              chunkIndex: 0,
+              score: 1.0
+            });
+          }
+        }
+      } catch (_e) {}
+    }
+
+    const uniqueSources = Array.from(
+      new Map(sources.map((s) => [s.source + s.chunkIndex, s])).values()
+    );
 
     return {
-        answers: result.finalOutput.answers,
-        sources: uniqueSources
+      answers: result.finalOutput.answers,
+      sources: uniqueSources
     };
   } catch (error) {
     console.error("Agent workflow error:", error);

@@ -11,7 +11,7 @@ export async function getTimelineDayByDate(dateString: string): Promise<DailyRec
   try {
     const client = await clientPromise;
     const db = client.db(DB_NAME);
-    const collection = db.collection(COLLECTION_NAME);
+    const collection = db.collection<DailyRecordDocument>(COLLECTION_NAME);
     
     const day = await collection.findOne({ date_string: dateString });
     
@@ -33,7 +33,7 @@ export async function getNextTimelineDay(dateString: string): Promise<DailyRecor
   try {
     const client = await clientPromise;
     const db = client.db(DB_NAME);
-    const collection = db.collection(COLLECTION_NAME);
+    const collection = db.collection<DailyRecordDocument>(COLLECTION_NAME);
     
     const nextDay = await collection.findOne(
       { date_string: { $gt: dateString } },
@@ -58,7 +58,7 @@ export async function getPreviousTimelineDay(dateString: string): Promise<DailyR
   try {
     const client = await clientPromise;
     const db = client.db(DB_NAME);
-    const collection = db.collection(COLLECTION_NAME);
+    const collection = db.collection<DailyRecordDocument>(COLLECTION_NAME);
     
     const previousDay = await collection.findOne(
       { date_string: { $lt: dateString } },
@@ -245,7 +245,7 @@ export async function getAllTimelineDays(): Promise<DailyRecordDocument[]> {
   try {
     const client = await clientPromise;
     const db = client.db(DB_NAME);
-    const collection = db.collection(COLLECTION_NAME);
+    const collection = db.collection<DailyRecordDocument>(COLLECTION_NAME);
     
     const days = await collection.find({}).sort({ date_string: 1 }).toArray();
     
@@ -255,4 +255,3 @@ export async function getAllTimelineDays(): Promise<DailyRecordDocument[]> {
     throw error;
   }
 }
-
