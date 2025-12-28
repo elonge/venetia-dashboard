@@ -21,7 +21,7 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: "The Venetia Project",
-  description: "A data-driven archive of Venetia, Asquith, and the secrets stitched across their letters.",
+  description: "A data-driven archive of Venetia Stanley, Asquith, and the secrets stitched across their letters.",
 };
 
 export default function RootLayout({
