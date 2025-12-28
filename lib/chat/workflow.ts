@@ -58,6 +58,7 @@ export async function runAgentWorkflow(
   onStatus?: (status: string) => void
 ) {
   const historyContext = history
+    .slice(-8) // Only pass the last 8 interactions
     .filter(m => m.content)
     .map(m => `${m.role.toUpperCase()}: ${m.content}`)
     .join('\n\n');
