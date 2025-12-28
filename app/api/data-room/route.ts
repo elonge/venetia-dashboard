@@ -927,6 +927,7 @@ export async function GET() {
     // Generate meeting dates data from timeline_days collection
     const generateMeetingDatesData = async (): Promise<MeetingDatesData> => {
       const allDays = await getAllTimelineDays();
+      console.log('[DEBUG] Generating Meeting Dates Data - Total days fetched:', allDays.length);
       
       // Filter days where they met
       const meetingDays = allDays.filter(day => 

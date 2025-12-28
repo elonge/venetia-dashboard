@@ -1,187 +1,282 @@
 import { tool } from '@openai/agents';
 import { z } from 'zod';
-import { 
-  searchPrimaryEntries, 
-  searchSimilarChunks, 
-  type SearchIntent,
-  type SearchFilters 
+import {
+  searchPrimaryEntries,
+  searchSimilarChunks
 } from '@/lib/vector-search';
 import { getWeather } from '@/lib/weather';
+import { getAsquithVenetiaProximitySeries } from '@/lib/daily_records';
 import OpenAI from 'openai';
-import { SearchIntentSchema, PlanSchema, AuthorEnum, RecipientEnum } from '@/types/chat';
+import { AuthorEnum, RecipientEnum } from '@/types/chat';
 
-// --- Shared Schemas ---
-export { SearchIntentSchema, PlanSchema };
+// --- Helper Functions ---
 
-export const AnswersSchema = z.object({
-  answers: z.array(z.object({
-    text: z.string().describe('The answer text, formatted as a paragraph.'),
-    link: z.string().describe('The name of the source document referenced (e.g. "Letter to Venetia, 1915-05-12").')
-  }))
-});
-
-// --- Helper for Intent Analysis ---
-// Reusing the logic from route.ts but making it self-contained
-async function analyzeIntentLogic(query: string): Promise<SearchIntent> {
+async function extractSnippetWithLLM(text: string, query: string): Promise<string> {
+    if (!process.env.OPENAI_API_KEY) return text.substring(0, 300) + '...';
     const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-    
-    const knowledgeBase = `
-    Use this knowledge base to resolve named events into date ranges:
-    - Marconi Scandal: 1912-04 to 1913-06-19 (Location: London)
-    - Sicily Trip: 1912-01-11 to 1912-01-30 (Location: Sicily)
-    - Asquith's Romantic Epiphany: 1912-02-25 (Location: Hurstly)
-    - Curragh Incident: 1914-03-20 to 1914-03-24 (Location: Ireland)
-    - Home Rule Crisis: 1914-07-21 to 1914-07-24 (Location: London)
-    - Outbreak of War: 1914-08-04 (Location: London)
-    - Fall of Antwerp: 1914-10-03 to 1914-10-10 (Location: Antwerp)
-    - Sinking of HMS Audacious: 1914-10-27 (Location: Ireland)
-    - Battle of Coronel: 1914-11-01 (Location: Chile)
-    - Battle of the Falklands: 1914-12-08 (Location: South Atlantic)
-    - Annus Mirabilis Letter: 1914-12-31 (Location: Walmer Castle)
-    - Venetia's Nursing: 1915-01 to 1915-05 (Location: London Hospital)
-    - Dardanelles Bombardment: 1915-02-19 to 1915-03-18 (Location: Turkey)
-    - Neuve Chapelle: 1915-03-10 to 1915-03-13 (Location: France)
-    - Shells Scandal: 1915-04-20 to 1915-05-14 (Location: London)
-    - Gallipoli Landings: 1915-04-25 (Location: Turkey)
-    - Sinking of Lusitania: 1915-05-07 (Location: Ireland)
-    - Venetia's Engagement: 1915-05-12 (Location: Wimereux/London)
-    - Resignation of Lord Fisher: 1915-05-15 (Location: London)
-    - May Crisis / Coalition: 1915-05-17 to 1915-05-26 (Location: London)
-    - Venetia's Marriage: 1915-07-12 to 1915-07-26 (Location: London)
-    - Conscription Crisis: 1915-10 to 1916-01-27 (Location: London)
-    - Death of Kitchener: 1916-06-05 (Location: Orkney)
-    - Death of Raymond Asquith: 1916-09-15 (Location: France)
-    - Fall of Asquith: 1916-12-01 to 1916-12-07 (Location: London)
-    `;
-
-    const analysisPrompt = `
-    Analyze the user's historical query.
-    ${knowledgeBase}
-    
-    Return a JSON object with:
-    - type: 'specific_date', 'timeline', 'sentiment_trend', or 'general_context'
-    - dateRange: { start: 'YYYY-MM-DD', end: 'YYYY-MM-DD' } (or null). 
-    - sentiment: 'positive', 'negative', or null
-    - author: The name of the person writing the letter (e.g., 'Edwin Montagu', 'H.H. Asquith', 'Margot Asquith', 'Venetia Stanley') if specified.
-    - recipient: The name of the person receiving the letter if specified.
-    - requiresSecondary: boolean
-    - requiresWeather: boolean
-    - locationContext: 'London', 'Oxford', or 'Alderley'
-    - semanticQuery: A concise string optimized for VECTOR SEARCH if the user asks about a TOPIC, SECRET, OPINION, or EVENT content (e.g., "political secrets", "opinion on war", "shells scandal details"). Exclude dates/authors from this string if they are captured in other fields. If the query is purely date-based, leave null.
-    
-    Query: "${query}"
-    `;
-
     try {
-        const completion = await openai.chat.completions.create({
-          model: "gpt-4o-mini",
-          messages: [{ role: "system", content: "You are a precise query analyzer." }, { role: "user", content: analysisPrompt }],
-          response_format: { type: "json_object" },
-          temperature: 0
+        const response = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            messages: [
+                { role: "system", content: `Extract a concise, relevant excerpt (approx 200-300 characters) from the following letter that directly relates to the query: "${query}". Keep the original wording. Return ONLY the excerpt.` },
+                { role: "user", content: text }
+            ],
+            max_tokens: 150,
+            temperature: 0
         });
-    
-        const parsed = JSON.parse(completion.choices[0].message.content || '{}');
-        console.log('Intent analysis response:', parsed);
-        return SearchIntentSchema.parse(parsed);
-    } catch (e) {
-        console.error("Intent analysis failed:", e);
-        return { 
-            type: 'general_context', 
-            requiresWeather: false,
-            locationContext: 'London'
-        };
+        return response.choices[0].message.content || text.substring(0, 300) + '...';
+    } catch (_e) {
+        return text.substring(0, 300) + '...';
+    }
+}
+
+async function scoreTextWithLLM(text: string, metric: string): Promise<number> {
+    // A simplified metric scorer using a cheap model
+    if (!process.env.OPENAI_API_KEY) return 0;
+    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    try {
+        const response = await openai.chat.completions.create({
+            model: "gpt-4o-mini", // Fast model
+            messages: [
+                { role: "system", content: `You are a sentiment analyzer. Rate the following text for the metric: "${metric}". Return ONLY a number between 0 and 100.` },
+                { role: "user", content: text }
+            ],
+            max_tokens: 10,
+            temperature: 0
+        });
+        const score = parseInt(response.choices[0].message.content || '0', 10);
+        return isNaN(score) ? 0 : score;
+    } catch (_e) {
+        return 0;
     }
 }
 
 // --- Tools ---
 
-export const createDetectIntentTool = (currentMessage: string, onStatus?: (status: string) => void) => tool({
-    name: 'detect_intent',
-    description: 'Analyze the latest user query to determine the search intent, date ranges, entities, and required data types.',
+export const createGetCorrespondenceMetricsTool = (onStatus?: (status: string) => void) => tool({
+    name: 'get_correspondence_metrics',
+    description: 'Analyze correspondence sentiment and metrics over a time range. Useful for "Political-Emotional" correlation, "Coded Language" decoder, etc.',
     parameters: z.object({
-        query: z.string().describe('The latest user message. (Optional, will use context if not provided)')
+        start_date: z.string().describe('YYYY-MM-DD'),
+        end_date: z.string().describe('YYYY-MM-DD'),
+        sender: AuthorEnum.nullable().optional(),
+        recipient: RecipientEnum.nullable().optional(),
+        topic: z.string().describe('The topic or entity to analyze, e.g. "Churchill", "The War"'),
+        metric: z.string().describe('The metric to score, e.g. "sentiment", "anxiety", "romantic intensity"')
     }),
-    execute: async ({ query }) => {
-        const textToAnalyze = currentMessage || query;
-        onStatus?.('Analyzing your question...');
-        console.log('🔍 [Tool: detect_intent] Analyzing:', textToAnalyze);
-        const intent = await analyzeIntentLogic(textToAnalyze);
-        console.log('🧠 [Intent Detected]:', JSON.stringify(intent, null, 2));
-        return JSON.stringify(intent);
+    execute: async (args) => {
+        onStatus?.('Analyzing correspondence metrics...');
+        console.log('📊 [Tool: get_correspondence_metrics] Running analysis for:', JSON.stringify(args));
+        
+        // 1. Fetch relevant chunks using Vector Search
+        // We use source_type='letter' to target correspondence
+        const docs = await searchSimilarChunks(args.topic, 50, {
+            dateRange: { start: args.start_date, end: args.end_date },
+            author: args.sender || undefined,
+            recipient: args.recipient || undefined,
+            source_type: 'letter'
+        });
+        
+        console.log(`📊 [Tool: get_correspondence_metrics] Found ${docs.length} relevant chunks for topic "${args.topic}".`);
+        
+        // 2. Calculate metrics for each chunk
+        const results = await Promise.all(docs.map(async (doc) => {
+            const score = await scoreTextWithLLM(doc.content, args.metric);
+            
+            return {
+                date: doc.metadata.date,
+                score,
+                source: doc.source,
+                text_snippet: doc.content.substring(0, 200) + '...'
+            };
+        }));
+
+        // Filter out null dates if any
+        const validResults = results.filter(r => r.date);
+
+        console.log(`📊 [Tool: get_correspondence_metrics] Completed scoring for ${validResults.length} data points.`);
+        return JSON.stringify(validResults);
     }
 });
 
-export const createGetPrimarySourcesTool = (onStatus?: (status: string) => void) => tool({
-    name: 'get_primary_sources',
-    description: 'Search for primary source documents (letters, diaries) based on metadata like date, author, recipient, and sentiment.',
+export const createGetParliamentChunksTool = (onStatus?: (status: string) => void) => tool({
+    name: 'get_parliament_chunks_in_range',
+    description: 'Search Parliament/Hansard records for specific topics or mentions within a date range.',
     parameters: z.object({
-        start_date: z.string().nullable().describe('Start date in YYYY-MM-DD format'),
-        end_date: z.string().nullable().describe('End date in YYYY-MM-DD format'),
-        author: AuthorEnum.nullable(),
-        recipient: RecipientEnum.nullable(),
-        sentiment: z.enum(['positive', 'negative']).nullable(),
-        topics: z.array(z.string()).nullable(),
-        limit: z.number().nullable().default(15)
+        start_date: z.string().describe('YYYY-MM-DD'),
+        end_date: z.string().describe('YYYY-MM-DD'),
+        query: z.string().describe('Search query, e.g., "shells scandal", "conscription"'),
     }),
     execute: async (args) => {
-        onStatus?.('Searching letters and diaries...');
-        console.log('📜 [Tool: get_primary_sources] Called with:', JSON.stringify(args));
-        const intent: SearchIntent = {
-            type: args.start_date || args.author ? 'specific_date' : 'general_context',
-            requiresWeather: false, // Not relevant for this specific tool call
-            dateRange: args.start_date && args.end_date ? { start: args.start_date, end: args.end_date } : null,
-            author: args.author,
-            recipient: args.recipient,
-            sentiment: args.sentiment,
-            topics: args.topics,
-            requiresSecondary: true
-        };
-        const results = await searchPrimaryEntries(intent, args.limit || 15);
-        console.log(`📜 [Tool: get_primary_sources] Found ${results.length} docs`);
-        return JSON.stringify(results);
-    }
-});
+        onStatus?.('Searching Parliament records...');
+        console.log('🏛️ [Tool: get_parliament_chunks] Searching Parliament records for:', JSON.stringify(args));
+        
+        // Use the new source_type: 'hansard' filter directly in vector search
+        const results = await searchSimilarChunks(args.query, 10, {
+            dateRange: { start: args.start_date, end: args.end_date },
+            source_type: 'hansard'
+        });
 
-export const createFindRelevantChunksTool = (onStatus?: (status: string) => void) => tool({
-    name: 'find_relevant_chunks',
-    description: 'Semantic vector search over all documents (primary and secondary sources) to find relevant text chunks.',
-    parameters: z.object({
-        query: z.string().describe('The search query text'),
-        limit: z.number().nullable().default(10),
-        source_filter: z.array(z.string()).nullable(),
-        start_date: z.string().nullable(),
-        end_date: z.string().nullable(),
-        author: AuthorEnum.nullable().describe('Filter by author (e.g., "Asquith")'),
-        recipient: RecipientEnum.nullable().describe('Filter by recipient')
-    }),
-    execute: async (args) => {
-        onStatus?.('Reading through documents...');
-        console.log('🔎 [Tool: find_relevant_chunks] Called with:', JSON.stringify(args));
-        const filters: SearchFilters = {};
-        if (args.source_filter && args.source_filter.length > 0) {
-            filters.source = args.source_filter;
-        }
-        if (args.start_date && args.end_date) {
-            filters.dateRange = { start: args.start_date, end: args.end_date };
-        }
-        if (args.author) {
-            filters.author = args.author;
-        }
-        if (args.recipient) {
-            filters.recipient = args.recipient;
+        if (results.length === 0) {
+             console.log('🏛️ [Tool: get_parliament_chunks] No Hansard results found.');
+             return JSON.stringify([]);
         }
         
-        const results = await searchSimilarChunks(args.query, args.limit || 10, filters);
-        console.log(`🔎 [Tool: find_relevant_chunks] Found ${results.length} chunks`, filters);
-
-        // Return metadata only (omit full chunk content to reduce payload/token usage)
-        const redactedResults = results.map((r: any) => {
-            if (!r || typeof r !== 'object') return r;
-            // Common field name used for chunk text
-            const { content, ...rest } = r;
-            return rest;
-        });
+        console.log(`🏛️ [Tool: get_parliament_chunks] Found ${results.length} relevant Hansard chunks.`);
         return JSON.stringify(results);
+    }});
+
+export const createGetCabinetChunksTool = (onStatus?: (status: string) => void) => tool({
+    name: 'get_cabinet_chunks_in_range',
+    description: 'Search Cabinet papers and records for discussions on specific topics within a date range.',
+    parameters: z.object({
+        start_date: z.string().describe('YYYY-MM-DD'),
+        end_date: z.string().describe('YYYY-MM-DD'),
+        query: z.string().describe('Search query, e.g., "Dardanelles", "munitions"'),
+    }),
+    execute: async (args) => {
+        onStatus?.('Searching Cabinet papers...');
+        console.log('🗄️ [Tool: get_cabinet_chunks] Searching Cabinet papers for:', JSON.stringify(args));
+        
+        // Use the new source_type: 'churchill_cabinet' filter directly in vector search
+        const results = await searchSimilarChunks(args.query, 10, {
+            dateRange: { start: args.start_date, end: args.end_date },
+            source_type: 'churchill_cabinet'
+        });
+        
+        if (results.length === 0) {
+             console.log('🗄️ [Tool: get_cabinet_chunks] No Cabinet papers found.');
+             return JSON.stringify([]);
+        }
+
+        console.log(`🗄️ [Tool: get_cabinet_chunks] Found ${results.length} relevant chunks.`);
+        return JSON.stringify(results);
+    }
+});
+
+export const createGetPersonalChunksTool = (onStatus?: (status: string) => void) => tool({
+    name: 'get_personal_chunks_in_range',
+    description: 'Search private letters and diaries (Asquith, Venetia, etc.) for specific content.',
+    parameters: z.object({
+        author: AuthorEnum.nullable().optional(),
+        recipient: RecipientEnum.nullable().optional(),
+        start_date: z.string().describe('YYYY-MM-DD'),
+        end_date: z.string().describe('YYYY-MM-DD'),
+        query: z.string().describe('Search query, e.g., "opinion on Churchill", "the assyrian"'),
+    }),
+    execute: async (args) => {
+        onStatus?.('Searching private correspondence...');
+        console.log('💌 [Tool: get_personal_chunks] Searching correspondence for:', JSON.stringify(args));
+        
+        // Use vector search restricted to primary sources for semantic query capability
+        // searchPrimaryEntries is good for metadata/regex, searchSimilarChunks is better for "meaning"
+        // But searchPrimaryEntries supports textRegex. 
+        // If query is semantic "opinion on...", vector search is better.
+        // We will use searchSimilarChunks with source_type='primary_entry' (implied or explicit)
+        
+        // Wait, searchSimilarChunks supports filtering by author/recipient/source_type='primary_entry' via buildFilter
+        
+        const results = await searchSimilarChunks(args.query, 15, {
+            dateRange: { start: args.start_date, end: args.end_date },
+            author: args.author || undefined,
+            recipient: args.recipient || undefined,
+            source_type: 'letter' // or 'diary' or 'primary_entry'. Let's trust buildFilter logic
+        });
+        
+        // If vector search returns nothing, try primary search fallback (regex)
+        if (results.length === 0) {
+             console.log('💌 [Tool: get_personal_chunks] Vector search empty, trying keyword fallback...');
+             const primaryDocs = await searchPrimaryEntries({
+                 type: 'general_context',
+                 dateRange: { start: args.start_date, end: args.end_date },
+                 author: args.author,
+                 recipient: args.recipient,
+                 requiresWeather: false,
+                 textRegex: args.query // Naive use of query as regex
+             }, 10);
+             console.log(`💌 [Tool: get_personal_chunks] Found ${primaryDocs.length} docs via keyword fallback.`);
+             return JSON.stringify(primaryDocs);
+        }
+
+        console.log(`💌 [Tool: get_personal_chunks] Found ${results.length} relevant chunks.`);
+        return JSON.stringify(results);
+    }
+});
+
+export const createGetHistorianOpinionTool = (onStatus?: (status: string) => void) => tool({
+    name: 'get_historian_opinion',
+    description: 'Find secondary source analysis and historian opinions on a topic.',
+    parameters: z.object({
+        topic: z.string().describe('Topic to research, e.g. "Venetia influence"'),
+        historians: z.array(z.string()).nullable().optional().describe('List of historian names to filter by (e.g. "Jenkins"), or null for all.')
+    }),
+    execute: async (args) => {
+        onStatus?.('Consulting historian views...');
+        console.log('📚 [Tool: get_historian_opinion] Consulting historians for:', JSON.stringify(args));
+        
+        const results = await searchSimilarChunks(args.topic, 10, {
+            // Filter for 'book' source type if we had it, or exclude primary
+            source_type: 'book', // As per new_metadata logic
+            author: args.historians ? args.historians[0] : undefined // Simple filter for now
+        });
+        console.log(`📚 [Tool: get_historian_opinion] Found ${results.length} relevant chunks.`);
+        return JSON.stringify(results);
+    }
+});
+
+export const createGetDailyLocationsTool = (onStatus?: (status: string) => void) => tool({
+    name: 'get_daily_locations_and_proximity',
+    description: 'Get location data and proximity between Asquith and Venetia for a date range.',
+    parameters: z.object({
+        start_date: z.string().describe('YYYY-MM-DD'),
+        end_date: z.string().describe('YYYY-MM-DD'),
+    }),
+    execute: async (args) => {
+        onStatus?.('Checking locations...');
+        console.log('📍 [Tool: get_daily_locations] Checking locations for:', JSON.stringify(args));
+        
+        const allPoints = await getAsquithVenetiaProximitySeries();
+        const start = new Date(args.start_date);
+        const end = new Date(args.end_date);
+        
+        const filtered = allPoints.filter(p => {
+            const d = new Date(p.date);
+            return d >= start && d <= end;
+        });
+        
+        console.log(`📍 [Tool: get_daily_locations] Found ${filtered.length} daily location points.`);
+        return JSON.stringify(filtered);
+    }
+});
+
+export const createFindCorrespondenceDatesTool = (onStatus?: (status: string) => void) => tool({
+    name: 'find_dates_of_venetia_asquith_correspondance',
+    description: 'Identify specific dates where letters were exchanged matching a query. Restricts search to letters from Asquith to Venetia.',
+    parameters: z.object({
+        start_date: z.string().describe('YYYY-MM-DD'),
+        end_date: z.string().describe('YYYY-MM-DD'),
+        query: z.string().describe('Content query, e.g. "she doesn\'t write enough"'),
+    }),
+    execute: async (args) => {
+        onStatus?.('Scanning correspondence dates...');
+        console.log('📅 [Tool: find_correspondence_dates] Scanning dates for:', JSON.stringify(args));
+        
+        const docs = await searchSimilarChunks(args.query, 20, {
+            dateRange: { start: args.start_date, end: args.end_date },
+            source_type: 'letter',
+            author: 'H.H. Asquith',
+            recipient: 'Venetia Stanley'
+        });
+        
+        const results = await Promise.all(docs.map(async (d) => ({
+            date: d.metadata.date,
+            excerpt: await extractSnippetWithLLM(d.content, args.query)
+        })));
+        
+        const validResults = results.filter(r => r.date);
+
+        console.log(`📅 [Tool: find_correspondence_dates] Found ${validResults.length} matches.`);
+        return JSON.stringify(validResults);
     }
 });
 
@@ -195,15 +290,44 @@ export const createGetWeatherRecordsTool = (onStatus?: (status: string) => void)
     }),
     execute: async (args) => {
         onStatus?.('Checking weather records...');
-        console.log('☀️ [Tool: get_weather_records] Called with:', JSON.stringify(args));
+        console.log('☀️ [Tool: get_weather_records] Checking weather records for:', JSON.stringify(args));
         const results = await getWeather(args.start_date, args.end_date, args.location || 'London');
-        console.log(`☀️ [Tool: get_weather_records] Found data`);
+        console.log(`☀️ [Tool: get_weather_records] Found ${Array.isArray(results) ? results.length : 0} records.`);
         return JSON.stringify(results);
     }
 });
 
-// --- Backward Compatibility ---
-export const detectIntentTool = createDetectIntentTool('');
-export const getPrimarySourcesTool = createGetPrimarySourcesTool();
-export const findRelevantChunksTool = createFindRelevantChunksTool();
-export const getWeatherRecordsTool = createGetWeatherRecordsTool();
+export const createFormatFinalResponseTool = (onStatus?: (status: string) => void) => tool({
+    name: 'format_final_response',
+    description: 'Format the internal synthesized answer into a clear, reader-friendly structure using bullet points and paragraphs. ALWAYS run this as the last step before finishing.',
+    parameters: z.object({
+        raw_answer: z.string().describe('The synthesized answer from previous tool outputs.')
+    }),
+    execute: async ({ raw_answer }) => {
+        onStatus?.('Finalizing response formatting...');
+        console.log('✨ [Tool: format_final_response] Formatting response...');
+        
+        if (!process.env.OPENAI_API_KEY) return raw_answer;
+        const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+        
+        try {
+            const response = await openai.chat.completions.create({
+                model: "gpt-4o-mini",
+                messages: [
+                    { 
+                        role: "system", 
+                        content: "You are a professional editor. Reformat the provided historical analysis into a clear, structured response. Use bullet points for lists of facts or events. Ensure paragraphs are distinct. Keep the tone academic yet accessible. Do NOT add new information." 
+                    },
+                    { role: "user", content: raw_answer }
+                ],
+                temperature: 0.2
+            });
+                        const formatted = response.choices[0].message.content || raw_answer;
+                        console.log('✨ [Tool: format_final_response] Formatting complete.');
+                        return formatted;
+                    } catch (_e) {
+                        return raw_answer;
+                    }
+                }
+            });
+            

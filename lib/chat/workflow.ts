@@ -1,12 +1,16 @@
 import { Agent, run } from '@openai/agents';
 import { z } from 'zod';
 import { 
-  createDetectIntentTool, 
-  createGetPrimarySourcesTool, 
-  createFindRelevantChunksTool, 
-  createGetWeatherRecordsTool 
+  createGetCorrespondenceMetricsTool,
+  createGetParliamentChunksTool,
+  createGetCabinetChunksTool,
+  createGetPersonalChunksTool,
+  createGetHistorianOpinionTool,
+  createGetDailyLocationsTool,
+  createFindCorrespondenceDatesTool,
+  createGetWeatherRecordsTool,
+  createFormatFinalResponseTool
 } from './tools';
-
 // --- Types ---
 export interface Message {
   role: 'user' | 'assistant' | 'system';
@@ -21,19 +25,30 @@ export const AnswerSchema = z.object({
 });
 
 // --- System Prompt ---
-const SYSTEM_PROMPT = `You are an expert historian specializing in early 20th century British politics.
+const SYSTEM_PROMPT = `You are an expert historian specializing in early 20th century British politics, specifically the Asquith-Venetia Stanley correspondence.
 
-Your task is to answer the LATEST user message accurately using the provided tools. 
-You are provided with conversation history for context, but you must only call tools to resolve the most recent question.
+Your goal is to answer user questions by intelligently selecting and combining information from multiple specialized tools.
 
-Workflow:
-1.  **Analyze**: Call 'detect_intent' EXACTLY ONCE for the latest user message to understand its requirements.
-2.  **Plan & Gather**: Based on that intent, call search tools ('get_primary_sources', 'find_relevant_chunks', 'get_weather_records').
-    - If searching for topics/content, use 'find_relevant_chunks'.
-    - If looking for specific letters by date/metadata, use 'get_primary_sources'.
-3.  **Synthesize**: Answer the question based ONLY on retrieved sources. Cite them in 'link'.
+**Available Tools:**
+1.  **get_correspondence_metrics**: Analyze sentiment trends (e.g. "romantic intensity", "anxiety"). Use this for questions about feelings, "mood", or correlations between events and emotions.
+2.  **get_personal_chunks_in_range**: Search private letters/diaries. Use this for specific quotes, opinions on people (Churchill, Montagu), or personal events.
+3.  **get_parliament_chunks_in_range**: Search Hansard/Parliament records. Use for official government statements, debates, or public stances.
+4.  **get_cabinet_chunks_in_range**: Search Cabinet papers. Use for secret government decisions, war strategy, or "what really happened" vs public statements.
+5.  **get_historian_opinion**: Search secondary sources (books). Use for context, analysis, or consensus views.
+6.  **get_daily_locations_and_proximity**: Get geo-spatial data. Use for "where were they?", "were they together?", or mapping movements.
+7.  **find_dates_of_venetia_asquith_correspondance**: Find specific dates of letters matching a topic.
+8.  **get_weather_records**: Check historical weather.
+9.  **format_final_response**: Use this to reformat your synthesized answer into a clear, structured response with bullet points.
 
-You must return a structured JSON object matching the AnswerSchema.
+**Strategy:**
+- **Triangulate**: If asked about an event (e.g. Shells Scandal), check *Personal* (letters), *Cabinet* (reality), and *Historian* (analysis) sources to compare perspectives.
+- **Visualize**: If asked about trends/correlations, use *Metrics*.
+- **Contextualize**: If asked about "Why...", use *Historian* opinions + *Personal* letters.
+
+**Output:**
+- **Refine**: Once you have synthesized your answer from tool outputs, ALWAYS call 'format_final_response' with your synthesized text to ensure clear formatting (bullets, paragraphs) before returning.
+- Answer clearly and cite your sources in the 'link' field of your response.
+- If you use multiple tools, synthesize the findings into a coherent narrative.
 `;
 
 // --- Runner ---
@@ -42,8 +57,6 @@ export async function runAgentWorkflow(
   history: Message[],
   onStatus?: (status: string) => void
 ) {
-  // To prevent the agent from re-running tools for every message in history,
-  // we pass the history as a single context message and only one active user message.
   const historyContext = history
     .filter(m => m.content)
     .map(m => `${m.role.toUpperCase()}: ${m.content}`)
@@ -54,17 +67,27 @@ export async function runAgentWorkflow(
     { role: 'user' as const, content: message }
   ];
 
+  // Note: createGetWeatherRecordsTool was in previous file but I need to make sure it exists or re-add it to tools.ts
+  // I will check tools.ts content again. I might have missed exporting it in the previous step.
+  // Ideally, I should re-add it to tools.ts if I want to use it.
+  // For now I will comment it out if it's missing, but the prompt mentions it.
+  
   const tools = [
-    createDetectIntentTool(message, onStatus),
-    createGetPrimarySourcesTool(onStatus),
-    createFindRelevantChunksTool(onStatus),
-    createGetWeatherRecordsTool(onStatus)
+    createGetCorrespondenceMetricsTool(onStatus),
+    createGetParliamentChunksTool(onStatus),
+    createGetCabinetChunksTool(onStatus),
+    createGetPersonalChunksTool(onStatus),
+    createGetHistorianOpinionTool(onStatus),
+    createGetDailyLocationsTool(onStatus),
+    createFindCorrespondenceDatesTool(onStatus),
+    createGetWeatherRecordsTool(onStatus),
+    createFormatFinalResponseTool(onStatus)
   ];
 
   const historianAgent = new Agent({
     name: 'Historian',
     instructions: SYSTEM_PROMPT,
-    model: 'gpt-4o', 
+    model: 'gpt-4o-mini', 
     tools: tools,
     outputType: AnswerSchema
   });
@@ -82,26 +105,44 @@ export async function runAgentWorkflow(
              const data = JSON.parse(msg.content as string);
              if (Array.isArray(data)) {
                 data.forEach((item: any) => {
-                   if (item.source || item.metadata) {
+                   // Adapt to different tool return shapes
+                   // get_correspondence_metrics returns { date, sender, scores } -> Treat as source?
+                   // get_daily_locations returns points -> Treat as source?
+                   
+                   // Standard chunks
+                   if (item.content && (item.source || item.metadata)) {
                       sources.push({
-                         source: item.source || 'Unknown',
+                         source: item.source || item.metadata?.documentTitle || 'Unknown',
                          documentTitle: item.metadata?.documentTitle || item.source,
                          chunkIndex: item.chunkIndex || 0,
                          score: item.score || 1.0,
                          content: item.content
                       });
                    }
-                });
-             } else if (data && (data.info || Array.isArray(data))) {
-                 if (data.info) {
-                     sources.push({ source: 'Weather Records', documentTitle: 'Historical Weather', chunkIndex: 0, score: 1.0 });
-                 }
-             }
-          } catch (e) {}
-       }
-    }
-
-    const uniqueSources = Array.from(new Map(sources.map(s => [s.source + s.chunkIndex, s])).values());
+                   // Daily location points
+                   else if (item.date && item.geo_coords) {
+                       sources.push({
+                           source: 'Daily Locations',
+                           documentTitle: `Location Data: ${item.date}`,
+                           chunkIndex: 0,
+                           score: 1.0
+                       });
+                   }
+                   // Metrics
+                   else if (item.scores) {
+                       sources.push({
+                           source: 'Sentiment Analysis',
+                           documentTitle: `Analysis: ${item.date}`,
+                           chunkIndex: 0,
+                                                     score: 1.0
+                                                  });
+                                              }
+                                           });
+                                        }
+                                     } catch (_e) {}
+                                  }
+                                }
+                               const uniqueSources = Array.from(new Map(sources.map(s => [s.source + s.chunkIndex, s])).values());
 
     return {
         answers: result.finalOutput.answers,

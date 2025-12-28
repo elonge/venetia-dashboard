@@ -1,5 +1,6 @@
 import clientPromise from './mongodb';
 import OpenAI from 'openai';
+import { type SearchIntent } from '@/types/chat';
 
 const DB_NAME = 'venetia_project';
 const COLLECTION_NAME = 'document_chunks';
@@ -7,20 +8,8 @@ const INDEX_NAME = process.env.VECTOR_SEARCH_INDEX_NAME || 'vector_index';
 const EMBEDDING_MODEL = process.env.EMBEDDING_MODEL || 'text-embedding-3-large';
 const ENTRIES_COLLECTION = 'primary_sources'; // The new collection for letters/diaries
 
-export interface SearchIntent {
-  type: 'specific_date' | 'timeline' | 'sentiment_trend' | 'general_context';
-  dateRange?: { start: string; end: string } | null;
-  sentiment?: 'positive' | 'negative' | null;
-  topics?: string[] | null;
-  requiresSecondary?: boolean | null;
-  author?: 'Edwin Montagu' | 'H.H. Asquith' | 'Margot Asquith' | 'Venetia Stanley' | null;    // todo: need a better way to handle authors
-  recipient?: 'Venetia Stanley' | 'Edwin Montagu' | null; 
-  requiresWeather: boolean;
-  locationContext?: string | null;
-  entities?: string[] | null;
-  textRegex?: string | null;
-  semanticQuery?: string | null;
-}
+export type { SearchIntent };
+
 export interface PrimaryEntryResult {
   content: string;
   date: Date;
@@ -39,6 +28,9 @@ export interface SearchResult {
     documentTitle?: string;
     dateRange?: { start: string; end: string };
     pageNumber?: number;
+    date?: string | Date;
+    author?: string;
+    recipient?: string;
   };
 }
 
@@ -87,7 +79,7 @@ export async function searchPrimaryEntries(
     const db = client.db(DB_NAME);
     const collection = db.collection(ENTRIES_COLLECTION);
 
-    const query: any = { source_type: 'primary_entry' };
+    const query: any = {  };
 
     // 1. Date Filter (The "Calendar" Logic)
     if (intent.dateRange) {

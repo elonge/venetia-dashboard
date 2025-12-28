@@ -83,8 +83,9 @@ async function main() {
   const targetColl = db.collection(TARGET_COLLECTION);
 
   console.log(`Reading from ${SOURCE_COLLECTION}...`);
-  const cursor = sourceColl.find({});
-  // const cursor = sourceColl.find({"recipient": "Violet Asquith"});
+  // const cursor = sourceColl.find({});
+  const cursor = sourceColl.find({author:"Cynthia Asquith"});
+  //   _id: { $in: [ "letter_bf32fe63", "letter_c8d66b02", "letter_d2d4b73f", "letter_90e7e2aa", "letter_9b966da3", "letter_c8d66b02", "letter_991610d3", "letter_853894a2", "letter_4ad6e5b3", "letter_c609236f", "letter_8d2f79ba" ] } }
   
   // Clear existing primary chunks to avoid duplicates if re-running
   // We assume primary sources in document_chunks are marked with source_type='primary_entry'
