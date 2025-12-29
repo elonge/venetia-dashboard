@@ -14,11 +14,13 @@ import {
   MessageSquare,
   Activity,
   Eye,
+  Briefcase,
 } from "lucide-react";
 import { format } from "date-fns";
 import type { DayData } from "./types";
 import { PEOPLE_IMAGES } from "@/constants";
 import { getDayByDate } from "./dayUtils";
+import Newspaper from "../Newspaper";
 
 interface DailyPopupProps {
   day: DayData;
@@ -74,6 +76,7 @@ export default function DailyPopup({
   const [hasPrevious, setHasPrevious] = useState(false);
   const [dateInput, setDateInput] = useState("");
   const [datePickerError, setDatePickerError] = useState<string | null>(null);
+  const [showNewspaperModal, setShowNewspaperModal] = useState(false);
   const dateInputRef = useRef<HTMLInputElement>(null);
 
   // Get current date in YYYY-MM-DD format for date input
@@ -254,131 +257,132 @@ export default function DailyPopup({
         className={cardClassName}
         onClick={isModal ? (e) => e.stopPropagation() : undefined}
       >
-{/* Header: Integrated Navigation */}
-<div className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 md:p-6 border-b-2 border-border-beige bg-white/80 backdrop-blur-md sticky top-0 z-50 gap-4 md:gap-0">
-  <div className="flex items-center gap-3 md:gap-6 flex-1 min-w-0">
-    <div className="min-w-0 flex-1">
-      <h2 className="font-serif text-xl md:text-2xl font-bold text-navy tracking-tight">
-        {formattedDate}
-      </h2>
-      {currentDay.weather && (
-        <div className="flex items-center gap-2 text-[10px] md:text-[11px] text-muted-gray font-black uppercase tracking-[0.15em] mt-1">
-          <Cloud className="w-3 h-3 md:w-3.5 md:h-3.5 text-accent-brown" />
-          <span className="truncate">{currentDay.weather}</span>
+        {/* Header: Integrated Navigation */}
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 md:p-6 border-b-2 border-border-beige bg-white/80 backdrop-blur-md sticky top-0 z-50 gap-4 md:gap-0">
+          <div className="flex items-center gap-3 md:gap-6 flex-1 min-w-0">
+            <div className="min-w-0 flex-1">
+              <h2 className="font-serif text-xl md:text-2xl font-bold text-navy tracking-tight">
+                {formattedDate}
+              </h2>
+              {currentDay.weather && (
+                <div className="flex items-center gap-2 text-[10px] md:text-[11px] text-muted-gray font-black uppercase tracking-[0.15em] mt-1">
+                  <Cloud className="w-3 h-3 md:w-3.5 md:h-3.5 text-accent-brown" />
+                  <span className="truncate">{currentDay.weather}</span>
+                </div>
+              )}
+            </div>
+            
+            {/* Status Badge: Only visible if a meeting occurred */}
+            {hasMeeting && (
+              <div className="hidden sm:flex items-center gap-2 px-2 md:px-3 py-1 bg-accent-green/10 rounded-sm border border-accent-green/30 shrink-0">
+                <div className="w-1.5 h-1.5 bg-accent-green rounded-full animate-pulse"></div>
+                <span className="text-[9px] md:text-[10px] text-accent-green font-black uppercase tracking-widest whitespace-nowrap">
+                  In-Person Meeting Recorded
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Control Group: Step Navigation & Archive Access */}
+          <div className="flex items-center gap-2 w-full md:w-auto justify-end">
+            <div className="flex items-center bg-card-bg rounded-sm p-1 border border-border-beige/60">
+              <button
+                onClick={handlePrevious}
+                disabled={!hasPrevious || loading}
+                className="p-2 hover:bg-page-bg hover:text-accent-brown rounded-sm transition-all text-navy disabled:opacity-20 disabled:cursor-not-allowed cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
+                title="Previous Day"
+                aria-label="Previous Day"
+              >
+                <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
+              </button>
+              <div className="w-[1px] h-5 bg-border-beige mx-1"></div>
+              <button
+                onClick={handleNext}
+                disabled={!hasNext || loading}
+                className="p-2 hover:bg-page-bg hover:text-accent-brown rounded-sm transition-all text-navy disabled:opacity-20 disabled:cursor-not-allowed cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
+                title="Next Day"
+                aria-label="Next Day"
+              >
+                <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
+              </button>
+            </div>
+
+            {/* Calendar Selector (Hidden Input + Trigger Button) */}
+            <div className="relative">
+              <input
+                ref={dateInputRef}
+                type="date"
+                value={dateInput || getCurrentDateInputValue()}
+                onChange={handleDateChange}
+                min={dateRange.min}
+                max={dateRange.max}
+                className="absolute inset-0 opacity-0 pointer-events-none"
+                aria-hidden="true"
+              />
+              <button
+                onClick={() => {
+                  setDatePickerError(null);
+                  dateInputRef.current?.showPicker();
+                }}
+                className="p-2.5 rounded-sm border transition-all cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center bg-white border-border-beige text-navy hover:bg-card-bg hover:text-accent-brown hover:border-accent-brown"
+                aria-label="Jump to date"
+                title="Open Archive Search"
+              >
+                <Calendar className="w-5 h-5 md:w-5.5 md:h-5.5" />
+              </button>
+            </div>
+            
+            {/* Close button for mobile */}
+            {isModal && (
+              <button
+                onClick={onClose}
+                className="md:hidden p-2 rounded-sm border border-border-beige bg-white text-navy hover:bg-card-bg cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
+                aria-label="Close"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            )}
+          </div>
         </div>
-      )}
-    </div>
-    
-    {/* Status Badge: Only visible if a meeting occurred */}
-    {hasMeeting && (
-      <div className="hidden sm:flex items-center gap-2 px-2 md:px-3 py-1 bg-accent-green/10 rounded-sm border border-accent-green/30 shrink-0">
-        <div className="w-1.5 h-1.5 bg-accent-green rounded-full animate-pulse"></div>
-        <span className="text-[9px] md:text-[10px] text-accent-green font-black uppercase tracking-widest whitespace-nowrap">
-          In-Person Meeting Recorded
-        </span>
-      </div>
-    )}
-  </div>
 
-  {/* Control Group: Step Navigation & Archive Access */}
-  <div className="flex items-center gap-2 w-full md:w-auto justify-end">
-    <div className="flex items-center bg-card-bg rounded-sm p-1 border border-border-beige/60">
-      <button
-        onClick={handlePrevious}
-        disabled={!hasPrevious || loading}
-        className="p-2 hover:bg-page-bg hover:text-accent-brown rounded-sm transition-all text-navy disabled:opacity-20 disabled:cursor-not-allowed cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
-        title="Previous Day"
-        aria-label="Previous Day"
-      >
-        <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
-      </button>
-      <div className="w-[1px] h-5 bg-border-beige mx-1"></div>
-      <button
-        onClick={handleNext}
-        disabled={!hasNext || loading}
-        className="p-2 hover:bg-page-bg hover:text-accent-brown rounded-sm transition-all text-navy disabled:opacity-20 disabled:cursor-not-allowed cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
-        title="Next Day"
-        aria-label="Next Day"
-      >
-        <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
-      </button>
-    </div>
-
-    {/* Calendar Selector (Hidden Input + Trigger Button) */}
-    <div className="relative">
-      <input
-        ref={dateInputRef}
-        type="date"
-        value={dateInput || getCurrentDateInputValue()}
-        onChange={handleDateChange}
-        min={dateRange.min}
-        max={dateRange.max}
-        className="absolute inset-0 opacity-0 pointer-events-none"
-        aria-hidden="true"
-      />
-      <button
-        onClick={() => {
-          setDatePickerError(null);
-          dateInputRef.current?.showPicker();
-        }}
-        className="p-2.5 rounded-sm border transition-all cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center bg-white border-border-beige text-navy hover:bg-card-bg hover:text-accent-brown hover:border-accent-brown"
-        aria-label="Jump to date"
-        title="Open Archive Search"
-      >
-        <Calendar className="w-5 h-5 md:w-5.5 md:h-5.5" />
-      </button>
-    </div>
-    
-    {/* Close button for mobile */}
-    {isModal && (
-      <button
-        onClick={onClose}
-        className="md:hidden p-2 rounded-sm border border-border-beige bg-white text-navy hover:bg-card-bg cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
-        aria-label="Close"
-      >
-        <X className="w-5 h-5" />
-      </button>
-    )}
-  </div>
-</div>
-
-{/* Inline Error Display (if date selection fails) */}
-{datePickerError && (
-  <div className="bg-accent-red/10 border-b border-accent-red/20 py-2 px-4 text-center text-xs text-accent-red font-medium animate-in fade-in slide-in-from-top-1">
-    {datePickerError}
-  </div>
-)}
+        {/* Inline Error Display (if date selection fails) */}
+        {datePickerError && (
+          <div className="bg-accent-red/10 border-b border-accent-red/20 py-2 px-4 text-center text-xs text-accent-red font-medium animate-in fade-in slide-in-from-top-1">
+            {datePickerError}
+          </div>
+        )}
         {/* Content - Scrollable */}
         <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 md:space-y-6">
           {loading && (
             <div className="text-center py-8 text-slate">Loading...</div>
           )}
 
-{/* Meeting Reference: The Archive Cross-Reference */}
-{hasMeeting && currentDay.meeting_reference && (
-  <div className="bg-accent-green/5 border-l-4 border-accent-green rounded-sm p-5 shadow-sm mb-8 relative overflow-hidden group">
+          {/* Meeting Reference: The Archive Cross-Reference */}
+          {hasMeeting && currentDay.meeting_reference && (
+            <div className="bg-accent-green/5 border-l-4 border-accent-green rounded-sm p-5 shadow-sm mb-8 relative overflow-hidden group">
+              <div className="flex items-start gap-4">
+                {/* Icon: A more formal "Official Note" look */}
+                <div className="w-10 h-10 rounded-full bg-accent-green/10 flex items-center justify-center flex-shrink-0 border border-accent-green/20">
+                  <MessageSquare className="w-5 h-5 text-accent-green" />
+                </div>
 
-    <div className="flex items-start gap-4">
-      {/* Icon: A more formal "Official Note" look */}
-      <div className="w-10 h-10 rounded-full bg-accent-green/10 flex items-center justify-center flex-shrink-0 border border-accent-green/20">
-        <MessageSquare className="w-5 h-5 text-accent-green" />
-      </div>
+                <div className="flex-1 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-[10px] font-black text-accent-green uppercase tracking-[0.2em]">
+                      The PM and Venetia met that day
+                    </h3>
+                    <span className="h-[1px] w-8 bg-accent-green/20"></span>
+                  </div>
+                  
+                  <p className="text-[15px] text-navy font-serif italic leading-relaxed">
+                    &quot;{currentDay.meeting_reference}&quot;
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
 
-      <div className="flex-1 space-y-2">
-        <div className="flex items-center gap-2">
-          <h3 className="text-[10px] font-black text-accent-green uppercase tracking-[0.2em]">
-            The PM and Venetia met that day
-          </h3>
-          <span className="h-[1px] w-8 bg-accent-green/20"></span>
-        </div>
-        
-        <p className="text-[15px] text-navy font-serif italic leading-relaxed">
-          "{currentDay.meeting_reference}"
-        </p>
-      </div>
-    </div>
-  </div>
-)}          {/* Letters */}
+          {/* Letters */}
           {hasLetters ? (
             <div className="space-y-4">
               <h3 className="text-xs font-black text-navy uppercase tracking-[0.2em] flex items-center gap-2">
@@ -404,7 +408,7 @@ export default function DailyPopup({
                         {letter.excerpt && (
                           <div className="relative pt-2">
                             <span className="absolute -top-2 md:-top-4 -left-1 md:-left-2 text-4xl md:text-6xl font-serif text-accent-burgundy/10">
-                              "
+                              &quot;
                             </span>
                             <p className="font-serif text-xl md:text-xl lg:text-xl text-navy italic leading-tight relative z-10">
                               {letter.excerpt}
@@ -589,7 +593,7 @@ export default function DailyPopup({
                       <Activity className="w-4 h-4 text-accent-brown mt-0.5" />
                       <div className="text-sm">
                         <span className="block text-[10px] font-bold text-accent-brown uppercase tracking-wider">
-                          The PM's Record
+                          The PM&apos;s Record
                         </span>
                         <p className="text-navy leading-snug">
                           {currentDay.pm_activities}
@@ -607,7 +611,7 @@ export default function DailyPopup({
                         </span>
                       </div>
                       <p className="text-sm text-slate italic font-serif leading-relaxed">
-                        "{currentDay.pm_mood_witness}"
+                        &quot;{currentDay.pm_mood_witness}&quot;
                       </p>
                     </div>
                   )}
@@ -672,54 +676,97 @@ export default function DailyPopup({
           </div>
 
           {/* Politics: The Government Dispatch */}
-          {currentDay.politics && (
-            <div className="bg-white rounded-sm p-6 shadow-sm border border-border-beige relative">
-              <div className="absolute top-0 right-0 p-3 text-[10px] font-mono text-navy/30 uppercase tracking-tighter">
-                Entry: {currentDay.date?.toUpperCase() || "MAY-17-1915"}
-              </div>
+            {currentDay.politics && (
+  <div 
+    className="bg-stone-50 rounded-sm shadow-sm border border-stone-200 overflow-hidden group hover:shadow-lg transition-all duration-500 cursor-pointer"
+    onClick={() => setShowNewspaperModal(true)}
+  >
+    
+    {/* 1. TOP BAR: Official Metadata */}
+    <div className="px-6 py-4 border-b border-stone-200 bg-white flex justify-between items-center">
+      <div className="flex items-center gap-2">
+        <div className="w-1.5 h-1.5 rounded-full bg-[#8B0000]"></div>
+        <h4 className="text-[10px] font-black text-navy uppercase tracking-[0.2em]">
+          The Daily Record
+        </h4>
+      </div>
+      <span className="text-[10px] font-mono text-stone-400 uppercase tracking-widest">
+        No. 5892 • {currentDay.date?.toUpperCase() || "JAN 02 1912"}
+      </span>
+    </div>
 
-              <h4 className="text-xs font-black text-navy uppercase tracking-[0.2em] mb-8 flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-accent-brown" />
-                The Political Record
-              </h4>
+    {/* 2. HERO IMAGE SECTION (The "Large Thumbnail") 
+        We use a fixed height container to show just the top third (Masthead + Lead Story)
+        This acts as the visual hook.
+    */}
+    <div className="relative w-full h-72 bg-stone-200 overflow-hidden border-b border-stone-200 group-hover:opacity-95 transition-opacity">
+       {/* Image Styling:
+          - object-top: Ensures we always see the Title/Masthead first.
+          - object-cover: Fills the width perfectly.
+          - sepia/contrast: Filters to blend it with the UI.
+       */}
+       <Newspaper/>
+       
+       {/* Optional: "Read Full Paper" Overlay on Hover */}
+       <div className="absolute inset-0 bg-navy/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+         <span className="bg-white/90 text-navy px-4 py-2 text-[10px] font-bold uppercase tracking-widest shadow-sm backdrop-blur-sm">
+           View Full Page
+         </span>
+       </div>
+    </div>
 
-              <div className="space-y-8">
-                {currentDay.politics.parliament && (
-                  <div className="relative pl-6 border-l border-accent-brown/30">
-                    <span className="absolute -left-[3px] top-0 w-[5px] h-[5px] rounded-full bg-accent-brown"></span>
-                    <div className="flex flex-col mb-1">
-                      <span className="text-[10px] font-bold text-accent-brown uppercase tracking-widest">
-                        Parliament
-                      </span>
-                    </div>
-                    <div className="text-sm text-navy font-serif leading-relaxed">
-                      {currentDay.politics.parliament.replace(
-                        /^(Parliament\s*—\s*Yes\s*—\s*Topics:\s*)/i,
-                        ""
-                      )}
-                    </div>
-                  </div>
-                )}
+    {/* 3. DATA GRID (Parliament & Cabinet) */}
+    <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-8 bg-stone-50">
+      
+      {/* Parliament Status */}
+      {currentDay.politics.parliament && (
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between">
+             <span className="text-[9px] font-bold text-stone-400 uppercase tracking-widest">
+               Parliament
+             </span>
+             {/* Status Pill */}
+             <span className={`px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded-full ${
+                currentDay.politics.parliament.toLowerCase().includes("no") 
+                  ? "bg-stone-200 text-stone-500" 
+                  : "bg-emerald-100 text-emerald-800"
+              }`}>
+                {currentDay.politics.parliament.toLowerCase().includes("no") ? "Recess" : "Session"}
+              </span>
+          </div>
+          <p className="text-sm text-navy font-serif leading-relaxed line-clamp-2">
+             {currentDay.politics.parliament.replace(/^(Parliament\s*—\s*)/i, "").replace(/^(Yes\s*—\s*)/i, "")}
+          </p>
+        </div>
+      )}
 
-                {currentDay.politics.cabinet && (
-                  <div className="relative pl-6 border-l border-accent-brown/30">
-                    <span className="absolute -left-[3px] top-0 w-[5px] h-[5px] rounded-full bg-accent-brown"></span>
-                    <div className="flex flex-col mb-1">
-                      <span className="text-[10px] font-bold text-accent-brown uppercase tracking-widest">
-                        Cabinet
-                      </span>
-                    </div>
-                    <div className="text-sm text-muted-gray font-serif leading-relaxed italic">
-                      {currentDay.politics.cabinet.toLowerCase().includes("no") 
-                        ? "No Cabinet session recorded for this date." 
-                        : currentDay.politics.cabinet.replace(/^(Cabinet\s*—\s*Yes\s*—\s*Topics:\s*)/i, "")
-                      }
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
+      {/* Cabinet Status */}
+      {currentDay.politics.cabinet && (
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between">
+             <span className="text-[9px] font-bold text-stone-400 uppercase tracking-widest">
+               Cabinet
+             </span>
+             <span className={`px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded-full ${
+                currentDay.politics.cabinet.toLowerCase().includes("no") 
+                  ? "bg-stone-200 text-stone-500" 
+                  : "bg-amber-100 text-amber-800"
+              }`}>
+                {currentDay.politics.cabinet.toLowerCase().includes("no") ? "None" : "Meeting"}
+              </span>
+          </div>
+          <p className="text-sm text-stone-500 font-serif leading-relaxed italic line-clamp-2">
+            {currentDay.politics.cabinet.toLowerCase().includes("no")
+              ? "No Cabinet session recorded."
+              : currentDay.politics.cabinet.replace(/^(Cabinet\s*—\s*)/i, "").replace(/^(Yes\s*—\s*)/i, "")}
+          </p>
+        </div>
+      )}
+
+    </div>
+  </div>
+)}
+
           {/* Diaries */}
           {currentDay.diaries_summary &&
             currentDay.diaries_summary.length > 0 && (
@@ -764,7 +811,7 @@ export default function DailyPopup({
                             </div>
 
                             <p className="text-[15px] text-slate leading-relaxed italic font-serif border-l-2 border-page-bg pl-4">
-                              "{diary.excerpt}"
+                              &quot;{diary.excerpt}&quot;
                             </p>
                           </div>
                         </div>
@@ -776,6 +823,43 @@ export default function DailyPopup({
             )}
         </div>
       </div>
+
+      {/* Newspaper Modal */}
+      {showNewspaperModal && (
+        <div
+          className="fixed inset-0 z-[10000] bg-black/90 flex flex-col items-center justify-center p-4"
+          onClick={() => setShowNewspaperModal(false)}
+        >
+          <div
+            className="relative w-full max-w-6xl h-full max-h-[90vh] flex flex-col bg-[#2e2620] rounded-sm overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header / Close */}
+            <div className="flex items-center justify-between p-4 bg-[#231d18] text-amber-50 shrink-0 border-b border-white/10">
+              <button
+                onClick={() => setShowNewspaperModal(false)}
+                className="p-2 hover:bg-white/10 rounded-full transition-colors text-amber-50/70 hover:text-amber-50"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 overflow-clip bg-[#2e2620] flex flex-col">
+              <div className="flex-1">
+                <Newspaper />
+              </div>
+              
+              <div className="p-6 bg-[#231d18] border-t border-white/10 flex items-center justify-center gap-4">
+                 <div className="w-1 h-12 bg-accent-brown/50 hidden sm:block"></div>
+                 <p className="text-lg md:text-xl font-serif italic text-amber-50/70 text-center max-w-3xl leading-relaxed">
+                   &quot;This image is a visual reconstruction based on the leading stories reported in the Westminster Gazette on that day.&quot;
+                 </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

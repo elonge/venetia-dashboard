@@ -46,9 +46,9 @@ const NEWSPAPER_CONTENT = {
   }
 };
 
-export default function NewspaperPage() {
+export default function Newspaper() {
   return (
-    <div className="min-h-screen bg-[#2e2620] py-12 px-4 flex justify-center items-start overflow-auto selection:bg-amber-200/30">
+    <div className="bg-[#2e2620] py-12 px-4 flex justify-center items-start overflow-auto selection:bg-amber-200/30 transform-scale-85">
       <style>
         {`
           @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
@@ -109,7 +109,7 @@ export default function NewspaperPage() {
         </div>
 
         {/* 2. Main Content Area */}
-        <div className="absolute top-[33%] left-[12%] right-[12%] bottom-[6%] flex gap-[2%] items-stretch">
+        <div className="absolute top-[33%] left-[12%] right-[12%] bottom-[6%] flex gap-[2%] items-stretch overflow-y-clip">
           
           {/* LEFT COLUMN */}
           <article className="w-[30%] flex flex-col items-center">
