@@ -19,10 +19,10 @@ export default function NewspaperPage() {
           }
 
           .ink-print {
-            color: #1a1a1a;
+            color: #2e2624;
             mix-blend-mode: multiply;
-            opacity: 0.80;
-            filter: contrast(1.1) brightness(0.9) blur(0.15px);
+            opacity: 0.90;
+            filter: contrast(1.1) brightness(0.9) blur(0.3px);
           }
 
           .header-font {
@@ -63,7 +63,7 @@ export default function NewspaperPage() {
         </div>
 
         {/* 2. Main Content Area */}
-        <div className="absolute top-[31%] left-[12%] right-[12%] bottom-[6%] flex gap-[2%] items-stretch">
+        <div className="absolute top-[33%] left-[12%] right-[12%] bottom-[6%] flex gap-[2%] items-stretch">
           
           {/* LEFT COLUMN */}
           <article className="w-[30%] flex flex-col items-center">
