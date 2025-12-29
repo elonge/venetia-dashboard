@@ -82,7 +82,7 @@ export default function DailyPopup({
   };
 
   const date = parseDate(currentDay.date);
-  const formattedDate = date ? format(date, "MMMM d, yyyy") : currentDay.date;
+  const formattedDate = date ? format(date, "EEEE, MMMM d, yyyy") : currentDay.date;
   const dateString = formatDateString(currentDay.date);
   const hasMeeting = currentDay.met_venetia;
   const letters = currentDay.letters ?? [];
@@ -256,7 +256,7 @@ export default function DailyPopup({
       >
 {/* Header: Integrated Navigation */}
 <div className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 md:p-6 border-b-2 border-border-beige bg-white/80 backdrop-blur-md sticky top-0 z-50 gap-4 md:gap-0">
-  <div className="flex items-center gap-3 md:gap-6 flex-1 min-w-0">
+  <div className="flex items-center gap-3 md:gap-6 flex-1 min-w-0 md:mr-2">
     <div className="min-w-0 flex-1">
       <h2 className="font-serif text-xl md:text-2xl font-bold text-navy tracking-tight">
         {formattedDate}
