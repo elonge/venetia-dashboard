@@ -406,7 +406,7 @@ export default function DailyPopup({
                             <span className="absolute -top-2 md:-top-4 -left-1 md:-left-2 text-4xl md:text-6xl font-serif text-accent-burgundy/10">
                               "
                             </span>
-                            <p className="font-serif text-xl md:text-2xl lg:text-3xl text-navy italic leading-tight relative z-10">
+                            <p className="font-serif text-xl md:text-xl lg:text-xl text-navy italic leading-tight relative z-10">
                               {letter.excerpt}
                             </p>
                           </div>
