@@ -19,10 +19,10 @@ export default function NewspaperPage() {
           }
 
           .ink-print {
-            color: #2e2624;
-            mix-blend-mode: multiply;
-            opacity: 0.90;
-            filter: contrast(1.1) brightness(0.9) blur(0.3px);
+            color: #1a1614; /* Deep Charcoal */
+            mix-blend-mode: multiply; /* Crucial: "Burns" the text into the paper */
+            opacity: 0.85; /* Transparency mimics absorption */
+            filter: blur(0.35px) contrast(1.2); /* Softens digital edges */
           }
 
           .header-font {
