@@ -6,6 +6,7 @@ import { ArrowLeft, MessageCircle, X } from 'lucide-react';
 import ChatInterface from '@/components/chat/ChatInterface';
 import { ChatLayoutContext } from '@/components/chat/chat-layout-context';
 import { useIsMobile } from '@/lib/useMediaQuery';
+import { Footer } from '@/components/ui/Footer';
 
 const CHAT_MIN_WIDTH = 300;
 const CHAT_MAX_WIDTH = 1200;
@@ -174,8 +175,12 @@ export default function SiteLayout({
 </header>
 
         <div className="flex flex-1 min-h-0 relative">
-          <div className="flex-1 min-w-0 relative overflow-y-auto">
-            {children}
+          <div className="flex-1 min-w-0 relative overflow-y-auto flex flex-col">
+            <div className="flex-1">
+              {children}
+            </div>
+            
+            <Footer />
           </div>
 
           {/* Desktop Chat Sidebar */}
