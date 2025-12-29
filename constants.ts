@@ -180,6 +180,7 @@ export const PODCASTS: Array<{
         "title": "The Asquith family",
         "description": "Introducing the asquith family members and their dynamics that shaped the prime minister's world.",
         "chapter_id": "asquith_family",
+        "spotify_url": "https://open.spotify.com/episode/5rvRGt2liB67qxwDZgW7VS"
       },
     {
         "title": "Marconi Scandal: The Razor Thin Defense",
