@@ -23,6 +23,7 @@ export default function Home() {
   // Daily widget state
   const [todayInHistory, setTodayInHistory] = useState<DayData | null>(null);
   const [loadingDays, setLoadingDays] = useState(true);
+  const [navigating, setNavigating] = useState(false);
 
   const [funFacts, setFunFacts] = useState<Array<{
     _id: string;
@@ -30,6 +31,40 @@ export default function Home() {
   }> | null>(null);
   const [funFactIndex, setFunFactIndex] = useState(0);
   const [loadingFunFacts, setLoadingFunFacts] = useState(true);
+
+  const handleNextDay = async () => {
+    if (!todayInHistory || navigating) return;
+    setNavigating(true);
+    try {
+      const date = normalizeDayDate(todayInHistory.date);
+      const res = await fetch(`/api/daily_records/next?date=${date}`);
+      if (res.ok) {
+        const nextDay = await res.json();
+        setTodayInHistory(nextDay);
+      }
+    } catch (error) {
+      console.error("Error navigating to next day:", error);
+    } finally {
+      setNavigating(false);
+    }
+  };
+
+  const handlePrevDay = async () => {
+    if (!todayInHistory || navigating) return;
+    setNavigating(true);
+    try {
+      const date = normalizeDayDate(todayInHistory.date);
+      const res = await fetch(`/api/daily_records/previous?date=${date}`);
+      if (res.ok) {
+        const prevDay = await res.json();
+        setTodayInHistory(prevDay);
+      }
+    } catch (error) {
+      console.error("Error navigating to previous day:", error);
+    } finally {
+      setNavigating(false);
+    }
+  };
 
   // Find an "interesting" day matching today's month/day in priority years.
   useEffect(() => {
@@ -153,6 +188,10 @@ export default function Home() {
                 onClick={() =>
                   router.push(`/daily/${normalizeDayDate(todayInHistory.date)}`)
                 }
+                onNext={handleNextDay}
+                onPrev={handlePrevDay}
+                isNextDisabled={navigating}
+                isPrevDisabled={navigating}
               />
             ) : (
               <div className="bg-card-bg rounded-2xl p-4 md:p-6 text-center text-slate border border-border-beige min-h-[200px] md:min-h-[250px] flex items-center justify-center shadow-[0_14px_34px_rgba(0,0,0,0.08)]">

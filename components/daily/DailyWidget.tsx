@@ -2,11 +2,16 @@
 
 import React from 'react';
 import { format } from 'date-fns';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { DayData } from './types';
 
 interface DailyWidgetProps {
   day: DayData;
   onClick: () => void;
+  onNext?: () => void;
+  onPrev?: () => void;
+  isNextDisabled?: boolean;
+  isPrevDisabled?: boolean;
 }
 
 // Helper to parse date from various formats
@@ -73,7 +78,14 @@ function pickPrimaryScore(day: DayData): { label: string; value: number } | null
   return valid[0];
 }
 
-export default function DailyWidget({ day, onClick }: DailyWidgetProps) {
+export default function DailyWidget({ 
+  day, 
+  onClick, 
+  onNext, 
+  onPrev,
+  isNextDisabled,
+  isPrevDisabled
+}: DailyWidgetProps) {
   const date = parseDate(day.date);
   const formattedDate = date ? format(date, 'MMMM d, yyyy') : day.date;
   const previewText = getPreviewText(day);
@@ -91,16 +103,16 @@ export default function DailyWidget({ day, onClick }: DailyWidgetProps) {
   const primaryLocation = day.pm_location || day.venetia_location || null;
 
   return (
-    <button
+    <div
       onClick={onClick}
-      type="button"
-      className="w-full cursor-pointer rounded-md bg-card-bg p-4 md:p-6 border border-border-beige shadow-[0_18px_40px_rgba(0,0,0,0.12)] hover:-translate-y-[1px] hover:shadow-[0_26px_54px_rgba(0,0,0,0.14)] transition-all text-left group"
+      className="w-full cursor-pointer rounded-md bg-card-bg p-4 md:p-6 border border-border-beige shadow-[0_18px_40px_rgba(0,0,0,0.12)] hover:-translate-y-[1px] hover:shadow-[0_26px_54px_rgba(0,0,0,0.14)] transition-all text-left group relative"
     >
       {/* Header */}
       <div className="flex items-start justify-between gap-2 md:gap-4">
         <div className="inline-flex items-center rounded-md bg-accent-brown px-2 py-1 text-[10px] md:text-[11px] font-semibold tracking-[0.14em] uppercase text-card-bg shadow-sm">
           Today in History
         </div>
+        
         <div className="flex items-center gap-1.5 md:gap-2 shrink-0">
           {hasMeeting && (
             <span className="inline-flex items-center rounded-full border border-accent-green/20 bg-accent-green/10 px-1.5 md:px-2 py-0.5 md:py-1 text-[10px] md:text-[11px] font-medium text-accent-green">
@@ -119,13 +131,42 @@ export default function DailyWidget({ day, onClick }: DailyWidgetProps) {
         </div>
       </div>
 
-      {/* Date */}
-      <div className="mt-2 md:mt-3">
+      {/* Date & Navigation */}
+      <div className="mt-2 md:mt-3 flex items-center justify-between gap-4">
         <div className="font-serif text-2xl md:text-[34px] leading-[1.05] font-semibold tracking-tight text-navy">
           {formattedDate}
         </div>
-        <div className="mt-2 md:mt-3 h-px w-full bg-border-beige opacity-50" />
+
+        {/* Navigation Controls */}
+        {(onPrev || onNext) && (
+          <div className="flex items-center bg-page-bg/50 rounded-md border border-border-beige p-0.5" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onPrev?.();
+              }}
+              disabled={isPrevDisabled}
+              className="cursor-pointer p-1.5 hover:bg-white rounded transition-colors disabled:opacity-30 disabled:cursor-not-allowed text-navy"
+              title="Previous Day"
+            >
+              <ChevronLeft size={18} />
+            </button>
+            <div className="w-px h-5 bg-border-beige mx-1" />
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onNext?.();
+              }}
+              disabled={isNextDisabled}
+              className="cursor-pointer p-1.5 hover:bg-white rounded transition-colors disabled:opacity-30 disabled:cursor-not-allowed text-navy"
+              title="Next Day"
+            >
+              <ChevronRight size={18} />
+            </button>
+          </div>
+        )}
       </div>
+      <div className="mt-2 md:mt-3 h-px w-full bg-border-beige opacity-50" />
 
       {/* Content */}
       <div className="mt-4 md:mt-6 grid grid-cols-1 md:grid-cols-[1fr_280px] md:gap-8">
@@ -225,12 +266,14 @@ export default function DailyWidget({ day, onClick }: DailyWidgetProps) {
           </div>
 
           <div className="mt-4 md:mt-6 flex items-center justify-end">
-            <div className="text-xs md:text-sm font-semibold text-navy group-hover:text-accent-burgundy transition-colors whitespace-nowrap">
-              Read Full Analysis →
+            <div className="inline-flex items-center gap-2 rounded-md bg-navy/5 px-3 py-1.5 text-xs md:text-sm font-bold text-navy border border-navy/10 group-hover:bg-navy group-hover:text-white group-hover:border-navy transition-all duration-300 shadow-sm whitespace-nowrap">
+              <span>Read Full Analysis</span>
+              <span className="text-lg leading-none">→</span>
             </div>
           </div>
         </div>
       </div>
-    </button>
-  );
-}
+        </div>
+      );
+    }
+    
