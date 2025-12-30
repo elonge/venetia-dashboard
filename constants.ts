@@ -39,7 +39,7 @@ export const PEOPLE_IMAGES = {
     "Sir Edward Grey": "https://commons.wikimedia.org/wiki/Special:FilePath/Edward_Grey,_1st_Viscount_Grey_of_Fallodon.jpg",
     "Sir John French": "https://commons.wikimedia.org/wiki/Special:FilePath/John_French_GW.png",
     "Sylvia Henley": "/sylvia_henley.jpg",
-    "Venetia Stanley": "/lab_instagram/venetia_profile.png",
+    "Venetia Stanley": "https://upload.wikimedia.org/wikipedia/en/1/1c/Venetia_Stanley.jpg",
     "Venetia Montagu": "/lab_instagram/venetia_profile.png",
     "Violet Asquith": "https://commons.wikimedia.org/wiki/Special:FilePath/Violet_Bonham_Carter_1915.jpg",
     "Violet": "https://commons.wikimedia.org/wiki/Special:FilePath/Violet_Bonham_Carter_1915.jpg",
