@@ -71,6 +71,7 @@ export default function DailyPopup({
   allDays = [],
 }: DailyPopupProps) {
   const [currentDay, setCurrentDay] = useState<DayData>(day);
+  const [currentLetterIndex, setCurrentLetterIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [hasNext, setHasNext] = useState(false);
   const [hasPrevious, setHasPrevious] = useState(false);
@@ -382,164 +383,226 @@ export default function DailyPopup({
             </div>
           )}
 
-          {/* Letters */}
-          {hasLetters ? (
-            <div className="space-y-4">
+          {/* Letters Section */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
               <h3 className="text-xs font-black text-navy uppercase tracking-[0.2em] flex items-center gap-2">
                 <Mail className="w-4 h-4 text-accent-brown" />
-                Correspondence ({letters.length})
+                Correspondence {hasLetters ? `(${currentLetterIndex + 1} of ${letters.length})` : "(0)"}
               </h3>
-              {letters.map((letter, idx) => (
-                <div
-                  key={idx}
-                  className="bg-card-bg rounded-sm p-4 md:p-6 border-l-[4px] md:border-l-[6px] border-accent-burgundy shadow-md mb-6 md:mb-8"
-                >
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
-                    {/* LEFT COLUMN: The Primary Source (2/3) */}
-                    <div className="lg:col-span-2 flex flex-col justify-between lg:border-r lg:border-border-beige/50 lg:pr-8">
-                      <div className="space-y-3 md:space-y-4">
-                        {/* Header Info */}
-                        <div className="flex items-center justify-between text-[10px] md:text-[11px] font-bold uppercase tracking-widest text-accent-brown">
-                          <span>Letter #{letter.letter_number}</span>
-                          <span className="truncate ml-2">{letter.time_of_day || "Time not recorded"}</span>
-                        </div>
+              
+              {/* Navigation Buttons - Header Position */}
+              {letters.length > 1 && (
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={() => setCurrentLetterIndex(prev => Math.max(0, prev - 1))}
+                    disabled={currentLetterIndex === 0}
+                    className="p-1.5 rounded-sm bg-card-bg border border-border-beige text-navy hover:text-accent-brown disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                    aria-label="Previous letter"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => setCurrentLetterIndex(prev => Math.min(letters.length - 1, prev + 1))}
+                    disabled={currentLetterIndex === letters.length - 1}
+                    className="p-1.5 rounded-sm bg-card-bg border border-border-beige text-navy hover:text-accent-brown disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                    aria-label="Next letter"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
+            </div>
 
-                        {/* THE QUOTE: Large and Impactful */}
-                        {letter.excerpt && (
-                          <div className="relative pt-2">
-                            <span className="absolute -top-2 md:-top-4 -left-1 md:-left-2 text-4xl md:text-6xl font-serif text-accent-burgundy/10">
-                              &quot;
-                            </span>
-                            <p className="font-serif text-xl md:text-xl lg:text-xl text-navy italic leading-tight relative z-10">
-                              {letter.excerpt}
-                            </p>
-                          </div>
-                        )}
+            <div className="relative">
+              {hasLetters ? (
+                /* Letter Card Carousel */
+                <div className="space-y-6">
+                  <div className="relative">
+                    {letters.map((letter, idx) => (
+                      <div
+                        key={idx}
+                        className={`${
+                          idx === currentLetterIndex ? "block animate-in fade-in slide-in-from-right-4 duration-500" : "hidden"
+                        }`}
+                      >
+                        <div className="bg-card-bg rounded-sm p-4 md:p-6 border-l-[4px] md:border-l-[6px] border-accent-burgundy shadow-md">
+                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
+                            {/* LEFT COLUMN: The Primary Source (2/3) */}
+                            <div className="lg:col-span-2 flex flex-col justify-between lg:border-r lg:border-border-beige/50 lg:pr-8">
+                              <div className="space-y-3 md:space-y-4">
+                                {/* Header Info */}
+                                <div className="flex items-center justify-between text-[10px] md:text-[11px] font-bold uppercase tracking-widest text-accent-brown">
+                                  <span>Letter #{letter.letter_number}</span>
+                                  <span className="truncate ml-2">{letter.time_of_day || "Time not recorded"}</span>
+                                </div>
 
-                        {/* SUMMARY: Detailed Context */}
-                        {letter.summary && (
-                          <p className="text-xs md:text-sm text-slate leading-relaxed border-t border-border-beige pt-3 md:pt-4 italic">
-                            {letter.summary}
-                          </p>
-                        )}
-                      </div>
-
-                      {/* MENTIONED PEOPLE: Move to bottom of main column */}
-                      {letter.people_mentioned &&
-                        letter.people_mentioned.length > 0 && (
-                          <div className="mt-8 pt-4 border-t border-border-beige/30 flex items-start gap-3 text-[9px] uppercase tracking-[0.15em] text-muted-gray font-bold">
-                            <Users className="w-3.5 h-3.5 mt-[-1px] opacity-60" />
-                            <div className="leading-relaxed">
-                              <span className="text-accent-brown mr-2">
-                                Mentioned:
-                              </span>
-                              <span>
-                                {letter.people_mentioned.join("  •  ")}
-                              </span>
-                            </div>
-                          </div>
-                        )}
-                    </div>
-
-                    {/* RIGHT COLUMN: Intelligence Analysis (1/3) */}
-                    <div className="lg:col-span-1 space-y-4 md:space-y-6 bg-page-bg/40 p-3 md:p-4 rounded-sm mt-4 lg:mt-0">
-                      {/* METRICS: Redesigned for full readability */}
-                      <div>
-                        <h3 className="text-[10px] font-black text-accent-brown uppercase tracking-[0.2em] mb-4">
-                          Metric Analysis
-                        </h3>
-                        <div className="space-y-4">
-                          {[
-                            {
-                              label: "Romantic Adoration",
-                              score: letter.scores?.romantic_adoration,
-                              color: "var(--color-accent-burgundy)",
-                            },
-                            {
-                              label: "Political Unburdening",
-                              score: letter.scores?.political_unburdening,
-                              color: "var(--color-accent-green)",
-                            },
-                            {
-                              label: "Emotional Desolation",
-                              score: letter.scores?.emotional_desolation,
-                              color: "var(--color-accent-brown)",
-                            },
-                          ].map(
-                            (metric, mIdx) =>
-                              metric.score !== undefined && (
-                                <div key={mIdx} className="space-y-1.5">
-                                  <div className="flex justify-between text-[10px] font-bold uppercase tracking-wider text-navy">
-                                    <span>{metric.label}</span>
-                                    <span>{metric.score}/10</span>
+                                {/* THE QUOTE: Large and Impactful */}
+                                {letter.excerpt && (
+                                  <div className="relative pt-2">
+                                    <span className="absolute -top-2 md:-top-4 -left-1 md:-left-2 text-4xl md:text-6xl font-serif text-accent-burgundy/10">
+                                      &quot;
+                                    </span>
+                                    <p className="font-serif text-xl md:text-xl lg:text-xl text-navy italic leading-tight relative z-10">
+                                      {letter.excerpt}
+                                    </p>
                                   </div>
-                                  <div className="w-full bg-section-bg h-1.5 rounded-full overflow-hidden">
-                                    <div
-                                      className="h-full transition-all duration-1000"
-                                      style={{
-                                        width: `${(metric.score / 10) * 100}%`,
-                                        backgroundColor: metric.color,
-                                      }}
-                                    />
+                                )}
+
+                                {/* SUMMARY: Detailed Context */}
+                                {letter.summary && (
+                                  <p className="text-xs md:text-sm text-slate leading-relaxed border-t border-border-beige pt-3 md:pt-4 italic">
+                                    {letter.summary}
+                                  </p>
+                                )}
+                              </div>
+
+                              {/* MENTIONED PEOPLE: Move to bottom of main column */}
+                              {letter.people_mentioned &&
+                                letter.people_mentioned.length > 0 && (
+                                  <div className="mt-8 pt-4 border-t border-border-beige/30 flex items-start gap-3 text-[9px] uppercase tracking-[0.15em] text-muted-gray font-bold">
+                                    <Users className="w-3.5 h-3.5 mt-[-1px] opacity-60" />
+                                    <div className="leading-relaxed">
+                                      <span className="text-accent-brown mr-2">
+                                        Mentioned:
+                                      </span>
+                                      <span>
+                                        {letter.people_mentioned.join("  •  ")}
+                                      </span>
+                                    </div>
+                                  </div>
+                                )}
+                            </div>
+
+                            {/* RIGHT COLUMN: Intelligence Analysis (1/3) */}
+                            <div className="lg:col-span-1 space-y-4 md:space-y-6 bg-page-bg/40 p-3 md:p-4 rounded-sm mt-4 lg:mt-0">
+                              {/* METRICS: Redesigned for full readability */}
+                              <div>
+                                <h3 className="text-[10px] font-black text-accent-brown uppercase tracking-[0.2em] mb-4">
+                                  Metric Analysis
+                                </h3>
+                                <div className="space-y-4">
+                                  {[
+                                    {
+                                      label: "Romantic Adoration",
+                                      score: letter.scores?.romantic_adoration,
+                                      color: "var(--color-accent-burgundy)",
+                                    },
+                                    {
+                                      label: "Political Unburdening",
+                                      score: letter.scores?.political_unburdening,
+                                      color: "var(--color-accent-green)",
+                                    },
+                                    {
+                                      label: "Emotional Desolation",
+                                      score: letter.scores?.emotional_desolation,
+                                      color: "var(--color-accent-brown)",
+                                    },
+                                  ].map(
+                                    (metric, mIdx) =>
+                                      metric.score !== undefined && (
+                                        <div key={mIdx} className="space-y-1.5">
+                                          <div className="flex justify-between text-[10px] font-bold uppercase tracking-wider text-navy">
+                                            <span>{metric.label}</span>
+                                            <span>{metric.score}/10</span>
+                                          </div>
+                                          <div className="w-full bg-section-bg h-1.5 rounded-full overflow-hidden">
+                                            <div
+                                              className="h-full transition-all duration-1000"
+                                              style={{
+                                                width: `${(metric.score / 10) * 100}%`,
+                                                backgroundColor: metric.color,
+                                              }}
+                                            />
+                                          </div>
+                                        </div>
+                                      )
+                                  )}
+                                </div>
+                              </div>
+
+                              {/* TOPICS: Styled as Archive Tags */}
+                              {letter.topics && letter.topics.length > 0 && (
+                                <div className="pt-4 border-t border-border-beige">
+                                  <h3 className="text-[10px] font-black text-accent-brown uppercase tracking-[0.2em] mb-3">
+                                    Thematic Tags
+                                  </h3>
+                                  <div className="flex flex-wrap gap-1.5">
+                                    {letter.topics.map((topic, topicIdx) => (
+                                      <span
+                                        key={topicIdx}
+                                        className="px-2 py-1 bg-navy text-card-bg text-[11px] font-bold uppercase tracking-wider rounded-sm shadow-sm transition-all duration-300 cursor-default"
+                                      >
+                                        {topic}
+                                      </span>
+                                    ))}
                                   </div>
                                 </div>
-                              )
-                          )}
-                        </div>
-                      </div>
-
-                      {/* TOPICS: Styled as Archive Tags */}
-                      {letter.topics && letter.topics.length > 0 && (
-                        <div className="pt-4 border-t border-border-beige">
-                          <h3 className="text-[10px] font-black text-accent-brown uppercase tracking-[0.2em] mb-3">
-                            Thematic Tags
-                          </h3>
-                          <div className="flex flex-wrap gap-1.5">
-                            {letter.topics.map((topic, topicIdx) => (
-                              <span
-                                key={topicIdx}
-                                className="px-2 py-1 bg-navy text-card-bg text-[11px] font-bold uppercase tracking-wider rounded-sm shadow-sm transition-all duration-300 cursor-default"
-                              >
-                                {topic}
-                              </span>
-                            ))}
+                              )}
+                            </div>
                           </div>
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    ))}
                   </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            /* No Letter State: The "Empty Archive" Look */
-            <div className="relative py-10 px-6 bg-page-bg/40 rounded-sm border border-border-beige overflow-hidden">
-              <div className="relative z-10 flex flex-col md:flex-row items-center gap-6">
-                {/* Visual Indicator of Silence */}
-                <div className="w-14 h-14 rounded-full border-2 border-dashed border-accent-burgundy/20 flex items-center justify-center bg-white/50 shrink-0">
-                  <Mail className="w-5 h-5 text-accent-burgundy/30" />
-                </div>
 
-                <div className="flex-1 text-center md:text-left space-y-1">
-                  <h3 className="text-[10px] font-black text-navy uppercase tracking-[0.3em]">
-                    Daily Correspondence: Silent
-                  </h3>
-                  <p className="text-sm font-serif italic text-navy leading-relaxed">
-                    The Prime Minister did not write to Venetia on this day. The
-                    following records reconstruct the atmosphere in Downing
-                    Street and the unfolding political situation.
-                  </p>
+                  {/* Indicators */}
+                  {letters.length > 1 && (
+                    <div className="flex justify-center gap-2">
+                      {letters.map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setCurrentLetterIndex(idx)}
+                          className={`w-1.5 h-1.5 rounded-full transition-all ${
+                            idx === currentLetterIndex ? "bg-accent-burgundy w-4" : "bg-border-beige"
+                          }`}
+                          aria-label={`Go to letter ${idx + 1}`}
+                        />
+                      ))}
+                    </div>
+                  )}
                 </div>
-
-                {/* Background Status Tag */}
-                <div className="shrink-0 px-3 py-1 bg-section-bg border border-border-beige rounded-sm shadow-sm">
-                  <span className="text-[11px] font-bold text-muted-gray uppercase tracking-tighter">
-                    Gap in Correspondence
-                  </span>
+              ) : (
+                /* No Letter Card: Maintained visual consistency */
+                <div className="bg-card-bg rounded-sm p-8 md:p-12 border-l-[4px] md:border-l-[6px] border-muted-gray/30 shadow-md min-h-[300px] flex flex-col items-center justify-center text-center">
+                   {hasMeeting ? (
+                      <div className="space-y-6 max-w-lg">
+                        <div className="w-16 h-16 rounded-full bg-accent-green/10 flex items-center justify-center mx-auto border border-accent-green/20">
+                           <Users className="w-8 h-8 text-accent-green" />
+                        </div>
+                        <div className="space-y-3">
+                          <h3 className="text-[10px] font-black text-accent-green uppercase tracking-[0.3em]">
+                            No known letters exchanged
+                          </h3>
+                          <p className="text-xl font-serif italic text-navy leading-relaxed">
+                            {currentDay.meeting_reference || "The Prime Minister and Venetia met in person"}
+                          </p>
+                        </div>
+                      </div>
+                   ) : (
+                      <div className="space-y-6 max-w-lg">
+                        <div className="w-16 h-16 rounded-full bg-muted-gray/10 flex items-center justify-center mx-auto border border-muted-gray/20">
+                           <Mail className="w-8 h-8 text-muted-gray/40" />
+                        </div>
+                        <div className="space-y-3">
+                          <h3 className="text-[10px] font-black text-navy uppercase tracking-[0.3em]">
+                            Gap in Correspondence
+                          </h3>
+                          <p className="text-xl font-serif italic text-navy/60 leading-relaxed">
+                            No surviving record of correspondence for this date. The Archive continues through witness accounts and official records.
+                          </p>
+                        </div>
+                        <div className="pt-4">
+                           <span className="px-3 py-1 bg-section-bg border border-border-beige rounded-sm text-[10px] font-bold text-muted-gray uppercase tracking-widest">
+                             Archive Silence
+                           </span>
+                        </div>
+                      </div>
+                   )}
                 </div>
-              </div>
+              )}
             </div>
-          )}
+          </div>
 
           {/* Activities & Locations */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
