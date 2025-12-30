@@ -1,6 +1,6 @@
 import React from "react";
 
-const NEWSPAPER_CONTENT = {
+const NEWSPAPER_CONTENT_19120102 = {
   date: "Tuesday, January 2, 1912.",
   leftColumn: {
     headline: "The Mediterranean\nProblem.",
@@ -45,6 +45,63 @@ const NEWSPAPER_CONTENT = {
     ]
   }
 };
+const NEWSPAPER_CONTENT_19120103 = {
+  date: "Wednesday, January 3, 1912.",
+
+  leftColumn: {
+    headline: "The Delhi Durbar.",
+
+    subheads: [
+      "The King and the People.",
+      "The Camp at Delhi.",
+      "A Pageant and Its Meaning."
+    ],
+
+    body: {
+      dropCap: "A",
+      paragraphs: [
+        "t least a million people from all parts of India have been in and out of Delhi city and the Coronation Camp this week, and all of them desire to return to their towns and villages able to say that they have seen the King. Whether they will cheer or not as he passes is uncertain; sometimes they do, sometimes they do not, but silence is no sign of indifference, for many regard it as disrespectful to make noise in his presence.",
+
+        "I stood the other day among a group who watched the King pass almost in silence. Afterwards they shook hands, congratulated one another, and showed delight at having achieved their simple purpose. Throughout the camp one sees dense throngs of people, with many children in their finest dress, waiting patiently, running from place to place at rumours of the King’s coming.",
+
+        "The main object of the Durbar is that this multitude should have the pleasure they seek, and that they may return home holding their heads higher because they have seen the King. From this point of view the Durbar has already proved a success, and it is impossible not to believe that it will be of real and lasting advantage to the Government of India."
+      ]
+    }
+  },
+
+  middleColumn: {
+    headline: "Soldiers and Pageantry.",
+
+    subhead: "(An Observation.)",
+
+    dialogue: {
+      speaker: "Correspondent",
+      lines: [
+        "“Too much prominence, some say, is given to soldiers and Princes;",
+        "Too little to the civilians who govern the land.",
+        "Yet pageantry must use the materials at hand,",
+        "And the crowd delights in splendour, colour, and command.”"
+      ]
+    }
+  },
+
+  rightColumn: {
+    stories: [
+      {
+        title: "The Indian Tommy.",
+        subtitle: "A Bridge Between Races.",
+        content:
+          "The British soldier in India is cheerful, active, and competent. He mingles freely with the people, manages crowds with tact, and does much in his own way to bridge the gap between rulers and ruled. Unlike others, he walks among the crowd, and his good-humoured intelligence earns both trust and admiration."
+      },
+      {
+        title: "Notes of the Day.",
+        content:
+          "The Admiralty has acted rightly in publishing the figures relating to recent cruiser tenders. London prices exceeded those of the Northern yards by a wide margin, and to grant preference would impose a heavy and continuing burden on the taxpayer. Economic facts must be faced, however unwelcome."
+      }
+    ]
+  }
+};
+const NEWSPAPER_CONTENT = NEWSPAPER_CONTENT_19120103;
 
 export default function Newspaper() {
   return (
