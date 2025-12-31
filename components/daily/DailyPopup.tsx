@@ -276,82 +276,17 @@ export default function DailyPopup({
         className={cardClassName}
         onClick={isModal ? (e) => e.stopPropagation() : undefined}
       >
-        {/* Header: Integrated Navigation */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 md:p-6 border-b-2 border-border-beige bg-card-bg/80 backdrop-blur-md sticky top-0 z-50 gap-4 md:gap-0">
-          <div className="flex items-center gap-3 md:gap-6 flex-1 min-w-0 md:mr-2">
-            <div className="min-w-0 flex-1">
-              <h2 className="font-serif text-xl md:text-2xl font-bold text-navy tracking-tight">
-                {formattedDate}
-              </h2>
-              {currentDay.weather && (
-                <div className="flex items-center gap-2 text-[10px] md:text-[11px] text-muted-gray font-black uppercase tracking-[0.15em] mt-1">
-                  <Cloud className="w-3 h-3 md:w-3.5 md:h-3.5 text-accent-brown" />
-                  <span className="truncate">{currentDay.weather}</span>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Control Group: Step Navigation & Archive Access */}
-          <div className="flex items-center gap-2 w-full md:w-auto justify-end">
-            <div className="flex items-center bg-card-bg rounded-sm p-1 border border-border-beige/60">
-              <button
-                onClick={handlePrevious}
-                disabled={!hasPrevious || loading}
-                className="p-2 hover:bg-page-bg hover:text-accent-brown rounded-sm transition-all text-navy disabled:opacity-20 disabled:cursor-not-allowed cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
-                title="Previous Day"
-                aria-label="Previous Day"
-              >
-                <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
-              </button>
-              <div className="w-[1px] h-5 bg-border-beige mx-1"></div>
-              <button
-                onClick={handleNext}
-                disabled={!hasNext || loading}
-                className="p-2 hover:bg-page-bg hover:text-accent-brown rounded-sm transition-all text-navy disabled:opacity-20 disabled:cursor-not-allowed cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
-                title="Next Day"
-                aria-label="Next Day"
-              >
-                <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
-              </button>
-            </div>
-
-            {/* Calendar Selector (Hidden Input + Trigger Button) */}
-            <div className="relative">
-              <input
-                ref={dateInputRef}
-                type="date"
-                value={dateInput || getCurrentDateInputValue()}
-                onChange={handleDateChange}
-                min={dateRange.min}
-                max={dateRange.max}
-                className="absolute inset-0 opacity-0 pointer-events-none"
-                aria-hidden="true"
-              />
-              <button
-                onClick={() => {
-                  setDatePickerError(null);
-                  dateInputRef.current?.showPicker();
-                }}
-                className="p-2.5 rounded-sm border transition-all cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center bg-card-bg border-border-beige text-navy hover:bg-card-bg hover:text-accent-brown hover:border-accent-brown"
-                aria-label="Jump to date"
-                title="Open Archive Search"
-              >
-                <Calendar className="w-5 h-5 md:w-5.5 md:h-5.5" />
-              </button>
-            </div>
-
-            {/* Close button for mobile */}
-            {isModal && (
-              <button
-                onClick={onClose}
-                className="md:hidden p-2 rounded-sm border border-border-beige bg-card-bg text-navy hover:bg-card-bg cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
-                aria-label="Close"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            )}
-          </div>
+{/* Header: Integrated Navigation */}
+<div className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 md:p-6 border-b-2 border-border-beige bg-white/80 backdrop-blur-md sticky top-0 z-50 gap-4 md:gap-0">
+  <div className="flex items-center gap-3 md:gap-6 flex-1 min-w-0 md:mr-2">
+    <div className="min-w-0 flex-1">
+      <h2 className="font-serif text-xl md:text-2xl font-bold text-navy tracking-tight">
+        {formattedDate}
+      </h2>
+      {currentDay.weather && (
+        <div className="flex items-center gap-2 text-[10px] md:text-[11px] text-muted-gray font-black uppercase tracking-[0.15em] mt-1">
+          <Cloud className="w-3 h-3 md:w-3.5 md:h-3.5 text-accent-brown" />
+          <span className="truncate">{currentDay.weather}</span>
         </div>
 
         {/* Inline Error Display (if date selection fails) */}
