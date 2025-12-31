@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Polyline, useMap } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
@@ -15,26 +15,32 @@ const icon = L.icon({
   popupAnchor: [1, -34],
 });
 
-// --- HELPER TO AUTO-PAN THE MAP ---
-function MapUpdater({ center }: { center: [number, number] }) {
+// --- HELPER TO AUTO-PAN OR FIT BOUNDS ---
+function MapUpdater({ center, destination }: { center: [number, number], destination?: [number, number] }) {
   const map = useMap();
   useEffect(() => {
-    map.flyTo(center, 10, { duration: 1.5 }); // Smooth fly animation
-  }, [center, map]);
+    if (destination) {
+      const bounds = L.latLngBounds([center, destination]);
+      map.fitBounds(bounds, { padding: [20, 20], maxZoom: 8, animate: true, duration: 1.5 });
+    } else {
+      map.flyTo(center, 7, { duration: 1.5 });
+    }
+  }, [center, destination, map]);
   return null;
 }
 
 interface DiaryMapProps {
   center: [number, number];
+  destination?: [number, number];
   locationName: string;
 }
 
-const DiaryMap = ({ center, locationName }: DiaryMapProps) => {
+const DiaryMap = ({ center, destination, locationName }: DiaryMapProps) => {
   return (
     <div className="absolute top-6 left-6 z-20 w-48 h-32 rounded-lg overflow-hidden border-4 border-white shadow-2xl opacity-90 hover:opacity-100 transition-opacity">
         <MapContainer 
             center={center} 
-            zoom={10} 
+            zoom={7} 
             scrollWheelZoom={false} 
             zoomControl={false}
             attributionControl={false}
@@ -44,11 +50,20 @@ const DiaryMap = ({ center, locationName }: DiaryMapProps) => {
             <TileLayer
                 url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
             />
-            <Marker position={center} icon={icon}>
-            </Marker>
+            <Marker position={center} icon={icon}></Marker>
+            
+            {destination && (
+              <>
+                <Marker position={destination} icon={icon}></Marker>
+                <Polyline 
+                  positions={[center, destination]} 
+                  pathOptions={{ color: '#78350f', dashArray: '5, 10', opacity: 0.7 }} 
+                />
+              </>
+            )}
             
             {/* Helper to fly to new coordinates when entry changes */}
-            <MapUpdater center={center} />
+            <MapUpdater center={center} destination={destination} />
         </MapContainer>
         
         {/* Location Label overlay on map */}
