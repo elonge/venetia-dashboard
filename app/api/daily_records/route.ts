@@ -3,6 +3,7 @@ import { getAllDailyRecords } from '@/lib/daily_records';
 
 export async function GET() {
   try {
+    console.log('Fetching All Daily Records');
     const days = await getAllDailyRecords();
     return NextResponse.json(days);
   } catch (error) {

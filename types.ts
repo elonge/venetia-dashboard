@@ -116,4 +116,5 @@ export interface DailyRecordDocument {
   diaries?: DailyRecordDiary[] | null;
   weather_short?: DailyRecordWeatherShort | null;
   weather?: string | null;
+  total_number_letters?: number | null;
 }
