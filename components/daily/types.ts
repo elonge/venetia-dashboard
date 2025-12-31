@@ -18,6 +18,7 @@ export interface DayData {
   venetia_activities?: string;
   venetia_location?: string;
   meeting_reference?: string;
+  meeting_details?: string;
   politics?: {
     parliament?: string;
     cabinet?: string;
@@ -29,5 +30,6 @@ export interface DayData {
   }>;
   weather?: string;
   met_venetia?: boolean;
+  total_number_letters?: number;
 }
 

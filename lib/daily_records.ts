@@ -85,7 +85,7 @@ function buildPoliticsLine(
       ? 'Yes'
       : flags.session === false || flags.meeting === false
         ? 'No'
-        : undefined;
+        : 'No';
 
   const topicsList = asStringArray(topics);
   const topicsText = topicsList?.length ? `Topics: ${topicsList.join(', ')}` : undefined;
@@ -163,6 +163,7 @@ export function mapDailyRecordToDayData(doc: DailyRecordDocument | unknown): Day
   const politicsRecord = isRecord(record.politics) ? record.politics : undefined;
   const parliament = isRecord(politicsRecord?.parliament) ? politicsRecord.parliament : undefined;
   const cabinet = isRecord(politicsRecord?.cabinet) ? politicsRecord.cabinet : undefined;
+  const totalNumberLetters = asNumber(record.total_number_letters);
   const politics = politicsRecord
     ? {
         parliament: buildPoliticsLine('Parliament', { session: parliament?.session }, parliament?.topics_discussed),
@@ -184,10 +185,12 @@ export function mapDailyRecordToDayData(doc: DailyRecordDocument | unknown): Day
     venetia_activities: venetiaActivities,
     venetia_location: getLocationString(record.venetia_location),
     meeting_reference: cleanString(record.meeting_reference),
+    meeting_details: cleanString(record.meeting_details),
     politics,
     diaries_summary: diariesSummary?.length ? diariesSummary : undefined,
     weather,
     met_venetia: record.met_venetia === true,
+    total_number_letters: totalNumberLetters ? totalNumberLetters : letters?.length || 0,
   };
 }
 
@@ -200,22 +203,7 @@ export async function getAllDailyRecords(): Promise<DayData[]> {
     .find(
       {},
       {
-        projection: {
-          _id: 0,
-          date: 1,
-          date_string: 1,
-          pm_activities: 1,
-          venetia_activities: 1,
-          pm_location: 1,
-          venetia_location: 1,
-          meeting_reference: 1,
-          letters: 1,
-          politics: 1,
-          diaries: 1,
-          weather: 1,
-          weather_short: 1,
-          met_venetia: 1,
-        },
+        projection: DAILY_RECORD_PROJECTION,
       }
     )
     .sort({ date_string: 1 })
@@ -313,25 +301,11 @@ export async function getDailyRecordByDate(dateString: string): Promise<DayData 
   const doc = await col.findOne(
     { date_string: dateString },
     {
-      projection: {
-        _id: 0,
-        date: 1,
-        date_string: 1,
-        pm_activities: 1,
-        venetia_activities: 1,
-        pm_location: 1,
-        venetia_location: 1,
-        meeting_reference: 1,
-        letters: 1,
-        politics: 1,
-        diaries: 1,
-        weather: 1,
-        weather_short: 1,
-        met_venetia: 1,
-      },
+      projection: DAILY_RECORD_PROJECTION,
     }
   );
 
+  console.log("Fetched Daily Record Doc for date", dateString, ":");
   if (!doc) return null;
   return mapDailyRecordToDayData(doc);
 }
@@ -351,6 +325,7 @@ const DAILY_RECORD_PROJECTION = {
   weather: 1,
   weather_short: 1,
   met_venetia: 1,
+  total_number_letters: 1,
 } as const;
 
 export async function getNextDailyRecordByDate(dateString: string): Promise<DayData | null> {

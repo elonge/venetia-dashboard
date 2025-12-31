@@ -91,7 +91,16 @@ export default function DailyPopup({
   const dateString = formatDateString(currentDay.date);
   const hasMeeting = currentDay.met_venetia;
   const letters = currentDay.letters ?? [];
-  const hasLetters = letters.length > 0;
+
+  const totalRecordedLetters = currentDay.total_number_letters || letters.length;
+  const missingLettersCount = Math.max(0, totalRecordedLetters - letters.length);
+  const showMissingCard = missingLettersCount > 0;
+  
+  // Total slides in the carousel: existing letters + 1 for missing card if needed
+  const totalSlides = letters.length + (showMissingCard ? 1 : 0);
+  const hasDisplayableContent = totalSlides > 0;
+
+  const meetingNote = currentDay.meeting_reference  || "The Prime Minister and Venetia met in person";
 
   // Check for next/previous days
   useEffect(() => {
@@ -115,6 +124,7 @@ export default function DailyPopup({
       const nextDay = await getNextDay(dateString);
       if (nextDay) {
         setCurrentDay(nextDay);
+        setCurrentLetterIndex(0);
         if (onNavigateToDay) {
           onNavigateToDay(nextDay.date);
         }
@@ -133,6 +143,7 @@ export default function DailyPopup({
       const prevDay = await getPreviousDay(dateString);
       if (prevDay) {
         setCurrentDay(prevDay);
+        setCurrentLetterIndex(0);
         if (onNavigateToDay) {
           onNavigateToDay(prevDay.date);
         }
@@ -174,6 +185,7 @@ export default function DailyPopup({
         }
 
         setCurrentDay(foundDay);
+        setCurrentLetterIndex(0);
         onNavigateToDay?.(foundDay.date);
         setDateInput("");
         setDatePickerError(null);
@@ -190,6 +202,7 @@ export default function DailyPopup({
 
       const fetchedDay = (await response.json()) as DayData;
       setCurrentDay(fetchedDay);
+      setCurrentLetterIndex(0);
       onNavigateToDay?.(fetchedDay.date);
       setDateInput("");
       setDatePickerError(null);
@@ -234,6 +247,7 @@ export default function DailyPopup({
   // Update current day when prop changes
   useEffect(() => {
     setCurrentDay(day);
+    setCurrentLetterIndex(0);
   }, [day]);
 
   const isModal = mode === "modal";
@@ -244,6 +258,7 @@ export default function DailyPopup({
     ? "relative w-full h-full md:h-auto md:max-w-[95vw] md:max-h-[90vh] md:rounded-2xl bg-card-bg shadow-2xl overflow-hidden flex flex-col"
     : "relative w-full max-w-5xl bg-card-bg rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-border-beige";
 
+  console.log("Current Day:", currentDay);
   return (
     <div
       className={containerClassName}
@@ -275,16 +290,6 @@ export default function DailyPopup({
                 </div>
               )}
             </div>
-
-            {/* Status Badge: Only visible if a meeting occurred */}
-            {hasMeeting && (
-              <div className="hidden sm:flex items-center gap-2 px-2 md:px-3 py-1 bg-accent-green/10 rounded-sm border border-accent-green/30 shrink-0">
-                <div className="w-1.5 h-1.5 bg-accent-green rounded-full animate-pulse"></div>
-                <span className="text-[9px] md:text-[10px] text-accent-green font-black uppercase tracking-widest whitespace-nowrap">
-                  In-Person Meeting Recorded
-                </span>
-              </div>
-            )}
           </div>
 
           {/* Control Group: Step Navigation & Archive Access */}
@@ -392,13 +397,13 @@ export default function DailyPopup({
               <h3 className="text-xs md:text-sm font-black text-navy uppercase tracking-[0.2em] flex items-center gap-2">
                 <Mail className="w-4 h-4 text-accent-brown" />
                 Correspondence{" "}
-                {hasLetters
-                  ? `(${currentLetterIndex + 1} of ${letters.length})`
+                {hasDisplayableContent
+                  ? `(${currentLetterIndex + 1} of ${totalSlides})`
                   : "(0)"}
               </h3>
 
               {/* Navigation Buttons - Header Position */}
-              {letters.length > 1 && (
+              {totalSlides > 1 && (
                 <div className="flex items-center gap-1">
                   <button
                     onClick={() =>
@@ -413,10 +418,10 @@ export default function DailyPopup({
                   <button
                     onClick={() =>
                       setCurrentLetterIndex((prev) =>
-                        Math.min(letters.length - 1, prev + 1)
+                        Math.min(totalSlides - 1, prev + 1)
                       )
                     }
-                    disabled={currentLetterIndex === letters.length - 1}
+                    disabled={currentLetterIndex === totalSlides - 1}
                     className="p-1.5 rounded-sm bg-card-bg border border-border-beige text-navy hover:text-accent-brown disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                     aria-label="Next letter"
                   >
@@ -427,7 +432,7 @@ export default function DailyPopup({
             </div>
 
             <div className="relative">
-              {hasLetters ? (
+              {hasDisplayableContent ? (
                 /* Letter Card Carousel */
                 <div className="space-y-6">
                   <div className="relative">
@@ -564,12 +569,44 @@ export default function DailyPopup({
                         </div>
                       </div>
                     ))}
+
+                    {/* Render Missing Letters Card if needed */}
+                    {showMissingCard && (
+                      <div
+                        className={`${
+                          currentLetterIndex === letters.length
+                            ? "block animate-in fade-in slide-in-from-right-4 duration-500"
+                            : "hidden"
+                        }`}
+                      >
+                         <div className="bg-card-bg rounded-sm p-6 md:p-8 border-l-[4px] md:border-l-[6px] border-muted-gray/30 shadow-md min-h-[200px] flex flex-col items-center justify-center text-center">
+                            <div className="space-y-4 max-w-lg">
+                              <div className="w-12 h-12 rounded-full bg-muted-gray/10 flex items-center justify-center mx-auto border border-muted-gray/20">
+                                <BookOpen className="w-6 h-6 text-muted-gray/40" />
+                              </div>
+                              <div className="space-y-2">
+                                <h3 className="text-[10px] font-black text-navy uppercase tracking-[0.3em]">
+                                  Additional Correspondence
+                                </h3>
+                                <p className="text-lg font-serif italic text-navy/60 leading-relaxed">
+                                  According to the <span className="not-italic font-bold">Letters to Venetia Stanley</span> book, there {missingLettersCount === 1 ? 'is' : 'are'} {missingLettersCount} more letter{missingLettersCount === 1 ? '' : 's'} that day, but {missingLettersCount === 1 ? 'its content is' : 'their contents are'} not currently in the digital archive.
+                                </p>
+                              </div>
+                              <div className="pt-2">
+                                <span className="px-3 py-1 bg-section-bg border border-border-beige rounded-sm text-[10px] font-bold text-muted-gray uppercase tracking-widest">
+                                  Archive Notice
+                                </span>
+                              </div>
+                            </div>
+                         </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Indicators */}
-                  {letters.length > 1 && (
+                  {totalSlides > 1 && (
                     <div className="flex justify-center gap-2">
-                      {letters.map((_, idx) => (
+                      {Array.from({ length: totalSlides }).map((_, idx) => (
                         <button
                           key={idx}
                           onClick={() => setCurrentLetterIndex(idx)}
@@ -586,38 +623,38 @@ export default function DailyPopup({
                 </div>
               ) : (
                 /* No Letter Card: Maintained visual consistency */
-                <div className="bg-card-bg rounded-sm p-8 md:p-12 border-l-[4px] md:border-l-[6px] border-muted-gray/30 shadow-md min-h-[300px] flex flex-col items-center justify-center text-center">
+                <div className="bg-card-bg rounded-sm p-6 md:p-8 border-l-[4px] md:border-l-[6px] border-muted-gray/30 shadow-md min-h-[200px] flex flex-col items-center justify-center text-center">
                   {hasMeeting ? (
-                    <div className="space-y-6 max-w-lg">
-                      <div className="w-16 h-16 rounded-full bg-accent-green/10 flex items-center justify-center mx-auto border border-accent-green/20">
-                        <Users className="w-8 h-8 text-accent-green" />
+                    <div className="space-y-4 max-w-lg">
+                      <div className="w-12 h-12 rounded-full bg-accent-green/10 flex items-center justify-center mx-auto border border-accent-green/20">
+                        <Users className="w-6 h-6 text-accent-green" />
                       </div>
-                      <div className="space-y-3">
+                      <div className="space-y-2">
                         <h3 className="text-[10px] font-black text-accent-green uppercase tracking-[0.3em]">
                           No known letters exchanged
                         </h3>
-                        <p className="text-xl font-serif italic text-navy leading-relaxed">
+                        <p className="text-lg font-serif italic text-navy leading-relaxed">
                           {currentDay.meeting_reference ||
                             "The Prime Minister and Venetia met in person"}
                         </p>
                       </div>
                     </div>
                   ) : (
-                    <div className="space-y-6 max-w-lg">
-                      <div className="w-16 h-16 rounded-full bg-muted-gray/10 flex items-center justify-center mx-auto border border-muted-gray/20">
-                        <Mail className="w-8 h-8 text-muted-gray/40" />
+                    <div className="space-y-4 max-w-lg">
+                      <div className="w-12 h-12 rounded-full bg-muted-gray/10 flex items-center justify-center mx-auto border border-muted-gray/20">
+                        <Mail className="w-6 h-6 text-muted-gray/40" />
                       </div>
-                      <div className="space-y-3">
+                      <div className="space-y-2">
                         <h3 className="text-[10px] font-black text-navy uppercase tracking-[0.3em]">
                           Gap in Correspondence
                         </h3>
-                        <p className="text-xl font-serif italic text-navy/60 leading-relaxed">
+                        <p className="text-lg font-serif italic text-navy/60 leading-relaxed">
                           No surviving record of correspondence for this date.
                           The Archive continues through witness accounts and
                           official records.
                         </p>
                       </div>
-                      <div className="pt-4">
+                      <div className="pt-2">
                         <span className="px-3 py-1 bg-section-bg border border-border-beige rounded-sm text-[10px] font-bold text-muted-gray uppercase tracking-widest">
                           Archive Silence
                         </span>
@@ -629,141 +666,152 @@ export default function DailyPopup({
             </div>
           </div>
 
-          {/* Activities & Locations */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* PRIME MINISTER: The Postcard/Correspondence Card */}
-            {!currentDay.pm_location && !currentDay.pm_activities ? (
-              /* PM Insufficient Data - "Missing File" Style */
-              <div className="bg-[#F9F7F1] rounded-sm p-6 border border-border-beige shadow-sm relative flex flex-col items-center justify-center text-center min-h-[220px]">
-                <div className="absolute inset-0 opacity-[0.03] bg-[repeating-linear-gradient(-45deg,rgba(var(--color-section-bg-rgb),0.4),rgba(var(--color-section-bg-rgb),0.4)_1px,transparent_1px,transparent_10px)]"></div>
-
-                <div className="relative z-10 opacity-60">
-                  <div className="w-16 h-20 bg-[#EFECE5] mx-auto mb-3 border-2 border-dashed border-[#D8D0C0] flex items-center justify-center">
-                    <span className="text-2xl font-serif font-bold text-[#D8D0C0]">
-                      ?
-                    </span>
-                  </div>
-                  <h4 className="text-xs font-black text-navy uppercase tracking-[0.2em] mb-1">
-                    H.H. Asquith
-                  </h4>
-                  <p className="text-xs text-muted-gray font-serif italic">
-                    No correspondence or official record found.
-                  </p>
-                </div>
-              </div>
-            ) : (
-              /* PM Active Record - Removed Title */
-              <div className="group bg-page-bg rounded-sm p-5 border border-border-beige shadow-sm hover:shadow-md transition-all duration-300 flex flex-col sm:flex-row gap-5">
-                {/* Left: The Portrait */}
-                <div className="shrink-0 relative mx-auto sm:mx-0 self-start mt-1">
-                  <div className="w-24 h-32 relative shadow-sm rotate-[-1deg] group-hover:rotate-0 transition-transform duration-500 bg-section-bg border-4 border-card-bg">
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Asquith_Q_42036_%28cropped%29%28b%29.jpg/250px-Asquith_Q_42036_%28cropped%29%28b%29.jpg"
-                      alt="H.H. Asquith"
-                      className="w-full h-full object-cover grayscale sepia-[0.3]"
-                    />
-                  </div>
-                  {/* Decorative Clip */}
-                  <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-2 bg-border-beige opacity-60 rotate-2"></div>
-                </div>
-
-                {/* Right: The Content */}
-                <div className="flex-1 relative pt-1">
-                  {/* Location "Postmark" (Top Right Corner) */}
-                  {currentDay.pm_location && (
-                    <div className="absolute top-0 right-0 transform translate-x-1 -translate-y-2 rotate-[3deg] opacity-80 z-10">
-                      <div className="border border-accent-brown/40 rounded-sm px-2 py-0.5 text-[10px] font-bold text-accent-brown uppercase tracking-widest bg-card-bg/50 backdrop-blur-[1px]">
-                        {currentDay.pm_location}
+                    {/* Activities & Locations */}
+                    <div className="relative pt-12">
+                      {hasMeeting && (
+                        <div className="absolute top-0 left-0 right-0 z-10 flex items-center justify-center">
+                          <div className="px-6 py-2 bg-accent-green text-card-bg rounded-full shadow-lg border-2 border-card-bg">
+                            <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest">
+                              <MessageSquare className="w-4 h-4" />
+                              <span>{meetingNote}</span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {/* PRIME MINISTER: The Postcard/Correspondence Card */}
+                      {!currentDay.pm_location && !currentDay.pm_activities ? (
+                        /* PM Insufficient Data - "Missing File" Style */
+                        <div className="bg-[#F9F7F1] rounded-sm p-6 border border-border-beige shadow-sm relative flex flex-col items-center justify-center text-center min-h-[220px]">
+                          <div className="absolute inset-0 opacity-[0.03] bg-[repeating-linear-gradient(-45deg,rgba(var(--color-section-bg-rgb),0.4),rgba(var(--color-section-bg-rgb),0.4)_1px,transparent_1px,transparent_10px)]"></div>
+          
+                          <div className="relative z-10 opacity-60">
+                            <div className="w-16 h-20 bg-[#EFECE5] mx-auto mb-3 border-2 border-dashed border-[#D8D0C0] flex items-center justify-center">
+                              <span className="text-2xl font-serif font-bold text-[#D8D0C0]">
+                                ?
+                              </span>
+                            </div>
+                            <h4 className="text-xs font-black text-navy uppercase tracking-[0.2em] mb-1">
+                              H.H. Asquith
+                            </h4>
+                            <p className="text-xs text-muted-gray font-serif italic">
+                              No correspondence or official record found.
+                            </p>
+                          </div>
+                        </div>
+                      ) : (
+                        /* PM Active Record - Removed Title */
+                        <div className="group bg-page-bg rounded-sm p-5 border border-border-beige shadow-sm hover:shadow-md transition-all duration-300 flex flex-col sm:flex-row gap-5">
+                          {/* Left: The Portrait */}
+                          <div className="shrink-0 relative mx-auto sm:mx-0 self-start mt-1">
+                            <div className="w-24 h-32 relative shadow-sm rotate-[-1deg] group-hover:rotate-0 transition-transform duration-500 bg-section-bg border-4 border-card-bg">
+                              <img
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Asquith_Q_42036_%28cropped%29%28b%29.jpg/250px-Asquith_Q_42036_%28cropped%29%28b%29.jpg"
+                                alt="H.H. Asquith"
+                                className="w-full h-full object-cover grayscale sepia-[0.3]"
+                              />
+                            </div>
+                            {/* Decorative Clip */}
+                            <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-2 bg-border-beige opacity-60 rotate-2"></div>
+                          </div>
+          
+                          {/* Right: The Content */}
+                          <div className="flex-1 relative pt-1">
+                            {/* Location "Postmark" (Top Right Corner) */}
+                            {currentDay.pm_location && (
+                              <div className="absolute top-0 right-0 transform translate-x-1 -translate-y-2 rotate-[3deg] opacity-80 z-10">
+                                <div className="border border-accent-brown/40 rounded-sm px-2 py-0.5 text-[10px] font-bold text-accent-brown uppercase tracking-widest bg-card-bg/50 backdrop-blur-[1px]">
+                                  {currentDay.pm_location}
+                                </div>
+                              </div>
+                            )}
+          
+                            {/* Main Body Text */}
+                            <div className="space-y-4 pr-8">
+                              {/* Added pr-8 to prevent text from overlapping the postmark */}
+          
+                              {currentDay.pm_activities && (
+                                <div className="text-sm font-serif text-navy/90 leading-relaxed">
+                                  <span className="text-[10px] font-sans font-bold text-accent-brown uppercase tracking-wider block mb-1 opacity-70">
+                                    Daily Record
+                                  </span>
+                                  {currentDay.pm_activities}
+                                </div>
+                              )}
+          
+                              {currentDay.pm_mood_witness && (
+                                <div className="mt-2 bg-section-bg/50 p-2 rounded-sm border-l-2 border-accent-brown/30">
+                                  <p className="text-xs text-slate italic font-serif leading-relaxed">
+                                    &quot;{currentDay.pm_mood_witness}&quot;
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+          
+                      {/* VENETIA: The Postcard/Correspondence Card */}
+                      {!currentDay.venetia_location && !currentDay.venetia_activities ? (
+                        /* Venetia Insufficient Data */
+                        <div className="bg-[#F9F7F1] rounded-sm p-6 border border-border-beige shadow-sm relative flex flex-col items-center justify-center text-center min-h-[220px]">
+                          <div className="absolute inset-0 opacity-[0.03] bg-[repeating-linear-gradient(-45deg,rgba(var(--color-section-bg-rgb),0.4),rgba(var(--color-section-bg-rgb),0.4)_1px,transparent_1px,transparent_10px)]"></div>
+          
+                          <div className="relative z-10 opacity-60">
+                            <div className="w-16 h-20 bg-[#EFECE5] mx-auto mb-3 border-2 border-dashed border-[#D8D0C0] flex items-center justify-center">
+                              <span className="text-2xl font-serif font-bold text-[#D8D0C0]">
+                                ?
+                              </span>
+                            </div>
+                            <h4 className="text-xs font-black text-navy uppercase tracking-[0.2em] mb-1">
+                              Venetia Stanley
+                            </h4>
+                            <p className="text-xs text-muted-gray font-serif italic">
+                              Location unknown.
+                            </p>
+                          </div>
+                        </div>
+                      ) : (
+                        /* Venetia Active Record - Removed Title */
+                        <div className="group bg-page-bg rounded-sm p-5 border border-border-beige shadow-sm hover:shadow-md transition-all duration-300 flex flex-col sm:flex-row gap-5">
+                          {/* Left: Portrait */}
+                          <div className="shrink-0 relative mx-auto sm:mx-0 self-start mt-1">
+                            <div className="w-24 h-32 relative shadow-sm rotate-[1deg] group-hover:rotate-0 transition-transform duration-500 bg-section-bg border-4 border-card-bg">
+                              <img
+                                src="https://upload.wikimedia.org/wikipedia/en/1/1c/Venetia_Stanley.jpg"
+                                alt="Venetia Stanley"
+                                className="w-full h-full object-cover grayscale sepia-[0.3]"
+                              />
+                            </div>
+                            <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-2 bg-border-beige opacity-60 rotate-[-2deg]"></div>
+                          </div>
+          
+                          {/* Right: Content */}
+                          <div className="flex-1 relative pt-1">
+                            {/* Location Postmark */}
+                            {currentDay.venetia_location && (
+                              <div className="absolute top-0 right-0 transform translate-x-1 -translate-y-2 rotate-[-2deg] opacity-80 z-10">
+                                <div className="border border-accent-burgundy/40 rounded-sm px-2 py-0.5 text-[10px] font-bold text-accent-burgundy uppercase tracking-widest bg-card-bg/50 backdrop-blur-[1px]">
+                                  {currentDay.venetia_location}
+                                </div>
+                              </div>
+                            )}
+          
+                            <div className="space-y-4 pr-8">
+                              {currentDay.venetia_activities && (
+                                <div className="text-sm font-serif text-navy/90 leading-relaxed">
+                                  <span className="text-[10px] font-sans font-bold text-accent-burgundy uppercase tracking-wider block mb-1 opacity-70">
+                                    Activities
+                                  </span>
+                                  {currentDay.venetia_activities}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      )}
                       </div>
-                    </div>
-                  )}
-
-                  {/* Main Body Text */}
-                  <div className="space-y-4 pr-8">
-                    {/* Added pr-8 to prevent text from overlapping the postmark */}
-
-                    {currentDay.pm_activities && (
-                      <div className="text-sm font-serif text-navy/90 leading-relaxed">
-                        <span className="text-[10px] font-sans font-bold text-accent-brown uppercase tracking-wider block mb-1 opacity-70">
-                          Daily Record
-                        </span>
-                        {currentDay.pm_activities}
-                      </div>
-                    )}
-
-                    {currentDay.pm_mood_witness && (
-                      <div className="mt-2 bg-section-bg/50 p-2 rounded-sm border-l-2 border-accent-brown/30">
-                        <p className="text-xs text-slate italic font-serif leading-relaxed">
-                          &quot;{currentDay.pm_mood_witness}&quot;
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* VENETIA: The Postcard/Correspondence Card */}
-            {!currentDay.venetia_location && !currentDay.venetia_activities ? (
-              /* Venetia Insufficient Data */
-              <div className="bg-[#F9F7F1] rounded-sm p-6 border border-border-beige shadow-sm relative flex flex-col items-center justify-center text-center min-h-[220px]">
-                <div className="absolute inset-0 opacity-[0.03] bg-[repeating-linear-gradient(-45deg,rgba(var(--color-section-bg-rgb),0.4),rgba(var(--color-section-bg-rgb),0.4)_1px,transparent_1px,transparent_10px)]"></div>
-
-                <div className="relative z-10 opacity-60">
-                  <div className="w-16 h-20 bg-[#EFECE5] mx-auto mb-3 border-2 border-dashed border-[#D8D0C0] flex items-center justify-center">
-                    <span className="text-2xl font-serif font-bold text-[#D8D0C0]">
-                      ?
-                    </span>
-                  </div>
-                  <h4 className="text-xs font-black text-navy uppercase tracking-[0.2em] mb-1">
-                    Venetia Stanley
-                  </h4>
-                  <p className="text-xs text-muted-gray font-serif italic">
-                    Location unknown.
-                  </p>
-                </div>
-              </div>
-            ) : (
-              /* Venetia Active Record - Removed Title */
-              <div className="group bg-page-bg rounded-sm p-5 border border-border-beige shadow-sm hover:shadow-md transition-all duration-300 flex flex-col sm:flex-row gap-5">
-                {/* Left: Portrait */}
-                <div className="shrink-0 relative mx-auto sm:mx-0 self-start mt-1">
-                  <div className="w-24 h-32 relative shadow-sm rotate-[1deg] group-hover:rotate-0 transition-transform duration-500 bg-section-bg border-4 border-card-bg">
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/en/1/1c/Venetia_Stanley.jpg"
-                      alt="Venetia Stanley"
-                      className="w-full h-full object-cover grayscale sepia-[0.3]"
-                    />
-                  </div>
-                  <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-2 bg-border-beige opacity-60 rotate-[-2deg]"></div>
-                </div>
-
-                {/* Right: Content */}
-                <div className="flex-1 relative pt-1">
-                  {/* Location Postmark */}
-                  {currentDay.venetia_location && (
-                    <div className="absolute top-0 right-0 transform translate-x-1 -translate-y-2 rotate-[-2deg] opacity-80 z-10">
-                      <div className="border border-accent-burgundy/40 rounded-sm px-2 py-0.5 text-[10px] font-bold text-accent-burgundy uppercase tracking-widest bg-card-bg/50 backdrop-blur-[1px]">
-                        {currentDay.venetia_location}
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="space-y-4 pr-8">
-                    {currentDay.venetia_activities && (
-                      <div className="text-sm font-serif text-navy/90 leading-relaxed">
-                        <span className="text-[10px] font-sans font-bold text-accent-burgundy uppercase tracking-wider block mb-1 opacity-70">
-                          Activities
-                        </span>
-                        {currentDay.venetia_activities}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-          {/* Politics: The Government Dispatch */}
+                    </div>          {/* Politics: The Government Dispatch */}
           {currentDay.politics && (
             <div className="mt-8 border-t-2 border-navy/10 pt-6">
               {/* 1. HEADER: Official Metadata */}
