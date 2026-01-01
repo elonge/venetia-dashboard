@@ -129,7 +129,9 @@ const VenetiaDiaryLayout = () => {
               </button>
             ))}
           </div>
-          <div className="text-stone-400 text-xs font-mono">1914.DIARY</div>
+          <div className="text-stone-400 text-[10px] font-bold uppercase tracking-widest">
+            Venetia Stanley · 1914
+          </div>
         </div>
 
         {/* Content Area */}
@@ -138,7 +140,10 @@ const VenetiaDiaryLayout = () => {
             key={entry.id}
             className={`${animating ? "animate-slide-in-right" : ""}`}
           >
-            <div className="mb-6">
+            <div className="mb-10">
+              <span className="text-stone-400 text-[10px] font-bold uppercase tracking-[0.3em] block mb-6">
+                A Reconstructed Diary of Venetia in 1914
+              </span>
               <div className="flex items-center text-red-800 mb-3 space-x-2">
                 <MapPin size={16} />
                 <span className="uppercase tracking-widest text-xs font-bold">
