@@ -328,6 +328,17 @@ export default function AboutPage() {
                   Historical weather data from the UK Met Office archives, used to contextualize daily events and confirm atmospheric details mentioned in letters.
                 </p>
               </div>
+              <div>
+                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
+                  12.5. The Times Archives (1912–1916) & special pages from Liverpool Echo, Yorskshire post & Dundee Evenning Telegraph
+                </h4>
+                <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
+                  Classification: High Reliability / Contemporary News Source
+                </p>
+                <p className="text-slate">
+                  Daily newspapers from The Times provide contemporaneous accounts of public events, political developments, and social context relevant to the timeline.
+                </p>
+              </div>
             </div>
 
             <h3 className="text-2xl font-serif font-semibold text-navy mt-12 mb-4">

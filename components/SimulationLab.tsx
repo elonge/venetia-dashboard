@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useCallback, useRef, useState } from 'react';
-import { Play, Pause, Heart, MessageCircle, Send, Bookmark, MoreHorizontal, Camera, Info, Sparkles, Terminal, Cpu, FlaskConical } from 'lucide-react';
+import Link from 'next/link';
+import { Play, Pause, Heart, MessageCircle, Send, Bookmark, MoreHorizontal, Camera, Info, Sparkles, Terminal, Cpu, FlaskConical, ArrowRight, BookOpen } from 'lucide-react';
 import { PEOPLE_IMAGES } from '@/constants';
 
 const correspondenceData = [
@@ -761,13 +762,59 @@ const VenetiaSimulationLab = () => {
             </div>
           </div>
 
+          {/* Experimental Diary Section */}
+          <div className="w-full md:w-[380px] flex flex-col gap-4 border-2 border-accent-green/30 rounded-lg p-4 bg-page-bg/30 h-fit flex-shrink-0 relative group/diary rotate-[0.3deg] hover:rotate-0 transition-transform duration-500">
+            <Tape className="-top-2 -left-4 rotate-[-12deg] bg-neon-pink/30" />
+            
+            {/* Diary Section Explanation */}
+            <div className="bg-page-bg rounded-2xl p-4 md:p-6 border border-border-beige shadow-sm">
+              <h2 className="text-2xl md:text-4xl font-bold text-navy tracking-light mb-2 md:mb-3">Diary Reconstruction</h2>
+              <p className="text-xs md:text-sm text-slate leading-relaxed mb-3">
+                <strong className="text-navy">What is this?</strong> An interactive reconstruction of Venetia&apos;s 1914 diary, mapping her physical movements against the emotional landscape of her letters.
+              </p>
+              <p className="text-xs md:text-sm text-slate leading-relaxed">
+                <strong className="text-navy">Why did we do this?</strong> Because Venetia’s own voice is largely absent from the historical record. She appears constantly—but almost always through the words of others. This project treats her not as a footnote or a recipient, but as a subject with her own interior life, restoring agency where the archive falls silent.
+              </p>
+            </div>
+
+            {/* Diary Preview Box */}
+            <Link 
+              href="/1914-diary"
+              className="bg-card-bg rounded-2xl p-6 border border-border-beige shadow-lg group/preview relative overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-accent-green/5 opacity-0 group-hover/preview:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="relative z-10">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="p-2 rounded-lg bg-accent-green/10 text-accent-green">
+                    <BookOpen size={20} />
+                  </div>
+                  <div className="text-[10px] font-black uppercase tracking-widest text-muted-gray">1914.DIARY</div>
+                </div>
+                
+                <h3 className="text-xl font-bold text-navy mb-2 group-hover/preview:text-accent-green transition-colors">The 1914 Narrative</h3>
+                <p className="text-xs text-slate italic mb-6 leading-relaxed">
+                  &quot;I feel as if I am doubling the parts of Martha and Granville Barker here...&quot;
+                </p>
+                
+                <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-accent-green">
+                  <span>Enter the Journey</span>
+                  <ArrowRight size={14} className="group-hover/preview:translate-x-1 transition-transform" />
+                </div>
+              </div>
+              
+              {/* Abstract decorative element */}
+              <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-accent-green/5 rounded-full blur-2xl"></div>
+            </Link>
+          </div>
+
           {/* Instagram Section */}
           <div className="w-full md:w-[380px] flex flex-col gap-4 border-2 border-navy/30 rounded-lg p-4 bg-card-bg/30 h-fit flex-shrink-0 relative group/insta rotate-[-0.8deg] hover:rotate-0 transition-transform duration-500">
             <Tape className="-bottom-4 -left-4 rotate-[-10deg] bg-neon-pink/40" />
             
             {/* Instagram Section Explanation */}
             <div className="bg-card-bg rounded-2xl p-4 md:p-6 border border-border-beige shadow-sm">
-              <h2 className="text-2xl md:text-4xl font-bold text-navy tracking-light mb-2 md:mb-3">Instagram Displacement</h2>
+              <h2 className="text-2xl md:text-4xl font-bold text-navy tracking-light mb-2 md:mb-3">Venetia on Instagram</h2>
               <p className="text-xs md:text-sm text-slate leading-relaxed mb-3">
                 <strong className="text-navy">What is this?</strong> This is a speculative Instagram feed for 
                 Venetia Stanley, translating her historical experiences and personality into contemporary social media 
