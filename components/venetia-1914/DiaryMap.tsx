@@ -19,7 +19,9 @@ const icon = L.icon({
 function MapUpdater({ center, destination }: { center: [number, number], destination?: [number, number] }) {
   const map = useMap();
   useEffect(() => {
-    if (destination) {
+    if (!center || isNaN(center[0]) || isNaN(center[1])) return;
+
+    if (destination && !isNaN(destination[0]) && !isNaN(destination[1])) {
       const bounds = L.latLngBounds([center, destination]);
       map.fitBounds(bounds, { padding: [20, 20], maxZoom: 8, animate: true, duration: 1.5 });
     } else {
@@ -36,6 +38,8 @@ interface DiaryMapProps {
 }
 
 const DiaryMap = ({ center, destination, locationName }: DiaryMapProps) => {
+  if (!center || isNaN(center[0]) || isNaN(center[1])) return null;
+
   return (
     <div className="absolute top-6 left-6 z-20 w-48 h-32 rounded-lg overflow-hidden border-4 border-white shadow-2xl opacity-90 hover:opacity-100 transition-opacity">
         <MapContainer 

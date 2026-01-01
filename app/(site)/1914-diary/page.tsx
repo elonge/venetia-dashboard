@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 import dynamic from "next/dynamic";
 import { TIMELINE_DATA } from "@/diary_entris";
+import { useIsMobile } from "@/lib/useMediaQuery";
+
 const DiaryMap = dynamic(() => import("@/components/venetia-1914/DiaryMap"), {
   ssr: false,
 });
@@ -20,6 +22,7 @@ const VenetiaDiaryLayout = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showHistory, setShowHistory] = useState(false);
   const [animating, setAnimating] = useState(false);
+  const isMobile = useIsMobile();
 
   const entry = TIMELINE_DATA[currentIndex];
 
@@ -106,11 +109,13 @@ const VenetiaDiaryLayout = () => {
         )}
 
         {/* --- REAL LEAFLET MAP (Top Left) --- */}
-        <DiaryMap
-          center={entry.coords as [number, number]}
-          destination={entry.destination as [number, number] | undefined}
-          locationName={entry.location.split(",")[0]}
-        />
+        {!isMobile && (
+          <DiaryMap
+            center={entry.coords as [number, number]}
+            destination={entry.destination as [number, number] | undefined}
+            locationName={entry.location.split(",")[0]}
+          />
+        )}
       </div>
 
       {/* RIGHT PANE: Narrative */}
@@ -132,7 +137,7 @@ const VenetiaDiaryLayout = () => {
               </button>
             ))}
           </div>
-          <div className="text-stone-400 text-xs font-mono">1914.DIARY.V45</div>
+          <div className="text-stone-400 text-xs font-mono">1914.DIARY</div>
         </div>
 
         {/* Content Area */}
