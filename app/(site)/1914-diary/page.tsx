@@ -13,6 +13,7 @@ import {
 import dynamic from "next/dynamic";
 import { TIMELINE_DATA } from "@/diary_entris";
 import { useIsMobile } from "@/lib/useMediaQuery";
+import { useChatVisibility } from "@/components/chat/useChatVisibility";
 
 const DiaryMap = dynamic(() => import("@/components/venetia-1914/DiaryMap"), {
   ssr: false,
@@ -20,6 +21,7 @@ const DiaryMap = dynamic(() => import("@/components/venetia-1914/DiaryMap"), {
 
 
 const VenetiaDiaryLayout = () => {
+  useChatVisibility(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showHistory, setShowHistory] = useState(false);
   const [animating, setAnimating] = useState(false);
