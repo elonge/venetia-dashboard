@@ -19,7 +19,6 @@ export const TIMELINE_DATA = [
       "Reconstruction from Asquith's letter to Venetia (Jan 5, 1914)"
     ],
     visualBackground: "/timeline/Alderley_Park_Paint_Winter.jpg",
-    // visualOverlay: "/timeline/Alderley_Park_Cards.png",
     visualAlt: "Alderley Park painting with an overlay of people playing cards",
     theme: "winter",
   },
@@ -43,7 +42,6 @@ export const TIMELINE_DATA = [
         "Reconstruction from Asquith's letter (Jan 9, 1914)"
       ],
       visualBackground: "/timeline/Chamonix_Paint_Winter.jpg",
-      visualOverlay: null, // Optional: Could use a vintage postcard of Chamonix or Sicily
       visualAlt: "Snowy landscape in Chamonix",
       theme: "winter",
     },
@@ -67,7 +65,6 @@ export const TIMELINE_DATA = [
       "Venetia Stanley to Edwin Montagu letter (Feb 5, 1914)"
     ],
     visualBackground: "/timeline/Tilstone_Lodge_Paint.jpg",
-    visualOverlay: null,
     visualAlt: "Tilstone Lodge, Tarporley, Cheshire",
     theme: "winter",
   },
@@ -89,7 +86,6 @@ export const TIMELINE_DATA = [
       "The Times, February 24, 1914"
     ],
     visualBackground: "/timeline/Cordelia_Paint.jpg",
-    visualOverlay: null,
     visualAlt: "Cordelia ship naming ceremony at Pembroke Dock",
     theme: "winter",
   },
@@ -432,7 +428,6 @@ export const TIMELINE_DATA = [
     ],
     sources: ["Reconstruction from Asquith's letter (Sep 17, 1914)."],
     visualBackground: "/timeline/Train_Paint_Sep.jpg",
-    visualOverlay: null,
     visualAlt: "Travelling to Penrhos by train",
     theme: "war",
   },

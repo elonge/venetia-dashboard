@@ -8,6 +8,7 @@ import {
   X,
   Info,
   BookOpen,
+  ScrollText,
 } from "lucide-react";
 import dynamic from "next/dynamic";
 import { TIMELINE_DATA } from "@/diary_entris";
@@ -97,17 +98,6 @@ const VenetiaDiaryLayout = () => {
           />
         </div>
 
-        {/* Overlay Image */}
-        {entry.visualOverlay && (
-          <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none animate-slide-up">
-            <img
-              src={entry.visualOverlay}
-              alt="Overlay context"
-              className="max-w-[70%] max-h-[70%] object-contain drop-shadow-2xl opacity-90"
-            />
-          </div>
-        )}
-
         {/* --- REAL LEAFLET MAP (Top Left) --- */}
         {!isMobile && (
           <DiaryMap
@@ -164,18 +154,6 @@ const VenetiaDiaryLayout = () => {
                 {entry.diaryEntry}
               </p>
 
-              <div className="mt-6 flex flex-wrap gap-2">
-                {entry.theme === "war" && (
-                  <span className="px-3 py-1 bg-stone-800 text-stone-100 text-[10px] uppercase tracking-wider">
-                    War Declared
-                  </span>
-                )}
-                {entry.location.includes("Alderley") && (
-                  <span className="px-3 py-1 bg-[#e8e4da] text-stone-600 text-[10px] uppercase tracking-wider">
-                    Social
-                  </span>
-                )}
-              </div>
             </div>
 
             <div className="pt-6 border-t border-stone-100">
@@ -192,15 +170,25 @@ const VenetiaDiaryLayout = () => {
                 </div>
                 <span>
                   {showHistory
-                    ? "Hide Historical Facts"
-                    : "View Historical Facts"}
+                    ? "Hide Sources & Historical Facts"
+                    : "View Sources & Historical Facts"}
                 </span>
               </button>
 
               {showHistory && (
                 <div className="mt-4 p-5 bg-[#f4f1ea] border-l-4 border-red-800 text-sm text-stone-700 animate-fade-in rounded-r-md">
                   <h4 className="font-bold text-stone-900 mb-3 flex items-center uppercase tracking-wider text-xs">
-                    <BookOpen size={14} className="mr-2" /> Verified Sources
+                    <BookOpen size={14} className="mr-2" /> Sources
+                  </h4>
+                  <ul className="list-disc pl-5 space-y-2 marker:text-red-800">
+                    {entry.sources.map((fact, idx) => (
+                      <li key={idx} className="leading-snug">
+                        {fact}
+                      </li>
+                    ))}
+                  </ul>
+                  <h4 className="mt-8 font-bold text-stone-900 mb-3 flex items-center uppercase tracking-wider text-xs">
+                    <ScrollText size={14} className="mr-2" /> Historical Facts
                   </h4>
                   <ul className="list-disc pl-5 space-y-2 marker:text-red-800">
                     {entry.historicalFacts.map((fact, idx) => (
