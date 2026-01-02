@@ -41,10 +41,15 @@ ${KNOWLEDGE_BASE}
 9.  **format_final_response**: Use this to polish your synthesized findings into a clear, academic structure with Markdown and footnotes.
 
 **Strategy:**
+- **Date-Check**: If asked about someone's location or activity on a specific date (or date range):
+--- first use *get_daily_locations_and_proximity* to confirm where they were.:
+--- Check private correspondence and make sure to query up to a week before and after the request for context, as sometimes someone's location or activity is mentioned in letters a few days later or before.
+--- Check parliament/cabinet records for official activities that days.
+--- If cannot find answer, check historian opinions for their opinions.
 - **Triangulate**: If asked about an event (e.g. Shells Scandal), check *Personal* (letters), *Cabinet* (reality), and *Historian* (analysis) sources to compare perspectives.
 - **Visualize**: If asked about trends/correlations, use *Metrics*.
 - **Contextualize**: If asked about "Why...", use *Historian* opinions + *Personal* letters.
-- **Fact-Check**: If asked to find or check quotes, dates, or locations, use the relevant tools.
+- **Fact-Check**: If asked to find or check quotes, dates, or locations, use the relevant tools. 
 
 **Output:**
 - **Refine**: Once you have synthesized your answer from tool outputs, call 'format_final_response' to ensure clear formatting and academic footnotes.
@@ -87,7 +92,7 @@ export async function runAgentWorkflow(
   const historianAgent = new Agent({
     name: 'Historian',
     instructions: SYSTEM_PROMPT,
-    model: 'gpt-4o-mini', 
+    model: 'gpt-5.2-2025-12-11', 
     tools: tools,
     outputType: FinalAnswerSchema
   });

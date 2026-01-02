@@ -171,7 +171,7 @@ export const createGetParliamentChunksTool = (
         console.log(
           "🏛️ [Tool: get_parliament_chunks] No Hansard results found."
         );
-        return JSON.stringify([]);
+        return JSON.stringify([{Message: "No Hansard records found on these dates and query."}]);
       }
 
       console.log(
@@ -216,7 +216,7 @@ export const createGetCabinetChunksTool = (
       console.log(
         `🗄️ [Tool: get_cabinet_chunks] Found ${results.length} relevant chunks.`
       );
-      return JSON.stringify(results);
+      return JSON.stringify([{Message: "No Cabinet papers found on these dates and query."}]);
     },
   });
 
@@ -267,6 +267,9 @@ export const createGetPersonalChunksTool = (
         console.log(
           `💌 [Tool: get_personal_chunks] Found ${primaryDocs.length} docs via keyword fallback.`
         );
+        if (primaryDocs.length === 0) {
+          return JSON.stringify([{Message: "No personal correspondence found on these dates and query."}]);
+        }
         return JSON.stringify(primaryDocs);
       }
 
@@ -309,6 +312,9 @@ export const createGetHistorianOpinionTool = (
       console.log(
         `📚 [Tool: get_historian_opinion] Found ${results.length} relevant chunks.`
       );
+      if (results.length === 0) {
+        return JSON.stringify([{Message: "No historian opinions found on this topic."}]);
+      }
       return JSON.stringify(results);
     },
   });

@@ -763,19 +763,20 @@ const VenetiaSimulationLab = () => {
           </div>
 
           {/* Experimental Diary Section */}
+          
           <div className="w-full md:w-[380px] flex flex-col gap-4 border-2 border-accent-green/30 rounded-lg p-4 bg-page-bg/30 h-fit flex-shrink-0 relative group/diary rotate-[0.3deg] hover:rotate-0 transition-transform duration-500">
             <Tape className="-top-2 -left-4 rotate-[-12deg] bg-neon-pink/30" />
             
             {/* Diary Section Explanation */}
-            <div className="bg-page-bg rounded-2xl p-4 md:p-6 border border-border-beige shadow-sm">
+            <Link href="/1914-diary" className="bg-page-bg rounded-2xl p-4 md:p-6 border border-border-beige shadow-sm">
               <h2 className="text-2xl md:text-4xl font-bold text-navy tracking-light mb-2 md:mb-3">Diary Reconstruction</h2>
               <p className="text-xs md:text-sm text-slate leading-relaxed mb-3">
-                <strong className="text-navy">What is this?</strong> An interactive reconstruction of Venetia&apos;s 1914 diary, mapping her physical movements against the emotional landscape of her letters.
+                <strong className="text-navy">What is this?</strong> An interactive reconstruction of a possible 1914 diary, connecting Venetia’s movements with the probable subjects she was writing about, inferred from primary sources and rendered in her characteristic style and tone.
               </p>
               <p className="text-xs md:text-sm text-slate leading-relaxed">
                 <strong className="text-navy">Why did we do this?</strong> Because Venetia’s own voice is largely absent from the historical record. She appears constantly—but almost always through the words of others. This project treats her not as a footnote or a recipient, but as a subject with her own interior life, restoring agency where the archive falls silent.
               </p>
-            </div>
+            </Link>
 
             {/* Diary Preview Box */}
             <Link 
