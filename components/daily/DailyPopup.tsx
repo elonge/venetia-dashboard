@@ -832,60 +832,39 @@ export default function DailyPopup({
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border border-border-beige bg-page-bg rounded-sm overflow-hidden">
                 {/* COLUMN 1: PARLIAMENT */}
                 <div className="relative p-6 border-b md:border-b-0 md:border-r border-border-beige group min-h-[160px]">
-                  {/* Header Row */}
                   <div className="flex justify-between items-start mb-4">
                     <h4 className="text-xs font-serif font-bold text-navy/70 uppercase tracking-widest flex items-center gap-2">
-                      <Landmark
+                      <Newspaper
                         className="w-4 h-4 text-navy/40"
                         strokeWidth={1.5}
                       />
-                      Parliament
+                      Top News
                     </h4>
-
-                    {/* Status Stamp */}
-                    <div
-                      className={`
-              border-2 px-3 py-1 text-[10px] font-black uppercase tracking-widest transform -rotate-2 opacity-80 select-none
-              ${
-                currentDay.politics?.parliament &&
-                !currentDay.politics.parliament.toLowerCase().includes("no")
-                  ? "border-accent-green/30 text-accent-green/60" // Active Session Color
-                  : "border-accent-red/30 text-accent-red/50"
-              }    // Recess Color
-          `}
-                    >
-                      {currentDay.politics?.parliament &&
-                      !currentDay.politics.parliament
-                        .toLowerCase()
-                        .includes("no")
-                        ? "IN SESSION"
-                        : "RECESS"}
+                    
+                    <div className="border border-navy/20 px-2 py-0.5 text-[8px] font-bold text-navy/40 uppercase tracking-tighter">
+                      Daily Edition
                     </div>
                   </div>
 
-                  {/* Content Area */}
+                  {/* News Content */}
                   <div className="relative">
-                    {currentDay.politics?.parliament &&
-                    !currentDay.politics.parliament
-                      .toLowerCase()
-                      .includes("no") ? (
-                      <p className="font-mono text-xs text-navy/80 leading-loose">
-                        <span className="text-accent-brown font-bold mr-2 select-none">
-                          &gt;&gt;
-                        </span>
-                        {currentDay.politics.parliament
-                          .replace(/^(Parliament\s*—\s*)/i, "")
-                          .replace(/^(Yes\s*—\s*)/i, "")}
-                      </p>
+                    {currentDay.major_event ? (
+                      <div className="space-y-3">
+                        <div className="h-0.5 w-full bg-navy/10 mb-3"></div>
+                        <p className="font-sans text-[13px] text-navy/90 leading-relaxed text-justify hyphens-auto selection:bg-accent-amber/30">
+                          {currentDay.major_event}
+                        </p>
+                        <div className="h-px w-12 bg-navy/20 ml-auto"></div>
+                      </div>
                     ) : (
                       /* Empty State Overlay */
                       <div className="flex items-center justify-center mt-6 opacity-10 select-none pointer-events-none">
-                        <span className="text-3xl font-black text-navy uppercase tracking-[0.2em] rotate-[-5deg]">
-                          Adjourned
+                        <span className="text-2xl font-black text-navy uppercase tracking-[0.2em] rotate-[3deg]">
+                          No Headline
                         </span>
                       </div>
                     )}
-                  </div>
+                  </div>                  
                 </div>
 
                 {/* COLUMN 2: CABINET */}
@@ -955,33 +934,53 @@ export default function DailyPopup({
                   {/* Header Row */}
                   <div className="flex justify-between items-start mb-4">
                     <h4 className="text-xs font-serif font-bold text-navy/70 uppercase tracking-widest flex items-center gap-2">
-                      <Newspaper
+                      <Landmark
                         className="w-4 h-4 text-navy/40"
                         strokeWidth={1.5}
                       />
-                      Top News
+                      Parliament
                     </h4>
-                    
-                    <div className="border border-navy/20 px-2 py-0.5 text-[8px] font-bold text-navy/40 uppercase tracking-tighter">
-                      Daily Edition
+
+                    {/* Status Stamp */}
+                    <div
+                      className={`
+              border-2 px-3 py-1 text-[10px] font-black uppercase tracking-widest transform -rotate-2 opacity-80 select-none
+              ${
+                currentDay.politics?.parliament &&
+                !currentDay.politics.parliament.toLowerCase().includes("no")
+                  ? "border-accent-green/30 text-accent-green/60" // Active Session Color
+                  : "border-accent-red/30 text-accent-red/50"
+              }    // Recess Color
+          `}
+                    >
+                      {currentDay.politics?.parliament &&
+                      !currentDay.politics.parliament
+                        .toLowerCase()
+                        .includes("no")
+                        ? "IN SESSION"
+                        : "RECESS"}
                     </div>
                   </div>
 
-                  {/* News Content */}
+                  {/* Content Area */}
                   <div className="relative">
-                    {currentDay.major_event ? (
-                      <div className="space-y-3">
-                        <div className="h-0.5 w-full bg-navy/10 mb-3"></div>
-                        <p className="font-sans text-[13px] text-navy/90 leading-relaxed text-justify hyphens-auto selection:bg-accent-amber/30">
-                          {currentDay.major_event}
-                        </p>
-                        <div className="h-px w-12 bg-navy/20 ml-auto"></div>
-                      </div>
+                    {currentDay.politics?.parliament &&
+                    !currentDay.politics.parliament
+                      .toLowerCase()
+                      .includes("no") ? (
+                      <p className="font-mono text-xs text-navy/80 leading-loose">
+                        <span className="text-accent-brown font-bold mr-2 select-none">
+                          &gt;&gt;
+                        </span>
+                        {currentDay.politics.parliament
+                          .replace(/^(Parliament\s*—\s*)/i, "")
+                          .replace(/^(Yes\s*—\s*)/i, "")}
+                      </p>
                     ) : (
                       /* Empty State Overlay */
                       <div className="flex items-center justify-center mt-6 opacity-10 select-none pointer-events-none">
-                        <span className="text-2xl font-black text-navy uppercase tracking-[0.2em] rotate-[3deg]">
-                          No Headline
+                        <span className="text-3xl font-black text-navy uppercase tracking-[0.2em] rotate-[-5deg]">
+                          Adjourned
                         </span>
                       </div>
                     )}
