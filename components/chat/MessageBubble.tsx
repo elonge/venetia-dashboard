@@ -179,14 +179,11 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
     );
   } else if (hasMarkdownText) {
      const hasExistingFootnotes = message.markdownText!.includes('### Footnotes') || message.markdownText!.includes('## Footnotes');
-     console.log('message.footnotes = :', message.footnotes);
      const footnotesBlock = !hasExistingFootnotes && message.footnotes && message.footnotes.length > 0
         ? '\n\n' + message.footnotes.map((f, i) => `[^${i + 1}]: ${getRealSourceName(f.sourceId)} ${f.date ? f.date : ''}`).join('\n')
         : '';
      
      const contentWithFootnotes = replaceSourceNames(message.markdownText!) + footnotesBlock;
-     console.log('hasExistingFootnotes:', hasExistingFootnotes);
-     console.log('footnotesBlock:', footnotesBlock);
      renderedContent = (
         <div className="markdown-container">
             <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
