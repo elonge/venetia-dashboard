@@ -21,7 +21,7 @@ export async function GET(request: Request) {
     }
 
     // Attach major event if exists
-    const dateStr = previousDay.date_string || (previousDay.date instanceof Date ? previousDay.date.toISOString().split('T')[0] : String(previousDay.date));
+    const dateStr = previousDay.date;
     const event = majorDailyEvents.find(e => e.date === dateStr);
     
     const responseData = {

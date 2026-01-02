@@ -21,8 +21,7 @@ export async function GET(request: Request) {
     }
 
     // Attach major event if exists
-    // nextDay is a Document, assume it has date_string property or we convert date object
-    const dateStr = nextDay.date_string || (nextDay.date instanceof Date ? nextDay.date.toISOString().split('T')[0] : String(nextDay.date));
+    const dateStr = nextDay.date;
     
     const event = majorDailyEvents.find(e => e.date === dateStr);
     const responseData = {
