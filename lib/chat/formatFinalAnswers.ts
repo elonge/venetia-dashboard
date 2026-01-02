@@ -4,11 +4,10 @@ import { KNOWLEDGE_BASE } from "./knowledge";
 
 export const ValidatedSourceIds = z.enum([
   "asquith-letters-full.txt",
-  "Asquith - Roy Jenkins.txt",
   "The_Asquiths_Book-full.txt",
   "violet-diaries.txt",
   "Margot Asquith's Great War Diary - Michael Brock.txt",
-  "venetia-stanley-letters-full.txt",
+  "venetia_edwin_letters.txt",
   "Charles_Lister_Letters-full.txt",
   "cynthia-diaries-full.txt",
   "Diana_Cooper-full.txt",
@@ -21,6 +20,8 @@ export const ValidatedSourceIds = z.enum([
   "Winston_Churchill_CAB_Part_3.1_1914_1915-full.txt",
   "Winston_Churchill_CAB_Part_3.2_1915_1916-full.txt",
   "Hansard 1912-1916.txt",
+  "Asquith - Roy Jenkins.txt",
+  "The Annual Register 1914.txt"
 ]);
 
 

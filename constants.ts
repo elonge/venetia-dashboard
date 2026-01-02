@@ -247,11 +247,8 @@ export const PODCASTS: Array<{
 export const sourceNameMapping: Record<string, string> = {
         // Asquith & Family
         "asquith-letters-full.txt": "Asquith Letters",
-        "asquith_letters_full.txt": "Asquith Letters",
         "Asquith - Roy Jenkins.txt": "Asquith (Roy Jenkins)",
         "The_Asquiths_Book-full.txt": "The Asquiths Book",
-        "the_asquiths_book_full": "The Asquiths Book",
-        "violet-full.txt": "Violet Asquith Diaries",
         "violet-diaries.txt": "Violet Asquith Diaries",
         "Margot Asquith's Great War Diary - Michael Brock.txt": "Margot Asquith's Great War Diary",
       
@@ -275,7 +272,6 @@ export const sourceNameMapping: Record<string, string> = {
         "Winston_Churchill_CAB_Part_3.2_1915_1916-full.txt": "Churchill Cabinet Papers (1915–1916)",
         
         // Data Folders (if needed)
-        "hansard_data_notebooklm_ready": "Hansard Data Records",
         "Hansard 1912-1916.txt": "Hansard 1912-1916",
         
 };

@@ -50,7 +50,12 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
     h1: ({ node, ...props }: any) => <h1 className="text-lg font-bold mb-2 mt-4 text-[#1A2A40]" {...props} />,
     h2: ({ node, ...props }: any) => <h2 className="text-base font-bold mb-2 mt-3 text-[#1A2A40]" {...props} />,
     h3: ({ node, ...props }: any) => <h3 className="text-sm font-bold mb-1 mt-2 text-[#1A2A40]" {...props} />,
-    a: ({ node, href, children, ...props }: any) => {
+    a: ({ node, href, children, className, ...props }: any) => {
+      // Remove the back-reference link (usually a ↩ symbol or similar)
+      if (className === 'data-footnote-backref') {
+        return null;
+      }
+
       const isFootnote = href?.startsWith('#user-content-fn-') || href?.startsWith('#fn-');
       if (isFootnote) {
           const idMatch = href.match(/\d+$/);
@@ -174,8 +179,9 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
     );
   } else if (hasMarkdownText) {
      const hasExistingFootnotes = message.markdownText!.includes('### Footnotes') || message.markdownText!.includes('## Footnotes');
+     console.log('message.footnotes = :', message.footnotes);
      const footnotesBlock = !hasExistingFootnotes && message.footnotes && message.footnotes.length > 0
-        ? '\n\n' + message.footnotes.map((f, i) => `[^${i + 1}]: ${getRealSourceName(f.sourceId)}`).join('\n')
+        ? '\n\n' + message.footnotes.map((f, i) => `[^${i + 1}]: ${getRealSourceName(f.sourceId)} ${f.date ? f.date : ''}`).join('\n')
         : '';
      
      const contentWithFootnotes = replaceSourceNames(message.markdownText!) + footnotesBlock;
@@ -226,7 +232,7 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
           </div>
 
           {/* D. Footer: Sources & Citations */}
-          {consolidatedSources.length > 0 && (
+          {/* {consolidatedSources.length > 0 && (
             <div className="mt-4 md:mt-6 pt-3 md:pt-4 border-t border-dashed border-border-beige flex flex-col gap-2">
               <span className="text-[8px] md:text-[9px] font-bold text-muted-gray uppercase tracking-widest mb-1">
                 Verified Sources
@@ -245,7 +251,7 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
                 ))}
               </div>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>
