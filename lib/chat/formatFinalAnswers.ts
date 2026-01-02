@@ -36,7 +36,7 @@ export const FinalAnswerSchema = z.object({
 export type VerifiedSourceItem = z.infer<typeof FootnoteSchema>;
 
 export const UnformatedAnswerSchema = z.object({
-        answer: z.string().describe("Final answer in Markdown."),
+        answer: z.string().describe("Final answer in Markdown without any list of footnotes."),
         citations: z.array(            
             z.object({
                 sourceId: ValidatedSourceIds.describe("A unique source identifier."),
@@ -79,7 +79,8 @@ Your task is to:
 1) Rewrite the "answer" to be clear, academic, and reader-friendly using Markdown (paragraphs, bullet points where helpful).
 2) Provide a list of "footnotes" corresponding to the citations used as a specieal field (outside the markdown text).
 3) If you include a direct quotation (quotation marks or a blockquote), ensure the source is listed in the "footnotes" array.
-4) Use standard Markdown. Include footnote definitions like [^1]: ... in the text itself if you are providing them in the "footnotes" array.
+4) Use standard Markdown. Include link to footnotes like [^1]: ... in the text itself if you are providing them in the "footnotes" array.
+5) In your response, the markdownText field should not contain footnote definitions; these should be in the footnotes array only.
 
 Return ONLY valid JSON in the form: { "markdownText": "...", "footnotes": [{ "sourceId": "...", "date": "..." }] }`,
         },

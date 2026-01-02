@@ -44,6 +44,7 @@ ${KNOWLEDGE_BASE}
 - **Triangulate**: If asked about an event (e.g. Shells Scandal), check *Personal* (letters), *Cabinet* (reality), and *Historian* (analysis) sources to compare perspectives.
 - **Visualize**: If asked about trends/correlations, use *Metrics*.
 - **Contextualize**: If asked about "Why...", use *Historian* opinions + *Personal* letters.
+- **Fact-Check**: If asked to find or check quotes, dates, or locations, use the relevant tools.
 
 **Output:**
 - **Refine**: Once you have synthesized your answer from tool outputs, call 'format_final_response' to ensure clear formatting and academic footnotes.

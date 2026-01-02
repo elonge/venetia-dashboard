@@ -3,7 +3,13 @@
 import React from 'react';
 import { format } from 'date-fns';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import type { DayData } from './types';
+import { PEOPLE_IMAGES } from '@/constants';
+
+const ProximityMap = dynamic(() => import('@/components/data-room/ProximityMap'), {
+  ssr: false,
+});
 
 interface DailyWidgetProps {
   day: DayData;
@@ -91,7 +97,21 @@ export default function DailyWidget({
   const previewText = getPreviewText(day);
   const weatherEmoji = weatherToEmoji(day.weather);
   const firstLetter = day.letters?.[0];
-  const headline = firstLetter?.summary || 'A day in the correspondence';
+  const firstDiary = !firstLetter && day.diaries_summary?.[0];
+  
+  let headline = firstLetter?.summary;
+  if (!headline) {
+    if (day.letters && day.letters.length > 0) {
+      headline = 'A day in the correspondence';
+    } else if (firstDiary) {
+      headline = firstDiary.summary || 'A day in the diaries';
+    } else if (day.pm_activities || day.venetia_activities) {
+      headline = 'Daily Movements';
+    } else {
+      headline = 'Historical Context';
+    }
+  }
+
   const topics = firstLetter?.topics ?? [];
   const primaryScore = pickPrimaryScore(day);
 
@@ -101,6 +121,14 @@ export default function DailyWidget({
   
   const letterCount = day.letters?.length ?? 0;
   const primaryLocation = day.pm_location || day.venetia_location || null;
+
+  const diaryWriterImage = firstDiary ? PEOPLE_IMAGES[firstDiary.writer] || PEOPLE_IMAGES[Object.keys(PEOPLE_IMAGES).find(k => k.includes(firstDiary.writer)) || ''] : null;
+
+  const pmCoords = day.asquith_venetia_proximity?.geo_coords?.pm;
+  const venetiaCoords = day.asquith_venetia_proximity?.geo_coords?.venetia;
+  const hasMapCoords = 
+    pmCoords?.lat != null && pmCoords?.lng != null && 
+    venetiaCoords?.lat != null && venetiaCoords?.lng != null;
 
   return (
     <div
@@ -175,6 +203,20 @@ export default function DailyWidget({
           <div className="font-serif text-lg md:text-xl font-semibold text-navy leading-snug">
             {headline}
           </div>
+          {firstDiary && (
+            <div className="flex items-center gap-2 my-2">
+              {diaryWriterImage && (
+                <img 
+                  src={diaryWriterImage} 
+                  alt={firstDiary.writer} 
+                  className="w-6 h-6 rounded-full object-cover border border-border-beige"
+                />
+              )}
+              <span className="text-xs font-bold uppercase tracking-wider text-accent-brown">
+                {firstDiary.writer}
+              </span>
+            </div>
+          )}
 
           <p className="mt-2 md:mt-3 font-serif italic text-sm md:text-[15px] text-navy leading-relaxed line-clamp-3 md:line-clamp-4 max-w-full">
             {previewText ? `"${previewText}"` : 'Read the entry for this day.'}
@@ -195,7 +237,7 @@ export default function DailyWidget({
         {/* Right */}
         <div className="mt-4 md:mt-6 md:mt-0 md:border-l md:border-border-beige/50 md:pl-6 flex flex-col justify-between">
           <div>
-            {primaryScore ? (
+            {primaryScore && (
               <div>
                 <div className="flex items-baseline justify-between gap-3">
                   <div className="text-xs font-semibold tracking-[0.12em] uppercase text-muted-gray">
@@ -212,16 +254,21 @@ export default function DailyWidget({
                   />
                 </div>
               </div>
-            ) : (
-              <div className="text-xs font-medium text-muted-gray">No score available</div>
+            )}
+
+            {/* Proximity Map */}
+            {hasMapCoords && pmCoords && venetiaCoords && (
+              <div className="mt-4 md:mt-5 w-full h-40 rounded-sm overflow-hidden border border-border-beige shadow-sm">
+                <ProximityMap 
+                  pm={{ lat: pmCoords.lat!, lng: pmCoords.lng! }} 
+                  venetia={{ lat: venetiaCoords.lat!, lng: venetiaCoords.lng! }} 
+                />
+              </div>
             )}
 
             <div className="mt-4 md:mt-5 space-y-2 md:space-y-3 text-xs md:text-sm text-navy">
               {day.pm_location && (
                 <div className="flex items-start gap-1.5 md:gap-2">
-                  <span className="mt-0.5 text-base md:text-lg" aria-hidden="true">
-                    🏛️
-                  </span>
                   <div className="min-w-0 flex-1">
                     <span className="font-medium text-slate">PM:</span>{' '}
                     <span className="truncate">{day.pm_location}</span>
@@ -230,9 +277,6 @@ export default function DailyWidget({
               )}
               {day.venetia_location && (
                 <div className="flex items-start gap-1.5 md:gap-2">
-                  <span className="mt-0.5 text-base md:text-lg" aria-hidden="true">
-                    👩
-                  </span>
                   <div className="min-w-0 flex-1">
                     <span className="font-medium text-slate">Venetia:</span>{' '}
                     <span className="truncate">{day.venetia_location}</span>
@@ -241,24 +285,9 @@ export default function DailyWidget({
               )}
               {!day.pm_location && !day.venetia_location && primaryLocation && (
                 <div className="flex items-start gap-1.5 md:gap-2">
-                  <span className="mt-0.5 text-base md:text-lg" aria-hidden="true">
-                    📍
-                  </span>
                   <div className="min-w-0 flex-1">
                     <span className="font-medium text-slate">Location:</span>{' '}
                     <span className="truncate">{primaryLocation}</span>
-                  </div>
-                </div>
-              )}
-
-              {letterCount > 0 && (
-                <div className="flex items-start gap-1.5 md:gap-2">
-                  <span className="mt-0.5 text-base md:text-lg" aria-hidden="true">
-                    ✉️
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <span className="font-medium text-slate">Letters:</span>{' '}
-                    <span className="tabular-nums">{letterCount}</span>
                   </div>
                 </div>
               )}

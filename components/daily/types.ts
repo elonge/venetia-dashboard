@@ -1,3 +1,16 @@
+export interface AsquithVenetiaProximity {
+  distance_km?: number | null;
+  status?: string | null;
+  calculated_from?: {
+    pm?: string | null;
+    venetia?: string | null;
+  } | null;
+  geo_coords?: {
+    pm?: { lat?: number | null; lng?: number | null } | null;
+    venetia?: { lat?: number | null; lng?: number | null } | null;
+  } | null; 
+}
+
 export interface DayData {
   date: string; // Format: "1913-01-15" or datetime(1913, 1, 15) string
   letters?: Array<{
@@ -19,6 +32,7 @@ export interface DayData {
   venetia_location?: string;
   meeting_reference?: string;
   meeting_details?: string;
+  asquith_venetia_proximity?: AsquithVenetiaProximity | null;
   politics?: {
     parliament?: string;
     cabinet?: string;

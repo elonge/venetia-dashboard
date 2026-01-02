@@ -96,29 +96,25 @@ export default function Home() {
           }
         }
 
-        const listResponse = await fetch("/api/daily_records");
-        if (listResponse.ok) {
-          const list = (await listResponse.json()) as DayData[];
-          for (const candidate of candidateDateStrings) {
-            const dayData = getDayByDate(list, candidate);
-            if (isInterestingDay(dayData)) {
-              setTodayInHistory(dayData);
-              return;
-            }
-          }
+        // Fallback logic if no interesting day found
+        const fallbackYear = month < 7 ? 1915 : 1914;
+        const fallbackDate = `${fallbackYear}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+        
+        // Fetch specific fallback date directly to ensure data consistency
+        const fallbackRes = await fetch(`/api/daily_records/${fallbackDate}`);
+        if (fallbackRes.ok) {
+           const fallbackData = await fallbackRes.json();
+           setTodayInHistory(fallbackData);
+        } else {
+           // Absolute minimal fallback if API fails
+           setTodayInHistory({
+             date: fallbackDate,
+             summary: "No historical record available for this date.",
+             events: [],
+             letters: []
+           } as DayData);
         }
 
-        const fallbackResponse = await fetch("/api/mock_days");
-        if (!fallbackResponse.ok)
-          throw new Error("Failed to load daily records");
-        const fallbackList = (await fallbackResponse.json()) as DayData[];
-        for (const candidate of candidateDateStrings) {
-          const dayData = getDayByDate(fallbackList, candidate);
-          if (isInterestingDay(dayData)) {
-            setTodayInHistory(dayData);
-            return;
-          }
-        }
       } catch (error) {
         console.error("Error loading days:", error);
       } finally {

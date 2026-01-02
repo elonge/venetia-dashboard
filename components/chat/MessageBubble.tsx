@@ -106,11 +106,12 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
     ),
     section: ({ node, className, ...props }: any) => {
         if (props['data-footnotes']) {
-            return null;
+            return (
+                <section className="mt-6 pt-4 border-t border-border-beige text-xs text-muted-gray font-sans" {...props} />
+            );
         }
         return <section className={className} {...props} />;
     },
-    footer: ({ node, ...props }: any) => null,
   };
   
   // 1. USER MESSAGE: Solid Navy, Modern, Direct
@@ -172,8 +173,14 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
       </div>
     );
   } else if (hasMarkdownText) {
-     const footnotesBlock = message.footnotes?.map((f, i) => `[^${i + 1}]: ${f.sourceId}`).join('\n') || '';
-     const contentWithFootnotes = replaceSourceNames(message.markdownText!) + '\n\n' + footnotesBlock;
+     const hasExistingFootnotes = message.markdownText!.includes('### Footnotes') || message.markdownText!.includes('## Footnotes');
+     const footnotesBlock = !hasExistingFootnotes && message.footnotes && message.footnotes.length > 0
+        ? '\n\n' + message.footnotes.map((f, i) => `[^${i + 1}]: ${getRealSourceName(f.sourceId)}`).join('\n')
+        : '';
+     
+     const contentWithFootnotes = replaceSourceNames(message.markdownText!) + footnotesBlock;
+     console.log('hasExistingFootnotes:', hasExistingFootnotes);
+     console.log('footnotesBlock:', footnotesBlock);
      renderedContent = (
         <div className="markdown-container">
             <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
