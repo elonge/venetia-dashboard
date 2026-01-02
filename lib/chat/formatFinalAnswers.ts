@@ -36,7 +36,7 @@ export const FinalAnswerSchema = z.object({
 export type VerifiedSourceItem = z.infer<typeof FootnoteSchema>;
 
 export const UnformatedAnswerSchema = z.object({
-        answer: z.string().describe("Final answer in Markdown without any list of footnotes."),
+        answer: z.string().describe("Final answer in Markdown with marker to a citation in the right place, but without any list of footnotes."),
         citations: z.array(            
             z.object({
                 sourceId: ValidatedSourceIds.describe("A unique source identifier."),

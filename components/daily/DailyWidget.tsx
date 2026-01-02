@@ -122,7 +122,8 @@ export default function DailyWidget({
   const letterCount = day.letters?.length ?? 0;
   const primaryLocation = day.pm_location || day.venetia_location || null;
 
-  const diaryWriterImage = firstDiary ? PEOPLE_IMAGES[firstDiary.writer] || PEOPLE_IMAGES[Object.keys(PEOPLE_IMAGES).find(k => k.includes(firstDiary.writer)) || ''] : null;
+  const peopleImages = PEOPLE_IMAGES as Record<string, string>;
+  const diaryWriterImage = firstDiary ? peopleImages[firstDiary.writer] || peopleImages[Object.keys(peopleImages).find(k => k.includes(firstDiary.writer)) || ''] : null;
 
   const pmCoords = day.asquith_venetia_proximity?.geo_coords?.pm;
   const venetiaCoords = day.asquith_venetia_proximity?.geo_coords?.venetia;

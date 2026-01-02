@@ -41,6 +41,7 @@ export interface DayData {
   diaries_summary?: Array<{
     writer: string;
     excerpt: string;
+    summary?: string;
   }>;
   weather?: string;
   met_venetia?: boolean;
