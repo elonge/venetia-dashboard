@@ -94,15 +94,22 @@ export default function DailyWidget({
 }: DailyWidgetProps) {
   const date = parseDate(day.date);
   const formattedDate = date ? format(date, 'MMMM d, yyyy') : day.date;
-  const previewText = getPreviewText(day);
   const weatherEmoji = weatherToEmoji(day.weather);
   const firstLetter = day.letters?.[0];
   const firstDiary = !firstLetter && day.diaries_summary?.[0];
+  let showingNews = false;
   
   let headline = firstLetter?.summary;
+  let previewText = getPreviewText(day);
+
   if (!headline) {
     if (day.letters && day.letters.length > 0) {
       headline = 'A day in the correspondence';
+    } else if (day.major_event) {
+      headline = 'News of the Day';
+      // If we are showing news, make sure the text reflects it
+      previewText = day.major_event;
+      showingNews = true;
     } else if (firstDiary) {
       headline = firstDiary.summary || 'A day in the diaries';
     } else if (day.pm_activities || day.venetia_activities) {
@@ -204,7 +211,7 @@ export default function DailyWidget({
           <div className="font-serif text-lg md:text-xl font-semibold text-navy leading-snug">
             {headline}
           </div>
-          {firstDiary && (
+          {!showingNews && firstDiary && (
             <div className="flex items-center gap-2 my-2">
               {diaryWriterImage && (
                 <img 
@@ -219,8 +226,8 @@ export default function DailyWidget({
             </div>
           )}
 
-          <p className="mt-2 md:mt-3 font-serif italic text-sm md:text-[15px] text-navy leading-relaxed line-clamp-3 md:line-clamp-4 max-w-full">
-            {previewText ? `"${previewText}"` : 'Read the entry for this day.'}
+          <p className={`mt-2 md:mt-3 font-serif text-sm md:text-[15px] text-navy leading-relaxed line-clamp-3 md:line-clamp-4 max-w-full ${showingNews ? 'font-sans not-italic' : 'italic'}`}>
+            {previewText ? (showingNews ? previewText : `"${previewText}"`) : 'Read the entry for this day.'}
           </p>
 
           <div className="mt-4 md:mt-5 flex flex-wrap items-center gap-1.5 md:gap-2">

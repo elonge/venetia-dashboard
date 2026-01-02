@@ -44,6 +44,7 @@ export interface DayData {
     summary?: string;
   }>;
   weather?: string;
+  major_event?: string;
   met_venetia?: boolean;
   total_number_letters?: number;
 }
