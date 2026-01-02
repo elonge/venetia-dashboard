@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getPreviousDailyRecordByDate } from '@/lib/daily_records';
+import { majorDailyEvents } from '@/major_daily_events';
 
 export async function GET(request: Request) {
   try {
@@ -19,7 +20,16 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'No previous daily record found' }, { status: 404 });
     }
 
-    return NextResponse.json(previousDay);
+    // Attach major event if exists
+    const dateStr = previousDay.date_string || (previousDay.date instanceof Date ? previousDay.date.toISOString().split('T')[0] : String(previousDay.date));
+    const event = majorDailyEvents.find(e => e.date === dateStr);
+    
+    const responseData = {
+        ...previousDay,
+        major_event: event ? event.news : undefined
+    };
+
+    return NextResponse.json(responseData);
   } catch (error) {
     console.error('Error in previous daily record API:', error);
     return NextResponse.json({ error: 'Failed to fetch previous daily record' }, { status: 500 });

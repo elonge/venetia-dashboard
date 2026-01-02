@@ -16,6 +16,7 @@ import {
   Eye,
   Briefcase,
   Landmark,
+  Newspaper,
 } from "lucide-react";
 import { format } from "date-fns";
 import type { DayData } from "./types";
@@ -828,7 +829,7 @@ export default function DailyPopup({
               </div>
 
               {/* 2. DATA GRID: "Ledger" Style Container */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-border-beige bg-page-bg rounded-sm overflow-hidden">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border border-border-beige bg-page-bg rounded-sm overflow-hidden">
                 {/* COLUMN 1: PARLIAMENT */}
                 <div className="relative p-6 border-b md:border-b-0 md:border-r border-border-beige group min-h-[160px]">
                   {/* Header Row */}
@@ -846,14 +847,14 @@ export default function DailyPopup({
                       className={`
               border-2 px-3 py-1 text-[10px] font-black uppercase tracking-widest transform -rotate-2 opacity-80 select-none
               ${
-                currentDay.politics.parliament &&
+                currentDay.politics?.parliament &&
                 !currentDay.politics.parliament.toLowerCase().includes("no")
                   ? "border-accent-green/30 text-accent-green/60" // Active Session Color
                   : "border-accent-red/30 text-accent-red/50"
               }    // Recess Color
           `}
                     >
-                      {currentDay.politics.parliament &&
+                      {currentDay.politics?.parliament &&
                       !currentDay.politics.parliament
                         .toLowerCase()
                         .includes("no")
@@ -864,7 +865,7 @@ export default function DailyPopup({
 
                   {/* Content Area */}
                   <div className="relative">
-                    {currentDay.politics.parliament &&
+                    {currentDay.politics?.parliament &&
                     !currentDay.politics.parliament
                       .toLowerCase()
                       .includes("no") ? (
@@ -888,7 +889,7 @@ export default function DailyPopup({
                 </div>
 
                 {/* COLUMN 2: CABINET */}
-                <div className="relative p-6 group min-h-[160px]">
+                <div className="relative p-6 border-b md:border-b-0 md:border-r border-border-beige group min-h-[160px]">
                   {/* Header Row */}
                   <div className="flex justify-between items-start mb-4">
                     <h4 className="text-xs font-serif font-bold text-navy/70 uppercase tracking-widest flex items-center gap-2">
@@ -904,14 +905,14 @@ export default function DailyPopup({
                       className={`
               border-2 px-3 py-1 text-[10px] font-black uppercase tracking-widest transform rotate-1 opacity-80 select-none
               ${
-                currentDay.politics.cabinet &&
+                currentDay.politics?.cabinet &&
                 !currentDay.politics.cabinet.toLowerCase().includes("no")
                   ? "border-navy/30 text-navy/60" // Meeting Color
                   : "border-muted-gray/30 text-muted-gray/50"
               } // None Color
           `}
                     >
-                      {currentDay.politics.cabinet &&
+                      {currentDay.politics?.cabinet &&
                       !currentDay.politics.cabinet.toLowerCase().includes("no")
                         ? "MEETING"
                         : "NO SESSION"}
@@ -920,7 +921,7 @@ export default function DailyPopup({
 
                   {/* Content Area */}
                   <div className="relative">
-                    {currentDay.politics.cabinet &&
+                    {currentDay.politics?.cabinet &&
                     !currentDay.politics.cabinet
                       .toLowerCase()
                       .includes("no") ? (
@@ -943,6 +944,44 @@ export default function DailyPopup({
                       <div className="flex items-center justify-center mt-6 opacity-10 select-none pointer-events-none">
                         <span className="text-2xl font-black text-navy uppercase tracking-[0.2em] rotate-[-5deg]">
                           No Minutes
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* COLUMN 3: DAILY NEWS */}
+                <div className="relative p-6 group min-h-[160px] bg-white/40">
+                  {/* Header Row */}
+                  <div className="flex justify-between items-start mb-4">
+                    <h4 className="text-xs font-serif font-bold text-navy/70 uppercase tracking-widest flex items-center gap-2">
+                      <Newspaper
+                        className="w-4 h-4 text-navy/40"
+                        strokeWidth={1.5}
+                      />
+                      Top News
+                    </h4>
+                    
+                    <div className="border border-navy/20 px-2 py-0.5 text-[8px] font-bold text-navy/40 uppercase tracking-tighter">
+                      Daily Edition
+                    </div>
+                  </div>
+
+                  {/* News Content */}
+                  <div className="relative">
+                    {currentDay.major_event ? (
+                      <div className="space-y-3">
+                        <div className="h-0.5 w-full bg-navy/10 mb-3"></div>
+                        <p className="font-sans text-[13px] text-navy/90 leading-relaxed text-justify hyphens-auto selection:bg-accent-amber/30">
+                          {currentDay.major_event}
+                        </p>
+                        <div className="h-px w-12 bg-navy/20 ml-auto"></div>
+                      </div>
+                    ) : (
+                      /* Empty State Overlay */
+                      <div className="flex items-center justify-center mt-6 opacity-10 select-none pointer-events-none">
+                        <span className="text-2xl font-black text-navy uppercase tracking-[0.2em] rotate-[3deg]">
+                          No Headline
                         </span>
                       </div>
                     )}

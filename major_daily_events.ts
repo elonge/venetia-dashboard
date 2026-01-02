@@ -1,946 +1,3870 @@
 /*
-https://en.wikipedia.org/wiki/January_1915
-https://en.wikipedia.org/wiki/February_1915
-https://en.wikipedia.org/wiki/March_1915
-https://en.wikipedia.org/wiki/April_1915
-https://en.wikipedia.org/wiki/May_1915
-https://en.wikipedia.org/wiki/June_1915
-https://en.wikipedia.org/wiki/July_1915
-https://en.wikipedia.org/wiki/August_1915
-https://en.wikipedia.org/wiki/September_1915
-https://en.wikipedia.org/wiki/October_1915
-https://en.wikipedia.org/wiki/November_1915
-https://en.wikipedia.org/wiki/December_1915
+can you make a list of day to day between 1/11/1912-31/3/1912 of the main news of that day for UK reader. Please answer in JSON
+
+
+https://en.wikipedia.org/wiki/January_1912
+https://en.wikipedia.org/wiki/February_1912
+https://en.wikipedia.org/wiki/March_1912
+https://en.wikipedia.org/wiki/April_1912
+https://en.wikipedia.org/wiki/May_1912
+https://en.wikipedia.org/wiki/June_1912
+https://en.wikipedia.org/wiki/July_1912
+https://en.wikipedia.org/wiki/August_1912
+https://en.wikipedia.org/wiki/September_1912
+https://en.wikipedia.org/wiki/October_1912
+https://en.wikipedia.org/wiki/November_1912
+https://en.wikipedia.org/wiki/December_1912
 */
-export const majorDailyEvents =
+export const majorDailyEvents: { date: string; news: string[] }[] = (
+// @ts-ignore
 [
+    {
+    "date": "1912-01-01",
+    "news": ["The Republic of China was officially established with Dr. Sun Yat-sen inaugurated as Provisional President. In sport, England defeated France 7–1 in football at Tufnell Park, London, and Manchester United prepared to leave their Bank Street stadium after failing to renew the lease."]
+  },
+  {
+    "date": "1912-01-02",
+    "news": ["Alfred D'Orsay Tennyson Dickens, the son of author Charles Dickens, died while on a lecture tour in New York. In Persia, Russian authorities executed eight leaders who supported the constitutional revolution."]
+  },
+  {
+    "date": "1912-01-03",
+    "news": ["Captain Robert Falcon Scott reorganized his British Antarctic Expedition team for the final assault on the South Pole, sending a supporting group back to base while taking four companions forward."]
+  },
+  {
+    "date": "1912-01-04",
+    "news": ["King George V granted a Royal Charter to the Boy Scouts Association. Astronomers noted the Moon reached its closest point to Earth for the 20th century."]
+  },
+  {
+    "date": "1912-01-05",
+    "news": ["Dr. Sun Yat-sen issued a manifesto pledging to end China's isolationism and join the international community. In London, the Moscow Art Theatre opened a production of 'Hamlet' to international acclaim."]
+  },
+  {
+    "date": "1912-01-06",
+    "news": ["Alfred Wegener presented his theory of continental drift to the Geological Association of Germany. New Mexico was admitted as the 47th state of the United States."]
+  },
+  {
+    "date": "1912-01-07",
+    "news": ["Italian warships sank seven Turkish gunboats in the Red Sea during the ongoing Italo-Turkish War."]
+  },
+  {
+    "date": "1912-01-08",
+    "news": ["King George V and Queen Mary departed India after a month-long imperial visit. In South Africa, the African National Congress was founded."]
+  },
+  {
+    "date": "1912-01-09",
+    "news": ["A massive fire destroyed the Equitable Building in New York City, killing six people and destroying the offices of major financial institutions."]
+  },
+  {
+    "date": "1912-01-10",
+    "news": ["Charles Rumney Samson flew a Short biplane from HMS Africa anchored at Sheerness, marking the first time the Royal Navy operated an aircraft from a ship."]
+  },
+  {
+    "date": "1912-01-11",
+    "news": ["French Prime Minister Joseph Caillaux and his cabinet were forced to resign following accusations regarding secret negotiations with Germany. The General Post Office of the British government prepared to assume control of the National Telephone Company the following day."]
+  },
+  {
+    "date": "1912-01-12",
+    "news": ["The General Post Office assumed control of the National Telephone Company, leaving the United States as the only major nation with a privately owned network. In Germany, Socialists made significant gains in the Reichstag elections."]
+  },
+  {
+    "date": "1912-01-13",
+    "news": ["Raymond Poincaré formed a new government in France, serving as both Prime Minister and Foreign Minister."]
+  },
+  {
+    "date": "1912-01-14",
+    "news": ["Spanish Prime Minister José Canalejas y Méndez resigned with his cabinet following a controversy over the King's pardon of rioters, though he resumed office the next day."]
+  },
+  {
+    "date": "1912-01-15",
+    "news": ["A production of *Oedipus Rex* was presented in English for the first time at the Royal Opera House in London. Henry Labouchère, the politician known for the amendment making homosexuality a crime in the UK, died at age 80."]
+  },
+  {
+    "date": "1912-01-16",
+    "news": ["In the Antarctic, Captain Robert Falcon Scott wrote in his journal that 'The worst has happened' after his expedition found traces of Norwegian dogs, realizing Roald Amundsen had beaten them to the South Pole."]
+  },
+  {
+    "date": "1912-01-17",
+    "news": ["Captain Scott's British Antarctic Expedition reached the South Pole only to find the Norwegian flag already planted there. In France, the Chamber of Deputies overwhelmingly approved Prime Minister Poincaré's new government."]
+  },
+  {
+    "date": "1912-01-18",
+    "news": ["The British Miners' Federation released voting results showing a large majority in favor of a strike to secure a minimum wage. The ship *Wistow Hall* sank in a gale off the coast of Aberdeenshire, Scotland, with 53 lives lost."]
+  },
+  {
+    "date": "1912-01-19",
+    "news": ["Captain Scott and his four companions began their 900-mile return journey from the South Pole to their base, suffering from exhaustion and limited supplies."]
+  },
+  {
+    "date": "1912-01-20",
+    "news": ["The first successful strike in Mexican history was settled with workers winning a ten-hour workday and wage increases."]
+  },
+  {
+    "date": "1912-01-21",
+    "news": ["Author Joseph Conrad began achieving popular success as the *New York Herald* started serializing his novel *Chance*."]
+  },
+  {
+    "date": "1912-01-22",
+    "news": ["Sun Yat-sen and Yuan Shikai completed negotiations regarding the unification of the Republic of China."]
+  },
+  {
+    "date": "1912-01-23",
+    "news": ["The First International Opium Convention was signed at The Hague by 12 nations, resolving to suppress the abuse of opium, morphine, and cocaine."]
+  },
+  {
+    "date": "1912-01-24",
+    "news": ["British philosopher James Allen, pioneer of the self-help movement and author of *As a Man Thinketh*, died at age 47."]
+  },
+  {
+    "date": "1912-01-25",
+    "news": ["Norwegian explorer Roald Amundsen and his team arrived back at their base at Framheim after successfully becoming the first to reach the South Pole."]
+  },
+  {
+    "date": "1912-01-26",
+    "news": ["Generals of China's Imperial Army signed a petition asking the Manchu rulers to yield to a republic. In the US, a film featuring James Gordon as Robert E. Lee was released."]
+  },
+  {
+    "date": "1912-01-27",
+    "news": ["Reports circulated of a peculiar phenomenon where an amateur astronomer observed a large black object crossing the Moon."]
+  },
+  {
+    "date": "1912-01-28",
+    "news": ["A mob in Quito, Ecuador, stormed a penitentiary and lynched former President Eloy Alfaro and his brothers."]
+  },
+  {
+    "date": "1912-01-29",
+    "news": ["Alexander Duff, the Duke of Fife and husband to the Princess Royal, died of pleurisy in Egypt."]
+  },
+  {
+    "date": "1912-01-30",
+    "news": ["Roald Amundsen and the crew of the *Fram* departed Antarctica, heading northward. English singer and actress Florence St. John died at age 56."]
+  },
+  {
+    "date": "1912-01-31",
+    "news": ["Githa Sowerby's drama *Rutherford and Son* premiered at the Royal Court Theatre in London. The song 'It's a Long Way to Tipperary' was performed for the first time in Stalybridge, England."]
+  },
+  {
+    "date": "1912-02-01",
+    "news": ["The Stamford Brook station opened on the District Railway in London. Geoffrey de Havilland test flew a two-seat biplane prototype at the Royal Aircraft Factory in Hampshire."]
+  },
+  {
+    "date": "1912-02-02",
+    "news": ["The Royal Navy submarine HMS *A-3* sank off the Isle of Wight after a collision with the depot ship *Hazard*, resulting in the loss of 14 men."]
+  },
+  {
+    "date": "1912-02-03",
+    "news": ["New rules for American football were adopted, shortening the field to 100 yards and changing the value of a touchdown to six points."]
+  },
+  {
+    "date": "1912-02-04",
+    "news": ["King George and Queen Mary arrived back in the United Kingdom at Spithead after a three-month absence to visit India. Tailor Franz Reichelt died jumping from the Eiffel Tower while testing a wearable parachute."]
+  },
+  {
+    "date": "1912-02-05",
+    "news": ["The British Arbitration League issued an appeal against air warfare, signed by figures such as Arthur Conan Doyle and Thomas Hardy."]
+  },
+  {
+    "date": "1912-02-06",
+    "news": ["Portuguese army reinforcements arrived in East Timor to suppress a revolt."]
+  },
+  {
+    "date": "1912-02-07",
+    "news": ["The Usambara Railway officially opened for operation in German East Africa."]
+  },
+  {
+    "date": "1912-02-08",
+    "news": ["Australia inaugurated its first wireless telegraphic station in Melbourne."]
+  },
+  {
+    "date": "1912-02-09",
+    "news": ["Japan began the shipment of over 6,000 cherry blossom seedlings to the United States."]
+  },
+  {
+    "date": "1912-02-10",
+    "news": ["Joseph Lister, the British surgeon who introduced sterilization to medicine, died at age 84."]
+  },
+  {
+    "date": "1912-02-11",
+    "news": ["Swedish figure skater Gösta Sandahl won gold at the European Figure Skating Championships in Stockholm."]
+  },
+  {
+    "date": "1912-02-12",
+    "news": ["The Qing dynasty ended in China as the Empress Dowager signed an agreement on behalf of Emperor Puyi to dissolve the Imperial Advisory Council. Bonar Law began steps to merge the Liberal Unionist Party and the Conservative Party in the UK."]
+  },
+  {
+    "date": "1912-02-13",
+    "news": ["Dr. Sun Yat-sen resigned as President of China to pave the way for Yuan Shikai."]
+  },
+  {
+    "date": "1912-02-14",
+    "news": ["King George addressed Parliament regarding his visit to India. Amateur archaeologist Charles Dawson wrote to Arthur Smith Woodward about a skull discovery, initiating the Piltdown Man hoax."]
+  },
+  {
+    "date": "1912-02-15",
+    "news": ["Yuan Shikai was declared President of the Republic of China."]
+  },
+  {
+    "date": "1912-02-16",
+    "news": ["Russian Orthodox missionary Nicholas of Japan died at age 75."]
+  },
+  {
+    "date": "1912-02-17",
+    "news": ["Explorer Edgar Evans died near the Beardmore Glacier, becoming the first of Captain Scott's party to perish on the return from the South Pole. British pilot Graham Gilmour was killed in a plane crash over Richmond Park, London."]
+  },
+  {
+    "date": "1912-02-18",
+    "news": ["The British ship *Erne* was abandoned during a storm in the Atlantic with the loss of 10 crew members."]
+  },
+  {
+    "date": "1912-02-19",
+    "news": ["Fifty people drowned in the sinking of a boat at Rangoon."]
+  },
+  {
+    "date": "1912-02-20",
+    "news": ["Count Leopold Berchtold became the Foreign Minister of Austria-Hungary."]
+  },
+  {
+    "date": "1912-02-21",
+    "news": ["Workers bored a tunnel through the Swiss Alps for the Jungfrau Railway beneath the Eiger and Mönch mountains."]
+  },
+  {
+    "date": "1912-02-22",
+    "news": ["French pilot Jules Védrines became the first to fly an airplane faster than 100 miles per hour."]
+  },
+  {
+    "date": "1912-02-23",
+    "news": ["The Italian Chamber of Deputies voted to annex Tripolitania and Cyrenaica (modern-day Libya)."]
+  },
+  {
+    "date": "1912-02-24",
+    "news": ["Italy launched a surprise naval attack on the Ottoman port of Beirut, sinking two Turkish ships."]
+  },
+  {
+    "date": "1912-02-25",
+    "news": ["Grand Duke William of Luxembourg died and was succeeded by his daughter Marie-Adélaïde."]
+  },
+  {
+    "date": "1912-02-26",
+    "news": ["A national coal strike began in the United Kingdom, starting in Derbyshire, with 600,000 miners stopping work within days to demand a minimum wage."]
+  },
+  {
+    "date": "1912-02-27",
+    "news": ["British skating pair James and Phyllis Johnson won gold at the World Figure Skating Championships."]
+  },
+  {
+    "date": "1912-02-28",
+    "news": ["Danish composer Carl Nielsen conducted the premiere of his Symphony No. 3 in Copenhagen."]
+  },
+  {
+    "date": "1912-02-29",
+    "news": ["Serbia and Bulgaria secretly signed a treaty of alliance. King Vajiravudh of Siam narrowly avoided a coup attempt by junior officers."]
+  },
+  {
+    "date": "1912-03-01",
+    "news": ["Suffragettes, including Emmeline Pankhurst, smashed windows in London's West End; Pankhurst was sentenced to two months in jail. The British coal strike spread, involving one million workers."]
+  },
+  {
+    "date": "1912-03-02",
+    "news": ["The All England Badminton Championships concluded in London with Frank Chesterton winning the men's singles. Beijing was placed under martial law due to rioting."]
+  },
+  {
+    "date": "1912-03-03",
+    "news": ["Pilot Wilfred Parke made the first successful flight of the Avro 500. Frieda Weekley met author D. H. Lawrence in Nottingham."]
+  },
+  {
+    "date": "1912-03-04",
+    "news": ["British engineer Alexander Arthur, founder of Middlesboro, Kentucky, died at age 65."]
+  },
+  {
+    "date": "1912-03-05",
+    "news": ["Arnold Schoenberg's *Five Pieces for Orchestra* premiered at the Queen's Hall in London. The play *Drake of England* opened at His Majesty's Theatre."]
+  },
+  {
+    "date": "1912-03-06",
+    "news": ["The 'Oreo' biscuit was introduced by the National Biscuit Company."]
+  },
+  {
+    "date": "1912-03-07",
+    "news": ["Norwegian explorer Roald Amundsen arrived in Hobart, Tasmania, announcing to the world that he had reached the South Pole in December 1911."]
+  },
+  {
+    "date": "1912-03-08",
+    "news": ["The German Reichstag approved a bill to significantly expand the Imperial German Navy, a move likely to strain relations with Britain."]
+  },
+  {
+    "date": "1912-03-09",
+    "news": ["The textile strike in Lawrence, Massachusetts, ended with mill owners agreeing to wage increases."]
+  },
+  {
+    "date": "1912-03-10",
+    "news": ["Yuan Shikai was sworn in as the provisional President of the Republic of China."]
+  },
+  {
+    "date": "1912-03-11",
+    "news": ["The Miners' Federation of Great Britain offered to meet with Prime Minister Asquith regarding the ongoing strike. The Royal Navy submarine A-3 was raised from Portsmouth harbour."]
+  },
+  {
+    "date": "1912-03-12",
+    "news": ["Direct talks began in London between British coal operators and miner representatives. The Holy Trinity Church was consecrated in Southport."]
+  },
+  {
+    "date": "1912-03-13",
+    "news": ["Mahlon Pitney was confirmed by the US Senate to the Supreme Court. The Quebec Bulldogs won the Stanley Cup."]
+  },
+  {
+    "date": "1912-03-14",
+    "news": ["Frederick Seddon was convicted in a British court for the poisoning murder of Eliza Barrow. An anarchist attempted to assassinate the King and Queen of Italy."]
+  },
+  {
+    "date": "1912-03-15",
+    "news": ["Forty-five miners were killed in an explosion in Uzovka, Russia."]
+  },
+  {
+    "date": "1912-03-16",
+    "news": ["The P&O liner *Oceana* sank off Beachy Head after a collision; nine people died during the evacuation."]
+  },
+  {
+    "date": "1912-03-17",
+    "news": ["Explorer Lawrence Oates, suffering from frostbite and gangrene on the return from the South Pole, walked out of his tent into a blizzard to his death, telling his companions, 'I am just going outside and may be some time'."]
+  },
+  {
+    "date": "1912-03-18",
+    "news": ["A locomotive boiler explosion in San Antonio, Texas, killed 26 people."]
+  },
+  {
+    "date": "1912-03-19",
+    "news": ["The British government passed the Coal Mines Act, introducing a minimum wage for miners to help resolve the national strike."]
+  },
+  {
+    "date": "1912-03-20",
+    "news": ["The Australian steamer SS *Koombana* sank in a cyclone with the loss of all 150 on board."]
+  },
+  {
+    "date": "1912-03-21",
+    "news": ["Revolutionaries seized the capital of Paraguay, Asunción."]
+  },
+  {
+    "date": "1912-03-22",
+    "news": ["Thomas Mackenzie was elected Prime Minister of New Zealand. Guy Bowman, publisher of the *Syndicalist*, was sentenced to hard labor for inciting mutiny."]
+  },
+  {
+    "date": "1912-03-23",
+    "news": ["Kaiser Wilhelm met with Emperor Franz Joseph in Vienna. The remains of the crew of the USS *Maine* were buried in Arlington National Cemetery."]
+  },
+  {
+    "date": "1912-03-24",
+    "news": ["The Greek Liberal Party led by Eleftherios Venizelos won a majority in the Greek elections."]
+  },
+  {
+    "date": "1912-03-25",
+    "news": ["The ambassadors of the US, UK, Germany, and France protested China's borrowing of money from Belgium."]
+  },
+  {
+    "date": "1912-03-26",
+    "news": ["Eighty-one miners were killed in an explosion in West Virginia. Tokyo's gift of 3,000 cherry blossom trees arrived in Washington, D.C.."]
+  },
+  {
+    "date": "1912-03-27",
+    "news": ["The Minimum Wage Bill passed the House of Commons in the UK."]
+  },
+  {
+    "date": "1912-03-28",
+    "news": ["A resolution to grant women the vote was defeated in the British House of Commons. In the case of *Crown v. Walker*, the 'best interests of the child' became the standard for custody cases in the UK."]
+  },
+  {
+    "date": "1912-03-29",
+    "news": ["Captain Robert Falcon Scott and his remaining two companions, Edward Wilson and Henry Bowers, died in their tent in Antarctica, trapped by a blizzard. The Minimum Wage Bill received royal assent in the UK."]
+  },
+  {
+    "date": "1912-03-30",
+    "news": ["France established a protectorate over Morocco with the signing of the Treaty of Fes. The Oxford and Cambridge Boat Race was abandoned after both boats sank in rough weather."]
+  },
+  {
+    "date": "1912-03-31",
+    "news": ["A massive Home Rule meeting was held in Dublin with 200,000 attendees. Captain Edward Smith arrived in Belfast to take command of the *Titanic*."]
+  },
+  {
+    "date": "1912-04-01",
+    "news": ["News arrived that Captain Scott's Antarctic expedition had not reached the South Pole first; the Terra Nova arrived in New Zealand confirming Scott was still 150 miles away as of January 3, while Roald Amundsen had reached the pole in December."]
+  },
+  {
+    "date": "1912-04-02",
+    "news": ["The Titanic began its sea trials. Eleanor Trehawke Davies became the first woman to cross the English Channel in an airplane as a passenger."]
+  },
+  {
+    "date": "1912-04-03",
+    "news": ["Calbraith Perry Rodgers, the first person to fly across the continental US, was killed in a crash caused by a bird strike in California."]
+  },
+  {
+    "date": "1912-04-04",
+    "news": ["The Titanic arrived at the White Star Line pier in Southampton to prepare for its maiden voyage."]
+  },
+  {
+    "date": "1912-04-05",
+    "news": ["In the United States, vigilantes in San Diego brutally beat members of the Industrial Workers of the World after they were released from jail."]
+  },
+  {
+    "date": "1912-04-06",
+    "news": ["The Miners' Federation of Great Britain ordered striking members to return to work following the passage of the Minimum Wage Bill."]
+  },
+  {
+    "date": "1912-04-07",
+    "news": ["French cyclist Charles Crupelandt won the Paris–Roubaix race."]
+  },
+  {
+    "date": "1912-04-08",
+    "news": ["The national coal miners' strike ended in Britain, with thousands of workers returning to the pits after securing a guaranteed minimum wage."]
+  },
+  {
+    "date": "1912-04-09",
+    "news": ["Fenway Park opened in Boston, Massachusetts. In US politics, Theodore Roosevelt defeated President Taft in the Illinois primaries."]
+  },
+  {
+    "date": "1912-04-10",
+    "news": ["The Titanic departed Southampton on its maiden voyage to New York, nearly colliding with the liner New York while exiting the port."]
+  },
+  {
+    "date": "1912-04-11",
+    "news": ["Prime Minister H. H. Asquith introduced the Third Home Rule Bill in the House of Commons. The Titanic made its final stop at Queenstown (Cobh), Ireland."]
+  },
+  {
+    "date": "1912-04-12",
+    "news": ["The French liner La Touraine sent a radio message to the Titanic warning of an ice field."]
+  },
+  {
+    "date": "1912-04-13",
+    "news": ["The Royal Flying Corps, the forerunner of the Royal Air Force, was established by a Royal Warrant signed by King George V."]
+  },
+  {
+    "date": "1912-04-14",
+    "news": ["At 11:40 pm, the RMS Titanic struck an iceberg in the North Atlantic; warnings from other ships regarding the ice had been received throughout the day."]
+  },
+  {
+    "date": "1912-04-15",
+    "news": ["The Titanic sank at 2:20 am, resulting in the deaths of approximately 1,500 people, including British journalist W. T. Stead and ship architect Thomas Andrews. The Daily Herald began publication."]
+  },
+  {
+    "date": "1912-04-16",
+    "news": ["Harriet Quimby became the first woman to pilot an aircraft across the English Channel, though news of her feat was overshadowed by the Titanic disaster."]
+  },
+  {
+    "date": "1912-04-17",
+    "news": ["In Morocco, the Fez riots erupted against the French protectorate. A solar eclipse occurred, during which Victor Francis Hess discovered cosmic rays via balloon ascent."]
+  },
+  {
+    "date": "1912-04-18",
+    "news": ["The Carpathia arrived in New York City carrying the survivors of the Titanic. Italy bombarded Ottoman forts in the Dardanelles."]
+  },
+  {
+    "date": "1912-04-19",
+    "news": ["During a US Senate hearing, Second Officer Charles Lightoller testified regarding the loading of lifeboats on the Titanic. Russia agreed to recognize Italian sovereignty over Libya."]
+  },
+  {
+    "date": "1912-04-20",
+    "news": ["Bram Stoker, the Irish author best known for Dracula, died at age 64. The ocean liner SS France began its maiden voyage."]
+  },
+  {
+    "date": "1912-04-21",
+    "news": ["Aleister Crowley was appointed the National Grand Master General for Great Britain and Ireland of the Ordo Templi Orientis."]
+  },
+  {
+    "date": "1912-04-22",
+    "news": ["The Board of Trade requested a royal commission to investigate the loss of the Titanic. Denys Corbett Wilson completed the first successful aeroplane crossing of the Irish Sea."]
+  },
+  {
+    "date": "1912-04-23",
+    "news": ["In the first-ever New Hampshire presidential primary, President Taft defeated Theodore Roosevelt."]
+  },
+  {
+    "date": "1912-04-24",
+    "news": ["The RMS Olympic, sister ship to the Titanic, was prevented from sailing from Southampton due to a strike by firemen over insufficient lifeboats. Barnsley won the FA Cup."]
+  },
+  {
+    "date": "1912-04-25",
+    "news": ["The rebuilt St Mark's Campanile was inaugurated in Venice. In Germany, the Reichstag defeated a proposal to increase the size of the army and navy."]
+  },
+  {
+    "date": "1912-04-26",
+    "news": ["Vivian Hewitt made an airplane crossing of the Irish Sea from Holyhead to Dublin. A massive fire destroyed the bazaar in Damascus."]
+  },
+  {
+    "date": "1912-04-27",
+    "news": ["Civil war erupted in Paraguay. China cancelled a munitions contract with Belgium following protests by Western powers."]
+  },
+  {
+    "date": "1912-04-28",
+    "news": ["Hubert Lyautey was appointed the first French Resident-General of Morocco."]
+  },
+  {
+    "date": "1912-04-29",
+    "news": ["The Turkish steamship Texas struck a mine in the Gulf of Smyrna, killing 69 people."]
+  },
+  {
+    "date": "1912-04-30",
+    "news": ["The cable ship Mackay-Bennett arrived in Halifax, Nova Scotia, carrying 190 bodies recovered from the Titanic disaster site. A statue of Peter Pan appeared in Kensington Gardens."]
+  },
+  {
+    "date": "1912-05-01",
+    "news": ["Avro flew the first aircraft with an enclosed cabin for the pilot."]
+  },
+  {
+    "date": "1912-05-02",
+    "news": ["The royal commission headed by Lord Mersey began its inquiry into the sinking of the Titanic."]
+  },
+  {
+    "date": "1912-05-03",
+    "news": ["59 unidentified bodies recovered from the Titanic were buried in Halifax, Nova Scotia. In Morocco, Ahmed al-Hiba declared himself leader of an uprising against the French."]
+  },
+  {
+    "date": "1912-05-04",
+    "news": ["Sailors from the RMS Olympic were found guilty of mutiny regarding the lifeboat strike, but no penalty was imposed. Italian forces captured Rhodes."]
+  },
+  {
+    "date": "1912-05-05",
+    "news": ["The first issue of Pravda, the official newspaper of the Communist Party, was published in Saint Petersburg. The first events of the 1912 Summer Olympics began in Stockholm."]
+  },
+  {
+    "date": "1912-05-06",
+    "news": ["The cable ship Minia brought 17 more bodies from the Titanic disaster to Halifax. The will of John Jacob Astor was probated, leaving his fortune to his son Vincent."]
+  },
+  {
+    "date": "1912-05-07",
+    "news": ["A machine gun was fired from an airplane for the first time during a US Army test. A massive strike of hotel workers began in New York City."]
+  },
+  {
+    "date": "1912-05-08",
+    "news": ["Paramount Pictures was founded by Adolph Zukor (initially as the Famous Players Film Company)."]
+  },
+  {
+    "date": "1912-05-09",
+    "news": ["Commander Charles Rumney Samson became the first pilot to take off from a moving ship, launching his plane from HMS Hibernia. Salvation Army founder William Booth made his final public appearance."]
+  },
+  {
+    "date": "1912-05-10",
+    "news": ["The Paraguayan Civil War ended with rebel forces defeating government troops near Paraguarí."]
+  },
+  {
+    "date": "1912-05-11",
+    "news": ["The musical Princess Caprice opened at the Shaftesbury Theatre in London."]
+  },
+  {
+    "date": "1912-05-12",
+    "news": ["The decommissioned Royal Navy submarine HMS A3 was sunk during target practice."]
+  },
+  {
+    "date": "1912-05-13",
+    "news": ["RMS Oceanic located a collapsible lifeboat from the Titanic containing three bodies."]
+  },
+  {
+    "date": "1912-05-14",
+    "news": ["King Frederik VIII of Denmark died alone during a stroll in Hamburg; his identity was initially unknown. The first disaster film, Saved from the Titanic, starring survivor Dorothy Gibson, was released."]
+  },
+  {
+    "date": "1912-05-15",
+    "news": ["Christian X was proclaimed King of Denmark. The Grimsby and Immingham Electric Railway began operations."]
+  },
+  {
+    "date": "1912-05-16",
+    "news": ["Two young boys who survived the Titanic, known as the 'Titanic orphans', were identified and reunited with their mother."]
+  },
+  {
+    "date": "1912-05-17",
+    "news": ["Jules Massenet's opera Don Quichotte opened in London."]
+  },
+  {
+    "date": "1912-05-18",
+    "news": ["The Japanese battleship Kongō and the USS Texas were launched. The Detroit Tigers staged a strike to protest the suspension of Ty Cobb."]
+  },
+  {
+    "date": "1912-05-19",
+    "news": ["Julia Clark became the third woman to receive a pilot's license; she would die in a crash a month later."]
+  },
+  {
+    "date": "1912-05-20",
+    "news": ["Félix Fuchs became Governor-General of the Belgian Congo. The Alexander Nevsky Cathedral was consecrated in Warsaw."]
+  },
+  {
+    "date": "1912-05-21",
+    "news": ["The German Reichstag passed a law to expand the Imperial German Navy, adding battleships and cruisers."]
+  },
+  {
+    "date": "1912-05-22",
+    "news": ["The body of Titanic saloon steward James McGrady was recovered by the steamer Algerine."]
+  },
+  {
+    "date": "1912-05-23",
+    "news": ["The SS Imperator, the world's largest ship, was launched in Hamburg by Kaiser Wilhelm. The three Scandinavian kings met in Denmark for the funeral of King Frederik."]
+  },
+  {
+    "date": "1912-05-24",
+    "news": ["Charles Dawson presented skull fragments of the 'Piltdown Man' to the British Museum, initiating a famous scientific hoax."]
+  },
+  {
+    "date": "1912-05-25",
+    "news": ["The Third Sonderbund International Art Exhibit opened in Cologne, featuring modern masters like Van Gogh and Picasso."]
+  },
+  {
+    "date": "1912-05-26",
+    "news": ["American athlete James Duncan set the first internationally recognized record for the discus throw."]
+  },
+  {
+    "date": "1912-05-27",
+    "news": ["The French battleship Foudre became the first ship equipped as a seaplane tender."]
+  },
+  {
+    "date": "1912-05-28",
+    "news": ["The Irish Labour Party was founded in Clonmel by James Connolly, James Larkin, and William O'Brien. The US Senate filed its report on the Titanic disaster."]
+  },
+  {
+    "date": "1912-05-29",
+    "news": ["Vaslav Nijinsky's controversial ballet The Afternoon of a Faun premiered in Paris."]
+  },
+  {
+    "date": "1912-05-30",
+    "news": ["Aviation pioneer Wilbur Wright died of typhoid fever in Ohio. The Royal Australian Navy cruiser HMAS Melbourne was launched in Birkenhead."]
+  },
+  {
+    "date": "1912-05-31",
+    "news": ["The Paddington Rifles of the British Territorial Army were disbanded."]
+  },
+  {
+    "date": "1912-06-01",
+    "news": ["The Stockholm Olympic Stadium was inaugurated. American pilot Philip Orin Parmelee was killed in a crash in Washington state."]
+  },
+  {
+    "date": "1912-06-02",
+    "news": ["The Catholic Party won the parliamentary elections in Belgium, retaining their long-held majority."]
+  },
+  {
+    "date": "1912-06-03",
+    "news": ["German warships led by the SMS Moltke visited the United States and were received by President Taft."]
+  },
+  {
+    "date": "1912-06-04",
+    "news": ["Canada agreed to participate in celebrations marking 100 years of Anglo-American peace since the War of 1812."]
+  },
+  {
+    "date": "1912-06-05",
+    "news": ["Hungarian police ejected opposition members from parliament to allow the passage of an Army Bill."]
+  },
+  {
+    "date": "1912-06-06",
+    "news": ["The Novarupta volcano erupted in Alaska, the largest volcanic eruption of the 20th century. The body of a Titanic steward was recovered by the SS Ottawa."]
+  },
+  {
+    "date": "1912-06-07",
+    "news": ["A Hungarian legislator attempted to assassinate Prime Minister István Tisza in parliament before shooting himself. French aviation pioneer Hubert Latham was killed by a water buffalo in Africa."]
+  },
+  {
+    "date": "1912-06-08",
+    "news": ["The first Aerial Derby was held in London, won by Thomas Sopwith. Universal Pictures was incorporated."]
+  },
+  {
+    "date": "1912-06-09",
+    "news": ["The inaugural World Hard Court Championships for tennis concluded in Paris."]
+  },
+  {
+    "date": "1912-06-10",
+    "news": ["The Villisca Axe Murders occurred in Iowa. The Austro-Hungarian Navy tested submarine camouflage using kite balloons."]
+  },
+  {
+    "date": "1912-06-11",
+    "news": ["In the UK Parliament, an amendment was proposed to exclude northeast Ireland (Ulster) from the Home Rule Bill."]
+  },
+  {
+    "date": "1912-06-12",
+    "news": ["J. E. B. Seely was appointed the new British Secretary of State for War. The last body of a Titanic victim was buried in Halifax."]
+  },
+  {
+    "date": "1912-06-13",
+    "news": ["Volcanic activity was reported in Costa Rica and Alaska."]
+  },
+  {
+    "date": "1912-06-14",
+    "news": ["Dr. Robert Bell won a libel suit against a doctor who criticized his cancer treatments in the British Medical Journal."]
+  },
+  {
+    "date": "1912-06-15",
+    "news": ["The Hungarian House of Magnates adopted the Army Bill."]
+  },
+  {
+    "date": "1912-06-16",
+    "news": ["A train crash in Malmslätt, Sweden, killed 20 people."]
+  },
+  {
+    "date": "1912-06-17",
+    "news": ["The first female pilot to be killed in a crash, Julia Clark, died in Springfield, Illinois."]
+  },
+  {
+    "date": "1912-06-18",
+    "news": ["The Republican National Convention opened in Chicago amid a split between Taft and Roosevelt supporters. A coal mine explosion in Colorado killed 12."]
+  },
+  {
+    "date": "1912-06-19",
+    "news": ["A new training school for military fliers was established at Upavon, England. The first fatal mid-air collision between two airplanes occurred in France."]
+  },
+  {
+    "date": "1912-06-20",
+    "news": ["The Russian Duma voted for a £50,000,000 naval expansion program."]
+  },
+  {
+    "date": "1912-06-21",
+    "news": ["Pitcher Eppa Rixey debuted for the Philadelphia Phillies directly from college."]
+  },
+  {
+    "date": "1912-06-22",
+    "news": ["William Howard Taft was nominated for President at the Republican Convention; Theodore Roosevelt's supporters walked out to form the Progressive Party."]
+  },
+  {
+    "date": "1912-06-23",
+    "news": ["A dock collapsed at Niagara River, New York, killing 39 people. The Prince of Wales (future Edward VIII) turned 18."]
+  },
+  {
+    "date": "1912-06-24",
+    "news": ["Suffragette leaders Emmeline Pankhurst and Emmeline Pethick-Lawrence were released from prison."]
+  },
+  {
+    "date": "1912-06-25",
+    "news": ["The Government of India Act received royal assent. Ted Ray won the Open Championship in golf."]
+  },
+  {
+    "date": "1912-06-26",
+    "news": ["The National Museum of Wales opened in Cardiff. Gustav Mahler's Ninth Symphony premiered in Vienna."]
+  },
+  {
+    "date": "1912-06-27",
+    "news": ["Rebel leader Evaristo Estenoz was killed in Cuba, ending the uprising there. The Italian Army established its first air force battalion."]
+  },
+  {
+    "date": "1912-06-28",
+    "news": ["The Democratic National Convention began balloting in Baltimore. The 'Korean Conspiracy Trial' began."]
+  },
+  {
+    "date": "1912-06-29",
+    "news": ["Champ Clark led the voting for the US Democratic nomination but failed to secure the required majority. 35 Arabs were sentenced to death in Tunisia for rioting."]
+  },
+  {
+    "date": "1912-06-30",
+    "news": ["The Regina Cyclone struck Saskatchewan, Canada, killing 28 people. The 10th Tour de France began."]
+  },
+  {
+    "date": "1912-07-01",
+    "news": ["The first payments under the British National Insurance Act 1911 were collected, and the Copyright Act 1911 came into effect. In France, the Chamber of Deputies approved the protectorate over Morocco."]
+  },
+  {
+    "date": "1912-07-02",
+    "news": ["Woodrow Wilson received the Democratic Party nomination for President of the United States. The airship Akron exploded near Atlantic City, killing five crew members including Melvin Vaniman."]
+  },
+  {
+    "date": "1912-07-03",
+    "news": ["The British royal commission into the sinking of the Titanic concluded in London after 42 days of investigation. In Hong Kong, Governor Sir Francis Henry May escaped an assassination attempt."]
+  },
+  {
+    "date": "1912-07-04",
+    "news": ["Forty-one people were killed in a railroad accident near Corning, New York. The IOC selected Berlin to host the 1916 Summer Olympics."]
+  },
+  {
+    "date": "1912-07-05",
+    "news": ["The first International Radiotelegraph Convention was signed in London. Twenty-six people were killed in a train crash near Wilpen, Pennsylvania."]
+  },
+  {
+    "date": "1912-07-06",
+    "news": ["King Gustaf opened the 1912 Summer Olympics in Stockholm. The government of New Zealand Prime Minister Thomas Mackenzie fell after a vote of no confidence."]
+  },
+  {
+    "date": "1912-07-07",
+    "news": ["Harry Houdini performed a stunt in New York City, escaping from a weighted wooden box thrown into the East River. Horn & Hardart opened the first Automat in New York."]
+  },
+  {
+    "date": "1912-07-08",
+    "news": ["Anthony Wilding won his third consecutive Wimbledon championship. Italian forces captured Misrata in Libya from Ottoman forces."]
+  },
+  {
+    "date": "1912-07-09",
+    "news": ["A coal mine explosion at Cadeby, South Yorkshire, killed 77 miners and three inspectors."]
+  },
+  {
+    "date": "1912-07-10",
+    "news": ["William Massey became the new Prime Minister of New Zealand. The French Chamber of Deputies approved an Electoral Reform Bill for proportional representation."]
+  },
+  {
+    "date": "1912-07-11",
+    "news": ["The US House of Representatives voted to impeach Commerce Court Judge Robert W. Archbald. Inventor Elmer A. Sperry filed a patent application for the first aircraft autopilot."]
+  },
+  {
+    "date": "1912-07-12",
+    "news": ["The feature film 'Queen Elizabeth', starring Sarah Bernhardt, was released in the US, launching the company that would become Paramount Pictures. A fire destroyed the town of Point Tupper, Nova Scotia."]
+  },
+  {
+    "date": "1912-07-13",
+    "news": ["Dr. Théodore Tuffier performed the first successful surgery for aortic stenosis in France. The US Senate voted to remove William Lorimer from office for corruption."]
+  },
+  {
+    "date": "1912-07-14",
+    "news": ["South African Ken McArthur won the Olympic marathon; Portuguese runner Francisco Lázaro collapsed during the race and died the next day. A train crash near Chicago killed 15 people."]
+  },
+  {
+    "date": "1912-07-15",
+    "news": ["The National Insurance Act took effect in the United Kingdom, providing benefits for workers. The Commonwealth Bank opened for business in Australia."]
+  },
+  {
+    "date": "1912-07-16",
+    "news": ["Gambler Herman Rosenthal was shot dead in New York City, a crime later traced to a police lieutenant. Sir Percy Girouard resigned as Governor of the East Africa Protectorate."]
+  },
+  {
+    "date": "1912-07-17",
+    "news": ["Renowned French mathematician Henri Poincaré died at age 58. The Free State of Ikaria was declared on an island breaking away from the Ottoman Empire."]
+  },
+  {
+    "date": "1912-07-18",
+    "news": ["Ahmet Tevfik Pasha was appointed the new Grand Vizier of the Ottoman Empire amidst government instability. In Cuba, rebel leader General Pedro Ivonet was killed."]
+  },
+  {
+    "date": "1912-07-19",
+    "news": ["A large meteorite exploded over Holbrook, Arizona, showering the area with thousands of fragments. Albanian rebels agreed to a truce with Ottoman troops."]
+  },
+  {
+    "date": "1912-07-20",
+    "news": ["Scottish writer and literary critic Andrew Lang died at age 68. The 'Meat Trust' (National Packing Company) was dissolved in the US for antitrust violations."]
+  },
+  {
+    "date": "1912-07-21",
+    "news": ["Portuguese forces defeated the last rebels in East Timor. Ahmed Muhtar Pasha was appointed the new Ottoman Grand Vizier."]
+  },
+  {
+    "date": "1912-07-22",
+    "news": ["Under threat of impeachment, US District Judge Cornelius H. Hanford resigned."]
+  },
+  {
+    "date": "1912-07-23",
+    "news": ["The General Post Office inaugurated the first automatic telephone exchange in the United Kingdom in London."]
+  },
+  {
+    "date": "1912-07-24",
+    "news": ["The First International Congress on Eugenics convened in London, presided over by Major Leonard Darwin. A severe earthquake in Peru killed 101 people."]
+  },
+  {
+    "date": "1912-07-25",
+    "news": ["Marie-Adélaïde was formally enthroned as the Grand Duchess of Luxembourg."]
+  },
+  {
+    "date": "1912-07-26",
+    "news": ["The creation of a naval wing of the Royal Flying Corps was approved. France became the first country to mandate national markings on military aircraft."]
+  },
+  {
+    "date": "1912-07-27",
+    "news": ["Conservative Opposition Leader Bonar Law gave a speech attacking the Government as a 'revolutionary committee.' The Turkish government promised to investigate grievances in Northern Albania."]
+  },
+  {
+    "date": "1912-07-28",
+    "news": ["A pier collapse on the German island of Rügen killed at least 14 people. Belgian Odile Defraye won the Tour de France."]
+  },
+  {
+    "date": "1912-07-29",
+    "news": ["US Marines intervened in Nicaragua to protect the government from rebels. An assassination attempt was made on Albanian rebel leader Hassam Bey."]
+  },
+  {
+    "date": "1912-07-30",
+    "news": ["The Emperor Meiji of Japan died after a 44-year reign. The British Court of Inquiry on the Titanic disaster presented its report to Parliament, blaming excessive speed and collision with an iceberg."]
+  },
+  {
+    "date": "1912-07-31",
+    "news": ["The US enacted the Sims Act, prohibiting the transport of prize-fight films. The US Navy tested an aircraft catapult which failed."]
+  },
+  {
+    "date": "1912-08-01",
+    "news": ["The Jungfrau Railway in Switzerland was inaugurated. Alfred A. Cunningham became the first US Marine pilot."]
+  },
+  {
+    "date": "1912-08-02",
+    "news": ["A bomb attack in the Ottoman city of Kotschana led to a riot and the deaths of 140 people. Samuel Franklin Cody won a military aircraft competition on Salisbury Plain."]
+  },
+  {
+    "date": "1912-08-03",
+    "news": ["Sheet music for 'Baby Seals Blues' was published, the first to use 'blues' in the title."]
+  },
+  {
+    "date": "1912-08-04",
+    "news": ["Nine Boy Scouts and their master drowned when their boat capsized off the Isle of Sheppey; the tragedy was mourned nationally."]
+  },
+  {
+    "date": "1912-08-05",
+    "news": ["The Progressive Party ('Bull Moose' Party) opened its convention in Chicago."]
+  },
+  {
+    "date": "1912-08-06",
+    "news": ["Theodore Roosevelt announced his platform for the Progressive Party."]
+  },
+  {
+    "date": "1912-08-07",
+    "news": ["Physicist Victor Francis Hess discovered cosmic rays during a balloon flight."]
+  },
+  {
+    "date": "1912-08-08",
+    "news": ["A mine explosion in Gerthe, Germany, killed 103 men. Haitian President Cincinnatus Leconte was killed in an accidental explosion at his palace."]
+  },
+  {
+    "date": "1912-08-09",
+    "news": ["An earthquake near the Dardanelles in Turkey killed 3,000 people."]
+  },
+  {
+    "date": "1912-08-10",
+    "news": ["Frank McClean flew a Short Brothers floatplane up the Thames and through Tower Bridge. Author Virginia Stephen married Leonard Woolf."]
+  },
+  {
+    "date": "1912-08-11",
+    "news": ["Baseball star Ty Cobb was attacked by knife-wielding men in Detroit."]
+  },
+  {
+    "date": "1912-08-12",
+    "news": ["Sultan Mulay Hafid of Morocco abdicated in favor of his brother. Imperial Russia created a military aviation branch."]
+  },
+  {
+    "date": "1912-08-13",
+    "news": ["The Radio Act was enacted in the US to regulate broadcasters. French composer Jules Massenet died."]
+  },
+  {
+    "date": "1912-08-14",
+    "news": ["Social reformer and National Trust co-founder Octavia Hill died at age 73."]
+  },
+  {
+    "date": "1912-08-15",
+    "news": ["Jules Destrée published an open letter to King Albert regarding the separation of Flanders and Wallonia. Japan inaugurated its first taxi service."]
+  },
+  {
+    "date": "1912-08-16",
+    "news": ["Captain Stanley Lord of the SS Californian issued a statement defending his ship's actions during the Titanic disaster. In China, two generals were executed for their role in the Wuchang Uprising."]
+  },
+  {
+    "date": "1912-08-17",
+    "news": ["Britain notified China it would accept Chinese suzerainty over Tibet only if troops were withdrawn. Clarence Darrow was acquitted of bribery charges in Los Angeles."]
+  },
+  {
+    "date": "1912-08-18",
+    "news": ["The Ottoman Empire granted autonomy to Albania."]
+  },
+  {
+    "date": "1912-08-19",
+    "news": ["Guillermo Billinghurst was elected President of Peru."]
+  },
+  {
+    "date": "1912-08-20",
+    "news": ["Salvation Army founder William Booth died at age 83. In the US, the Plant Quarantine Act was signed into law."]
+  },
+  {
+    "date": "1912-08-21",
+    "news": ["Arthur Rose Eldred became the first American Boy Scout to earn the rank of Eagle Scout."]
+  },
+  {
+    "date": "1912-08-22",
+    "news": ["England won the Triangular Test Cricket Tournament against Australia and South Africa."]
+  },
+  {
+    "date": "1912-08-23",
+    "news": ["The Pure Food and Drug Act was amended in the US to prohibit false claims on medication labels."]
+  },
+  {
+    "date": "1912-08-24",
+    "news": ["Alaska was granted status as a US territory."]
+  },
+  {
+    "date": "1912-08-25",
+    "news": ["The Kuomintang (Nationalist Party) was founded in China by Sun Yat-sen. Italian Lieutenant Piero Manzini became the first pilot killed in warfare."]
+  },
+  {
+    "date": "1912-08-26",
+    "news": ["The Fasanenstrasse Synagogue opened in Berlin. Walter Johnson's 16-game winning streak ended."]
+  },
+  {
+    "date": "1912-08-27",
+    "news": ["Heavy rains caused extensive flooding in Norfolk and Norwich."]
+  },
+  {
+    "date": "1912-08-28",
+    "news": ["Russian explorer Georgy Brusilov began a disastrous expedition to find the Northern Sea Route; the ship would become trapped in ice."]
+  },
+  {
+    "date": "1912-08-29",
+    "news": ["A typhoon caused massive flooding in Wenzhou, China, reportedly killing thousands."]
+  },
+  {
+    "date": "1912-08-30",
+    "news": ["A Swiss soldier killed seven men in a shooting spree in Romanshorn. Mexican rebels ordered Americans to leave Colonia Morelos."]
+  },
+  {
+    "date": "1912-08-31",
+    "news": ["General Leónidas Plaza was inaugurated as President of Ecuador."]
+  },
+  {
+    "date": "1912-09-01",
+    "news": ["Plans for the Lincoln Highway, a road across the United States, were unveiled by Carl G. Fisher. French troops suppressed an uprising in Morocco."]
+  },
+  {
+    "date": "1912-09-02",
+    "news": ["The Trades Union Congress opened its annual conference in Newport, with president Will Thorne attacking the government's handling of strikes. The first Calgary Stampede began in Canada."]
+  },
+  {
+    "date": "1912-09-03",
+    "news": ["Arnold Schoenberg's 'Five Pieces for Orchestra' premiered at the Queen's Hall in London. The play 'Drake of England' opened at His Majesty's Theatre."]
+  },
+  {
+    "date": "1912-09-04",
+    "news": ["Twenty-two people were injured in a collision on the Piccadilly line, the first accident on the London Underground."]
+  },
+  {
+    "date": "1912-09-05",
+    "news": ["General Arthur MacArthur Jr. died of a stroke while addressing a Civil War reunion in Milwaukee."]
+  },
+  {
+    "date": "1912-09-06",
+    "news": ["Two Royal Flying Corps officers were killed in a monoplane crash in Hertfordshire. In Morocco, French troops defeated the forces of Ahmed al-Hiba."]
+  },
+  {
+    "date": "1912-09-07",
+    "news": ["Roland Garros set a new airplane altitude record of 16,405 feet in France. French troops rescued hostages in Marrakesh."]
+  },
+  {
+    "date": "1912-09-08",
+    "news": ["A motorcycle crash at a motordrome in Newark, New Jersey, killed two racers and six spectators."]
+  },
+  {
+    "date": "1912-09-09",
+    "news": ["Mass demonstrations took place in Athens demanding the liberation of Greeks from Ottoman rule. Jules Védrines won the Gordon Bennett Trophy race."]
+  },
+  {
+    "date": "1912-09-10",
+    "news": ["Two Royal Flying Corps officers were killed in a crash near Oxford, leading to a temporary ban on monoplanes in the RFC. A bomb in Doiran, Macedonia, killed 20 people."]
+  },
+  {
+    "date": "1912-09-11",
+    "news": ["Italian Captain Riccardo Moizo became the first pilot to be captured as a prisoner of war in Libya."]
+  },
+  {
+    "date": "1912-09-12",
+    "news": ["Russia ratified the Franco-Russian Convention, solidifying the alliance against potential German aggression."]
+  },
+  {
+    "date": "1912-09-13",
+    "news": ["The funeral of Emperor Meiji was held in Tokyo; General Nogi Maresuke and his wife committed ritual suicide to follow the emperor."]
+  },
+  {
+    "date": "1912-09-14",
+    "news": ["Ground was broken for the Trans-Australian Railway. Rioting at a football match in Belfast injured 100 people."]
+  },
+  {
+    "date": "1912-09-15",
+    "news": ["Nine French soldiers were killed in fighting with tribesmen in Morocco."]
+  },
+  {
+    "date": "1912-09-16",
+    "news": ["A severe typhoon struck Formosa (Taiwan), killing over 100 people and destroying thousands of homes."]
+  },
+  {
+    "date": "1912-09-17",
+    "news": ["Fifteen people were killed when a train caught fire at Ditton Junction in Cheshire. Greece began drafting citizens in preparation for war."]
+  },
+  {
+    "date": "1912-09-18",
+    "news": ["A four-nation banking consortium placed strict conditions on a loan to the Chinese government."]
+  },
+  {
+    "date": "1912-09-19",
+    "news": ["The new Glamorgan County Hall opened in Cardiff. Australia formally approved its new coat of arms."]
+  },
+  {
+    "date": "1912-09-20",
+    "news": ["The Australian Flying Corps was approved for creation. Italian forces captured the Zanzur oasis in Libya."]
+  },
+  {
+    "date": "1912-09-21",
+    "news": ["Harry Houdini debuted his Chinese Water Torture Cell escape in Berlin. Harley Granville-Barker's production of 'The Winter's Tale' opened at the Savoy Theatre."]
+  },
+  {
+    "date": "1912-09-22",
+    "news": ["Edwin Armstrong successfully tested the regenerative circuit, a breakthrough for radio reception. Greece and Bulgaria strengthened their defense alliance."]
+  },
+  {
+    "date": "1912-09-23",
+    "news": ["President Taft ordered foreign ships barred from strategic US naval ports including Pearl Harbor."]
+  },
+  {
+    "date": "1912-09-24",
+    "news": ["The Ottoman Empire mobilized its forces in Macedonia and Thrace."]
+  },
+  {
+    "date": "1912-09-25",
+    "news": ["The first radio transmissions from Antarctica were made from Macquarie Island."]
+  },
+  {
+    "date": "1912-09-26",
+    "news": ["The Australian Inland Mission was created to provide medical and spiritual care to the outback."]
+  },
+  {
+    "date": "1912-09-27",
+    "news": ["Divorce papers later revealed that Leslie King abused his wife Dorothy (parents of future US President Gerald Ford) on their honeymoon."]
+  },
+  {
+    "date": "1912-09-28",
+    "news": ["The signing of the Ulster Covenant was completed, with nearly half a million men and women in Ulster protesting against Irish Home Rule. The Japanese steamer Kiche Maru sank in a typhoon with the loss of 1,000 lives."]
+  },
+  {
+    "date": "1912-09-29",
+    "news": ["British and French marines captured Vathy on the island of Samos. Eric Lemming set the first world record for the javelin throw."]
+  },
+  {
+    "date": "1912-09-30",
+    "news": ["Six members of the British Terra Nova Expedition left the ice cave where they had wintered in Antarctica. The Columbia School of Journalism opened in New York."]
+  },
+  {
+    "date": "1912-10-01",
+    "news": ["The capital of British India was formally moved from Calcutta to Delhi. Turkey and Greece mobilized their armies in preparation for war."]
+  },
+  {
+    "date": "1912-10-02",
+    "news": ["Bulgarian troops seized control of Turkish blockhouses at the Djuma-i-Bala district as tensions in the Balkans escalated."]
+  },
+  {
+    "date": "1912-10-03",
+    "news": ["The silent film 'From the Manger to the Cross', filmed on location in the Holy Land, premiered in London."]
+  },
+  {
+    "date": "1912-10-04",
+    "news": ["The Royal Navy submarine HMS B2 was sunk off Dover after colliding with the German liner 'Amerika', resulting in the loss of 15 sailors; only one lieutenant survived."]
+  },
+  {
+    "date": "1912-10-05",
+    "news": ["French Prime Minister Raymond Poincaré addressed the British Foreign Office regarding potential mediation to avert war in the Balkans."]
+  },
+  {
+    "date": "1912-10-06",
+    "news": ["American troops captured the city of León, Nicaragua, effectively ending the insurgency there."]
+  },
+  {
+    "date": "1912-10-07",
+    "news": ["A proposed peace agreement to end the Italo-Turkish War was presented to the Italian cabinet."]
+  },
+  {
+    "date": "1912-10-08",
+    "news": ["The First Balkan War began as Montenegro declared war on the Ottoman Empire."]
+  },
+  {
+    "date": "1912-10-09",
+    "news": ["King Nicholas of Montenegro called on his subjects to join in a 'holy war' against Turkey."]
+  },
+  {
+    "date": "1912-10-10",
+    "news": ["Australia passed the Maternity Allowance Act, granting a 'baby bonus' to mothers of children born in the country."]
+  },
+  {
+    "date": "1912-10-11",
+    "news": ["The Prince of Wales (future King Edward VIII) began his studies as a commoner at Magdalen College, Oxford."]
+  },
+  {
+    "date": "1912-10-12",
+    "news": ["A fire at the North Mount Lyell mine in Tasmania killed 42 miners."]
+  },
+  {
+    "date": "1912-10-13",
+    "news": ["Bulgaria, Serbia, and Greece delivered an ultimatum to the Ottoman Empire demanding autonomy for Macedonia."]
+  },
+  {
+    "date": "1912-10-14",
+    "news": ["Former U.S. President Theodore Roosevelt was shot and wounded in the chest by a saloonkeeper in Milwaukee but proceeded to deliver his speech."]
+  },
+  {
+    "date": "1912-10-15",
+    "news": ["Italian and Turkish delegates signed a preliminary peace agreement at Ouchy, Switzerland."]
+  },
+  {
+    "date": "1912-10-16",
+    "news": ["The Boston Red Sox defeated the New York Giants to win the World Series in baseball."]
+  },
+  {
+    "date": "1912-10-17",
+    "news": ["Turkey declared war on Bulgaria and Serbia, widening the conflict in the Balkans."]
+  },
+  {
+    "date": "1912-10-18",
+    "news": ["The Ottoman Empire and Italy signed the Treaty of Lausanne, ending the Italo-Turkish War, with Italy gaining control of Libya."]
+  },
+  {
+    "date": "1912-10-19",
+    "news": ["English opera singer Richard Temple, known for his work with Gilbert and Sullivan, died at age 66."]
+  },
+  {
+    "date": "1912-10-20",
+    "news": ["The United Kingdom recognized Italian sovereignty over Tripoli and Cyrenaica."]
+  },
+  {
+    "date": "1912-10-21",
+    "news": ["Greece took control of the island of Lemnos from the Ottoman Empire."]
+  },
+  {
+    "date": "1912-10-22",
+    "news": ["The Australian Flying Corps established its first air base at Point Cook, Victoria."]
+  },
+  {
+    "date": "1912-10-23",
+    "news": ["The Battle of Kumanovo began between Serbian and Ottoman armies."]
+  },
+  {
+    "date": "1912-10-24",
+    "news": ["Harry Hawker set a record by staying airborne for 8 hours and 23 minutes at Brooklands, England."]
+  },
+  {
+    "date": "1912-10-25",
+    "news": ["Albert Mansbridge organized the first meeting of the Scottish branch of the Workers' Educational Association in Edinburgh."]
+  },
+  {
+    "date": "1912-10-26",
+    "news": ["Greek forces took control of Thessaloniki (Salonika) from the Ottoman Empire."]
+  },
+  {
+    "date": "1912-10-27",
+    "news": ["Bulgaria occupied Ishtip in Macedonia."]
+  },
+  {
+    "date": "1912-10-28",
+    "news": ["Six people died when the Irish collier 'Tenet' sank in the Bristol Channel."]
+  },
+  {
+    "date": "1912-10-29",
+    "news": ["The Battle of Lule Burgas began between Bulgarian and Ottoman forces in Thrace."]
+  },
+  {
+    "date": "1912-10-30",
+    "news": ["James S. Sherman, Vice President of the United States, died in office just days before the presidential election."]
+  },
+  {
+    "date": "1912-10-31",
+    "news": ["Scouting founder Robert Baden-Powell married Olave St Clair Soames in Dorset, England."]
+  },
+  {
+    "date": "1912-11-01",
+    "news": ["General Mario García Menocal was elected President of Cuba."]
+  },
+  {
+    "date": "1912-11-02",
+    "news": ["Royal Navy battleships and destroyers were ordered to Turkish waters as the Balkan War situation intensified."]
+  },
+  {
+    "date": "1912-11-03",
+    "news": ["Louth defeated Antrim to win the All-Ireland Senior Football Championship."]
+  },
+  {
+    "date": "1912-11-04",
+    "news": ["The British House of Commons rejected an amendment to the Home Rule Bill that would have established proportional representation for an Irish legislature."]
+  },
+  {
+    "date": "1912-11-05",
+    "news": ["Woodrow Wilson was elected President of the United States, defeating Theodore Roosevelt and William Howard Taft."]
+  },
+  {
+    "date": "1912-11-06",
+    "news": ["The Turkish Council of Ministers decided to continue the war with the Balkan League rather than seek immediate peace."]
+  },
+  {
+    "date": "1912-11-07",
+    "news": ["The French battleship 'France', the largest in the French navy, was launched at Saint-Nazaire."]
+  },
+  {
+    "date": "1912-11-08",
+    "news": ["The Greek Army reached Salonika hours ahead of Bulgarian forces and accepted the surrender of the city from the Ottomans."]
+  },
+  {
+    "date": "1912-11-09",
+    "news": ["Mahuta Tāwhiao, the Māori King, died at age 58 and was succeeded by his son Te Rata."]
+  },
+  {
+    "date": "1912-11-10",
+    "news": ["Explorer Douglas Mawson and his team set off on a surveying trip of George V Land in Antarctica, a journey that would end in tragedy for his companions."]
+  },
+  {
+    "date": "1912-11-11",
+    "news": ["Physicist Lawrence Bragg presented his derivation of Bragg's law regarding x-ray diffraction to the Cambridge Philosophical Society."]
+  },
+  {
+    "date": "1912-11-12",
+    "news": ["Spanish Prime Minister José Canalejas was assassinated in Madrid by an anarchist. The 'Manchester Guardian' published the first news story about the Piltdown Man discovery."]
+  },
+  {
+    "date": "1912-11-13",
+    "news": ["Fifteen people were killed in a railway accident at Irvington, Indiana."]
+  },
+  {
+    "date": "1912-11-14",
+    "news": ["The Count of Romanones was appointed as the new Prime Minister of Spain."]
+  },
+  {
+    "date": "1912-11-15",
+    "news": ["Vincent Astor inherited the $150 million fortune of his father John Jacob Astor IV, who died on the Titanic."]
+  },
+  {
+    "date": "1912-11-16",
+    "news": ["Kaiser Wilhelm inaugurated the Bober River dam in Silesia."]
+  },
+  {
+    "date": "1912-11-17",
+    "news": ["Kilkenny defeated Cork to win the All-Ireland Senior Hurling Championship."]
+  },
+  {
+    "date": "1912-11-18",
+    "news": ["A severe hurricane struck Jamaica, destroying thousands of buildings and killing over 40 people."]
+  },
+  {
+    "date": "1912-11-19",
+    "news": ["An earthquake in Mexico killed more than 70 people."]
+  },
+  {
+    "date": "1912-11-20",
+    "news": ["The History of Medicine Society held its inaugural meeting in London under the chairmanship of Sir William Osler."]
+  },
+  {
+    "date": "1912-11-21",
+    "news": ["The Ottoman government rejected the Balkan League's peace terms, causing the war to resume on all fronts."]
+  },
+  {
+    "date": "1912-11-22",
+    "news": ["The Entente Cordiale between the UK and France was strengthened by an exchange of notes pledging joint action in the event of war."]
+  },
+  {
+    "date": "1912-11-23",
+    "news": ["The South Africa rugby team defeated Scotland 16-0 in Inverleith."]
+  },
+  {
+    "date": "1912-11-24",
+    "news": ["A mass panic at a movie theater in Bilbao, Spain, resulted in 44 deaths."]
+  },
+  {
+    "date": "1912-11-25",
+    "news": ["Bulgarian and Ottoman delegates met near Çatalca to discuss peace terms."]
+  },
+  {
+    "date": "1912-11-26",
+    "news": ["Leaders of the Lawrence textile strike were acquitted of murder charges in Salem, Massachusetts."]
+  },
+  {
+    "date": "1912-11-27",
+    "news": ["Sir Edward Henry, the Commissioner of Police of the Metropolis (London), was shot and wounded by a man denied a taxicab license."]
+  },
+  {
+    "date": "1912-11-28",
+    "news": ["Albania declared independence from the Ottoman Empire."]
+  },
+  {
+    "date": "1912-11-29",
+    "news": ["Greek poet Lorentzos Mavilis was killed in battle during the First Balkan War."]
+  },
+  {
+    "date": "1912-11-30",
+    "news": ["The Hamilton Alerts won the 4th Grey Cup in Canadian football. South Africa defeated Ireland 38-0 in rugby."]
+  },
+  {
+    "date": "1912-12-01",
+    "news": ["Mohandas Gandhi began wearing traditional Indian clothing in South Africa, abandoning Western dress."]
+  },
+  {
+    "date": "1912-12-02",
+    "news": ["German Chancellor Theobald von Bethmann Hollweg declared to the Reichstag that Germany would go to war if Austria-Hungary was attacked."]
+  },
+  {
+    "date": "1912-12-03",
+    "news": ["An armistice was signed between Turkey, Bulgaria, Serbia, and Montenegro, temporarily halting the First Balkan War."]
+  },
+  {
+    "date": "1912-12-04",
+    "news": ["Italy's Chamber of Deputies approved the peace treaty with Turkey."]
+  },
+  {
+    "date": "1912-12-05",
+    "news": ["The Triple Alliance agreement between Germany, Austria-Hungary, and Italy was renewed in Vienna."]
+  },
+  {
+    "date": "1912-12-06",
+    "news": ["The bust of Nefertiti was discovered by German archaeologists in Egypt."]
+  },
+  {
+    "date": "1912-12-07",
+    "news": ["German-American banker Paul Warburg presented the blueprint for the U.S. Federal Reserve system."]
+  },
+  {
+    "date": "1912-12-08",
+    "news": ["Kaiser Wilhelm convened a 'War Council' with military leaders to discuss the possibility of a European war."]
+  },
+  {
+    "date": "1912-12-09",
+    "news": ["Prince Louis of Battenberg was appointed as the new First Sea Lord of the British Royal Navy."]
+  },
+  {
+    "date": "1912-12-10",
+    "news": ["Austria-Hungary issued a general mobilization of its military forces."]
+  },
+  {
+    "date": "1912-12-11",
+    "news": ["Roland Garros set a new altitude record of 18,670 feet in Tunis."]
+  },
+  {
+    "date": "1912-12-12",
+    "news": ["A storm in the Gulf of Mexico sank two British freighters, the 'Impoco' and 'Hainaut'."]
+  },
+  {
+    "date": "1912-12-13",
+    "news": ["President Taft established National Petroleum Reserve No. 2 in California."]
+  },
+  {
+    "date": "1912-12-14",
+    "news": ["Lieutenant Belgrave Ninnis died in Antarctica after falling into a crevasse during the Australasian Antarctic Expedition. South Africa beat Wales 3-0 in rugby."]
+  },
+  {
+    "date": "1912-12-15",
+    "news": ["Whitelaw Reid, the United States Ambassador to the United Kingdom, died suddenly in London."]
+  },
+  {
+    "date": "1912-12-16",
+    "news": ["The Balkan Peace Conference opened at St. James's Palace in London."]
+  },
+  {
+    "date": "1912-12-17",
+    "news": ["The Franco-Spanish treaty regarding Morocco was approved by the Spanish Chamber of Deputies."]
+  },
+  {
+    "date": "1912-12-18",
+    "news": ["The 'Piltdown Man' skull was presented to the Geological Society of London, claimed to be a missing link (later proven a hoax)."]
+  },
+  {
+    "date": "1912-12-19",
+    "news": ["The flag that inspired the American national anthem 'The Star-Spangled Banner' was donated to the Smithsonian Institution."]
+  },
+  {
+    "date": "1912-12-20",
+    "news": ["Twenty-two people died when the British steamer 'Florence' sank off Newfoundland."]
+  },
+  {
+    "date": "1912-12-21",
+    "news": ["The first full-color film, 'The Miracle', premiered at the Royal Opera House in London."]
+  },
+  {
+    "date": "1912-12-22",
+    "news": ["Actors and actresses in New York gathered to form what would become the Actors' Equity Association."]
+  },
+  {
+    "date": "1912-12-23",
+    "news": ["Lord Hardinge, the Viceroy of India, was wounded in an assassination attempt in Delhi."]
+  },
+  {
+    "date": "1912-12-24",
+    "news": ["Merck filed patent applications for the synthesis of MDMA (Ecstasy)."]
+  },
+  {
+    "date": "1912-12-25",
+    "news": ["A dynamite blast occurred during President Taft's visit to Panama, suspected to be an assassination attempt."]
+  },
+  {
+    "date": "1912-12-26",
+    "news": ["Thirteen crew members of the Danish steamer 'Volmer' died in a gale in the English Channel."]
+  },
+  {
+    "date": "1912-12-27",
+    "news": ["Arkansas Governor George Washington Donaghey pardoned 360 convicts to effectively end the convict lease system in the state."]
+  },
+  {
+    "date": "1912-12-28",
+    "news": ["Rudolf Steiner founded the Anthroposophical Society in Cologne."]
+  },
+  {
+    "date": "1912-12-29",
+    "news": ["Vedanayagam Samuel Azariah was ordained as the first Anglican bishop in India at Calcutta."]
+  },
+  {
+    "date": "1912-12-30",
+    "news": ["German Foreign Minister Alfred von Kiderlen-Waechter died suddenly in Stuttgart."]
+  },
+  {
+    "date": "1912-12-31",
+    "news": ["The first Ritz-Carlton hotel in North America opened in Montreal."]
+  },  
+  {
+    "date": "1913-01-01",
+    "news": ["The British Board of Censors began operations, while internationally, the 'Six Powers' agreed to a $125,000,000 loan to China."],
+  },
+  {
+    "date": "1913-01-02",
+    "news": ["Australia initiated its own postage service featuring a kangaroo and map design."],
+  },
+  {
+    "date": "1913-01-03",
+    "news": ["Greece completed its capture of the island of Chios from Ottoman forces."],
+  },
+  {
+    "date": "1913-01-04",
+    "news": ["Count Alfred von Schlieffen, architect of the German strategic plan for war, died aged 79."],
+  },
+  {
+    "date": "1913-01-05",
+    "news": ["Gottlieb von Jagow was named as the new State Secretary of the German Foreign Office."],
+  },
+  {
+    "date": "1913-01-06",
+    "news": ["An explosion of a boiler on the French battleship Massena killed eight crew members."],
+  },
+  {
+    "date": "1913-01-07",
+    "news": ["The American steamship Rosecrans was wrecked in a gale off the coast of Oregon, resulting in the loss of 33 crew members."],
+  },
+  {
+    "date": "1913-01-08",
+    "news": ["English poet Harold Monro founded the Poetry Bookshop in London, establishing a significant literary meeting place."],
+  },
+  {
+    "date": "1913-01-09",
+    "news": ["The passenger cargo ship SS Rosecrans broke in two during a storm off the Washington coast, drowning 35 people."],
+  },
+  {
+    "date": "1913-01-10",
+    "news": ["At the London Peace Conference, Romania demanded that Bulgaria cede territory between Silistra and the Black Sea."],
+  },
+  {
+    "date": "1913-01-11",
+    "news": ["The Paris intra-urban transit system completed its transition to electric streetcars as the last horse-drawn car made its final run."],
+  },
+  {
+    "date": "1913-01-12",
+    "news": ["Bolshevik activist Josef Dzhugashvili first used the pseudonym 'Stalin' in an article for a Russian-language Paris newspaper."],
+  },
+  {
+    "date": "1913-01-13",
+    "news": ["The Ulster Volunteer Force was organized by Edward Carson and James Craig to resist the Irish Home Rule movement."],
+  },
+  {
+    "date": "1913-01-14",
+    "news": ["The London Peace Conference ended without an agreement between the Ottoman Empire and the Balkan states."],
+  },
+  {
+    "date": "1913-01-15",
+    "news": ["The first sickness benefits were paid under the United Kingdom's National Insurance Act, and the Royal Geographical Society voted to admit women."],
+  },
+  {
+    "date": "1913-01-16",
+    "news": ["The Parliament of the United Kingdom passed the Irish Home Rule Bill on its third reading."],
+  },
+  {
+    "date": "1913-01-17",
+    "news": ["Prime Minister Raymond Poincaré was elected as the new President of France."],
+  },
+  {
+    "date": "1913-01-18",
+    "news": ["The Terra Nova broke through ice in Antarctica to pick up the remaining members of the British Antarctic Expedition, confirming that Robert Falcon Scott's party had perished."],
+  },
+  {
+    "date": "1913-01-19",
+    "news": ["Outgoing U.S. President Taft criticized the U.S. Senate for hindering universal peace treaties."],
+  },
+  {
+    "date": "1913-01-20",
+    "news": ["Bulgaria, Serbia, and Montenegro presented an ultimatum to the Ottoman Empire threatening a resumption of war within 14 days."],
+  },
+  {
+    "date": "1913-01-21",
+    "news": ["A proposal for a central Canadian bank was made in the House of Commons by MP W.F. MacLean."],
+  },
+  {
+    "date": "1913-01-22",
+    "news": ["The Ottoman Grand Council voted to surrender Edirne to the Balkan Allies and cede Aegean islands."],
+  },
+  {
+    "date": "1913-01-23",
+    "news": ["A coup d'état occurred in the Ottoman Empire known as the 'Raid on the Sublime Porte,' forcing the resignation of Grand Vizier Kâmil Pasha."],
+  },
+  {
+    "date": "1913-01-24",
+    "news": ["The Picture House opened on Oxford Street in London to premiere the color film 'The Miracle'."],
+  },
+  {
+    "date": "1913-01-25",
+    "news": ["The Royal Navy destroyer Ambuscade was launched by John Brown & Company in Clydebank, Scotland."],
+  },
+  {
+    "date": "1913-01-26",
+    "news": ["The body of John Paul Jones was inhumed at the United States Naval Academy chapel."],
+  },
+  {
+    "date": "1913-01-27",
+    "news": ["The British Cabinet voted to remove the women's suffrage bill from consideration in the House of Commons."],
+  },
+  {
+    "date": "1913-01-28",
+    "news": ["The Young Turks council voted unanimously to fight against the surrender of Edirne and the Aegean islands."],
+  },
+  {
+    "date": "1913-01-29",
+    "news": ["Alpha Kappa Alpha, the first African-American sorority, was incorporated."],
+  },
+  {
+    "date": "1913-01-30",
+    "news": ["The House of Lords rejected the Irish Home Rule bill by a vote of 326–69."],
+  },
+  {
+    "date": "1913-01-31",
+    "news": ["Ahmed Izzet Pasha was appointed commander-in-chief of Ottoman forces."],
+  },
+  {
+    "date": "1913-02-01",
+    "news": ["The Ottoman Empire accepted the peace terms proposed by the Great Powers to end the First Balkan War."],
+  },
+  {
+    "date": "1913-02-02",
+    "news": ["Grand Central Terminal opened in New York City as the world's largest train station."],
+  },
+  {
+    "date": "1913-02-03",
+    "news": ["Fighting resumed in the First Balkan War after peace talks in London broke down."],
+  },
+  {
+    "date": "1913-02-04",
+    "news": ["The wife of explorer Robert Falcon Scott departed the U.S. for New Zealand, unaware her husband had died in Antarctica."],
+  },
+  {
+    "date": "1913-02-05",
+    "news": ["The House of Commons passed the Welsh Church Disestablishment Bill."],
+  },
+  {
+    "date": "1913-02-06",
+    "news": ["Bulgaria refused to allow foreigners to leave the city of Adrianople in advance of its conquest."],
+  },
+  {
+    "date": "1913-02-07",
+    "news": ["Opera singer Vanni Marcoux was hospitalized with a concussion after being struck by a stage curtain."],
+  },
+  {
+    "date": "1913-02-08",
+    "news": ["Explorer Douglas Mawson returned to base as the sole survivor of his party, only to find the expedition ship Aurora had departed hours earlier."],
+  },
+  {
+    "date": "1913-02-09",
+    "news": ["A procession of brilliant meteors moved south-easterly across North America, an event later plotted by Professor Clarence Chant of Toronto."],
+  },
+  {
+    "date": "1913-02-10",
+    "news": ["The world learned of the death of Robert Falcon Scott and his team in Antarctica upon the return of the Terra Nova."],
+  },
+  {
+    "date": "1913-02-11",
+    "news": ["Franz Schuhmeier, a Socialist member of the Austrian parliament, was assassinated in Vienna."],
+  },
+  {
+    "date": "1913-02-12",
+    "news": ["Yamamoto Gonnohyōe became the new Prime Minister of Japan."],
+  },
+  {
+    "date": "1913-02-13",
+    "news": ["The 13th Dalai Lama declared the independence of Tibet from China."],
+  },
+  {
+    "date": "1913-02-14",
+    "news": ["The estate of Swedish writer Lotten von Kræmer established the literary society Samfundet De Nio in Stockholm."],
+  },
+  {
+    "date": "1913-02-15",
+    "news": ["The House of Lords rejected the Welsh Church Disestablishment Bill by a vote of 252 to 52."],
+  },
+  {
+    "date": "1913-02-16",
+    "news": ["Joseph Hertz of New York City was elected as Chief Rabbi of the United Hebrew Congregations of the British Empire."],
+  },
+  {
+    "date": "1913-02-17",
+    "news": ["The 'Armory Show,' the first International Exhibition of Modern Art, opened in New York City."],
+  },
+  {
+    "date": "1913-02-18",
+    "news": ["Mexican President Francisco I. Madero and Vice-President José María Pino Suárez were arrested and resigned following ten days of fighting."],
+  },
+  {
+    "date": "1913-02-19",
+    "news": ["Suffragists allegedly firebombed a house being built for David Lloyd George in Surrey; Emmeline Pankhurst claimed responsibility."],
+  },
+  {
+    "date": "1913-02-20",
+    "news": ["The first survey stake for the new city of Canberra, Australia, was driven into the ground."],
+  },
+  {
+    "date": "1913-02-21",
+    "news": ["Former Mexican President Madero and Vice-President Pino Suárez were shot to death while being transported to prison."],
+  },
+  {
+    "date": "1913-02-22",
+    "news": ["Ferdinand de Saussure, the Swiss linguist who pioneered structural linguistics, died aged 55."],
+  },
+  {
+    "date": "1913-02-23",
+    "news": ["Joseph Stalin was arrested by the Russian secret police in Saint Petersburg."],
+  },
+  {
+    "date": "1913-02-24",
+    "news": ["The first radio transmission from Antarctica was made by expedition leader Douglas Mawson."],
+  },
+  {
+    "date": "1913-02-25",
+    "news": ["The Sixteenth Amendment to the United States Constitution was ratified, authorizing a federal income tax."],
+  },
+  {
+    "date": "1913-02-26",
+    "news": ["The Royal Flying Corps established its first operational military airfield in the UK at Montrose, Scotland."],
+  },
+  {
+    "date": "1913-02-27",
+    "news": ["British radiochemist Frederick Soddy introduced the concept of the 'isotope' in an address to the Royal Society."],
+  },
+  {
+    "date": "1913-02-28",
+    "news": ["German animal merchant Carl Hagenbeck proved the existence of the pygmy hippopotamus in Liberia."],
+  },
+  {
+    "date": "1913-03-01",
+    "news": ["The British steamer Calvados was lost in the Sea of Marmara with 200 passengers and crew during a blizzard."],
+  },
+  {
+    "date": "1913-03-02",
+    "news": ["US soldiers traded gunfire with Mexican troops across the border at Agua Prieta."],
+  },
+  {
+    "date": "1913-03-03",
+    "news": ["The Woman Suffrage Procession took place in Washington D.C. with 8,000 marchers."],
+  },
+  {
+    "date": "1913-03-04",
+    "news": ["Woodrow Wilson was inaugurated as the 28th President of the United States."],
+  },
+  {
+    "date": "1913-03-05",
+    "news": ["The Municipal Reform Party defeated the Progressive Party in elections for the London County Council."],
+  },
+  {
+    "date": "1913-03-06",
+    "news": ["The Romanov dynasty celebrated its tercentenary across the Russian Empire."],
+  },
+  {
+    "date": "1913-03-07",
+    "news": ["Over 40 people were killed in Baltimore when dynamite on the steamship Alum Chine exploded."],
+  },
+  {
+    "date": "1913-03-08",
+    "news": ["The Federal League was founded in Indianapolis as a third major baseball league."],
+  },
+  {
+    "date": "1913-03-09",
+    "news": ["Dr. Friedrich Friedmann demonstrated his alleged tuberculosis cure to US government officials."],
+  },
+  {
+    "date": "1913-03-10",
+    "news": ["Harriet Tubman, American abolitionist and activist, died."],
+  },
+  {
+    "date": "1913-03-11",
+    "news": ["Godfrey Morgan, Viscount Tredegar, a survivor of the Charge of the Light Brigade, died aged 81."],
+  },
+  {
+    "date": "1913-03-12",
+    "news": ["The new capital of Australia was officially named 'Canberra' in a ceremony."],
+  },
+  {
+    "date": "1913-03-13",
+    "news": ["Archaeologists Katherine and William Scoresby Routledge departed England on the Mana Expedition to Easter Island."],
+  },
+  {
+    "date": "1913-03-14",
+    "news": ["In South Africa, a court ruling invalidated marriages not performed under Christian rites, affecting British Indian residents."],
+  },
+  {
+    "date": "1913-03-15",
+    "news": ["The Antarctic ship Aurora arrived in Tasmania with news of the deaths of explorers Ninnis and Mertz."],
+  },
+  {
+    "date": "1913-03-16",
+    "news": ["120,000 demonstrators gathered near Paris to protest the French Army's extension of military service."],
+  },
+  {
+    "date": "1913-03-17",
+    "news": ["Franklin D. Roosevelt was sworn in as Assistant Secretary of the US Navy."],
+  },
+  {
+    "date": "1913-03-18",
+    "news": ["King George of Greece was assassinated in Salonika by a Greek citizen."],
+  },
+  {
+    "date": "1913-03-19",
+    "news": ["The French cabinet under Prime Minister Aristide Briand resigned."],
+  },
+  {
+    "date": "1913-03-20",
+    "news": ["Song Jiaoren, President of the Kuomintang Party in China, was fatally shot."],
+  },
+  {
+    "date": "1913-03-21",
+    "news": ["Constantine took the oath of office as the new King of Greece."],
+  },
+  {
+    "date": "1913-03-22",
+    "news": ["Wireless communication commenced between the United States and France via the Eiffel Tower."],
+  },
+  {
+    "date": "1913-03-23",
+    "news": ["Tornadoes swept through Omaha, Nebraska on Easter Sunday, killing 150 people."],
+  },
+  {
+    "date": "1913-03-24",
+    "news": ["The Palace Theatre opened in New York City."],
+  },
+  {
+    "date": "1913-03-25",
+    "news": ["Field Marshal Garnet Wolseley, former Commander-in-Chief of the British Forces, died aged 79; heavy flooding devastated Dayton, Ohio."],
+  },
+  {
+    "date": "1913-03-26",
+    "news": ["Bulgarian troops captured the city of Adrianople in the First Balkan War."],
+  },
+  {
+    "date": "1913-03-27",
+    "news": ["The daily newspaper 'Le Droit' began publication in Ottawa."],
+  },
+  {
+    "date": "1913-03-28",
+    "news": ["Morris Motors opened Britain's first motor vehicle assembly line at Cowley, Oxfordshire."],
+  },
+  {
+    "date": "1913-03-29",
+    "news": ["The National Union of Railwaymen was formed in the United Kingdom through a merger of existing unions."],
+  },
+  {
+    "date": "1913-03-30",
+    "news": ["The Italian battleship Andrea Doria was launched in Naples."],
+  },
+  {
+    "date": "1913-03-31",
+    "news": ["American financier J. P. Morgan died in Rome at the age of 75."],
+  },
+  {
+    "date": "1913-04-01",
+    "news": ["Lord Northcliffe, publisher of the Daily Mail, offered a £10,000 prize for the first direct transatlantic flight."],
+  },
+  {
+    "date": "1913-04-02",
+    "news": ["The British record label Polydor Records was established."],
+  },
+  {
+    "date": "1913-04-03",
+    "news": ["Suffragette leader Emmeline Pankhurst was sentenced to three years in prison for conspiracy to bomb the home of David Lloyd George and immediately went on a hunger strike."],
+  },
+  {
+    "date": "1913-04-04",
+    "news": ["A mob in Mondak, Montana lynched a man accused of killing a sheriff, an event later noted by Booker T. Washington."],
+  },
+  {
+    "date": "1913-04-05",
+    "news": ["Physicist Niels Bohr completed his groundbreaking paper on the quantum theory of the hydrogen atom."],
+  },
+  {
+    "date": "1913-04-06",
+    "news": ["The Bucharest Academy of Economic Studies was founded in Romania."],
+  },
+  {
+    "date": "1913-04-07",
+    "news": ["Champ Clark was re-elected as Speaker of the United States House of Representatives."],
+  },
+  {
+    "date": "1913-04-08",
+    "news": ["The Norwegian ocean liner Bergensfjord was launched by Cammell Laird in Birkenhead, England."],
+  },
+  {
+    "date": "1913-04-09",
+    "news": ["Ebbets Field opened in New York for its first official baseball game."],
+  },
+  {
+    "date": "1913-04-10",
+    "news": ["The opera L'amore dei tre re by Italo Montemezzi premiered in Milan."],
+  },
+  {
+    "date": "1913-04-11",
+    "news": ["The cricket pavilion at the Nevill Ground was destroyed in an arson attack attributed to militant suffragettes."],
+  },
+  {
+    "date": "1913-04-12",
+    "news": ["The British weekly magazine New Statesman was founded by Sidney and Beatrice Webb with backing from George Bernard Shaw."],
+  },
+  {
+    "date": "1913-04-13",
+    "news": ["An assassination attempt was made on King Alfonso of Spain in Madrid."],
+  },
+  {
+    "date": "1913-04-14",
+    "news": ["200,000 Belgian workers launched a strike demanding electoral reform to abolish the plural vote system."],
+  },
+  {
+    "date": "1913-04-15",
+    "news": ["The Boy Scouts of America published the first issue of Scouting magazine."],
+  },
+  {
+    "date": "1913-04-16",
+    "news": ["The first Schneider Trophy airplane race was won by French pilot Maurice Prévost in Monaco."],
+  },
+  {
+    "date": "1913-04-17",
+    "news": ["Bulgaria and Turkey agreed to a temporary ceasefire in the First Balkan War."],
+  },
+  {
+    "date": "1913-04-18",
+    "news": ["The Royal Navy cruiser Nottingham was launched at Pembroke Dockyard in Wales."],
+  },
+  {
+    "date": "1913-04-19",
+    "news": ["Bulgaria and Serbia signed an armistice with the Ottoman Empire."],
+  },
+  {
+    "date": "1913-04-20",
+    "news": ["The French battleship Provence was launched as the first of her class."],
+  },
+  {
+    "date": "1913-04-21",
+    "news": ["The Cunard liner RMS Aquitania, the largest British liner built to date, was launched on the River Clyde."],
+  },
+  {
+    "date": "1913-04-22",
+    "news": ["The general strike in Belgium ended after the government agreed to a compromise on voting rights."],
+  },
+  {
+    "date": "1913-04-23",
+    "news": ["The Duchess of Argyll unveiled a memorial to King Edward VII in Birmingham."],
+  },
+  {
+    "date": "1913-04-24",
+    "news": ["The Woolworth Building in New York City opened as the tallest skyscraper in the world."],
+  },
+  {
+    "date": "1913-04-25",
+    "news": ["The 'Cat and Mouse Act' received royal assent in the UK, allowing the temporary release of hunger-striking suffragettes."],
+  },
+  {
+    "date": "1913-04-26",
+    "news": ["King Albert of Belgium opened the international exposition in Ghent."],
+  },
+  {
+    "date": "1913-04-27",
+    "news": ["European banks signed an agreement for a £25,000,000 loan to the Chinese government."],
+  },
+  {
+    "date": "1913-04-28",
+    "news": ["The Royal Navy cruiser Lowestoft was launched at Chatham Dockyard."],
+  },
+  {
+    "date": "1913-04-29",
+    "news": ["German Foreign Minister Gottlieb von Jagow stated in the Reichstag that Germany would respect Belgian neutrality."],
+  },
+  {
+    "date": "1913-04-30",
+    "news": ["The US Secretary of the Interior rescinded the ban on automobiles in Yosemite National Park."],
+  },
+  {
+    "date": "1913-05-01",
+    "news": ["Montenegro offered to evacuate the captured territory of Scutari in exchange for other territory."],
+  },
+  {
+    "date": "1913-05-02",
+    "news": ["Tancrède Auguste, the President of Haiti, died in office."],
+  },
+  {
+    "date": "1913-05-03",
+    "news": ["California passed the Alien Land Act, causing diplomatic tension with Japan."],
+  },
+  {
+    "date": "1913-05-04",
+    "news": ["Michel Oreste was elected as the new President of Haiti following the death of his predecessor."],
+  },
+  {
+    "date": "1913-05-05",
+    "news": ["Helen Carte, co-manager of the D'Oyly Carte Opera Company, died."],
+  },
+  {
+    "date": "1913-05-06",
+    "news": ["A women's suffrage bill failed to pass its second reading in the House of Commons by a vote of 219–266."],
+  },
+  {
+    "date": "1913-05-07",
+    "news": ["HMS Hermes became the first Royal Navy seaplane carrier after being fitted with a launching crane."],
+  },
+  {
+    "date": "1913-05-08",
+    "news": ["The Underwood Tariff Bill passed the US House of Representatives, lowering tariffs and moving toward an income tax."],
+  },
+  {
+    "date": "1913-05-09",
+    "news": ["Ibn Saud captured Al-Hasa from the Ottoman Turks, expanding his territory in Arabia."],
+  },
+  {
+    "date": "1913-05-10",
+    "news": ["French aviator Didier Masson conducted the first aerial bombing of a warship in the Western Hemisphere in Mexico."],
+  },
+  {
+    "date": "1913-05-11",
+    "news": ["The town of Silistra was awarded to Romania in recognition of its neutrality during the First Balkan War."],
+  },
+  {
+    "date": "1913-05-12",
+    "news": ["The RMS Lusitania was secretly refitted by the Royal Navy for potential war use."],
+  },
+  {
+    "date": "1913-05-13",
+    "news": ["Heavyweight boxing champion Jack Johnson was convicted of violating the Mann Act in Chicago."],
+  },
+  {
+    "date": "1913-05-14",
+    "news": ["Montenegro completed its evacuation of Scutari, handing control to multinational troops."],
+  },
+  {
+    "date": "1913-05-15",
+    "news": ["Vaslav Nijinsky's ballet 'Jeux', with music by Debussy, premiered in Paris."],
+  },
+  {
+    "date": "1913-05-16",
+    "news": ["Adolf Hitler received his father's inheritance in Vienna and moved to Germany a week later."],
+  },
+  {
+    "date": "1913-05-17",
+    "news": ["The first airplane flight between the United States and Cuba was completed."],
+  },
+  {
+    "date": "1913-05-18",
+    "news": ["French singer and songwriter Charles Trenet was born."],
+  },
+  {
+    "date": "1913-05-19",
+    "news": ["California Governor Hiram Johnson signed the Alien Land Law despite protests from Japan and the White House."],
+  },
+  {
+    "date": "1913-05-20",
+    "news": ["The London Opera Glass Company was formed to meet demand for theatre glasses."],
+  },
+  {
+    "date": "1913-05-21",
+    "news": ["King George V arrived in Germany to attend the wedding of the Kaiser's daughter."],
+  },
+  {
+    "date": "1913-05-22",
+    "news": ["Royal Navy submarine AE1 was launched to serve in the Royal Australian Navy."],
+  },
+  {
+    "date": "1913-05-23",
+    "news": ["An explosion at a hydraulic plant near Buenos Aires killed thirty workers."],
+  },
+  {
+    "date": "1913-05-24",
+    "news": ["Princess Luise, daughter of the Kaiser, married Prince Ernest Augustus in the last royal wedding in Germany before the war."],
+  },
+  {
+    "date": "1913-05-25",
+    "news": ["Austro-Hungarian Colonel Alfred Redl committed suicide after being exposed as a Russian spy."],
+  },
+  {
+    "date": "1913-05-26",
+    "news": ["Igor Sikorsky piloted the first four-engine airplane, the Ilya Mourometz, near Saint Petersburg."],
+  },
+  {
+    "date": "1913-05-27",
+    "news": ["Former US President Theodore Roosevelt testified in a libel suit regarding accusations of drunkenness."],
+  },
+  {
+    "date": "1913-05-28",
+    "news": ["British archaeologist John Lubbock died."],
+  },
+  {
+    "date": "1913-05-29",
+    "news": ["The premiere of Stravinsky's 'The Rite of Spring' in Paris provoked a famous riot."],
+  },
+  {
+    "date": "1913-05-30",
+    "news": ["The Treaty of London was signed, formally ending the First Balkan War."],
+  },
+  {
+    "date": "1913-05-31",
+    "news": ["The Seventeenth Amendment to the US Constitution, allowing for the direct election of senators, took effect."],
+  },
+  {
+    "date": "1913-06-01",
+    "news": ["Greece and Serbia signed an alliance to attack their former ally Bulgaria."],
+  },
+  {
+    "date": "1913-06-02",
+    "news": ["A rail station opened to passenger service west of Dover, England."],
+  },
+  {
+    "date": "1913-06-03",
+    "news": ["James Hamilton, the 2nd Duke of Abercorn, died in London."],
+  },
+  {
+    "date": "1913-06-04",
+    "news": ["Suffragette Emily Davison was fatally injured after running in front of the King's horse at the Epsom Derby."],
+  },
+  {
+    "date": "1913-06-05",
+    "news": ["The Ambassadors Theatre opened on West Street in London."],
+  },
+  {
+    "date": "1913-06-06",
+    "news": ["Prince Albert (the future King George VI) made his first visit to the United States via Niagara Falls."],
+  },
+  {
+    "date": "1913-06-07",
+    "news": ["Archdeacon Hudson Stuck's team became the first to reach the summit of Mount McKinley."],
+  },
+  {
+    "date": "1913-06-08",
+    "news": ["Suffragette Emily Davison died from injuries sustained at the Epsom Derby."],
+  },
+  {
+    "date": "1913-06-09",
+    "news": ["Economist John Maynard Keynes published his first book, 'Indian Currency and Finance'."],
+  },
+  {
+    "date": "1913-06-10",
+    "news": ["Tsar Nicholas dedicated the Kronstadt Naval Cathedral in Saint Petersburg."],
+  },
+  {
+    "date": "1913-06-11",
+    "news": ["The Ottoman Grand Vizier Mahmud Shevket Pasha was assassinated in Istanbul."],
+  },
+  {
+    "date": "1913-06-12",
+    "news": ["Serbia and Bulgaria agreed to Russian arbitration regarding disputed territories."],
+  },
+  {
+    "date": "1913-06-13",
+    "news": ["The US Senate Committee on Woman Suffrage reported favorably on a constitutional amendment for voting rights."],
+  },
+  {
+    "date": "1913-06-14",
+    "news": ["Thousands of suffragettes marched in London for the funeral procession of Emily Davison."],
+  },
+  {
+    "date": "1913-06-15",
+    "news": ["US forces defeated Moro defenders in the Battle of Bud Bagsak in the Philippines."],
+  },
+  {
+    "date": "1913-06-16",
+    "news": ["Kaiser Wilhelm II celebrated the 25th anniversary of his ascension to the German throne."],
+  },
+  {
+    "date": "1913-06-17",
+    "news": ["The Welsh Church Act passed its second reading in the House of Commons."],
+  },
+  {
+    "date": "1913-06-18",
+    "news": ["The Royal Navy submarine AE2 was launched to serve in the Royal Australian Navy."],
+  },
+  {
+    "date": "1913-06-19",
+    "news": ["The House of Commons acquitted David Lloyd George and Rufus Isaacs of malfeasance in the Marconi scandal."],
+  },
+  {
+    "date": "1913-06-20",
+    "news": ["Andrew Fisher resigned as Prime Minister of Australia following an election defeat."],
+  },
+  {
+    "date": "1913-06-21",
+    "news": ["Tiny Broadwick became the first woman to parachute from an airplane."],
+  },
+  {
+    "date": "1913-06-22",
+    "news": ["Serbia's Prime Minister resigned due to lack of progress in negotiations with Bulgaria."],
+  },
+  {
+    "date": "1913-06-23",
+    "news": ["US President Wilson addressed Congress on the need for a federal reserve banking system."],
+  },
+  {
+    "date": "1913-06-24",
+    "news": ["Joseph Cook was sworn in as the new Prime Minister of Australia."],
+  },
+  {
+    "date": "1913-06-25",
+    "news": ["Bulgaria and Serbia engaged in battle at Zletovo, despite recent alliances."],
+  },
+  {
+    "date": "1913-06-26",
+    "news": ["The Duke of Sutherland, Cromartie Sutherland-Leveson-Gower, died."],
+  },
+  {
+    "date": "1913-06-27",
+    "news": ["The British biologist Philip Sclater died."],
+  },
+  {
+    "date": "1913-06-28",
+    "news": ["The Lötschberg Tunnel linking Switzerland and Italy was formally opened."],
+  },
+  {
+    "date": "1913-06-29",
+    "news": ["The Second Balkan War formally began with a Bulgarian attack on Serbian and Greek armies."],
+  },
+  {
+    "date": "1913-06-30",
+    "news": ["The German Reichstag voted to increase the size of the army by 136,000 men."],
+  },
+  {
+    "date": "1913-07-01",
+    "news": ["New rail stations opened in Newport, Isle of Wight, and Dartford, Kent, while in the U.S., over 50,000 veterans gathered for the 50th anniversary of the Battle of Gettysburg."],
+  },
+  {
+    "date": "1913-07-02",
+    "news": ["The Catholic League was established to reconcile Protestant and Catholic faiths in England."],
+  },
+  {
+    "date": "1913-07-03",
+    "news": ["The Kingdom of Romania issued an order for mobilization of its armies to invade Bulgaria."],
+  },
+  {
+    "date": "1913-07-04",
+    "news": ["Anthony Wilding of England won his fourth consecutive Wimbledon championship; British politician and cricketer Alfred Lyttelton died."],
+  },
+  {
+    "date": "1913-07-05",
+    "news": ["Rioting miners in the Rand District of South Africa halted after the government agreed to legislation improving working conditions."],
+  },
+  {
+    "date": "1913-07-06",
+    "news": ["English clergyman Henry Beeching delivered a noted sermon on George Borrow at Norwich Cathedral."],
+  },
+  {
+    "date": "1913-07-07",
+    "news": ["The Irish Home Rule bill passed its third reading in the House of Commons by a vote of 352–243."],
+  },
+  {
+    "date": "1913-07-08",
+    "news": ["The Welsh Disestablishment Bill passed its third reading in the House of Commons; the British yacht Vivid was wrecked off the coast of Scotland."],
+  },
+  {
+    "date": "1913-07-09",
+    "news": ["China ratified a treaty with Russia relinquishing claims on Mongolia."],
+  },
+  {
+    "date": "1913-07-10",
+    "news": ["Romania declared war on Bulgaria as the Second Balkan War intensified."],
+  },
+  {
+    "date": "1913-07-11",
+    "news": ["Romanian troops crossed the Danube to invade Bulgaria; Redmond Berry, Lord Chancellor of Ireland, died."],
+  },
+  {
+    "date": "1913-07-12",
+    "news": ["Turkey attacked Bulgaria from the south, moving into Thrace."],
+  },
+  {
+    "date": "1913-07-13",
+    "news": ["The British House of Commons published Roger Casement's final report on atrocities committed by the Peruvian Amazon Company."],
+  },
+  {
+    "date": "1913-07-14",
+    "news": ["The House of Commons passed a bill abolishing plural voting on its third reading."],
+  },
+  {
+    "date": "1913-07-15",
+    "news": ["The House of Lords rejected the Irish Home Rule bill for the second time; Prime Minister Asquith announced plans to abolish the House of Lords."],
+  },
+  {
+    "date": "1913-07-16",
+    "news": ["Robert Bridges was appointed as the new Poet Laureate of the United Kingdom."],
+  },
+  {
+    "date": "1913-07-17",
+    "news": ["The Frensham School was established in Mittagong, New South Wales, Australia."],
+  },
+  {
+    "date": "1913-07-18",
+    "news": ["King Ferdinand of Bulgaria appealed to King Carol of Romania for peace terms as Romanian troops advanced near Sofia."],
+  },
+  {
+    "date": "1913-07-19",
+    "news": ["The Mental Deficiency Act passed the House of Commons; the Villa Marina on the Isle of Man reopened as a theatrical venue."],
+  },
+  {
+    "date": "1913-07-20",
+    "news": ["The United States announced terms for a treaty making Nicaragua a virtual protectorate."],
+  },
+  {
+    "date": "1913-07-21",
+    "news": ["Suffragette Nellie Hall threw a brick through the window of Prime Minister Asquith's car in Birmingham."],
+  },
+  {
+    "date": "1913-07-22",
+    "news": ["The House of Lords rejected the Welsh Disestablishment Bill."],
+  },
+  {
+    "date": "1913-07-23",
+    "news": ["Buffalo Bill's Wild West show assets were auctioned off following bankruptcy."],
+  },
+  {
+    "date": "1913-07-24",
+    "news": ["The House of Lords rejected the bill abolishing plural voting by a margin of 166 to 42."],
+  },
+  {
+    "date": "1913-07-25",
+    "news": ["Austria-Hungary issued a warning to Serbia and Greece regarding the peace settlement with Bulgaria."],
+  },
+  {
+    "date": "1913-07-26",
+    "news": ["British soldiers fired into a crowd of Irish protesters in Dublin, killing three and wounding 38."],
+  },
+  {
+    "date": "1913-07-27",
+    "news": ["British press commented on American social austerity after a Chicago physician was arrested for wearing a bathing suit without a skirt, a style already accepted in Britain."],
+  },
+  {
+    "date": "1913-07-28",
+    "news": ["The United States defeated Great Britain in the Davis Cup finals at Wimbledon."],
+  },
+  {
+    "date": "1913-07-29",
+    "news": ["The Anglo-Ottoman Convention regarding the Persian Gulf territories was signed; ambassadors of the Great Powers in London agreed on an international commission to govern Albania."],
+  },
+  {
+    "date": "1913-07-30",
+    "news": ["Great Britain announced it would not participate in the 1915 Panama-Pacific International Exposition."],
+  },
+  {
+    "date": "1913-07-31",
+    "news": ["The Second Opium Conference convened at The Hague."],
+  },
+  {
+    "date": "1913-08-01",
+    "news": ["The British Army dissolved the XIV Brigade of the Royal Horse Artillery."],
+  },
+  {
+    "date": "1913-08-02",
+    "news": ["Swiss mountaineers made the first known ascent of Mount Olympus."],
+  },
+  {
+    "date": "1913-08-03",
+    "news": ["Australian politician William Lyne, former Premier of New South Wales, died."],
+  },
+  {
+    "date": "1913-08-04",
+    "news": ["Survivalist Joseph Knowles entered the Maine wilderness naked to live as 'Adam' for two months, capturing press attention."],
+  },
+  {
+    "date": "1913-08-05",
+    "news": ["Pope Pius X reformed canon law regarding confession for religious orders."],
+  },
+  {
+    "date": "1913-08-06",
+    "news": ["John Henry Mears set a new round-the-world travel record of under 36 days."],
+  },
+  {
+    "date": "1913-08-07",
+    "news": ["Aviation pioneer Samuel Franklin Cody was killed in a plane crash near Mytchett, England."],
+  },
+  {
+    "date": "1913-08-08",
+    "news": ["Mexican revolutionary Venustiano Carranza rejected US proposals for a ceasefire."],
+  },
+  {
+    "date": "1913-08-09",
+    "news": ["Austro-Hungarian diplomats privately discussed plans for an invasion of Serbia with Italian and German representatives."],
+  },
+  {
+    "date": "1913-08-10",
+    "news": ["The Treaty of Bucharest was signed, ending the Second Balkan War."],
+  },
+  {
+    "date": "1913-08-11",
+    "news": ["The London ambassadors conference settled the boundaries of the new Principality of Albania."],
+  },
+  {
+    "date": "1913-08-12",
+    "news": ["The brand name 'Oreo' was registered in the United States."],
+  },
+  {
+    "date": "1913-08-13",
+    "news": ["The Canadian Arctic Expedition ship HMCS Karluk became trapped in ice."],
+  },
+  {
+    "date": "1913-08-14",
+    "news": ["Russian aviator Pyotr Nesterov performed the first aerial loop."],
+  },
+  {
+    "date": "1913-08-15",
+    "news": ["Albert Schweitzer performed his first major surgery at his new mission in Gabon."],
+  },
+  {
+    "date": "1913-08-16",
+    "news": ["Southampton dedicated a monument to the Pilgrims who sailed on the Mayflower."],
+  },
+  {
+    "date": "1913-08-17",
+    "news": ["Archduke Franz Ferdinand was appointed Inspector General of the Austro-Hungarian armed forces."],
+  },
+  {
+    "date": "1913-08-18",
+    "news": ["Monte Carlo casino patrons witnessed black come up 26 consecutive times on a roulette wheel."],
+  },
+  {
+    "date": "1913-08-19",
+    "news": ["Aviator Adolphe Pégoud became the first person to bail out of a plane and land safely."],
+  },
+  {
+    "date": "1913-08-20",
+    "news": ["Stainless steel was cast for the first time by metallurgist Harry Brearley in Sheffield."],
+  },
+  {
+    "date": "1913-08-21",
+    "news": ["The San Mamés Stadium opened in Bilbao, Spain."],
+  },
+  {
+    "date": "1913-08-22",
+    "news": ["Fifty miners were killed in a gold mine accident in Mysore, India."],
+  },
+  {
+    "date": "1913-08-23",
+    "news": ["The Little Mermaid statue was unveiled in Copenhagen."],
+  },
+  {
+    "date": "1913-08-24",
+    "news": ["The Mahavira Brotherhood was founded in London to promote Jainism."],
+  },
+  {
+    "date": "1913-08-25",
+    "news": ["Leo Frank was convicted of murder in Atlanta, Georgia, in a highly publicized case."],
+  },
+  {
+    "date": "1913-08-26",
+    "news": ["The Dublin tram strike began, involving James Larkin's Irish Transport and General Workers' Union."],
+  },
+  {
+    "date": "1913-08-27",
+    "news": ["British aviator Harry Hawker crashed in the Irish Sea while attempting to fly around the British Isles."],
+  },
+  {
+    "date": "1913-08-28",
+    "news": ["The Peace Palace at The Hague was dedicated by Queen Wilhelmina; the New York Yacht Club accepted Thomas Lipton's fourth America's Cup challenge."],
+  },
+  {
+    "date": "1913-08-29",
+    "news": ["Dutch Prime Minister Theo Heemskerk dissolved his cabinet."],
+  },
+  {
+    "date": "1913-08-30",
+    "news": ["A canine tooth fitting the Piltdown Man skull was found (later revealed as a hoax); the US Naval Air Service was established."],
+  },
+  {
+    "date": "1913-08-31",
+    "news": ["The Dublin lock-out strike turned deadly when police killed a demonstrator and injured hundreds; the last barrier to the Pacific side of the Panama Canal was breached."],
+  },  
+  {
+    "date": "1913-09-01",
+    "news": ["George Bernard Shaw's satirical play 'Androcles and the Lion' was performed for the first time."],
+  },
+  {
+    "date": "1913-09-02",
+    "news": ["A rear-end train collision at Carlisle, England, caused a fire that killed 15 passengers; Scottish football legend Bill Shankly was born."],
+  },
+  {
+    "date": "1913-09-03",
+    "news": ["The battleship Reşadiye was launched by Vickers in Barrow-in-Furness for the Ottoman Navy (later seized by the Royal Navy as HMS Erin)."],
+  },
+  {
+    "date": "1913-09-04",
+    "news": ["Dormer Tools was founded in Sheffield."],
+  },
+  {
+    "date": "1913-09-05",
+    "news": ["A fire in Hot Springs, Arkansas destroyed 55 city blocks, causing six million dollars in damage."],
+  },
+  {
+    "date": "1913-09-06",
+    "news": ["Arsenal Football Club played their first game at the newly opened Arsenal Stadium in Highbury, defeating Leicester 2–1."],
+  },
+  {
+    "date": "1913-09-07",
+    "news": ["Protests erupted in Tokyo with 15,000 people demanding military action against China over the killing of Japanese nationals in Nanjing."],
+  },
+  {
+    "date": "1913-09-08",
+    "news": ["The poem 'September 1913' by W. B. Yeats was first published in The Irish Times under the title 'Romance in Ireland'."],
+  },
+  {
+    "date": "1913-09-09",
+    "news": ["The Imperial German Navy Zeppelin L-1 wrecked in the North Sea off Heligoland, killing 14 crew members."],
+  },
+  {
+    "date": "1913-09-10",
+    "news": ["Jean Sibelius's tone poem 'Luonnotar' premiered at the Three Choirs Festival in Gloucester Cathedral; NYC Mayor William Jay Gaynor died on a liner nearing Liverpool."],
+  },
+  {
+    "date": "1913-09-11",
+    "news": ["Joseph Ward resumed leadership of the Liberal Party in New Zealand."],
+  },
+  {
+    "date": "1913-09-12",
+    "news": ["Niels Bohr presented his quantum model of the atom at the British Association for the Advancement of Science meeting in Birmingham."],
+  },
+  {
+    "date": "1913-09-13",
+    "news": ["Pioneering Romanian aviator Aurel Vlaicu died in a plane crash while attempting to cross the Carpathian Mountains."],
+  },
+  {
+    "date": "1913-09-14",
+    "news": ["The proposed route for the Lincoln Highway, the first transcontinental paved highway in the US, was announced."],
+  },
+  {
+    "date": "1913-09-15",
+    "news": ["The first successful four-wheel drive vehicle, the Jeffery Quad, was delivered to the US Army; it would later become a transport vehicle for Allied armies in WWI."],
+  },
+  {
+    "date": "1913-09-16",
+    "news": ["Italian forces suffered significant casualties in a battle with Arab tribesmen in Libya."],
+  },
+  {
+    "date": "1913-09-17",
+    "news": ["The Anti-Defamation League was founded in Chicago."],
+  },
+  {
+    "date": "1913-09-18",
+    "news": ["The British oil tanker Desabla was launched by Hawthorn Leslie and Company in Newcastle upon Tyne."],
+  },
+  {
+    "date": "1913-09-19",
+    "news": ["Mexican rebels dynamited a train south of Saltillo, killing 40 soldiers and 10 passengers."],
+  },
+  {
+    "date": "1913-09-20",
+    "news": ["20-year-old amateur Francis Ouimet won the U.S. Open golf championship in a major upset against British champions Harry Vardon and Ted Ray."],
+  },
+  {
+    "date": "1913-09-21",
+    "news": ["French aviator Adolphe Pégoud performed a vertical loop, popularizing the aerial maneuver."],
+  },
+  {
+    "date": "1913-09-22",
+    "news": ["The film 'Ivanhoe', starring King Baggot, was released by Universal Pictures."],
+  },
+  {
+    "date": "1913-09-23",
+    "news": ["French aviator Roland Garros completed the first aerial crossing of the Mediterranean Sea, flying from France to Tunisia."],
+  },
+  {
+    "date": "1913-09-24",
+    "news": ["500 Protestants met in Belfast to organize resistance to Irish Home Rule; philanthropist George Coupland dedicated a new hospital in Gainsborough."],
+  },
+  {
+    "date": "1913-09-25",
+    "news": ["Stage actor Charlie Chaplin began his film career by signing a contract with Keystone Studios."],
+  },
+  {
+    "date": "1913-09-26",
+    "news": ["A tugboat became the first vessel to pass through the locks of the Panama Canal; British comedian H. G. Pélissier died."],
+  },
+  {
+    "date": "1913-09-27",
+    "news": ["Around 12,000 men marched in Ulster to protest Irish Home Rule; syndicalist organizations met in London to discuss an international labor body."],
+  },
+  {
+    "date": "1913-09-28",
+    "news": ["General Félix Díaz was nominated as the Labor Party's candidate for President of Mexico."],
+  },
+  {
+    "date": "1913-09-29",
+    "news": ["Sir Thomas Bowater was elected Lord Mayor of London; diesel engine inventor Rudolf Diesel disappeared from the steamer SS Dresden."],
+  },
+  {
+    "date": "1913-09-30",
+    "news": ["The United Kingdom withdrawn support for a five-nation banking loan to China; passengers of the British freighter Templemore were rescued in the mid-Atlantic."],
+  },  
+  {
+    "date": "1913-10-01",
+    "news": ["English singer Marie Lloyd and her partner Bernard Dillon were arrested by immigration authorities upon arriving in New York City."],
+  },
+  {
+    "date": "1913-10-02",
+    "news": ["Patrick Higgins was hanged in Scotland for the murder of his two sons, a conviction secured through forensic evidence provided by Sydney Smith."],
+  },
+  {
+    "date": "1913-10-03",
+    "news": ["U.S. President Woodrow Wilson signed the Revenue Act into law, which established a federal income tax."],
+  },
+  {
+    "date": "1913-10-04",
+    "news": ["Survivalist Joseph Knowles emerged from the woods of Maine after living for two months without tools or clothing."],
+  },
+  {
+    "date": "1913-10-05",
+    "news": ["Taimur bin Feisal began his reign as the new Sultan of Oman."],
+  },
+  {
+    "date": "1913-10-06",
+    "news": ["Yuan Shikai was elected to a five-year term as the President of China by the National Assembly."],
+  },
+  {
+    "date": "1913-10-07",
+    "news": ["The Ford Motor Company introduced the moving assembly line at its Highland Park factory, drastically reducing production time."],
+  },
+  {
+    "date": "1913-10-08",
+    "news": ["The University of South Wales was founded at Treforest as the South Wales and Monmouthshire School of Mines."],
+  },
+  {
+    "date": "1913-10-09",
+    "news": ["The passenger ship SS Volturno caught fire in the Atlantic; 532 people were rescued by other steamers responding to wireless SOS signals."],
+  },
+  {
+    "date": "1913-10-10",
+    "news": ["President Wilson triggered the explosion of the Gamboa Dike, completing the Panama Canal."],
+  },
+  {
+    "date": "1913-10-11",
+    "news": ["Sir Lionel Carden, the British Minister to Mexico, greeted President Victoriano Huerta, a move interpreted by the U.S. as an attempt to gain alliance."],
+  },
+  {
+    "date": "1913-10-12",
+    "news": ["Lineups were announced for a world tour by the New York Giants and Chicago White Sox baseball teams."],
+  },
+  {
+    "date": "1913-10-13",
+    "news": ["American aviator Albert Jewell disappeared during a flight from Long Island, and Baron Alverstone resigned as Lord Chief Justice."],
+  },
+  {
+    "date": "1913-10-14",
+    "news": ["In the worst mining disaster in British history, 439 miners were killed in an explosion at the Universal Colliery in Senghenydd, Wales."],
+  },
+  {
+    "date": "1913-10-15",
+    "news": ["U.S. President Wilson appointed four natives of the Philippines to the Philippine Commission, granting Filipinos a majority on the governing body."],
+  },
+  {
+    "date": "1913-10-16",
+    "news": ["The Royal Navy launched HMS Queen Elizabeth, its first oil-powered battleship, at Portsmouth."],
+  },
+  {
+    "date": "1913-10-17",
+    "news": ["The German zeppelin L-2 exploded mid-air over Johannisthal, killing all 28 people on board."],
+  },
+  {
+    "date": "1913-10-18",
+    "news": ["Austria-Hungary issued an ultimatum to Serbia demanding the withdrawal of troops from Albanian territory."],
+  },
+  {
+    "date": "1913-10-19",
+    "news": ["German Deputy Foreign Minister Arthur Zimmermann told the British Ambassador that Germany could not restrain Austria-Hungary regarding its ultimatum."],
+  },
+  {
+    "date": "1913-10-20",
+    "news": ["Rufus Isaacs was appointed as the new Lord Chief Justice of the United Kingdom."],
+  },
+  {
+    "date": "1913-10-21",
+    "news": ["Camel cigarettes were introduced by the R. J. Reynolds Tobacco Company."],
+  },
+  {
+    "date": "1913-10-22",
+    "news": ["An explosion at the Stag Canyon Fuel Company's Mine Number 2 in New Mexico killed 263 miners."],
+  },
+  {
+    "date": "1913-10-23",
+    "news": ["The U.S. Senate passed the 'La Follette Seaman's Bill' to improve safety and working conditions for sailors."],
+  },
+  {
+    "date": "1913-10-24",
+    "news": ["Winston Churchill, First Lord of the Admiralty, proposed a naval holiday to halt the arms race with Germany, but the suggestion was ignored."],
+  },
+  {
+    "date": "1913-10-25",
+    "news": ["Serbian troops withdrew from Albania one day before the expiration of the Austro-Hungarian ultimatum."],
+  },
+  {
+    "date": "1913-10-26",
+    "news": ["Parliamentary elections were held in Italy, with the Liberal Party retaining its majority."],
+  },
+  {
+    "date": "1913-10-27",
+    "news": ["The Emir of Kuwait signed a treaty with the United Kingdom regarding oil rights, and a tornado in Wales killed two people."],
+  },
+  {
+    "date": "1913-10-28",
+    "news": ["Menahem Mendel Beilis was acquitted of ritual murder charges by a jury in Kiev."],
+  },
+  {
+    "date": "1913-10-29",
+    "news": ["Edwin Howard Armstrong filed a patent application for the regenerative circuit."],
+  },
+  {
+    "date": "1913-10-30",
+    "news": ["Serbia and Montenegro signed a treaty defining their shared border."],
+  },
+  {
+    "date": "1913-11-01",
+    "news": ["Municipal elections were held for the Liverpool City Council, with the Conservative Party retaining the most seats."],
+  },
+  {
+    "date": "1913-11-02",
+    "news": ["Prince Ernest Augustus and Princess Victoria Louise became the Duke and Duchess of Brunswick following their wedding."],
+  },
+  {
+    "date": "1913-11-03",
+    "news": ["Edward Elgar's symphonic study 'Falstaff' received its London premiere at Queen's Hall."],
+  },
+  {
+    "date": "1913-11-04",
+    "news": ["The first popular elections for the United States Senate were held in various states."],
+  },
+  {
+    "date": "1913-11-05",
+    "news": ["King Otto of Bavaria was deposed by his cousin, who assumed the title Ludwig III."],
+  },
+  {
+    "date": "1913-11-06",
+    "news": ["Mohandas Gandhi was arrested while leading a march of Indian miners in South Africa."],
+  },
+  {
+    "date": "1913-11-07",
+    "news": ["G. K. Chesterton's play 'Magic' premiered at The Little Theatre in London."],
+  },
+  {
+    "date": "1913-11-08",
+    "news": ["The 'Great Lakes Storm' intensified, causing shipwrecks across the region."],
+  },
+  {
+    "date": "1913-11-09",
+    "news": ["The British bulk freighter SS Wexford sank in Lake Huron with all hands lost during the Great Lakes Storm."],
+  },
+  {
+    "date": "1913-11-10",
+    "news": ["John Archer was elected mayor of Battersea, becoming the first black person to hold a mayoral seat in the United Kingdom."],
+  },
+  {
+    "date": "1913-11-11",
+    "news": ["The French Chamber of Deputies defeated a proposal to grant women the right to vote."],
+  },
+  {
+    "date": "1913-11-12",
+    "news": ["The Royal Navy battleship HMS Benbow was launched in Glasgow."],
+  },
+  {
+    "date": "1913-11-13",
+    "news": ["Emmeline Pankhurst delivered her 'Freedom or Death' speech in Hartford, Connecticut, and Rabindranath Tagore was awarded the Nobel Prize in Literature."],
+  },
+  {
+    "date": "1913-11-14",
+    "news": ["Greece and the Ottoman Empire signed a peace treaty ending the Second Balkan War conflict."],
+  },
+  {
+    "date": "1913-11-15",
+    "news": ["Japanese Government Railways extended the Echigo Line with the opening of Sekiya station."],
+  },
+  {
+    "date": "1913-11-16",
+    "news": ["Afonso Costa and the Democratic Party won a majority in the Portuguese legislative elections."],
+  },
+  {
+    "date": "1913-11-17",
+    "news": ["The Grimsby and Immingham Electric Railway opened a new station in Immingham."],
+  },
+  {
+    "date": "1913-11-18",
+    "news": ["George Bernard Shaw's play 'Great Catherine' premiered at the Vaudeville Theatre in London."],
+  },
+  {
+    "date": "1913-11-19",
+    "news": ["Jack Thompson appeared at his own funeral in Hamilton, Ontario, after being wrongly identified as a victim of a shipwreck."],
+  },
+  {
+    "date": "1913-11-20",
+    "news": ["Wireless transmission tests between the Eiffel Tower in Paris and Arlington, Virginia, were successful."],
+  },
+  {
+    "date": "1913-11-21",
+    "news": ["The Olds School of Agriculture and Home Economics officially opened in Alberta, Canada."],
+  },
+  {
+    "date": "1913-11-22",
+    "news": ["Sir Arthur Conan Doyle's Sherlock Holmes story 'The Adventure of the Dying Detective' was published in Collier's Weekly."],
+  },
+  {
+    "date": "1913-11-23",
+    "news": ["The first technical institute in Brazil was inaugurated in Itajubá."],
+  },
+  {
+    "date": "1913-11-24",
+    "news": ["The film 'Traffic in Souls' was released, establishing the narrative style of Hollywood film."],
+  },
+  {
+    "date": "1913-11-25",
+    "news": ["The Irish Volunteers were established at a large public meeting in Dublin."],
+  },
+  {
+    "date": "1913-11-26",
+    "news": ["The Royal Navy battleship HMS Warspite was launched at Devonport Shipyard in Plymouth."],
+  },
+  {
+    "date": "1913-11-27",
+    "news": ["The Royal Navy battleship HMS Emperor of India was launched by Vickers Limited."],
+  },
+  {
+    "date": "1913-11-28",
+    "news": ["Prussian soldiers in Saverne, Germany, arrested demonstrators, escalating the Zabern Affair."],
+  },
+  {
+    "date": "1913-11-29",
+    "news": ["The International Fencing Federation was recognized by the IOC as the sport's governing body."],
+  },
+  {
+    "date": "1913-11-30",
+    "news": ["The steam towboat Sprague wrecked on the Mississippi River, causing an environmental disaster with its coal cargo."],
+  },
+  {
+    "date": "1913-12-01",
+    "news": ["Crete was annexed by Greece, and the Bakerloo line of the London Underground extended to Paddington."],
+  },
+  {
+    "date": "1913-12-02",
+    "news": ["A German officer struck a shoemaker with his saber in Saverne, further inflaming the Zabern Affair."],
+  },
+  {
+    "date": "1913-12-03",
+    "news": ["Twenty-eight men died in the Arcadia Hotel fire in Boston."],
+  },
+  {
+    "date": "1913-12-04",
+    "news": ["The German Reichstag passed a vote of no-confidence against the Chancellor over the Zabern Affair, and British scientist Frederick Soddy introduced the term 'isotope'."],
+  },
+  {
+    "date": "1913-12-05",
+    "news": ["Isabella Newman committed suicide in Australia after being arrested on suspicion of infant disappearances."],
+  },
+  {
+    "date": "1913-12-06",
+    "news": ["The New York Giants and Chicago White Sox played the first Major League Baseball game in Japan."],
+  },
+  {
+    "date": "1913-12-07",
+    "news": ["The first direct elections were held in Costa Rica since 1844."],
+  },
+  {
+    "date": "1913-12-08",
+    "news": ["Construction began on the Palace of Fine Arts in San Francisco."],
+  },
+  {
+    "date": "1913-12-09",
+    "news": ["Pancho Villa's forces pursued federal troops to the Mexican-U.S. border."],
+  },
+  {
+    "date": "1913-12-10",
+    "news": ["The Nobel Prizes were awarded, with recipients including Heike Kamerlingh Onnes and Alfred Werner."],
+  },
+  {
+    "date": "1913-12-11",
+    "news": ["The Sikorsky Ilya Muromets, a four-engine heavy bomber, flew for the first time."],
+  },
+  {
+    "date": "1913-12-12",
+    "news": ["The stolen Mona Lisa was recovered in Florence, and the 'Brides in the Bath' murderer George Joseph Smith killed his second wife in Blackpool."],
+  },
+  {
+    "date": "1913-12-13",
+    "news": ["German balloonist Hugo Kaulen set a record by staying aloft for 87 hours."],
+  },
+  {
+    "date": "1913-12-14",
+    "news": ["The New York Giants played the Chicago White Sox in the first Major League Baseball game held in Hong Kong."],
+  },
+  {
+    "date": "1913-12-15",
+    "news": ["The Royal Navy launched the battlecruiser HMS Tiger in Scotland."],
+  },
+  {
+    "date": "1913-12-16",
+    "news": ["An explosion at the Vulcan Mine in Colorado killed 38 miners."],
+  },
+  {
+    "date": "1913-12-17",
+    "news": ["The first Major League Baseball game in the Philippines took place in Manila."],
+  },
+  {
+    "date": "1913-12-18",
+    "news": ["The Gaelic Athletic Association purchased Croke Park in Dublin to be a permanent site for national games."],
+  },
+  {
+    "date": "1913-12-19",
+    "news": ["The Peruvian musical play 'El cóndor pasa' premiered in Lima."],
+  },
+  {
+    "date": "1913-12-20",
+    "news": ["A serious fire destroyed the semaphore tower at Portsmouth Dockyard."],
+  },
+  {
+    "date": "1913-12-21",
+    "news": ["The first crossword puzzle was published in the New York World."],
+  },
+  {
+    "date": "1913-12-22",
+    "news": ["British driver Lydston Hornsted set a new land speed record at Brooklands."],
+  },
+  {
+    "date": "1913-12-23",
+    "news": ["U.S. President Woodrow Wilson signed the Federal Reserve Act into law."],
+  },
+  {
+    "date": "1913-12-24",
+    "news": ["Seventy-three people died in a stampede at the Italian Hall in Calumet, Michigan."],
+  },
+  {
+    "date": "1913-12-25",
+    "news": ["The crew of the trapped polar ship Karluk celebrated Christmas while drifting near Herald Island."],
+  },
+  {
+    "date": "1913-12-26",
+    "news": ["Union leader Charles Moyer was attacked and shot in Hancock, Michigan."],
+  },
+  {
+    "date": "1913-12-27",
+    "news": ["Baseball star Joe Tinker signed with the new Federal League."],
+  },
+  {
+    "date": "1913-12-28",
+    "news": ["The 'Venus of Cyrene' sculpture was discovered by Italian troops in Libya."],
+  },
+  {
+    "date": "1913-12-29",
+    "news": ["The first serial film, 'The Adventures of Kathlyn', premiered in Chicago."],
+  },
+  {
+    "date": "1913-12-30",
+    "news": ["The Mona Lisa was returned to France by Italy, and cricketer Sydney Barnes set a record for wickets in a Test series."],
+  },  
+  {
+    "date": "1913-12-31",
+    "news": ["Orville Wright publicly demonstrated the first autopilot device on an airplane, and French General Gaëtan Bonnier made history by landing the first airplane in Jerusalem."],
+  },
   {
     "date": "1914-01-01",
-    "news": "The New Year Honours list includes peerages for Sir Rufus Isaacs (Lord Reading) and Mr. James Bryce (Viscount Bryce), and knighthoods for Mr. Owen Seaman, editor of Punch, and scientist Ernest Rutherford,,. Sir Frederick Lugard completes the amalgamation of Northern and Southern Nigeria into a united protectorate. The Chancellor of the Exchequer, Mr. Lloyd George, gives an interview advocating for a reduction in armament expenditure."
+    "news": ["The New Year Honours list includes peerages for Sir Rufus Isaacs (Lord Reading) and Mr. James Bryce (Viscount Bryce), and knighthoods for Mr. Owen Seaman, editor of Punch, and scientist Ernest Rutherford,,. Sir Frederick Lugard completes the amalgamation of Northern and Southern Nigeria into a united protectorate. The Chancellor of the Exchequer, Mr. Lloyd George, gives an interview advocating for a reduction in armament expenditure."]
   },
   {
     "date": "1914-01-02",
-    "news": "Miss Eleanor Trehawke Davies becomes the first woman to experience an aerobatic loop as a passenger in a monoplane piloted by Gustav Hamel. In South Africa, the railway strike situation remains tense following the calling out of citizen forces."
+    "news": ["Miss Eleanor Trehawke Davies becomes the first woman to experience an aerobatic loop as a passenger in a monoplane piloted by Gustav Hamel. In South Africa, the railway strike situation remains tense following the calling out of citizen forces."]
   },
   {
     "date": "1914-01-04",
-    "news": "Mr. William O'Brien speaks at Cork, regretting that Nationalists have not accepted proposals for concessions regarding Ulster. The American tanker *Oklahoma* breaks in two during a gale off Sandy Hook, resulting in significant loss of life,."
+    "news": ["Mr. William O'Brien speaks at Cork, regretting that Nationalists have not accepted proposals for concessions regarding Ulster. The American tanker *Oklahoma* breaks in two during a gale off Sandy Hook, resulting in significant loss of life,."]
   },
   {
     "date": "1914-01-05",
-    "news": "The Ford Motor Company announces a new daily wage of $5 and an eight-hour workday. The strike in Dublin nears collapse with the return of many dockers to work. A mock trial of 'John Jasper' for the murder of Edwin Drood is held at King's Hall, Covent Garden, with G. K. Chesterton as judge and George Bernard Shaw as jury foreman."
+    "news": ["The Ford Motor Company announces a new daily wage of $5 and an eight-hour workday. The strike in Dublin nears collapse with the return of many dockers to work. A mock trial of 'John Jasper' for the murder of Edwin Drood is held at King's Hall, Covent Garden, with G. K. Chesterton as judge and George Bernard Shaw as jury foreman."]
   },
   {
     "date": "1914-01-06",
-    "news": "Mr. Joseph Chamberlain announces his intention to retire from Parliament at the next general election,. In the wake of the 'Zabern Affair', military trials commence in Strasbourg for Colonel von Reuter and Lieutenant Schadt."
+    "news": ["Mr. Joseph Chamberlain announces his intention to retire from Parliament at the next general election,. In the wake of the 'Zabern Affair', military trials commence in Strasbourg for Colonel von Reuter and Lieutenant Schadt."]
   },
   {
     "date": "1914-01-07",
-    "news": "Sir R. H. Brade is appointed Secretary of the War Office and the Army Council. The first vessel, the *Alexandre La Valley*, completes a transit through the Panama Canal."
+    "news": ["Sir R. H. Brade is appointed Secretary of the War Office and the Army Council. The first vessel, the *Alexandre La Valley*, completes a transit through the Panama Canal."]
   },
   {
     "date": "1914-01-08",
-    "news": "Viscount Cross, former Home Secretary, dies at the age of 90. A fire causes over £5,000 in damage at St. Paul's Training College, Cheltenham."
+    "news": ["Viscount Cross, former Home Secretary, dies at the age of 90. A fire causes over £5,000 in damage at St. Paul's Training College, Cheltenham."]
   },
   {
     "date": "1914-01-10",
-    "news": "Yuan Shikai formally dissolves the Chinese Parliament. Barton Hall, near Bury St. Edmunds, is destroyed by fire."
+    "news": ["Yuan Shikai formally dissolves the Chinese Parliament. Barton Hall, near Bury St. Edmunds, is destroyed by fire."]
   },
   {
     "date": "1914-01-12",
-    "news": "Severe winter weather grips England, lasting for several days. A massive volcanic eruption begins on Sakurajima in Japan."
+    "news": ["Severe winter weather grips England, lasting for several days. A massive volcanic eruption begins on Sakurajima in Japan."]
   },
   {
     "date": "1914-01-13",
-    "news": "Martial law is proclaimed in South Africa following general strike threats,. James Michael Curley is elected Mayor of Boston."
+    "news": ["Martial law is proclaimed in South Africa following general strike threats,. James Michael Curley is elected Mayor of Boston."]
   },
   {
     "date": "1914-01-14",
-    "news": "Lord Rayleigh unveils a memorial tablet to Lord Lister at King's College, London. Earl Curzon speaks at a Primrose League meeting in Manchester, arguing against naval expenditure reduction. The verdict in the Senghenydd Colliery disaster inquest is returned as 'Accidental Death'."
+    "news": ["Lord Rayleigh unveils a memorial tablet to Lord Lister at King's College, London. Earl Curzon speaks at a Primrose League meeting in Manchester, arguing against naval expenditure reduction. The verdict in the Senghenydd Colliery disaster inquest is returned as 'Accidental Death'."]
   },
   {
     "date": "1914-01-15",
-    "news": "The Lord Chancellor, speaking at Hoxton, advises against pessimism regarding the conversations between party leaders on Home Rule. Mr. Bonar Law, speaking at Bristol, warns that the country is drifting toward civil war over the Irish question. The Special Committee for English representation at the Olympic Games retires."
+    "news": ["The Lord Chancellor, speaking at Hoxton, advises against pessimism regarding the conversations between party leaders on Home Rule. Mr. Bonar Law, speaking at Bristol, warns that the country is drifting toward civil war over the Irish question. The Special Committee for English representation at the Olympic Games retires."]
   },
   {
     "date": "1914-01-16",
-    "news": "The Royal Navy submarine A7 sinks in Whitesand Bay with the loss of all 11 crew members,. A meeting is held at Cannon Street Hotel to advocate for the reduction of naval expenditure."
+    "news": ["The Royal Navy submarine A7 sinks in Whitesand Bay with the loss of all 11 crew members,. A meeting is held at Cannon Street Hotel to advocate for the reduction of naval expenditure."]
   },
   {
     "date": "1914-01-17",
-    "news": "England defeats Wales in the International Rugby match at Twickenham by ten points to nine. Sir Edward Carson inspects the East Belfast Regiment and emphasizes determination to resist Home Rule."
+    "news": ["England defeats Wales in the International Rugby match at Twickenham by ten points to nine. Sir Edward Carson inspects the East Belfast Regiment and emphasizes determination to resist Home Rule."]
   },
   {
     "date": "1914-01-19",
-    "news": "The Dublin lock-out practically collapses with the return to work of many dockers and tramway employees. Sir Edward Carson addresses the Ulster Unionist Council, stating that negotiations are useless unless based on rights under the Imperial Parliament. General Picquart, a central figure in the Dreyfus affair, dies."
+    "news": ["The Dublin lock-out practically collapses with the return to work of many dockers and tramway employees. Sir Edward Carson addresses the Ulster Unionist Council, stating that negotiations are useless unless based on rights under the Imperial Parliament. General Picquart, a central figure in the Dreyfus affair, dies."]
   },
   {
     "date": "1914-01-20",
-    "news": "The International Conference on Safety of Life at Sea signs a Convention in London, establishing new regulations for merchant vessels, including wireless telegraphy requirements,. The body of marine engineer Thomas Kent Reekes is found in a disused pit shaft near Wolverhampton."
+    "news": ["The International Conference on Safety of Life at Sea signs a Convention in London, establishing new regulations for merchant vessels, including wireless telegraphy requirements,. The body of marine engineer Thomas Kent Reekes is found in a disused pit shaft near Wolverhampton."]
   },
   {
     "date": "1914-01-21",
-    "news": "Lord Strathcona, High Commissioner for Canada, dies in London. A strike of coal porters begins in London. New bishoprics for Chelmsford, St. Edmundsbury, and Ipswich are ratified by the King in Council."
+    "news": ["Lord Strathcona, High Commissioner for Canada, dies in London. A strike of coal porters begins in London. New bishoprics for Chelmsford, St. Edmundsbury, and Ipswich are ratified by the King in Council."]
   },
   {
     "date": "1914-01-23",
-    "news": "Mr. Austen Chamberlain speaks at Shirley, declaring that Ulster would save herself by her own right arm. Princess Victor Napoleon (Princess Clementine of Belgium) gives birth to a son and heir to the Bonaparte dynasty."
+    "news": ["Mr. Austen Chamberlain speaks at Shirley, declaring that Ulster would save herself by her own right arm. Princess Victor Napoleon (Princess Clementine of Belgium) gives birth to a son and heir to the Bonaparte dynasty."]
   },
   {
     "date": "1914-01-24",
-    "news": "A lock-out is threatened in the London building trade following disputes over non-union labour,. Suffragists damage a conservatory at the Glasgow Winter Garden."
+    "news": ["A lock-out is threatened in the London building trade following disputes over non-union labour,. Suffragists damage a conservatory at the Glasgow Winter Garden."]
   },
   {
     "date": "1914-01-25",
-    "news": "Mr. John Redmond speaks at Waterford, asserting that the Home Rule Bill will become law within the year. Airman George Lee Temple is killed while flying at Hendon aerodrome."
+    "news": ["Mr. John Redmond speaks at Waterford, asserting that the Home Rule Bill will become law within the year. Airman George Lee Temple is killed while flying at Hendon aerodrome."]
   },
   {
     "date": "1914-01-26",
-    "news": "A suffragist deputation presents a statement to the Bishop of London regarding the forcible feeding of Rachel Peace in Holloway Jail. An explosion occurs on the Cunarder *Mauretania*, killing three men."
+    "news": ["A suffragist deputation presents a statement to the Bishop of London regarding the forcible feeding of Rachel Peace in Holloway Jail. An explosion occurs on the Cunarder *Mauretania*, killing three men."]
   },
   {
     "date": "1914-01-27",
-    "news": "The South African Government secretly deports ten labour leaders to England,. Unrest in Haiti leads to the abdication of President Michel Oreste and the landing of U.S. Marines."
+    "news": ["The South African Government secretly deports ten labour leaders to England,. Unrest in Haiti leads to the abdication of President Michel Oreste and the landing of U.S. Marines."]
   },
   {
     "date": "1914-01-28",
-    "news": "News of the South African deportations reaches London, causing indignation in Labour circles. The London coal porters' strike ends with concessions from employers."
+    "news": ["News of the South African deportations reaches London, causing indignation in Labour circles. The London coal porters' strike ends with concessions from employers."]
   },
   {
     "date": "1914-01-29",
-    "news": "Lord Knutsford dies at his London residence. Mr. John Horace Round is appointed honorary adviser to the Crown in Peerage Cases."
+    "news": ["Lord Knutsford dies at his London residence. Mr. John Horace Round is appointed honorary adviser to the Crown in Peerage Cases."]
   },
   {
     "date": "1914-01-30",
-    "news": "At the North-West Durham bye-election, the Liberal candidate Aneurin Williams retains the seat, though with a reduced majority attributed to the South African deportations issue,. The American liner *Monroe* sinks after a collision, resulting in 41 deaths."
+    "news": ["At the North-West Durham bye-election, the Liberal candidate Aneurin Williams retains the seat, though with a reduced majority attributed to the South African deportations issue,. The American liner *Monroe* sinks after a collision, resulting in 41 deaths."]
   },
   {
     "date": "1914-01-31",
-    "news": "The Bishop of London publishes a letter stating he found no evidence of brutality in the treatment of suffragist prisoner Rachel Peace. The German ship *Hera* is wrecked off Falmouth with the loss of 19 lives."
+    "news": ["The Bishop of London publishes a letter stating he found no evidence of brutality in the treatment of suffragist prisoner Rachel Peace. The German ship *Hera* is wrecked off Falmouth with the loss of 19 lives."]
   },
   {
     "date": "1914-02-01",
-    "news": "A militant suffragist interrupts the Bishop of London during a consecration service at Golder's Green. Japanese naval scandals lead to the establishment of a commission of inquiry."
+    "news": ["A militant suffragist interrupts the Bishop of London during a consecration service at Golder's Green. Japanese naval scandals lead to the establishment of a commission of inquiry."]
   },
   {
     "date": "1914-02-02",
-    "news": "Wagner's *Parsifal* is performed in England for the first time at Covent Garden. Gustav Hamel loops the loop before the King and Queen at Windsor Castle. The Postmaster-General speaks at Harrogate regarding the South African deportations."
+    "news": ["Wagner's *Parsifal* is performed in England for the first time at Covent Garden. Gustav Hamel loops the loop before the King and Queen at Windsor Castle. The Postmaster-General speaks at Harrogate regarding the South African deportations."]
   },
   {
     "date": "1914-02-03",
-    "news": "A meeting is held at Queen's Hall to advocate for the reduction of naval expenditure. The Prime Minister declines a request from the Miners' Federation to extend the Minimum Wage Act to surface workers."
+    "news": ["A meeting is held at Queen's Hall to advocate for the reduction of naval expenditure. The Prime Minister declines a request from the Miners' Federation to extend the Minimum Wage Act to surface workers."]
   },
   {
     "date": "1914-02-04",
-    "news": "The Chancellor of the Exchequer, Mr. Lloyd George, speaks at Glasgow on land reform and housing. Seventy people are injured at a football match in Sheffield when a wall collapses."
+    "news": ["The Chancellor of the Exchequer, Mr. Lloyd George, speaks at Glasgow on land reform and housing. Seventy people are injured at a football match in Sheffield when a wall collapses."]
   },
   {
     "date": "1914-02-05",
-    "news": "George Ball is convicted of the murder of Miss Christina Bradfield at Liverpool Assizes and sentenced to death. President Wilson lifts the embargo on arms exports to Mexico."
+    "news": ["George Ball is convicted of the murder of Miss Christina Bradfield at Liverpool Assizes and sentenced to death. President Wilson lifts the embargo on arms exports to Mexico."]
   },
   {
     "date": "1914-02-06",
-    "news": "The King approves appointments to the new bishoprics of Sheffield, Chelmsford, and St. Edmundsbury. Mr. John Redmond speaks at a National Liberal Club dinner, declaring Unionist opposition to Home Rule is directed against the Parliament Act."
+    "news": ["The King approves appointments to the new bishoprics of Sheffield, Chelmsford, and St. Edmundsbury. Mr. John Redmond speaks at a National Liberal Club dinner, declaring Unionist opposition to Home Rule is directed against the Parliament Act."]
   },
   {
     "date": "1914-02-07",
-    "news": "Mr. Austen Chamberlain speaks at the Birmingham Jewellers' annual dinner, expressing misgivings about the parliamentary session. Wales beats Scotland in Rugby at Cardiff."
+    "news": ["Mr. Austen Chamberlain speaks at the Birmingham Jewellers' annual dinner, expressing misgivings about the parliamentary session. Wales beats Scotland in Rugby at Cardiff."]
   },
   {
     "date": "1914-02-09",
-    "news": "A meeting of business men in the City of London assures the Government of commercial support for naval supremacy. Lord Justice Cherry is appointed Lord Chief Justice of Ireland."
+    "news": ["A meeting of business men in the City of London assures the Government of commercial support for naval supremacy. Lord Justice Cherry is appointed Lord Chief Justice of Ireland."]
   },
   {
     "date": "1914-02-10",
-    "news": "King George V opens Parliament; the Speech from the Throne regrets the failure to solve the Home Rule problem by agreement,. Sir Laurence Gomme resigns as clerk of the London County Council."
+    "news": ["King George V opens Parliament; the Speech from the Throne regrets the failure to solve the Home Rule problem by agreement,. Sir Laurence Gomme resigns as clerk of the London County Council."]
   },
   {
     "date": "1914-02-11",
-    "news": "Important Ministerial changes are announced: Mr. Sydney Buxton succeeds Lord Gladstone in South Africa, and Mr. John Burns moves to the Board of Trade,. In the debate on the Address, Sir Edward Carson speaks on the gravity of the Ulster situation. A deputation from the Trade Union Congress waits on the Prime Minister."
+    "news": ["Important Ministerial changes are announced: Mr. Sydney Buxton succeeds Lord Gladstone in South Africa, and Mr. John Burns moves to the Board of Trade,. In the debate on the Address, Sir Edward Carson speaks on the gravity of the Ulster situation. A deputation from the Trade Union Congress waits on the Prime Minister."]
   },
   {
     "date": "1914-02-12",
-    "news": "Labour amendment on the South African deportations is moved in the House of Commons by Mr. Ramsay Macdonald. Dedication ceremony of the Lincoln Memorial takes place in Washington, D.C.."
+    "news": ["Labour amendment on the South African deportations is moved in the House of Commons by Mr. Ramsay Macdonald. Dedication ceremony of the Lincoln Memorial takes place in Washington, D.C.."]
   },
   {
     "date": "1914-02-13",
-    "news": "In the Commons, a Labour amendment regarding railway and mining accidents is debated. Mr. H. W. Thornton is appointed General Manager of the Great Eastern Railway."
+    "news": ["In the Commons, a Labour amendment regarding railway and mining accidents is debated. Mr. H. W. Thornton is appointed General Manager of the Great Eastern Railway."]
   },
   {
     "date": "1914-02-14",
-    "news": "A large meeting of Labour organisations at Albert Hall protests against the Prime Minister's refusal to receive suffragist deputations. England beats Ireland in Rugby at Twickenham."
+    "news": ["A large meeting of Labour organisations at Albert Hall protests against the Prime Minister's refusal to receive suffragist deputations. England beats Ireland in Rugby at Twickenham."]
   },
   {
     "date": "1914-02-16",
-    "news": "Debate on the Address resumes with an Opposition amendment on the Welsh Church Bill. Mr. Balfour speaks against the Welsh Church Bill in the Commons."
+    "news": ["Debate on the Address resumes with an Opposition amendment on the Welsh Church Bill. Mr. Balfour speaks against the Welsh Church Bill in the Commons."]
   },
   {
     "date": "1914-02-17",
-    "news": "Lord Murray of Elibank makes a personal statement in the House of Lords regarding charges against him, admitting errors of judgment. A Tariff Reform amendment is moved in the Commons."
+    "news": ["Lord Murray of Elibank makes a personal statement in the House of Lords regarding charges against him, admitting errors of judgment. A Tariff Reform amendment is moved in the Commons."]
   },
   {
     "date": "1914-02-18",
-    "news": "Mr. Royds moves an amendment in the Commons concerning the adverse influence of the 1909 Budget on housing and building. A meeting of City men passes a resolution declaring the Home Rule Bill impossible to carry into effect. The Bishop of London presents a petition in Convocation regarding Christian truths."
+    "news": ["Mr. Royds moves an amendment in the Commons concerning the adverse influence of the 1909 Budget on housing and building. A meeting of City men passes a resolution declaring the Home Rule Bill impossible to carry into effect. The Bishop of London presents a petition in Convocation regarding Christian truths."]
   },
   {
     "date": "1914-02-19",
-    "news": "The Marquess of Lansdowne moves for a Select Committee to inquire into charges against Lord Murray. A Labour amendment regarding the Dublin strike is debated in the Commons. At the South-West Bethnal Green bye-election, Mr. C. F. G. Masterman is defeated,."
+    "news": ["The Marquess of Lansdowne moves for a Select Committee to inquire into charges against Lord Murray. A Labour amendment regarding the Dublin strike is debated in the Commons. At the South-West Bethnal Green bye-election, Mr. C. F. G. Masterman is defeated,."]
   },
   {
     "date": "1914-02-20",
-    "news": "The Address is agreed to in the Commons after a closure motion. At the Poplar bye-election, the Liberal candidate wins but with a significantly reduced majority,."
+    "news": ["The Address is agreed to in the Commons after a closure motion. At the Poplar bye-election, the Liberal candidate wins but with a significantly reduced majority,."]
   },
   {
     "date": "1914-02-21",
-    "news": "The Principality of Albania is formally established. An explosion destroys a magazine in Challapata, Bolivia."
+    "news": ["The Principality of Albania is formally established. An explosion destroys a magazine in Challapata, Bolivia."]
   },
   {
     "date": "1914-02-23",
-    "news": "A settlement is reached in the furniture trade strike at High Wycombe. In the House of Lords, a resolution regarding contributions to party funds and honours is carried."
+    "news": ["A settlement is reached in the furniture trade strike at High Wycombe. In the House of Lords, a resolution regarding contributions to party funds and honours is carried."]
   },
   {
     "date": "1914-02-24",
-    "news": "The ship *Umgeni* arrives at Gravesend with the deported South African labour leaders, who initially refuse to land. Pancho Villa denies killing British rancher William S. Benton."
+    "news": ["The ship *Umgeni* arrives at Gravesend with the deported South African labour leaders, who initially refuse to land. Pancho Villa denies killing British rancher William S. Benton."]
   },
   {
     "date": "1914-02-25",
-    "news": "Sir John Tenniel, famous *Punch* artist, dies. A motion for an impartial committee to study the Insurance Act is debated in the Commons."
+    "news": ["Sir John Tenniel, famous *Punch* artist, dies. A motion for an impartial committee to study the Insurance Act is debated in the Commons."]
   },
   {
     "date": "1914-02-26",
-    "news": "At the Leith Burghs bye-election, the Unionist candidate wins a seat held by Liberals since 1832,. Rev. Samuel Rolles Driver, Regius Professor of Hebrew at Oxford, dies."
+    "news": ["At the Leith Burghs bye-election, the Unionist candidate wins a seat held by Liberals since 1832,. Rev. Samuel Rolles Driver, Regius Professor of Hebrew at Oxford, dies."]
   },
   {
     "date": "1914-02-27",
-    "news": "A meeting is held at the London Opera House to support the South African deportees. Texas governor Colquitt suggests Texas Rangers might cross the border to retrieve the body of Clemente Vergara."
+    "news": ["A meeting is held at the London Opera House to support the South African deportees. Texas governor Colquitt suggests Texas Rangers might cross the border to retrieve the body of Clemente Vergara."]
   },
   {
     "date": "1914-02-28",
-    "news": "Ireland beats Scotland in Rugby at Dublin. Turkish airmen Fethi Bey and Sadik Bey are killed in a crash near the Sea of Galilee."
+    "news": ["Ireland beats Scotland in Rugby at Dublin. Turkish airmen Fethi Bey and Sadik Bey are killed in a crash near the Sea of Galilee."]
   },
   {
     "date": "1914-03-01",
-    "news": "A massive demonstration is held in Hyde Park supporting the South African deportees. A bomb explodes in St. John the Evangelist's Church, Westminster. Venceslau Brás wins the presidential election in Brazil."
+    "news": ["A massive demonstration is held in Hyde Park supporting the South African deportees. A bomb explodes in St. John the Evangelist's Church, Westminster. Venceslau Brás wins the presidential election in Brazil."]
   },
   {
     "date": "1914-03-02",
-    "news": "Supplementary Navy Estimates are debated in the Commons; Mr. Churchill defends increased expenditure on oil and air service. A severe blizzard strikes New York and Pennsylvania."
+    "news": ["Supplementary Navy Estimates are debated in the Commons; Mr. Churchill defends increased expenditure on oil and air service. A severe blizzard strikes New York and Pennsylvania."]
   },
   {
     "date": "1914-03-03",
-    "news": "The British Covenant, signed by eminent figures like Earl Roberts and Rudyard Kipling, is published, declaring opposition to the Home Rule Bill. A Labour resolution extending the Insurance Act is adopted in the Commons."
+    "news": ["The British Covenant, signed by eminent figures like Earl Roberts and Rudyard Kipling, is published, declaring opposition to the Home Rule Bill. A Labour resolution extending the Insurance Act is adopted in the Commons."]
   },
   {
     "date": "1914-03-04",
-    "news": "A motion for a Select Committee on the redistribution of seats is accepted by the Government. A deputation of Welsh Nonconformists waits on the Prime Minister regarding the Welsh Church Bill."
+    "news": ["A motion for a Select Committee on the redistribution of seats is accepted by the Government. A deputation of Welsh Nonconformists waits on the Prime Minister regarding the Welsh Church Bill."]
   },
   {
     "date": "1914-03-05",
-    "news": "The Army Estimates are published, showing a net increase of £625,000. President Wilson urges the U.S. Congress to repeal the Panama Canal tolls exemption. An avalanche in the Tyrol kills soldiers."
+    "news": ["The Army Estimates are published, showing a net increase of £625,000. President Wilson urges the U.S. Congress to repeal the Panama Canal tolls exemption. An avalanche in the Tyrol kills soldiers."]
   },
   {
     "date": "1914-03-06",
-    "news": "James William Humphrys Scotland completes the first substantial cross-country flight in New Zealand."
+    "news": ["James William Humphrys Scotland completes the first substantial cross-country flight in New Zealand."]
   },
   {
     "date": "1914-03-07",
-    "news": "Prince William of Wied arrives in Albania. The body of Texas rancher Clemente Vergara is recovered."
+    "news": ["Prince William of Wied arrives in Albania. The body of Texas rancher Clemente Vergara is recovered."]
   },
   {
     "date": "1914-03-08",
-    "news": "Mrs. Pankhurst is rearrested on her way to a demonstration in Trafalgar Square. Spain holds general elections."
+    "news": ["Mrs. Pankhurst is rearrested on her way to a demonstration in Trafalgar Square. Spain holds general elections."]
   },
   {
     "date": "1914-03-09",
-    "news": "The Prime Minister proposes the exclusion of Ulster counties from Home Rule for six years as a 'price of peace',. A fire at the Missouri Athletic Club in St. Louis kills 30 people."
+    "news": ["The Prime Minister proposes the exclusion of Ulster counties from Home Rule for six years as a 'price of peace',. A fire at the Missouri Athletic Club in St. Louis kills 30 people."]
   },
   {
     "date": "1914-03-10",
-    "news": "Suffragette Mary Richardson slashes the Rokeby Venus at the National Gallery,. The War Minister introduces the Army Estimates in the Commons. A resolution attacking the Chancellor of the Exchequer for inaccuracies is moved in the Commons."
+    "news": ["Suffragette Mary Richardson slashes the Rokeby Venus at the National Gallery,. The War Minister introduces the Army Estimates in the Commons. A resolution attacking the Chancellor of the Exchequer for inaccuracies is moved in the Commons."]
   },
   {
     "date": "1914-03-11",
-    "news": "A resolution regarding the shortage in Military Forces is moved in the Commons. British naval airman Engineer-Lieut. Briggs reaches a record height of 15,000 ft."
+    "news": ["A resolution regarding the shortage in Military Forces is moved in the Commons. British naval airman Engineer-Lieut. Briggs reaches a record height of 15,000 ft."]
   },
   {
     "date": "1914-03-12",
-    "news": "George Westinghouse, the American inventor, dies. Suffragists attempt to burn an unoccupied house at Stewarton. Survivors of the *Karluk* shipwreck reach Wrangel Island."
+    "news": ["George Westinghouse, the American inventor, dies. Suffragists attempt to burn an unoccupied house at Stewarton. Survivors of the *Karluk* shipwreck reach Wrangel Island."]
   },
   {
     "date": "1914-03-13",
-    "news": "The Territorial Forces Amendment Bill is debated and rejected in the House of Lords. A railway accident at Exeter, New South Wales, kills fourteen."
+    "news": ["The Territorial Forces Amendment Bill is debated and rejected in the House of Lords. A railway accident at Exeter, New South Wales, kills fourteen."]
   },
   {
     "date": "1914-03-14",
-    "news": "Mr. Churchill speaks at Bradford, stating that if Ulster rejects the offer, the Government will not shrink from lawful measures to maintain order. Ireland wins the British Home Championship in football."
+    "news": ["Mr. Churchill speaks at Bradford, stating that if Ulster rejects the offer, the Government will not shrink from lawful measures to maintain order. Ireland wins the British Home Championship in football."]
   },
   {
     "date": "1914-03-15",
-    "news": "Mrs. Pankhurst and Sylvia Pankhurst are released after hunger strikes. Severe storms cause flooding and loss of life in Russia."
+    "news": ["Mrs. Pankhurst and Sylvia Pankhurst are released after hunger strikes. Severe storms cause flooding and loss of life in Russia."]
   },
   {
     "date": "1914-03-16",
-    "news": "The Prime Minister makes a statement in the Commons regarding Home Rule, refusing to formulate details without agreement on principle. In Paris, Mme. Caillaux shoots and kills Gaston Calmette, editor of *Le Figaro*,. *The Times* reduces its price to 1d."
+    "news": ["The Prime Minister makes a statement in the Commons regarding Home Rule, refusing to formulate details without agreement on principle. In Paris, Mme. Caillaux shoots and kills Gaston Calmette, editor of *Le Figaro*,. *The Times* reduces its price to 1d."]
   },
   {
     "date": "1914-03-17",
-    "news": "The First Lord of the Admiralty introduces the Navy Estimates, defending increased expenditure. A suffragist interruption occurs at a charity performance attended by the King."
+    "news": ["The First Lord of the Admiralty introduces the Navy Estimates, defending increased expenditure. A suffragist interruption occurs at a charity performance attended by the King."]
   },
   {
     "date": "1914-03-18",
-    "news": "A fierce storm in Russia reportedly drowns 3,000 people. Captain Bartlett leaves Wrangel Island to seek help for *Karluk* survivors."
+    "news": ["A fierce storm in Russia reportedly drowns 3,000 people. Captain Bartlett leaves Wrangel Island to seek help for *Karluk* survivors."]
   },
   {
     "date": "1914-03-19",
-    "news": "A Vote of Censure is moved by Mr. Bonar Law regarding the Government's refusal to formulate Home Rule suggestions. The King and Queen visit the National Institute for the Blind. Orders are issued for military movements in Ireland to protect stores."
+    "news": ["A Vote of Censure is moved by Mr. Bonar Law regarding the Government's refusal to formulate Home Rule suggestions. The King and Queen visit the National Institute for the Blind. Orders are issued for military movements in Ireland to protect stores."]
   },
   {
     "date": "1914-03-20",
-    "news": "The 'Curragh Incident' begins; General Gough and other officers resign rather than serve against Ulster,. Pancho Villa sends a force to recapture Torreón."
+    "news": ["The 'Curragh Incident' begins; General Gough and other officers resign rather than serve against Ulster,. Pancho Villa sends a force to recapture Torreón."]
   },
   {
     "date": "1914-03-21",
-    "news": "Sir Arthur Paget addresses officers in Dublin regarding military operations; wild rumours of mutinies circulate. England wins the Calcutta Cup in Rugby against Scotland. Suffragists attempt to fire a church at Clevedon."
+    "news": ["Sir Arthur Paget addresses officers in Dublin regarding military operations; wild rumours of mutinies circulate. England wins the Calcutta Cup in Rugby against Scotland. Suffragists attempt to fire a church at Clevedon."]
   },
   {
     "date": "1914-03-22",
-    "news": "The Prime Minister issues a statement to *The Times* denying warrants for Ulster leaders and stating troop movements are precautionary. Suffragists attempt to interrupt service at Westminster Abbey."
+    "news": ["The Prime Minister issues a statement to *The Times* denying warrants for Ulster leaders and stating troop movements are precautionary. Suffragists attempt to interrupt service at Westminster Abbey."]
   },
   {
     "date": "1914-03-23",
-    "news": "In the Commons, Colonel Seely explains the Army resignations were due to a misunderstanding; the 'peccant paragraphs' signed by the War Minister are revealed,. Chilpancingo falls to Mexican revolutionaries."
+    "news": ["In the Commons, Colonel Seely explains the Army resignations were due to a misunderstanding; the 'peccant paragraphs' signed by the War Minister are revealed,. Chilpancingo falls to Mexican revolutionaries."]
   },
   {
     "date": "1914-03-24",
-    "news": "The Japanese Prime Minister Yamamoto resigns following the Siemens naval scandal. The King and Queen visit Knowsley."
+    "news": ["The Japanese Prime Minister Yamamoto resigns following the Siemens naval scandal. The King and Queen visit Knowsley."]
   },
   {
     "date": "1914-03-25",
-    "news": "A White Paper on the Army crisis is published, causing dismay among Liberals. In the Commons, Colonel Seely announces he has tendered his resignation (initially not accepted). The French poet Frédéric Mistral dies."
+    "news": ["A White Paper on the Army crisis is published, causing dismay among Liberals. In the Commons, Colonel Seely announces he has tendered his resignation (initially not accepted). The French poet Frédéric Mistral dies."]
   },
   {
     "date": "1914-03-26",
-    "news": "Pancho Villa attacks Torreón. The King and Queen return to London early from their visit to Cheshire due to the Army crisis."
+    "news": ["Pancho Villa attacks Torreón. The King and Queen return to London early from their visit to Cheshire due to the Army crisis."]
   },
   {
     "date": "1914-03-27",
-    "news": "The Prime Minister announces a new Army Order regarding discipline and forbids questions to officers about hypothetical contingencies. Sir John French and Sir J. S. Ewart persist in their resignations. Sweden holds general elections."
+    "news": ["The Prime Minister announces a new Army Order regarding discipline and forbids questions to officers about hypothetical contingencies. Sir John French and Sir J. S. Ewart persist in their resignations. Sweden holds general elections."]
   },
   {
     "date": "1914-03-28",
-    "news": "Cambridge wins the University Boat Race. Suffragists attempt to fire a church in Glasgow."
+    "news": ["Cambridge wins the University Boat Race. Suffragists attempt to fire a church in Glasgow."]
   },
   {
     "date": "1914-03-29",
-    "news": "The Katherine and William Scoresby Routledge expedition arrives on Easter Island. The Report of the Departmental Committee on Local Taxation is issued."
+    "news": ["The Katherine and William Scoresby Routledge expedition arrives on Easter Island. The Report of the Departmental Committee on Local Taxation is issued."]
   },
   {
     "date": "1914-03-30",
-    "news": "The Prime Minister announces the resignations of Sir John French and Sir J. S. Ewart, and Colonel Seely, and states he will assume the office of Secretary for War himself,. Civil war breaks out in the Dominican Republic."
+    "news": ["The Prime Minister announces the resignations of Sir John French and Sir J. S. Ewart, and Colonel Seely, and states he will assume the office of Secretary for War himself,. Civil war breaks out in the Dominican Republic."]
   },
   {
     "date": "1914-03-31",
-    "news": "The sealing ship *Southern Cross* is lost with all hands,. Sir Hubert von Herkomer, the artist, dies,. Debate on the Home Rule Bill resumes in the Commons."
+    "news": ["The sealing ship *Southern Cross* is lost with all hands,. Sir Hubert von Herkomer, the artist, dies,. Debate on the Home Rule Bill resumes in the Commons."]
   },
   {
     "date": "1914-04-01",
-    "news": "A strike school is established in Burston, Norfolk, after teachers Annie and Tom Higdon were dismissed, with students striking in their support. The Report of the Liberal Land Enquiry Committee regarding urban land proposals is issued."
+    "news": ["A strike school is established in Burston, Norfolk, after teachers Annie and Tom Higdon were dismissed, with students striking in their support. The Report of the Liberal Land Enquiry Committee regarding urban land proposals is issued."]
   },
   {
     "date": "1914-04-04",
-    "news": "A massive demonstration is held in Hyde Park to protest against the coercion of Ulster, featuring speakers such as Sir Edward Carson and Mr. Balfour,. In football, Scotland beats England 3–1 in Glasgow, but Ireland wins the British Home Championship."
+    "news": ["A massive demonstration is held in Hyde Park to protest against the coercion of Ulster, featuring speakers such as Sir Edward Carson and Mr. Balfour,. In football, Scotland beats England 3–1 in Glasgow, but Ireland wins the British Home Championship."]
   },
   {
     "date": "1914-04-05",
-    "news": "A bomb explodes in the church of St Martin-in-the-Fields in London, causing major damage; suffragists are suspected,."
+    "news": ["A bomb explodes in the church of St Martin-in-the-Fields in London, causing major damage; suffragists are suspected,."]
   },
   {
     "date": "1914-04-06",
-    "news": "General Charles W. H. Douglas replaces Field-Marshal Sir John French as Chief of the Imperial General Staff."
+    "news": ["General Charles W. H. Douglas replaces Field-Marshal Sir John French as Chief of the Imperial General Staff."]
   },
   {
     "date": "1914-04-07",
-    "news": "The East African Protectorates Loan Bill and the Mall Approach Improvement Bill are discussed in the House of Commons,. A debate on the adjournment raises issues regarding the obstruction of debate by 'blocking motions'."
+    "news": ["The East African Protectorates Loan Bill and the Mall Approach Improvement Bill are discussed in the House of Commons,. A debate on the adjournment raises issues regarding the obstruction of debate by 'blocking motions'."]
   },
   {
     "date": "1914-04-08",
-    "news": "Colonel Seely speaks at Ilkeston regarding the recent Army crisis, stating he had no intention of overwhelming Ulster by force,. The Prime Minister, Mr. Asquith, is returned unopposed to Parliament for East Fife upon his appointment as Secretary for War."
+    "news": ["Colonel Seely speaks at Ilkeston regarding the recent Army crisis, stating he had no intention of overwhelming Ulster by force,. The Prime Minister, Mr. Asquith, is returned unopposed to Parliament for East Fife upon his appointment as Secretary for War."]
   },
   {
     "date": "1914-04-11",
-    "news": "The first English-language performance of George Bernard Shaw's *Pygmalion* opens at His Majesty's Theatre in London,."
+    "news": ["The first English-language performance of George Bernard Shaw's *Pygmalion* opens at His Majesty's Theatre in London,."]
   },
   {
     "date": "1914-04-14",
-    "news": "Parliament reassembles after Easter; the East African Protectorate (Loans) Bill passes through Committee. The 'Independent Labour party' conference in Bradford passes a resolution declaring Cabinet rule inimical to good government."
+    "news": ["Parliament reassembles after Easter; the East African Protectorate (Loans) Bill passes through Committee. The 'Independent Labour party' conference in Bradford passes a resolution declaring Cabinet rule inimical to good government."]
   },
   {
     "date": "1914-04-15",
-    "news": "The Yorkshire coal strike is virtually closed by a ballot of the miners. In the Commons, a resolution is moved regarding the length of speeches."
+    "news": ["The Yorkshire coal strike is virtually closed by a ballot of the miners. In the Commons, a resolution is moved regarding the length of speeches."]
   },
   {
     "date": "1914-04-17",
-    "news": "Suffragettes burn down the pier pavilion at Yarmouth. The Ulster Unionist Council issues a statement regarding the recent military operations and alleged Government plans to coerce Ulster."
+    "news": ["Suffragettes burn down the pier pavilion at Yarmouth. The Ulster Unionist Council issues a statement regarding the recent military operations and alleged Government plans to coerce Ulster."]
   },
   {
     "date": "1914-04-20",
-    "news": "The second reading of the Welsh Church Bill is debated in the Commons; Lord Robert Cecil moves its rejection. Gun-running preparations are noted in Ulster."
+    "news": ["The second reading of the Welsh Church Bill is debated in the Commons; Lord Robert Cecil moves its rejection. Gun-running preparations are noted in Ulster."]
   },
   {
     "date": "1914-04-21",
-    "news": "King George V and Queen Mary arrive in Paris for a state visit to President Poincaré to celebrate the Anglo-French *entente*. In Parliament, Mr. Balfour appeals to the Welsh people regarding the Welsh Church Bill."
+    "news": ["King George V and Queen Mary arrive in Paris for a state visit to President Poincaré to celebrate the Anglo-French *entente*. In Parliament, Mr. Balfour appeals to the Welsh people regarding the Welsh Church Bill."]
   },
   {
     "date": "1914-04-22",
-    "news": "A White Paper is issued containing Sir A. Paget's account of conversations with officers regarding the Ulster crisis. The King and Queen review French troops at Vincennes."
+    "news": ["A White Paper is issued containing Sir A. Paget's account of conversations with officers regarding the Ulster crisis. The King and Queen review French troops at Vincennes."]
   },
   {
     "date": "1914-04-24",
-    "news": "A massive gun-running operation takes place in Ulster; 35,000 rifles and millions of rounds of ammunition are landed at Larne, Bangor, and Donaghadee,. The King and Queen return to London from Paris."
+    "news": ["A massive gun-running operation takes place in Ulster; 35,000 rifles and millions of rounds of ammunition are landed at Larne, Bangor, and Donaghadee,. The King and Queen return to London from Paris."]
   },
   {
     "date": "1914-04-25",
-    "news": "Burnley beats Liverpool 1–0 in the FA Cup Final at Crystal Palace, attended by the King,."
+    "news": ["Burnley beats Liverpool 1–0 in the FA Cup Final at Crystal Palace, attended by the King,."]
   },
   {
     "date": "1914-04-27",
-    "news": "In the Commons, the Prime Minister announces the Government will take steps to vindicate the law following the Ulster gun-running. The Plural Voting Bill is read a second time."
+    "news": ["In the Commons, the Prime Minister announces the Government will take steps to vindicate the law following the Ulster gun-running. The Plural Voting Bill is read a second time."]
   },
   {
     "date": "1914-04-28",
-    "news": "Suffragettes burn down the Bath Hotel at Felixstowe,. In the Commons, Mr. Austen Chamberlain moves for an impartial inquiry into the alleged 'plot' to coerce Ulster."
+    "news": ["Suffragettes burn down the Bath Hotel at Felixstowe,. In the Commons, Mr. Austen Chamberlain moves for an impartial inquiry into the alleged 'plot' to coerce Ulster."]
   },
   {
     "date": "1914-04-29",
-    "news": "The debate on the Ulster 'plot' continues; Mr. Churchill defends the Government's precautionary measures,. The motion for inquiry is rejected."
+    "news": ["The debate on the Ulster 'plot' continues; Mr. Churchill defends the Government's precautionary measures,. The motion for inquiry is rejected."]
   },
   {
     "date": "1914-04-30",
-    "news": "The Select Committee of the House of Lords issues a unanimous report regarding charges against Lord Murray of Elibank, acquitting him of dishonourable conduct but noting errors of judgment,. The Post Office Estimates are discussed in the Commons."
+    "news": ["The Select Committee of the House of Lords issues a unanimous report regarding charges against Lord Murray of Elibank, acquitting him of dishonourable conduct but noting errors of judgment,. The Post Office Estimates are discussed in the Commons."]
   },
   {
     "date": "1914-05-01",
-    "news": "The Marquess of Lansdowne speaks at the Primrose League meeting, stating the Opposition would examine a federal solution if Ulster found an honourable place in it,."
+    "news": ["The Marquess of Lansdowne speaks at the Primrose League meeting, stating the Opposition would examine a federal solution if Ulster found an honourable place in it,."]
   },
   {
     "date": "1914-05-02",
-    "news": "Mr. Balfour speaks at Coventry, referring to the 'clean-cut separation' of North-East Ireland. At the Royal Academy banquet, Prince Arthur of Connaught criticizes 'fantastic vagaries' of current art."
+    "news": ["Mr. Balfour speaks at Coventry, referring to the 'clean-cut separation' of North-East Ireland. At the Royal Academy banquet, Prince Arthur of Connaught criticizes 'fantastic vagaries' of current art."]
   },
   {
     "date": "1914-05-04",
-    "news": "The Budget is introduced by Mr. Lloyd George; income tax is raised and a new system of grants for local taxation is proposed,. At the Royal Academy, a portrait of Henry James by Sargent is damaged by a suffragette with a meat cleaver."
+    "news": ["The Budget is introduced by Mr. Lloyd George; income tax is raised and a new system of grants for local taxation is proposed,. At the Royal Academy, a portrait of Henry James by Sargent is damaged by a suffragette with a meat cleaver."]
   },
   {
     "date": "1914-05-05",
-    "news": "The Women's Enfranchisement Bill is debated in the House of Lords; Lord Selborne moves the second reading."
+    "news": ["The Women's Enfranchisement Bill is debated in the House of Lords; Lord Selborne moves the second reading."]
   },
   {
     "date": "1914-05-06",
-    "news": "The House of Lords rejects the Women's Suffrage Bill by 104 to 60,. In the Commons, debate on the Budget begins."
+    "news": ["The House of Lords rejects the Women's Suffrage Bill by 104 to 60,. In the Commons, debate on the Budget begins."]
   },
   {
     "date": "1914-05-07",
-    "news": "Prince Alexander of Teck is announced as the successor to the Duke of Connaught as Governor-General of Canada. Debate on the Budget continues in the Commons."
+    "news": ["Prince Alexander of Teck is announced as the successor to the Duke of Connaught as Governor-General of Canada. Debate on the Budget continues in the Commons."]
   },
   {
     "date": "1914-05-09",
-    "news": "The King and Queen of Denmark arrive in London for a state visit."
+    "news": ["The King and Queen of Denmark arrive in London for a state visit."]
   },
   {
     "date": "1914-05-11",
-    "news": "The Chancellor of the Exchequer replies to criticisms of the Budget. Suffragettes attempt to interrupt a gala performance at the opera attended by the King and Queen."
+    "news": ["The Chancellor of the Exchequer replies to criticisms of the Budget. Suffragettes attempt to interrupt a gala performance at the opera attended by the King and Queen."]
   },
   {
     "date": "1914-05-12",
-    "news": "A portrait of the Duke of Wellington by Herkomer is damaged by a suffragette at the Royal Academy,. The Prime Minister moves a resolution to dispense with discussion on the Committee stage of the Home Rule, Welsh Church, and Plural Voting Bills."
+    "news": ["A portrait of the Duke of Wellington by Herkomer is damaged by a suffragette at the Royal Academy,. The Prime Minister moves a resolution to dispense with discussion on the Committee stage of the Home Rule, Welsh Church, and Plural Voting Bills."]
   },
   {
     "date": "1914-05-13",
-    "news": "Seventeen British sailors drown in separate sinkings in the North Sea and English Channel. The financial resolution for the Welsh Church Bill is discussed in the Commons."
+    "news": ["Seventeen British sailors drown in separate sinkings in the North Sea and English Channel. The financial resolution for the Welsh Church Bill is discussed in the Commons."]
   },
   {
     "date": "1914-05-14",
-    "news": "The Anglo-American Exhibition opens at Shepherd's Bush. The houses of Lord Lansdowne and Sir Edward Carson are picketed by suffragists."
+    "news": ["The Anglo-American Exhibition opens at Shepherd's Bush. The houses of Lord Lansdowne and Sir Edward Carson are picketed by suffragists."]
   },
   {
     "date": "1914-05-15",
-    "news": "The Government of Scotland Bill (devolution) is debated in the Commons. Suffragettes burn down a cricket pavilion near Birmingham."
+    "news": ["The Government of Scotland Bill (devolution) is debated in the Commons. Suffragettes burn down a cricket pavilion near Birmingham."]
   },
   {
     "date": "1914-05-16",
-    "news": "Railway servants' leaders decide to demand recognition of their trade union and a shorter work week."
+    "news": ["Railway servants' leaders decide to demand recognition of their trade union and a shorter work week."]
   },
   {
     "date": "1914-05-19",
-    "news": "The Welsh Church Bill passes its third reading in the Commons by 328 to 251."
+    "news": ["The Welsh Church Bill passes its third reading in the Commons by 328 to 251."]
   },
   {
     "date": "1914-05-20",
-    "news": "The financial resolution for the Home Rule Bill is debated stormily in the Commons. At the North-East Derbyshire bye-election, the Unionist candidate wins due to a Liberal-Labour split."
+    "news": ["The financial resolution for the Home Rule Bill is debated stormily in the Commons. At the North-East Derbyshire bye-election, the Unionist candidate wins due to a Liberal-Labour split."]
   },
   {
     "date": "1914-05-21",
-    "news": "A deputation of women attempts to force its way to Buckingham Palace to petition the King; 66 are arrested after a conflict with police. In the Commons, the Weekly Rest Day Bill is rejected. Amid rising tension, the Prime Minister refuses to disclose details of the Home Rule Amending Bill."
+    "news": ["A deputation of women attempts to force its way to Buckingham Palace to petition the King; 66 are arrested after a conflict with police. In the Commons, the Weekly Rest Day Bill is rejected. Amid rising tension, the Prime Minister refuses to disclose details of the Home Rule Amending Bill."]
   },
   {
     "date": "1914-05-22",
-    "news": "Suffragettes interrupt a charity performance attended by the King and Queen; one addresses the King as 'Russian Tsar'. Five valuable pictures are damaged at the National Gallery."
+    "news": ["Suffragettes interrupt a charity performance attended by the King and Queen; one addresses the King as 'Russian Tsar'. Five valuable pictures are damaged at the National Gallery."]
   },
   {
     "date": "1914-05-23",
-    "news": "Gustav Hamel, aviation pioneer, disappears while flying over the English Channel,. At the Ipswich bye-election, the Liberal candidate Mr. Masterman is defeated."
+    "news": ["Gustav Hamel, aviation pioneer, disappears while flying over the English Channel,. At the Ipswich bye-election, the Liberal candidate Mr. Masterman is defeated."]
   },
   {
     "date": "1914-05-25",
-    "news": "The Home Rule Bill passes its third reading in the House of Commons by 351 to 274,."
+    "news": ["The Home Rule Bill passes its third reading in the House of Commons by 351 to 274,."]
   },
   {
     "date": "1914-05-26",
-    "news": "The General Assembly of the Church of Scotland accepts a draft constitution for reunion with the United Free Church."
+    "news": ["The General Assembly of the Church of Scotland accepts a draft constitution for reunion with the United Free Church."]
   },
   {
     "date": "1914-05-27",
-    "news": "Suffragettes break windows at Buckingham Palace."
+    "news": ["Suffragettes break windows at Buckingham Palace."]
   },
   {
     "date": "1914-05-29",
-    "news": "The ocean liner RMS *Empress of Ireland* sinks in the Gulf of St. Lawrence after a collision; over 1,000 lives are lost, including Sir Henry Seton-Karr and Laurence Irving,."
+    "news": ["The ocean liner RMS *Empress of Ireland* sinks in the Gulf of St. Lawrence after a collision; over 1,000 lives are lost, including Sir Henry Seton-Karr and Laurence Irving,."]
   },
   {
     "date": "1914-05-30",
-    "news": "The RMS *Aquitania* makes her maiden voyage from Liverpool to New York. Viscount Milner describes the situation in Ireland as 'smouldering war'."
+    "news": ["The RMS *Aquitania* makes her maiden voyage from Liverpool to New York. Viscount Milner describes the situation in Ireland as 'smouldering war'."]
   },
   {
     "date": "1914-06-01",
-    "news": "Wargrave Church near Henley is burnt down by militant suffragettes. The Co-operative Congress opens in Dublin."
+    "news": ["Wargrave Church near Henley is burnt down by militant suffragettes. The Co-operative Congress opens in Dublin."]
   },
   {
     "date": "1914-06-02",
-    "news": "Sir Edward Carson speaks at East Belfast, stating he is there to 'make arrangements for the final scene'. A burglar is arrested inside Buckingham Palace."
+    "news": ["Sir Edward Carson speaks at East Belfast, stating he is there to 'make arrangements for the final scene'. A burglar is arrested inside Buckingham Palace."]
   },
   {
     "date": "1914-06-04",
-    "news": "The King's Birthday Honours list is published. A suffragette appeals to the King at Court to stop 'torturing women'."
+    "news": ["The King's Birthday Honours list is published. A suffragette appeals to the King at Court to stop 'torturing women'."]
   },
   {
     "date": "1914-06-05",
-    "news": "The Salvation Army holds a memorial service at Albert Hall for victims of the *Empress of Ireland* disaster."
+    "news": ["The Salvation Army holds a memorial service at Albert Hall for victims of the *Empress of Ireland* disaster."]
   },
   {
     "date": "1914-06-06",
-    "news": "American aviator Walter L. Brock wins the 'Aerial Derby' round London."
+    "news": ["American aviator Walter L. Brock wins the 'Aerial Derby' round London."]
   },
   {
     "date": "1914-06-09",
-    "news": "Mr. John Redmond issues a statement that the Nationalist party will support the Irish Volunteers."
+    "news": ["Mr. John Redmond issues a statement that the Nationalist party will support the Irish Volunteers."]
   },
   {
     "date": "1914-06-10",
-    "news": "Sylvia Pankhurst is rearrested while leading a deputation to Parliament. A statue of Roger Bacon is unveiled at Oxford."
+    "news": ["Sylvia Pankhurst is rearrested while leading a deputation to Parliament. A statue of Roger Bacon is unveiled at Oxford."]
   },
   {
     "date": "1914-06-11",
-    "news": "A bomb explodes in Edward the Confessor's Chapel in Westminster Abbey, slightly injuring the Coronation Chair,. Mr. Bonar Law speaks at Inverness against the 'coercion of Ulster'."
+    "news": ["A bomb explodes in Edward the Confessor's Chapel in Westminster Abbey, slightly injuring the Coronation Chair,. Mr. Bonar Law speaks at Inverness against the 'coercion of Ulster'."]
   },
   {
     "date": "1914-06-12",
-    "news": "A joint protest against militancy is issued by constitutional women's suffrage societies."
+    "news": ["A joint protest against militancy is issued by constitutional women's suffrage societies."]
   },
   {
     "date": "1914-06-13",
-    "news": "The Prince of Wales performs his first public function, laying the foundation stone of St. Anselm's Church, Kennington. Queen Alexandra inspects 10,000 Boy Scouts."
+    "news": ["The Prince of Wales performs his first public function, laying the foundation stone of St. Anselm's Church, Kennington. Queen Alexandra inspects 10,000 Boy Scouts."]
   },
   {
     "date": "1914-06-15",
-    "news": "The Plural Voting Bill passes the Commons. A deputation of Liberals protest to the Prime Minister against the Finance Bill procedure."
+    "news": ["The Plural Voting Bill passes the Commons. A deputation of Liberals protest to the Prime Minister against the Finance Bill procedure."]
   },
   {
     "date": "1914-06-16",
-    "news": "Debates occur in both Houses regarding the Irish Volunteers; Lord Robert Cecil calls attention to the danger of two opposing Volunteer forces."
+    "news": ["Debates occur in both Houses regarding the Irish Volunteers; Lord Robert Cecil calls attention to the danger of two opposing Volunteer forces."]
   },
   {
     "date": "1914-06-17",
-    "news": "The Government's plan to invest in the Anglo-Persian Oil Company is discussed in the Commons. The First Lord of the Admiralty defends the scheme as necessary for the Navy."
+    "news": ["The Government's plan to invest in the Anglo-Persian Oil Company is discussed in the Commons. The First Lord of the Admiralty defends the scheme as necessary for the Navy."]
   },
   {
     "date": "1914-06-18",
-    "news": "A railway bridge collapses at Carrbridge, Scotland, killing five people. A Conference of National Railwaymen approves an alliance with Miners and Transport Workers."
+    "news": ["A railway bridge collapses at Carrbridge, Scotland, killing five people. A Conference of National Railwaymen approves an alliance with Miners and Transport Workers."]
   },
   {
     "date": "1914-06-20",
-    "news": "A deputation of working women from East London meets the Prime Minister regarding women's suffrage. The Chancellor of the Exchequer speaks at Denmark Hill, defending the Budget."
+    "news": ["A deputation of working women from East London meets the Prime Minister regarding women's suffrage. The Chancellor of the Exchequer speaks at Denmark Hill, defending the Budget."]
   },
   {
     "date": "1914-06-22",
-    "news": "The Finance Bill is debated in the Commons; the President of the Local Government Board announces changes to the Bill due to procedural objections,."
+    "news": ["The Finance Bill is debated in the Commons; the President of the Local Government Board announces changes to the Bill due to procedural objections,."]
   },
   {
     "date": "1914-06-23",
-    "news": "The Government of Ireland Amending Bill is introduced in the House of Lords by the Marquess of Crewe. The King's Birthday honours are gazetted."
+    "news": ["The Government of Ireland Amending Bill is introduced in the House of Lords by the Marquess of Crewe. The King's Birthday honours are gazetted."]
   },
   {
     "date": "1914-06-25",
-    "news": "The Prime Minister defends the Budget against criticism in the Commons. The King and Queen visit Nottingham and the Midlands."
+    "news": ["The Prime Minister defends the Budget against criticism in the Commons. The King and Queen visit Nottingham and the Midlands."]
   },
   {
     "date": "1914-06-26",
-    "news": "The King opens the King George Dock at Hull. In the Commons, the Finance Bill passes its second reading by a narrow majority."
+    "news": ["The King opens the King George Dock at Hull. In the Commons, the Finance Bill passes its second reading by a narrow majority."]
   },
   {
     "date": "1914-06-29",
-    "news": "The Assassination of Archduke Franz Ferdinand and his wife in Sarajevo is reported; the news shocks Great Britain but initial apprehensions are limited to the Near East. In Parliament, the Foreign Office Vote is debated."
+    "news": ["The Assassination of Archduke Franz Ferdinand and his wife in Sarajevo is reported; the news shocks Great Britain but initial apprehensions are limited to the Near East. In Parliament, the Foreign Office Vote is debated."]
   },
   {
     "date": "1914-06-30",
-    "news": "Addresses of sympathy to the Austrian Emperor are moved in both Houses of Parliament. The Earl of Wemyss dies."
+    "news": ["Addresses of sympathy to the Austrian Emperor are moved in both Houses of Parliament. The Earl of Wemyss dies."]
   },
   {
     "date": "1914-07-01",
-    "news": "The Naval Wing of the Royal Flying Corps becomes the Royal Naval Air Service. Debate on the Amending Bill begins in the House of Lords."
+    "news": ["The Naval Wing of the Royal Flying Corps becomes the Royal Naval Air Service. Debate on the Amending Bill begins in the House of Lords."]
   },
   {
     "date": "1914-07-02",
-    "news": "Mr. Joseph Chamberlain dies at his home in Birmingham,. In the Lords, the Marquess of Londonderry asks if the Government will accept amendments to the Amending Bill."
+    "news": ["Mr. Joseph Chamberlain dies at his home in Birmingham,. In the Lords, the Marquess of Londonderry asks if the Government will accept amendments to the Amending Bill."]
   },
   {
     "date": "1914-07-03",
-    "news": "Suffragettes burn Ballymenoch House near Belfast. A strike at Woolwich Arsenal begins over the employment of non-union labour."
+    "news": ["Suffragettes burn Ballymenoch House near Belfast. A strike at Woolwich Arsenal begins over the employment of non-union labour."]
   },
   {
     "date": "1914-07-06",
-    "news": "Funeral of Mr. Joseph Chamberlain; tributes are paid in Parliament,. The King and Queen begin a visit to Scotland."
+    "news": ["Funeral of Mr. Joseph Chamberlain; tributes are paid in Parliament,. The King and Queen begin a visit to Scotland."]
   },
   {
     "date": "1914-07-07",
-    "news": "The Prime Minister moves to limit debate on the Finance Bill (guillotine motion), sparking opposition protests."
+    "news": ["The Prime Minister moves to limit debate on the Finance Bill (guillotine motion), sparking opposition protests."]
   },
   {
     "date": "1914-07-08",
-    "news": "The House of Lords transforms the Amending Bill, voting to exclude the whole of Ulster from Home Rule."
+    "news": ["The House of Lords transforms the Amending Bill, voting to exclude the whole of Ulster from Home Rule."]
   },
   {
     "date": "1914-07-09",
-    "news": "Captain Craig reads the preamble to the Constitution of the Ulster Provisional Government, declaring resistance to Home Rule. The Woolwich Arsenal strike ends."
+    "news": ["Captain Craig reads the preamble to the Constitution of the Ulster Provisional Government, declaring resistance to Home Rule. The Woolwich Arsenal strike ends."]
   },
   {
     "date": "1914-07-10",
-    "news": "Sir Edward Carson receives an enthusiastic welcome in Belfast. Foreign Office Vote debate continues in the Commons."
+    "news": ["Sir Edward Carson receives an enthusiastic welcome in Belfast. Foreign Office Vote debate continues in the Commons."]
   },
   {
     "date": "1914-07-12",
-    "news": "A bomb is found in St. John the Evangelist Church, Westminster."
+    "news": ["A bomb is found in St. John the Evangelist Church, Westminster."]
   },
   {
     "date": "1914-07-13",
-    "news": "Boyne anniversary celebrations in Ulster pass off without disturbance. The House of Lords passes the Report Stage of the Amending Bill."
+    "news": ["Boyne anniversary celebrations in Ulster pass off without disturbance. The House of Lords passes the Report Stage of the Amending Bill."]
   },
   {
     "date": "1914-07-14",
-    "news": "The House of Lords passes the Amending Bill after inserting a clause suspending the Home Rule Act until a Commission reports,."
+    "news": ["The House of Lords passes the Amending Bill after inserting a clause suspending the Home Rule Act until a Commission reports,."]
   },
   {
     "date": "1914-07-15",
-    "news": "The House of Lords rejects the Plural Voting Bill."
+    "news": ["The House of Lords rejects the Plural Voting Bill."]
   },
   {
     "date": "1914-07-17",
-    "news": "The King attends a naval review at Spithead; the fleet is later kept mobilized,. Conference negotiations on Home Rule are reported."
+    "news": ["The King attends a naval review at Spithead; the fleet is later kept mobilized,. Conference negotiations on Home Rule are reported."]
   },
   {
     "date": "1914-07-18",
-    "news": "The King inspects the British Fleet at Spithead, the largest ever assembled,."
+    "news": ["The King inspects the British Fleet at Spithead, the largest ever assembled,."]
   },
   {
     "date": "1914-07-20",
-    "news": "It is announced that the King has summoned a conference on the Ulster question at Buckingham Palace. The Prime Minister announces the postponement of the Amending Bill pending the conference."
+    "news": ["It is announced that the King has summoned a conference on the Ulster question at Buckingham Palace. The Prime Minister announces the postponement of the Amending Bill pending the conference."]
   },
   {
     "date": "1914-07-21",
-    "news": "The Buckingham Palace Conference opens; the King addresses the delegates regarding the 'cry of civil war'. Liberal and Labour members express misgivings about the King's intervention."
+    "news": ["The Buckingham Palace Conference opens; the King addresses the delegates regarding the 'cry of civil war'. Liberal and Labour members express misgivings about the King's intervention."]
   },
   {
     "date": "1914-07-23",
-    "news": "The Finance Bill passes its third reading in the Commons. Austria-Hungary presents an ultimatum to Serbia."
+    "news": ["The Finance Bill passes its third reading in the Commons. Austria-Hungary presents an ultimatum to Serbia."]
   },
   {
     "date": "1914-07-24",
-    "news": "The Buckingham Palace Conference breaks up without agreement,. The Cabinet learns of the Austro-Hungarian note to Serbia; Sir Edward Grey proposes mediation."
+    "news": ["The Buckingham Palace Conference breaks up without agreement,. The Cabinet learns of the Austro-Hungarian note to Serbia; Sir Edward Grey proposes mediation."]
   },
   {
     "date": "1914-07-26",
-    "news": "Gun-running by Irish Volunteers at Howth; troops (King's Own Scottish Borderers) fire on a crowd at Bachelor's Walk, Dublin, killing three,,. Sir Edward Grey proposes a conference of ambassadors to avert war."
+    "news": ["Gun-running by Irish Volunteers at Howth; troops (King's Own Scottish Borderers) fire on a crowd at Bachelor's Walk, Dublin, killing three,,. Sir Edward Grey proposes a conference of ambassadors to avert war."]
   },
   {
     "date": "1914-07-27",
-    "news": "Sir Edward Grey makes a statement in the Commons on the European situation. A debate is held on the Dublin gun-running affray. The London Stock Exchange shows signs of crisis."
+    "news": ["Sir Edward Grey makes a statement in the Commons on the European situation. A debate is held on the Dublin gun-running affray. The London Stock Exchange shows signs of crisis."]
   },
   {
     "date": "1914-07-28",
-    "news": "Austria-Hungary declares war on Serbia. The First Fleet is ordered to Scapa Flow."
+    "news": ["Austria-Hungary declares war on Serbia. The First Fleet is ordered to Scapa Flow."]
   },
   {
     "date": "1914-07-29",
-    "news": "The warning telegram is sent to the fleet. In the Commons, the Prime Minister urges a united front."
+    "news": ["The warning telegram is sent to the fleet. In the Commons, the Prime Minister urges a united front."]
   },
   {
     "date": "1914-07-30",
-    "news": "The Prime Minister announces the postponement of the Amending Bill due to the critical European situation. Labour MPs protest against war."
+    "news": ["The Prime Minister announces the postponement of the Amending Bill due to the critical European situation. Labour MPs protest against war."]
   },
   {
     "date": "1914-07-31",
-    "news": "The London Stock Exchange is closed indefinitely,. Russia orders general mobilization. The Postponement of Payments Bill is introduced."
+    "news": ["The London Stock Exchange is closed indefinitely,. Russia orders general mobilization. The Postponement of Payments Bill is introduced."]
   },
   {
     "date": "1914-08-01",
-    "news": "Germany declares war on Russia. The British Cabinet meets to discuss the crisis. The London Stock Exchange remains closed, and the Bank Rate is raised to 10 per cent to check the financial panic,."
+    "news": ["Germany declares war on Russia. The British Cabinet meets to discuss the crisis. The London Stock Exchange remains closed, and the Bank Rate is raised to 10 per cent to check the financial panic,."]
   },
   {
     "date": "1914-08-02",
-    "news": "German troops invade Luxemburg. The British Cabinet decides to take action, and a Royal Proclamation institutes a partial moratorium on debts. Crowds demonstrate patriotism outside Buckingham Palace,."
+    "news": ["German troops invade Luxemburg. The British Cabinet decides to take action, and a Royal Proclamation institutes a partial moratorium on debts. Crowds demonstrate patriotism outside Buckingham Palace,."]
   },
   {
     "date": "1914-08-03",
-    "news": "Germany declares war on France and issues an ultimatum to Belgium. Sir Edward Grey addresses the House of Commons, announcing that Britain will protect the French coast and maintain Belgian neutrality. The Bank Holiday is extended,."
+    "news": ["Germany declares war on France and issues an ultimatum to Belgium. Sir Edward Grey addresses the House of Commons, announcing that Britain will protect the French coast and maintain Belgian neutrality. The Bank Holiday is extended,."]
   },
   {
     "date": "1914-08-04",
-    "news": "Great Britain declares war on Germany following the expiration of an ultimatum demanding respect for Belgian neutrality. The Army is mobilised, and the Government takes control of the railways. Admiral Sir John Jellicoe is appointed to command the Home Fleets,,."
+    "news": ["Great Britain declares war on Germany following the expiration of an ultimatum demanding respect for Belgian neutrality. The Army is mobilised, and the Government takes control of the railways. Admiral Sir John Jellicoe is appointed to command the Home Fleets,,."]
   },
   {
     "date": "1914-08-05",
-    "news": "Lord Kitchener is appointed Secretary of State for War. The German mine-layer *Königin Luise* is sunk by H.M.S. *Amphion* in the North Sea, the first naval success of the war,,."
+    "news": ["Lord Kitchener is appointed Secretary of State for War. The German mine-layer *Königin Luise* is sunk by H.M.S. *Amphion* in the North Sea, the first naval success of the war,,."]
   },
   {
     "date": "1914-08-06",
-    "news": "H.M.S. *Amphion* strikes a mine and sinks with the loss of 150 lives. The House of Commons passes a Vote of Credit for £100,000,000 and sanctions an increase of the Army by 500,000 men. The Prince of Wales launches a National Relief Fund,,."
+    "news": ["H.M.S. *Amphion* strikes a mine and sinks with the loss of 150 lives. The House of Commons passes a Vote of Credit for £100,000,000 and sanctions an increase of the Army by 500,000 men. The Prince of Wales launches a National Relief Fund,,."]
   },
   {
     "date": "1914-08-07",
-    "news": "New £1 and 10s. currency notes are issued as banks reopen. British forces land in France (the Expeditionary Force begins crossing). The cruiser H.M.S. *Birmingham* sinks the German submarine U-15,,."
+    "news": ["New £1 and 10s. currency notes are issued as banks reopen. British forces land in France (the Expeditionary Force begins crossing). The cruiser H.M.S. *Birmingham* sinks the German submarine U-15,,."]
   },
   {
     "date": "1914-08-08",
-    "news": "The Defence of the Realm Act ('DORA') is passed, giving the Government wide powers for national security. The Bank Rate is reduced to 5 per cent, easing the financial situation,,."
+    "news": ["The Defence of the Realm Act ('DORA') is passed, giving the Government wide powers for national security. The Bank Rate is reduced to 5 per cent, easing the financial situation,,."]
   },
   {
     "date": "1914-08-10",
-    "news": "The Government announces a state of war exists between Great Britain and Austria-Hungary (officially declared later). All German and Austrian reservists in the UK are ordered to be detained,."
+    "news": ["The Government announces a state of war exists between Great Britain and Austria-Hungary (officially declared later). All German and Austrian reservists in the UK are ordered to be detained,."]
   },
   {
     "date": "1914-08-12",
-    "news": "Great Britain formally declares war on Austria-Hungary. The Press Bureau is established to control war news,."
+    "news": ["Great Britain formally declares war on Austria-Hungary. The Press Bureau is established to control war news,."]
   },
   {
     "date": "1914-08-17",
-    "news": "The Belgian Government moves to Antwerp as the German army advances. General Sir James Grierson dies suddenly in France and is succeeded by Sir Horace Smith-Dorrien,,."
+    "news": ["The Belgian Government moves to Antwerp as the German army advances. General Sir James Grierson dies suddenly in France and is succeeded by Sir Horace Smith-Dorrien,,."]
   },
   {
     "date": "1914-08-18",
-    "news": "The safe arrival of the British Expeditionary Force in France is officially announced. Earl Kitchener issues instructions to the troops to ensure high standards of conduct,."
+    "news": ["The safe arrival of the British Expeditionary Force in France is officially announced. Earl Kitchener issues instructions to the troops to ensure high standards of conduct,."]
   },
   {
     "date": "1914-08-21",
-    "news": "A National Day of Intercession is held in churches across the country. The German army enters Brussels,."
+    "news": ["A National Day of Intercession is held in churches across the country. The German army enters Brussels,."]
   },
   {
     "date": "1914-08-23",
-    "news": "British troops engage in their first major battle at Mons, Belgium. Japan declares war on Germany,."
+    "news": ["British troops engage in their first major battle at Mons, Belgium. Japan declares war on Germany,."]
   },
   {
     "date": "1914-08-24",
-    "news": "The British Army begins its retreat from Mons in the face of superior German numbers. The fortress of Namur falls to the Germans,."
+    "news": ["The British Army begins its retreat from Mons in the face of superior German numbers. The fortress of Namur falls to the Germans,."]
   },
   {
     "date": "1914-08-25",
-    "news": "Lord Kitchener makes his first speech in the House of Lords, predicting a long war and calling for more recruits. British forces fight a rearguard action at Landrecies,."
+    "news": ["Lord Kitchener makes his first speech in the House of Lords, predicting a long war and calling for more recruits. British forces fight a rearguard action at Landrecies,."]
   },
   {
     "date": "1914-08-26",
-    "news": "Battle of Le Cateau: British troops fight a desperate holding action against the German advance. The armed merchant cruiser *Kaiser Wilhelm der Grosse* is sunk by H.M.S. *Highflyer*,."
+    "news": ["Battle of Le Cateau: British troops fight a desperate holding action against the German advance. The armed merchant cruiser *Kaiser Wilhelm der Grosse* is sunk by H.M.S. *Highflyer*,."]
   },
   {
     "date": "1914-08-28",
-    "news": "British naval forces win a significant victory in the Battle of Heligoland Bight, sinking three German cruisers and a destroyer with minimal British losses,."
+    "news": ["British naval forces win a significant victory in the Battle of Heligoland Bight, sinking three German cruisers and a destroyer with minimal British losses,."]
   },
   {
     "date": "1914-08-30",
-    "news": "A sensational dispatch in *The Times* reports the British Army is 'broken' and retreating, causing public alarm, though the War Office later issues a reassuring statement,."
+    "news": ["A sensational dispatch in *The Times* reports the British Army is 'broken' and retreating, causing public alarm, though the War Office later issues a reassuring statement,."]
   },
   {
     "date": "1914-09-03",
-    "news": "The French Government leaves Paris for Bordeaux as the German army approaches. H.M.S. *Speedy* is sunk by a mine in the North Sea,."
+    "news": ["The French Government leaves Paris for Bordeaux as the German army approaches. H.M.S. *Speedy* is sunk by a mine in the North Sea,."]
   },
   {
     "date": "1914-09-04",
-    "news": "The Prime Minister, Mr. Asquith, addresses a historic meeting at the Guildhall to stimulate recruiting, declaring Britain fights for the sanctity of treaties and the rights of small nations,."
+    "news": ["The Prime Minister, Mr. Asquith, addresses a historic meeting at the Guildhall to stimulate recruiting, declaring Britain fights for the sanctity of treaties and the rights of small nations,."]
   },
   {
     "date": "1914-09-05",
-    "news": "Great Britain, France, and Russia sign the Pact of London, agreeing not to conclude a separate peace. The scout cruiser H.M.S. *Pathfinder* is torpedoed and sunk in the North Sea,,."
+    "news": ["Great Britain, France, and Russia sign the Pact of London, agreeing not to conclude a separate peace. The scout cruiser H.M.S. *Pathfinder* is torpedoed and sunk in the North Sea,,."]
   },
   {
     "date": "1914-09-06",
-    "news": "The Battle of the Marne begins; the Allied armies halt their retreat and launch a counter-offensive against the German forces threatening Paris,."
+    "news": ["The Battle of the Marne begins; the Allied armies halt their retreat and launch a counter-offensive against the German forces threatening Paris,."]
   },
   {
     "date": "1914-09-09",
-    "news": "It is announced in Parliament that Indian troops are coming to support the British Army, and that the Princes and peoples of India have made munificent offers of aid,."
+    "news": ["It is announced in Parliament that Indian troops are coming to support the British Army, and that the Princes and peoples of India have made munificent offers of aid,."]
   },
   {
     "date": "1914-09-10",
-    "news": "The Battle of the Marne ends with the retreat of the German armies. The British Parliament votes to increase the Army by another 500,000 men,."
+    "news": ["The Battle of the Marne ends with the retreat of the German armies. The British Parliament votes to increase the Army by another 500,000 men,."]
   },
   {
     "date": "1914-09-14",
-    "news": "It is announced that Parliament will be prorogued and the Home Rule and Welsh Church Bills will become law under the Parliament Act, but their operation will be suspended until after the war,."
+    "news": ["It is announced that Parliament will be prorogued and the Home Rule and Welsh Church Bills will become law under the Parliament Act, but their operation will be suspended until after the war,."]
   },
   {
     "date": "1914-09-18",
-    "news": "The King signs the Home Rule Bill. Parliament is prorogued with a patriotic demonstration, members singing 'God Save the King'. The Prime Minister speaks in Edinburgh on the war,."
+    "news": ["The King signs the Home Rule Bill. Parliament is prorogued with a patriotic demonstration, members singing 'God Save the King'. The Prime Minister speaks in Edinburgh on the war,."]
   },
   {
     "date": "1914-09-20",
-    "news": "The cruiser H.M.S. *Pegasus* is surprised and disabled by the German cruiser *Königsberg* at Zanzibar. The German bombardment of Rheims Cathedral shocks the civilised world,."
+    "news": ["The cruiser H.M.S. *Pegasus* is surprised and disabled by the German cruiser *Königsberg* at Zanzibar. The German bombardment of Rheims Cathedral shocks the civilised world,."]
   },
   {
     "date": "1914-09-22",
-    "news": "The British armoured cruisers *Aboukir*, *Hogue*, and *Cressy* are torpedoed and sunk by a single German submarine in the North Sea with the loss of over 1,400 lives,."
+    "news": ["The British armoured cruisers *Aboukir*, *Hogue*, and *Cressy* are torpedoed and sunk by a single German submarine in the North Sea with the loss of over 1,400 lives,."]
   },
   {
     "date": "1914-09-23",
-    "news": "British airmen carry out a daring raid on the Zeppelin sheds at Düsseldorf,."
+    "news": ["British airmen carry out a daring raid on the Zeppelin sheds at Düsseldorf,."]
   },
   {
     "date": "1914-09-25",
-    "news": "Mr. Asquith addresses a recruiting meeting in Dublin, standing with Mr. John Redmond to appeal for Irish volunteers,."
+    "news": ["Mr. Asquith addresses a recruiting meeting in Dublin, standing with Mr. John Redmond to appeal for Irish volunteers,."]
   },
   {
     "date": "1914-10-02",
-    "news": "Mr. Asquith speaks at Cardiff, revealing that in 1912 Germany had asked Britain for a pledge of unconditional neutrality, which was refused,."
+    "news": ["Mr. Asquith speaks at Cardiff, revealing that in 1912 Germany had asked Britain for a pledge of unconditional neutrality, which was refused,."]
   },
   {
     "date": "1914-10-09",
-    "news": "The city of Antwerp falls to the Germans after a heavy bombardment; the British Naval Division aids in the defence but is forced to withdraw,."
+    "news": ["The city of Antwerp falls to the Germans after a heavy bombardment; the British Naval Division aids in the defence but is forced to withdraw,."]
   },
   {
     "date": "1914-10-13",
-    "news": "Rebellion breaks out in South Africa led by Colonel Maritz. The Government announces Belgian refugees are arriving in Folkestone in large numbers,."
+    "news": ["Rebellion breaks out in South Africa led by Colonel Maritz. The Government announces Belgian refugees are arriving in Folkestone in large numbers,."]
   },
   {
     "date": "1914-10-15",
-    "news": "The cruiser H.M.S. *Hawke* is sunk by a submarine in the North Sea with heavy loss of life. A Labour manifesto supports the continuance of the war until victory,."
+    "news": ["The cruiser H.M.S. *Hawke* is sunk by a submarine in the North Sea with heavy loss of life. A Labour manifesto supports the continuance of the war until victory,."]
   },
   {
     "date": "1914-10-16",
-    "news": "The Battle of the Yser begins as the Allies fight to hold the line to the sea. The cruiser *Theseus* escapes a submarine attack,."
+    "news": ["The Battle of the Yser begins as the Allies fight to hold the line to the sea. The cruiser *Theseus* escapes a submarine attack,."]
   },
   {
     "date": "1914-10-17",
-    "news": "British light cruisers sink four German destroyers off the Dutch coast. Anti-German riots occur in Deptford and Camberwell,."
+    "news": ["British light cruisers sink four German destroyers off the Dutch coast. Anti-German riots occur in Deptford and Camberwell,."]
   },
   {
     "date": "1914-10-21",
-    "news": "Trafalgar Day is observed. Orders are issued for the arrest of Germans and Austrians of military age in the UK,."
+    "news": ["Trafalgar Day is observed. Orders are issued for the arrest of Germans and Austrians of military age in the UK,."]
   },
   {
     "date": "1914-10-27",
-    "news": "The British super-dreadnought H.M.S. *Audacious* strikes a mine and sinks off the coast of Ireland (the loss is kept official secret but rumours spread),."
+    "news": ["The British super-dreadnought H.M.S. *Audacious* strikes a mine and sinks off the coast of Ireland (the loss is kept official secret but rumours spread),."]
   },
   {
     "date": "1914-10-29",
-    "news": "Turkey enters the war by bombarding Russian Black Sea ports. Prince Louis of Battenberg resigns as First Sea Lord due to his German origin,."
+    "news": ["Turkey enters the war by bombarding Russian Black Sea ports. Prince Louis of Battenberg resigns as First Sea Lord due to his German origin,."]
   },
   {
     "date": "1914-10-30",
-    "news": "Lord Fisher is appointed First Sea Lord. The hospital ship *Rohilla* is wrecked off Whitby with the loss of 85 lives,."
+    "news": ["Lord Fisher is appointed First Sea Lord. The hospital ship *Rohilla* is wrecked off Whitby with the loss of 85 lives,."]
   },
   {
     "date": "1914-10-31",
-    "news": "The cruiser H.M.S. *Hermes* is torpedoed and sunk in the Straits of Dover. The London Scottish regiment distinguishes itself in action near Ypres, the first Territorial unit to do so,."
+    "news": ["The cruiser H.M.S. *Hermes* is torpedoed and sunk in the Straits of Dover. The London Scottish regiment distinguishes itself in action near Ypres, the first Territorial unit to do so,."]
   },
   {
     "date": "1914-11-01",
-    "news": "Battle of Coronel: A British naval squadron is defeated by German cruisers off the coast of Chile; H.M.S. *Good Hope* and *Monmouth* are lost. Admiralty announces the Turkish attacks on Russia,."
+    "news": ["Battle of Coronel: A British naval squadron is defeated by German cruisers off the coast of Chile; H.M.S. *Good Hope* and *Monmouth* are lost. Admiralty announces the Turkish attacks on Russia,."]
   },
   {
     "date": "1914-11-02",
-    "news": "The Admiralty declares the whole of the North Sea a military area due to indiscriminate German mine-laying, warning merchant ships of the dangers,."
+    "news": ["The Admiralty declares the whole of the North Sea a military area due to indiscriminate German mine-laying, warning merchant ships of the dangers,."]
   },
   {
     "date": "1914-11-03",
-    "news": "German battlecruisers shell Yarmouth; H.M.S. *Halcyon* engages them. British and French ships bombard the Dardanelles forts,."
+    "news": ["German battlecruisers shell Yarmouth; H.M.S. *Halcyon* engages them. British and French ships bombard the Dardanelles forts,."]
   },
   {
     "date": "1914-11-04",
-    "news": "The German cruiser *Yorck* is sunk by a mine. British reverses reported in German East Africa,."
+    "news": ["The German cruiser *Yorck* is sunk by a mine. British reverses reported in German East Africa,."]
   },
   {
     "date": "1914-11-05",
-    "news": "Great Britain formally declares war on Turkey and annexes Cyprus. The German spy Carl Hans Lody is executed at the Tower of London,."
+    "news": ["Great Britain formally declares war on Turkey and annexes Cyprus. The German spy Carl Hans Lody is executed at the Tower of London,."]
   },
   {
     "date": "1914-11-09",
-    "news": "The Prime Minister and other leaders speak at the Lord Mayor's Banquet. News arrives that the German raider *Emden* has been destroyed by H.M.A.S. *Sydney*,."
+    "news": ["The Prime Minister and other leaders speak at the Lord Mayor's Banquet. News arrives that the German raider *Emden* has been destroyed by H.M.A.S. *Sydney*,."]
   },
   {
     "date": "1914-11-11",
-    "news": "King George V opens the new session of Parliament. The gunboat H.M.S. *Niger* is torpedoed and sunk off Deal,."
+    "news": ["King George V opens the new session of Parliament. The gunboat H.M.S. *Niger* is torpedoed and sunk off Deal,."]
   },
   {
     "date": "1914-11-14",
-    "news": "Field-Marshal Earl Roberts dies of pneumonia while visiting Indian troops at the front in France,."
+    "news": ["Field-Marshal Earl Roberts dies of pneumonia while visiting Indian troops at the front in France,."]
   },
   {
     "date": "1914-11-17",
-    "news": "The Chancellor of the Exchequer introduces the War Budget; income tax is doubled and a new War Loan of £350,000,000 is announced. The Prince of Wales goes to the front,."
+    "news": ["The Chancellor of the Exchequer introduces the War Budget; income tax is doubled and a new War Loan of £350,000,000 is announced. The Prince of Wales goes to the front,."]
   },
   {
     "date": "1914-11-19",
-    "news": "The funeral of Earl Roberts takes place at St. Paul's Cathedral with great solemnity. A riot occurs at a German prisoner camp on the Isle of Man,."
+    "news": ["The funeral of Earl Roberts takes place at St. Paul's Cathedral with great solemnity. A riot occurs at a German prisoner camp on the Isle of Man,."]
   },
   {
     "date": "1914-11-21",
-    "news": "British naval airmen raid the Zeppelin factory at Friedrichshafen. British troops occupy Basra in the Persian Gulf,."
+    "news": ["British naval airmen raid the Zeppelin factory at Friedrichshafen. British troops occupy Basra in the Persian Gulf,."]
   },
   {
     "date": "1914-11-23",
-    "news": "British ships bombard the German submarine base at Zeebrugge. The German submarine U-18 is rammed and sunk off the Scottish coast,."
+    "news": ["British ships bombard the German submarine base at Zeebrugge. The German submarine U-18 is rammed and sunk off the Scottish coast,."]
   },
   {
     "date": "1914-11-26",
-    "news": "The battleship H.M.S. *Bulwark* blows up at Sheerness with the loss of over 700 lives; accidental explosion is suspected,."
+    "news": ["The battleship H.M.S. *Bulwark* blows up at Sheerness with the loss of over 700 lives; accidental explosion is suspected,."]
   },
   {
     "date": "1914-12-04",
-    "news": "King George V visits the British Army in France, inspecting troops and meeting Allied commanders (returns Dec 5),."
+    "news": ["King George V visits the British Army in France, inspecting troops and meeting Allied commanders (returns Dec 5),."]
   },
   {
     "date": "1914-12-08",
-    "news": "Battle of the Falkland Islands: A British squadron under Admiral Sturdee destroys the German squadron of Admiral von Spee, sinking the *Scharnhorst*, *Gneisenau*, *Leipzig*, and *Nürnberg*,."
+    "news": ["Battle of the Falkland Islands: A British squadron under Admiral Sturdee destroys the German squadron of Admiral von Spee, sinking the *Scharnhorst*, *Gneisenau*, *Leipzig*, and *Nürnberg*,."]
   },
   {
     "date": "1914-12-13",
-    "news": "The British submarine B11 enters the Dardanelles and torpedoes the Turkish battleship *Messudiyeh*,."
+    "news": ["The British submarine B11 enters the Dardanelles and torpedoes the Turkish battleship *Messudiyeh*,."]
   },
   {
     "date": "1914-12-16",
-    "news": "German battlecruisers bombard Scarborough, Hartlepool, and Whitby, killing over 100 civilians; the raid causes great public indignation but stimulates recruiting,."
+    "news": ["German battlecruisers bombard Scarborough, Hartlepool, and Whitby, killing over 100 civilians; the raid causes great public indignation but stimulates recruiting,."]
   },
   {
     "date": "1914-12-18",
-    "news": "Egypt is proclaimed a British Protectorate; the Khedive Abbas II is deposed and Prince Hussein Kamel is appointed Sultan,."
+    "news": ["Egypt is proclaimed a British Protectorate; the Khedive Abbas II is deposed and Prince Hussein Kamel is appointed Sultan,."]
   },
   {
     "date": "1914-12-24",
-    "news": "A German aeroplane drops a bomb near Dover Castle, the first air raid on British soil (though little damage is done),."
+    "news": ["A German aeroplane drops a bomb near Dover Castle, the first air raid on British soil (though little damage is done),."]
   },
   {
     "date": "1914-12-25",
-    "news": "British seaplanes raid the German naval anchorage at Cuxhaven. An unofficial Christmas truce takes place between British and German troops on the Western Front,,."
+    "news": ["British seaplanes raid the German naval anchorage at Cuxhaven. An unofficial Christmas truce takes place between British and German troops on the Western Front,,."]
   },
   {
     "date": "1914-12-31",
-    "news": "The battleship H.M.S. *Formidable* is torpedoed in the Channel during the night (news reported early Jan). The London Stock Exchange prepares to reopen. Economic reports show trade is adapting to war conditions,."
+    "news": ["The battleship H.M.S. *Formidable* is torpedoed in the Channel during the night (news reported early Jan). The London Stock Exchange prepares to reopen. Economic reports show trade is adapting to war conditions,."]
   },
   {
     "date": "1915-01-01",
@@ -3344,5 +6268,1609 @@ export const majorDailyEvents =
     "news": [
       "The Great Northern Railway closed the Manchester Road railway station in Bradford."
     ]
-  }
-]
+  },
+  {
+    "date": "1916-01-01",
+    "news": [
+      "Allied forces occupied Jaunde, the capital of German Cameroon, in the Second Battle of Jaunde.",
+      "The British troop ship Geelong sank in the Mediterranean Sea after a collision, with all hands rescued.",
+      "The Royal Army Medical Corps performed the first successful blood transfusion using stored and cooled blood."
+    ]
+  },
+  {
+    "date": "1916-01-02",
+    "news": [
+      "HMS E2, the last British submarine operating in the Sea of Marmara, was recalled, marking the end of the 1915 Marmara campaign."
+    ]
+  },
+  {
+    "date": "1916-01-03",
+    "news": [
+      "Sir Mark Sykes and François Georges-Picot signed the secret Sykes–Picot Agreement to define British and French spheres of influence in the Ottoman Empire.",
+      "Britain's Secret Service Bureau was reorganized, creating MI5 for domestic counter-intelligence."
+    ]
+  },
+  {
+    "date": "1916-01-04",
+    "news": [
+      "A British relief force of over 13,000 men was dispatched to resupply the besieged British Indian Army at Kut, Mesopotamia.",
+      "John Hamilton-Gordon was awarded the title of Marquess of Aberdeen and Temair."
+    ]
+  },
+  {
+    "date": "1916-01-05",
+    "news": [
+      "The Royal Navy destroyer HMS Turbulent was launched in Newcastle upon Tyne."
+    ]
+  },
+  {
+    "date": "1916-01-06",
+    "news": [
+      "The battleship HMS King Edward VII struck a mine laid by the German cruiser SMS Möwe and sank off the coast of Scotland.",
+      "British relief forces encountered the Ottoman Sixth Army at the Battle of Sheikh Sa'ad in Mesopotamia, suffering 600 casualties on the first day.",
+      "British submarine HMS E17 was wrecked off the Netherlands."
+    ]
+  },
+  {
+    "date": "1916-01-07",
+    "news": [
+      "British forces renewed attacks at the Battle of Sheikh Sa'ad, forcing Ottoman forces to pull back.",
+      "The Royal Flying Corps established No. 34 Squadron."
+    ]
+  },
+  {
+    "date": "1916-01-08",
+    "news": [
+      "British forces successfully captured Sheikh Sa'ad in Mesopotamia, though at a cost of 4,400 casualties.",
+      "The battle cruiser HMS Repulse was launched in Clydebank, Scotland."
+    ]
+  },
+  {
+    "date": "1916-01-09",
+    "news": [
+      "The Gallipoli campaign concluded as the last British troops were evacuated from the peninsula."
+    ]
+  },
+  {
+    "date": "1916-01-12",
+    "news": [
+      "The Royal Flying Corps established No. 32 and No. 33 Squadrons."
+    ]
+  },
+  {
+    "date": "1916-01-13",
+    "news": [
+      "A British force of 19,000 attacked Ottoman defenses at the Battle of Wadi in Mesopotamia, suffering 1,600 casualties in a failed attempt to relieve Kut."
+    ]
+  },
+  {
+    "date": "1916-01-14",
+    "news": [
+      "Royal Flying Corps Headquarters ordered that reconnaissance aircraft must be escorted by at least three fighters due to high losses from German Fokker Eindeckers."
+    ]
+  },
+  {
+    "date": "1916-01-16",
+    "news": [
+      "The German raider SMS Möwe captured a British steamer south of Madeira."
+    ]
+  },
+  {
+    "date": "1916-01-18",
+    "news": [
+      "The Scottish polar vessel Scotia caught fire and sank off the coast of Wales."
+    ]
+  },
+  {
+    "date": "1916-01-21",
+    "news": [
+      "British forces suffered a defeat at the Battle of Hanna in Mesopotamia, losing 2,741 men and leaving the besieged garrison at Kut vulnerable."
+    ]
+  },
+  {
+    "date": "1916-01-23",
+    "news": [
+      "Troops of the Western Frontier Force attacked the Senussi in North Africa but were outflanked, suffering over 300 casualties."
+    ]
+  },
+  {
+    "date": "1916-01-27",
+    "news": [
+      "The British government passed the Military Service Act, introducing conscription in Great Britain."
+    ]
+  },
+  {
+    "date": "1916-01-31",
+    "news": [
+      "Nine German Navy Zeppelins attempted a bombing raid on Liverpool, with targets scattered across the English Midlands."
+    ]
+  },
+  {
+    "date": "1916-02-01",
+    "news": [
+      "A night raid by German Zeppelins on the West Midlands killed 35 people.",
+      "The British troop ship SS Empress Queen ran aground off the Isle of Wight."
+    ]
+  },
+  {
+    "date": "1916-02-02",
+    "news": [
+      "The British naval trawler King Stephen spotted a disabled German Zeppelin in the North Sea but left the crew to their fate."
+    ]
+  },
+  {
+    "date": "1916-02-03",
+    "news": [
+      "Fire destroyed the Centre Block of the Parliament of Canada in Ottawa."
+    ]
+  },
+  {
+    "date": "1916-02-05",
+    "news": [
+      "The British Fourth Army was established under General Henry Rawlinson."
+    ]
+  },
+  {
+    "date": "1916-02-07",
+    "news": [
+      "The British destroyer HMS Nomad was launched at Glasgow."
+    ]
+  },
+  {
+    "date": "1916-02-09",
+    "news": [
+      "British gunboats HMS Mimi and HMS Toutou sank the German steamship Hedwig von Wissmann in Lake Tanganyika.",
+      "British pilot Harry Hawker conducted the first test flight of the Sopwith Pup."
+    ]
+  },
+  {
+    "date": "1916-02-10",
+    "news": [
+      "German destroyers sank the minesweeper HMS Arabis during a clash at Dogger Bank."
+    ]
+  },
+  {
+    "date": "1916-02-11",
+    "news": [
+      "The light cruiser HMS Arethusa struck a mine and was wrecked in the North Sea."
+    ]
+  },
+  {
+    "date": "1916-02-12",
+    "news": [
+      "British cargo ship SS Leicester struck a mine and sank in the English Channel.",
+      "The Battle of Salaita Hill took place in East Africa, where Allied forces were repelled by German colonial troops."
+    ]
+  },
+  {
+    "date": "1916-02-13",
+    "news": [
+      "The 37th Indian Brigade was established to assist in the relief of Kut."
+    ]
+  },
+  {
+    "date": "1916-02-14",
+    "news": [
+      "British and German forces fought for control of The Bluff near St Eloi in Belgium."
+    ]
+  },
+  {
+    "date": "1916-02-15",
+    "news": [
+      "German colonial forces at Mora in Kamerun surrendered to Allied forces, effectively ending the Kamerun campaign.",
+      "The destroyer HMS Onslow was launched at Glasgow."
+    ]
+  },
+  {
+    "date": "1916-02-21",
+    "news": [
+      "The Battle of Verdun began with a massive German offensive against French lines."
+    ]
+  },
+  {
+    "date": "1916-02-26",
+    "news": [
+      "British forces defeated Senussi militia at the Action of Agagia in North Africa.",
+      "No. 40 Squadron of the Royal Flying Corps was established."
+    ]
+  },
+  {
+    "date": "1916-02-27",
+    "news": [
+      "British passenger ship SS Maloja struck a mine and sank in the English Channel, killing 155."
+    ]
+  },
+  {
+    "date": "1916-02-28",
+    "news": [
+      "British forces took the Egyptian port town of Sidi Barrani."
+    ]
+  },
+  {
+    "date": "1916-02-29",
+    "news": [
+      "The German raider SMS Greif was intercepted and sunk by Royal Navy ships in the North Sea; the British auxiliary cruiser HMS Alcantara also sank during the engagement."
+    ]
+  },
+  {
+    "date": "1916-03-01",
+    "news": [
+      "Germany began a strategy of using U-boats to draw British fleet units into submarine traps.",
+      "Royal Flying Corps established No. 45 and No. 47 Squadrons."
+    ]
+  },
+  {
+    "date": "1916-03-02",
+    "news": [
+      "Military conscription came into force in Great Britain under the Military Service Act.",
+      "The British Second Army recaptured The Bluff near St Eloi.",
+      "British forces attacked the Hohenzollern Redoubt using mines."
+    ]
+  },
+  {
+    "date": "1916-03-04",
+    "news": [
+      "Great Britain announced its third war budget, raising income tax.",
+      "The battle cruiser HMS Renown was launched in Glasgow."
+    ]
+  },
+  {
+    "date": "1916-03-06",
+    "news": [
+      "British and German forces clashed over the 'Triangle' crater at the Hohenzollern Redoubt."
+    ]
+  },
+  {
+    "date": "1916-03-07",
+    "news": [
+      "The destroyer HMS Coquette struck a mine and sank in the North Sea.",
+      "The submarine HMS E5 struck a mine and was lost with all hands."
+    ]
+  },
+  {
+    "date": "1916-03-08",
+    "news": [
+      "The British relief force failed to break through Ottoman lines at the Battle of Dujaila in Mesopotamia, sustaining 3,500 casualties.",
+      "The destroyer HMS Negro was launched in Jarrow."
+    ]
+  },
+  {
+    "date": "1916-03-09",
+    "news": [
+      "Germany declared war on Portugal.",
+      "RFC No. 36 Squadron was established for airship defense."
+    ]
+  },
+  {
+    "date": "1916-03-10",
+    "news": [
+      "British and French forces occupied German Cameroon, ending the Kamerun campaign.",
+      "Hubert Parry's choral setting of 'Jerusalem' was written."
+    ]
+  },
+  {
+    "date": "1916-03-11",
+    "news": [
+      "British and South African forces assaulted German defenses at the Battle of Latema Nek in East Africa."
+    ]
+  },
+  {
+    "date": "1916-03-12",
+    "news": [
+      "German forces retreated at the Battle of Latema Nek.",
+      "Lieutenant-General Fenton Aylmer was relieved of command after repeated failures to relieve Kut."
+    ]
+  },
+  {
+    "date": "1916-03-13",
+    "news": [
+      "The First ANZAC Corps was established under General William Birdwood for the Western Front."
+    ]
+  },
+  {
+    "date": "1916-03-14",
+    "news": [
+      "British forces took Sollum, Egypt, as the Senussi retreated."
+    ]
+  },
+  {
+    "date": "1916-03-16",
+    "news": [
+      "The Anglo-Egyptian Darfur Expedition was dispatched to quell a rebellion in Sudan."
+    ]
+  },
+  {
+    "date": "1916-03-18",
+    "news": [
+      "British forces defeated a larger German force at the Battle of Kahe in East Africa.",
+      "Intense fighting continued at the Hohenzollern Redoubt with nearly 2,000 British casualties."
+    ]
+  },
+  {
+    "date": "1916-03-20",
+    "news": [
+      "The 4th Mounted Division was established for British homeland defense."
+    ]
+  },
+  {
+    "date": "1916-03-23",
+    "news": [
+      "News arrived from the Ross Sea party via a wireless transmission from the ship Aurora, the first contact since 1914."
+    ]
+  },
+  {
+    "date": "1916-03-24",
+    "news": [
+      "The French ferry SS Sussex was torpedoed in the English Channel with at least 50 killed.",
+      "The submarine HMS E24 was lost in the Heligoland Bight."
+    ]
+  },
+  {
+    "date": "1916-03-25",
+    "news": [
+      "The Military Medal was instituted for bravery by personnel of the British Army below commissioned rank."
+    ]
+  },
+  {
+    "date": "1916-03-26",
+    "news": [
+      "HMS Vengeance shelled and sank the German hospital ship HS Tabora in East Africa."
+    ]
+  },
+  {
+    "date": "1916-03-27",
+    "news": [
+      "British engineers detonated mines under German trenches at St Eloi, Belgium, beginning the Actions of St Eloi Craters."
+    ]
+  },
+  {
+    "date": "1916-03-30",
+    "news": [
+      "German forces were pushed out of two craters at St Eloi."
+    ]
+  },
+  {
+    "date": "1916-03-31",
+    "news": [
+      "Seven German Zeppelins raided England; L 15 was shot down and crash-landed off the coast."
+    ]
+  },
+  {
+    "date": "1916-04-01",
+    "news": [
+      "Lieutenant General Hubert Gough took command of the British Reserve Army, which would later see action at the Battle of the Somme.",
+      "German Navy airships raided England for five consecutive nights.",
+      "The Royal Flying Corps established No. 38 and No. 42 Squadrons."
+    ]
+  },
+  {
+    "date": "1916-04-02",
+    "news": [
+      "A munitions factory exploded at Uplees near Faversham, Kent, killing 108 workers."
+    ]
+  },
+  {
+    "date": "1916-04-03",
+    "news": [
+      "British forces captured craters at St Eloi, Belgium, following the detonation of mines under German trenches.",
+      "The British polar ship Aurora arrived in New Zealand after drifting in the ice for 312 days."
+    ]
+  },
+  {
+    "date": "1916-04-05",
+    "news": [
+      "A British relief force of 30,000 under General G. F. Gorringe captured Fallahiyeh in Mesopotamia but suffered heavy losses.",
+      "German forces launched a night attack at St. Eloi, recovering ground lost to the British in late March."
+    ]
+  },
+  {
+    "date": "1916-04-06",
+    "news": [
+      "Canadian forces launched counterattacks to retake craters at St. Eloi overwhelmed by the Germans the previous day."
+    ]
+  },
+  {
+    "date": "1916-04-07",
+    "news": [
+      "A fire at the Garrick Theatre in London during a benefit concert for soldiers killed eight young girls."
+    ]
+  },
+  {
+    "date": "1916-04-09",
+    "news": [
+      "Members of the Imperial Trans-Antarctic Expedition launched three lifeboats to cross open water after the sinking of the Endurance."
+    ]
+  },
+  {
+    "date": "1916-04-11",
+    "news": [
+      "The Egyptian Expeditionary Force raided Jifjafa, destroying water wells in the Sinai desert."
+    ]
+  },
+  {
+    "date": "1916-04-14",
+    "news": [
+      "The German battle cruiser SMS Nürnberg was launched in Bremen; it would later be claimed by the Royal Navy."
+    ]
+  },
+  {
+    "date": "1916-04-15",
+    "news": [
+      "The Royal Flying Corps conducted the first air supply drop, delivering 13 tons of supplies to the besieged garrison at Kut, Mesopotamia.",
+      "The Royal Flying Corps established Squadrons No. 37, No. 39, No. 43, and No. 48.",
+      "Ernest Shackleton's party landed on Elephant Island."
+    ]
+  },
+  {
+    "date": "1916-04-16",
+    "news": [
+      "British forces captured Beit Asia in Mesopotamia in an attempt to relieve Kut.",
+      "British and Canadian forces called off counterattacks at St Eloi after reconnaissance showed Germans had rebuilt their trench lines."
+    ]
+  },
+  {
+    "date": "1916-04-17",
+    "news": [
+      "British forces moved on to Sannaiyat in Mesopotamia in a final attempt to rescue the besieged army at Kut.",
+      "A South African force engaged German colonial troops at Kondoa Irangi in German East Africa."
+    ]
+  },
+  {
+    "date": "1916-04-19",
+    "news": [
+      "German forces took the remaining craters at St Eloi, Belgium, moving their trench line west; total British casualties for the action were 2,233.",
+      "South African forces captured Kondoa Irangi in German East Africa.",
+      "German Field Marshall Colmar Freiherr von der Goltz, commander of Ottoman forces in Mesopotamia, died suddenly."
+    ]
+  },
+  {
+    "date": "1916-04-20",
+    "news": [
+      "The Royal Navy battlecruiser HMS Glorious was launched in Belfast.",
+      "The Royal Navy destroyer HMS Patriot was launched in Southampton."
+    ]
+  },
+  {
+    "date": "1916-04-21",
+    "news": [
+      "Roger Casement was arrested at Banna Strand, County Kerry, for attempting to land arms for Irish Volunteers.",
+      "The Royal Navy intercepted and scuttled the German-controlled steamer SS Libau, which was attempting to deliver weapons for the Easter Rising."
+    ]
+  },
+  {
+    "date": "1916-04-22",
+    "news": [
+      "The British failed to capture Sannaiyat in Mesopotamia, suffering 1,200 casualties and sealing the fate of the garrison at Kut.",
+      "The Royal Flying Corps established No. 70 Squadron."
+    ]
+  },
+  {
+    "date": "1916-04-23",
+    "news": [
+      "The military council of the Irish Republican Brotherhood decided to begin an insurrection the following day, despite the cancellation of volunteer manoeuvres.",
+      "An Ottoman force defeated a British Indian cavalry unit at the Battle of Katia near the Suez Canal."
+    ]
+  },
+  {
+    "date": "1916-04-24",
+    "news": [
+      "The Easter Rising began in Dublin as Irish Republicans occupied the General Post Office and proclaimed an Irish Republic.",
+      "A German battle squadron bombarded Yarmouth and Lowestoft on the English coast, killing 22 servicemen and 3 civilians.",
+      "Ernest Shackleton and five companions launched the James Caird from Elephant Island to seek rescue."
+    ]
+  },
+  {
+    "date": "1916-04-25",
+    "news": [
+      "Martial law was declared in Dublin, and civil power was handed to Major-General William Lowe.",
+      "The first Anzac Day was observed in Australia and New Zealand to remember the Gallipoli campaign."
+    ]
+  },
+  {
+    "date": "1916-04-26",
+    "news": [
+      "HMS Helga shelled Liberty Hall in Dublin as street fighting continued during the Easter Rising.",
+      "Irish pacifist Francis Sheehy-Skeffington was executed at Portobello Barracks."
+    ]
+  },
+  {
+    "date": "1916-04-27",
+    "news": [
+      "Major-General John Maxwell arrived in Dublin to take command of 12,000 British troops to suppress the Easter Rising.",
+      "German forces launched concentrated gas attacks on the 16th Irish and 15th Scottish Divisions near Hulluch, France."
+    ]
+  },
+  {
+    "date": "1916-04-28",
+    "news": [
+      "Irish Volunteers forced the Royal Irish Constabulary to surrender at Ashbourne, County Meath."
+    ]
+  },
+  {
+    "date": "1916-04-29",
+    "news": [
+      "British forces at Kut, Mesopotamia, surrendered to the Ottoman Empire after a lengthy siege.",
+      "The Easter Rising collapsed as Irish Republican leaders Patrick Pearse, James Connolly, and Thomas MacDonagh surrendered unconditionally.",
+      "German gas attacks at Hulluch ended, with nearly 2,000 British casualties."
+    ]
+  },
+  {
+    "date": "1916-04-30",
+    "news": [
+      "The Royal Flying Corps established No. 60 Squadron."
+    ]
+  },
+  {
+    "date": "1916-05-01",
+    "news": [
+      "The Easter Rising officially ended as all insurgents surrendered; the uprising resulted in 485 deaths.",
+      "Augustine Birrell resigned as Chief Secretary for Ireland."
+    ]
+  },
+  {
+    "date": "1916-05-02",
+    "news": [
+      "Courts-martial began for 187 Irish citizens involved in the Easter Rising, with ninety sentenced to death.",
+      "Eight German Zeppelins raided the east coast of England, causing 39 casualties."
+    ]
+  },
+  {
+    "date": "1916-05-03",
+    "news": [
+      "Irish Republican leaders Patrick Pearse, Thomas MacDonagh, and Tom Clarke were executed at Kilmainham Gaol."
+    ]
+  },
+  {
+    "date": "1916-05-04",
+    "news": [
+      "Four more Irish leaders, including Joseph Plunkett and Edward Daly, were executed.",
+      "Germany launched attacks near Cumières-le-Mort-Homme at Verdun."
+    ]
+  },
+  {
+    "date": "1916-05-05",
+    "news": [
+      "Irish leader John MacBride was executed.",
+      "The Royal Flying Corps established No. 54 Squadron."
+    ]
+  },
+  {
+    "date": "1916-05-07",
+    "news": [
+      "South African forces defended Kondoa Irangi in German East Africa against German attacks."
+    ]
+  },
+  {
+    "date": "1916-05-08",
+    "news": [
+      "Irish leaders Éamonn Ceannt, Con Colbert, Michael Mallin, and Seán Heuston were executed.",
+      "The British steamship SS Cymric was torpedoed and sunk by a German submarine.",
+      "Ernest Shackleton's relief crew sighted South Georgia Island."
+    ]
+  },
+  {
+    "date": "1916-05-10",
+    "news": [
+      "Ernest Shackleton and his crew landed at King Haakon Bay on South Georgia."
+    ]
+  },
+  {
+    "date": "1916-05-11",
+    "news": [
+      "John Dillon of the Irish Parliamentary Party called on the British government to stop the executions of Easter Rising leaders."
+    ]
+  },
+  {
+    "date": "1916-05-12",
+    "news": [
+      "Irish leaders Seán Mac Diarmada and James Connolly were executed in Dublin while Prime Minister H. H. Asquith visited the city.",
+      "The New Zealand Mounted Rifles Brigade began patrols in the Sinai desert."
+    ]
+  },
+  {
+    "date": "1916-05-13",
+    "news": [
+      "The New Zealand Division moved into front-line trenches at Armentières, France."
+    ]
+  },
+  {
+    "date": "1916-05-15",
+    "news": [
+      "The trial of Roger Casement for high treason began in London.",
+      "The Royal Flying Corps established Squadrons No. 50, No. 51, and No. 52."
+    ]
+  },
+  {
+    "date": "1916-05-16",
+    "news": [
+      "Great Britain and France concluded the secret Sykes–Picot Agreement to divide Ottoman territories.",
+      "The Dutch freighter SS Batavier V struck a mine in the English Channel, killing four."
+    ]
+  },
+  {
+    "date": "1916-05-17",
+    "news": [
+      "The German submarine SM U-74 sank after an accidental explosion, killing all hands.",
+      "Royal Flying Corps pilot John Cyril Porte flew an experimental parasite fighter plane released from an airship."
+    ]
+  },
+  {
+    "date": "1916-05-18",
+    "news": [
+      "A royal commission chaired by Lord Hardinge was set up to investigate the causes of the Easter Rising.",
+      "The Royal Flying Corps bombed Ottoman positions at El Arish in the Sinai."
+    ]
+  },
+  {
+    "date": "1916-05-20",
+    "news": [
+      "Ernest Shackleton and two companions crossed South Georgia to reach the whaling station at Husvik and arrange rescue for their stranded crew."
+    ]
+  },
+  {
+    "date": "1916-05-21",
+    "news": [
+      "Daylight saving time was introduced for the first time in the United Kingdom."
+    ]
+  },
+  {
+    "date": "1916-05-22",
+    "news": [
+      "Anglo-Egyptian forces defeated a Sudanese force at the village of Beringia near El Fasher.",
+      "The Royal Flying Corps bombed military camps along the Suez Canal front."
+    ]
+  },
+  {
+    "date": "1916-05-23",
+    "news": [
+      "Anglo-Egyptian forces advanced into El Fasher, the capital of Darfur, finding it abandoned by Sultan Ali Dinar."
+    ]
+  },
+  {
+    "date": "1916-05-26",
+    "news": [
+      "The British submarine HMS E18 went missing and was presumed lost with all hands."
+    ]
+  },
+  {
+    "date": "1916-05-28",
+    "news": [
+      "Lieutenant-General Julian Byng was appointed commander of the Canadian Corps.",
+      "British test pilot Harry Hawker conducted the first test flight of the Sopwith Triplane."
+    ]
+  },
+  {
+    "date": "1916-05-31",
+    "news": [
+      "The Battle of Jutland began between the Royal Navy Grand Fleet and the German High Seas Fleet in the North Sea.",
+      "British battlecruisers HMS Invincible, HMS Indefatigable, and HMS Queen Mary were sunk with heavy loss of life."
+    ]
+  },
+  {
+    "date": "1916-06-01",
+    "news": [
+      "The Battle of Jutland concluded; while the British lost more ships, the German fleet retreated, leaving the Royal Navy in dominance.",
+      "British cruiser HMS Warrior and destroyers HMS Turbulent, Ardent, Fortune, and Sparrowhawk were lost."
+    ]
+  },
+  {
+    "date": "1916-06-02",
+    "news": [
+      "German artillery shelled the Canadian Corps at Mont Sorrel in Belgium, killing Major-General Malcolm Mercer.",
+      "Jack Cornwell, a 16-year-old sailor, died from wounds received at Jutland; he was posthumously awarded the Victoria Cross."
+    ]
+  },
+  {
+    "date": "1916-06-03",
+    "news": [
+      "Canadian forces attempted a counterattack at Mont Sorrel but suffered heavy casualties.",
+      "The British passenger ship SS Golconda struck a mine and sank in the North Sea."
+    ]
+  },
+  {
+    "date": "1916-06-04",
+    "news": [
+      "Russia launched the Brusilov Offensive to break through Austro-Hungarian lines.",
+      "Casualties for the Canadian Corps at Mont Sorrel reached 8,430 after two days of fighting."
+    ]
+  },
+  {
+    "date": "1916-06-05",
+    "news": [
+      "Field Marshal Lord Kitchener was killed when HMS Hampshire struck a mine and sank off Orkney, Scotland.",
+      "The Arab Revolt against the Ottoman Empire began with attacks on the garrison in Medina."
+    ]
+  },
+  {
+    "date": "1916-06-06",
+    "news": [
+      "The 1st Anzac Entrenching Battalion was established for tunnel warfare on the Western Front."
+    ]
+  },
+  {
+    "date": "1916-06-08",
+    "news": [
+      "Russian forces captured Lutsk, capturing 200,000 prisoners.",
+      "The Royal Flying Corps established Squadrons No. 56, No. 57, and No. 58."
+    ]
+  },
+  {
+    "date": "1916-06-09",
+    "news": [
+      "The Canadian Corps prepared for a renewed counterattack at Mont Sorrel with heavy artillery shelling."
+    ]
+  },
+  {
+    "date": "1916-06-10",
+    "news": [
+      "Hussein bin Ali declared the Kingdom of Hejaz and ordered attacks on the Ottoman garrison in Mecca."
+    ]
+  },
+  {
+    "date": "1916-06-12",
+    "news": [
+      "Canadian shelling at Mont Sorrel reached its climax ahead of an assault.",
+      "Courts-martial began for 16 British conscientious objectors."
+    ]
+  },
+  {
+    "date": "1916-06-13",
+    "news": [
+      "Canadian and British troops retook German positions at Mont Sorrel."
+    ]
+  },
+  {
+    "date": "1916-06-14",
+    "news": [
+      "The Battle of Mont Sorrel ended with Canadian forces holding their lines.",
+      "The Allied Powers signed the Paris Economy Pact to isolate the Central Powers."
+    ]
+  },
+  {
+    "date": "1916-06-16",
+    "news": [
+      "The Ottoman garrison at the Red Sea port of Jidda surrendered to Arab forces."
+    ]
+  },
+  {
+    "date": "1916-06-18",
+    "news": [
+      "German flying ace Max Immelmann was shot down and killed.",
+      "The Royal Navy destroyer HMS Eden sank after a collision in the English Channel."
+    ]
+  },
+  {
+    "date": "1916-06-21",
+    "news": [
+      "Allied forces prepared for the upcoming Somme offensive."
+    ]
+  },
+  {
+    "date": "1916-06-23",
+    "news": [
+      "German forces advanced near the Verdun citadel."
+    ]
+  },
+  {
+    "date": "1916-06-24",
+    "news": [
+      "16 British conscientious objectors were sentenced to death, later commuted to penal servitude."
+    ]
+  },
+  {
+    "date": "1916-06-25",
+    "news": [
+      "The Imperial German Navy captured the British ferry SS Brussels and its captain Charles Fryatt."
+    ]
+  },
+  {
+    "date": "1916-06-26",
+    "news": [
+      "Roger Casement was put on trial for treason and stripped of his knighthood.",
+      "A royal commission report criticized authorities for their handling of the Easter Rising."
+    ]
+  },
+  {
+    "date": "1916-06-28",
+    "news": [
+      "The polar ship Aurora was refitted to return to Antarctica to rescue marooned men."
+    ]
+  },
+  {
+    "date": "1916-06-30",
+    "news": [
+      "The British launched a diversionary attack at the Battle of the Boar's Head prior to the Somme offensive.",
+      "The Royal Flying Corps established No. 66 Squadron."
+    ]
+  },
+  {
+    "date": "1916-07-01",
+    "news": [
+      "The Battle of the Somme began with the Battle of Albert; British forces captured Gommecourt, Montauban, and Mametz.",
+      "The British Army suffered its bloodiest day with 57,470 casualties, including 19,240 killed.",
+      "The 36th Ulster Division lost 5,500 men, and the Royal Newfoundland Regiment sustained a 90 percent casualty rate.",
+      "Nine Victoria Crosses were awarded for actions on the first day of the battle."
+    ]
+  },
+  {
+    "date": "1916-07-02",
+    "news": [
+      "British forces captured the village of Fricourt and 1,625 German prisoners, sustaining 8,791 casualties over 48 hours."
+    ]
+  },
+  {
+    "date": "1916-07-03",
+    "news": [
+      "British forces captured parts of La Boisselle and Ovillers."
+    ]
+  },
+  {
+    "date": "1916-07-06",
+    "news": [
+      "The British secured complete control over La Boisselle at a cost of 9,850 casualties.",
+      "British submarine HMS E26 was lost in the North Sea with all 30 crew."
+    ]
+  },
+  {
+    "date": "1916-07-07",
+    "news": [
+      "The New Zealand Labour Party was founded in Wellington."
+    ]
+  },
+  {
+    "date": "1916-07-09",
+    "news": [
+      "The Germans began an assault on Fort Souville at Verdun using gas, though French gas masks prevented numerous casualties."
+    ]
+  },
+  {
+    "date": "1916-07-10",
+    "news": [
+      "British forces captured Contalmaison at an estimated cost of 12,000 casualties."
+    ]
+  },
+  {
+    "date": "1916-07-12",
+    "news": [
+      "British forces captured Mametz Wood at a cost of approximately 4,000 casualties."
+    ]
+  },
+  {
+    "date": "1916-07-13",
+    "news": [
+      "Casualties for the first two weeks of the Battle of the Somme reached 25,000 for the British and 17,600 for the French."
+    ]
+  },
+  {
+    "date": "1916-07-14",
+    "news": [
+      "British forces captured Trônes Wood and began the assault on Bazentin Ridge and Delville Wood.",
+      "British submarine HMS H5 sank German U-boat SM U-51."
+    ]
+  },
+  {
+    "date": "1916-07-15",
+    "news": [
+      "The 1st South African Brigade suffered heavy losses attempting to take Delville Wood.",
+      "British submarine HMS H3 struck a mine and sank in the Adriatic Sea."
+    ]
+  },
+  {
+    "date": "1916-07-17",
+    "news": [
+      "British forces captured all of Ovillers and Bazentin Ridge but suffered over 9,000 casualties in the latter operation."
+    ]
+  },
+  {
+    "date": "1916-07-19",
+    "news": [
+      "The Attack at Fromelles began, the first joint British and Australian operation on the Western Front."
+    ]
+  },
+  {
+    "date": "1916-07-20",
+    "news": [
+      "The attack at Fromelles was repulsed with heavy casualties, including over 5,500 Australian losses.",
+      "British forces pushed into High Wood near Bazentin."
+    ]
+  },
+  {
+    "date": "1916-07-23",
+    "news": [
+      "The Australian 1st Division captured the village of Pozières."
+    ]
+  },
+  {
+    "date": "1916-07-27",
+    "news": [
+      "English civilian ferry captain Charles Fryatt was executed by the Germans in Belgium for attempting to ram a U-boat in 1915."
+    ]
+  },
+  {
+    "date": "1916-08-02",
+    "news": [
+      "A Bristol Scout from HMS Vindex made the first carrier-based interception of an airship."
+    ]
+  },
+  {
+    "date": "1916-08-03",
+    "news": [
+      "Roger Casement was hanged at Pentonville Prison for high treason.",
+      "The Battle of Romani began in the Sinai Peninsula."
+    ]
+  },
+  {
+    "date": "1916-08-04",
+    "news": [
+      "British reinforcements at the Battle of Romani overturned the German-Ottoman assault.",
+      "Australian forces secured the second network of German trenches at Pozières."
+    ]
+  },
+  {
+    "date": "1916-08-05",
+    "news": [
+      "German and Ottoman forces retreated at the Battle of Romani."
+    ]
+  },
+  {
+    "date": "1916-08-07",
+    "news": [
+      "Portugal joined the Allies."
+    ]
+  },
+  {
+    "date": "1916-08-09",
+    "news": [
+      "An Austro-Hungarian aircraft sank British submarine HMS B-10, the first time aircraft successfully sank such a vessel."
+    ]
+  },
+  {
+    "date": "1916-08-10",
+    "news": [
+      "The official documentary film 'The Battle of the Somme' premiered in London."
+    ]
+  },
+  {
+    "date": "1916-08-12",
+    "news": [
+      "The Battle of Romani concluded, securing the Suez Canal for the Allies."
+    ]
+  },
+  {
+    "date": "1916-08-13",
+    "news": [
+      "Royal Navy destroyer HMS Lassoo was torpedoed and sunk by a German U-boat in the North Sea."
+    ]
+  },
+  {
+    "date": "1916-08-15",
+    "news": [
+      "British submarines HMS E4 and HMS E41 collided and sank in the North Sea.",
+      "Royal Navy battlecruiser HMS Furious was launched in Newcastle."
+    ]
+  },
+  {
+    "date": "1916-08-19",
+    "news": [
+      "The Royal Navy and German Navy clashed in the North Sea; British light cruisers HMS Nottingham and HMS Falmouth were sunk by submarines."
+    ]
+  },
+  {
+    "date": "1916-08-21",
+    "news": [
+      "British forces captured the road to Flers at Delville Wood."
+    ]
+  },
+  {
+    "date": "1916-08-22",
+    "news": [
+      "British submarine HMS E16 struck a mine and sank with all hands in the Heligoland Bight."
+    ]
+  },
+  {
+    "date": "1916-08-24",
+    "news": [
+      "German airship L 31 bombed southeast London, killing nine civilians.",
+      "British armed steamer Duke of Albany was torpedoed and sunk in the North Sea."
+    ]
+  },
+  {
+    "date": "1916-08-26",
+    "news": [
+      "British forces captured the rest of the front line German trench at Delville Wood."
+    ]
+  },
+  {
+    "date": "1916-08-27",
+    "news": [
+      "Romania declared war on the Central Powers and launched an offensive in Transylvania."
+    ]
+  },
+  {
+    "date": "1916-08-29",
+    "news": [
+      "Paul von Hindenburg replaced Erich von Falkenhayn as German Chief of Staff."
+    ]
+  },
+  {
+    "date": "1916-08-30",
+    "news": [
+      "Ernest Shackleton rescued the remaining men of the Imperial Trans-Antarctic Expedition from Elephant Island."
+    ]
+  },
+  {
+    "date": "1916-09-02",
+    "news": [
+      "Royal Flying Corps pilot Leefe Robinson shot down German airship SL 11 near London, the first airship shot down over Britain."
+    ]
+  },
+  {
+    "date": "1916-09-03",
+    "news": [
+      "The largest airship raid of the war occurred as 16 German airships bombed southeast England.",
+      "British and French forces launched the Battle of Guillemont."
+    ]
+  },
+  {
+    "date": "1916-09-04",
+    "news": [
+      "British forces occupied the village of Guillemont."
+    ]
+  },
+  {
+    "date": "1916-09-09",
+    "news": [
+      "The Irish 16th Division captured the village of Ginchy."
+    ]
+  },
+  {
+    "date": "1916-09-15",
+    "news": [
+      "The Battle of Flers–Courcelette began; British tanks were deployed in battle for the first time.",
+      "Raymond Asquith, son of the Prime Minister, and MP Guy Baring were killed in action."
+    ]
+  },
+  {
+    "date": "1916-09-17",
+    "news": [
+      "Manfred von Richthofen scored his first aerial victory."
+    ]
+  },
+  {
+    "date": "1916-09-18",
+    "news": [
+      "Royal Navy destroyer HMS Eden sank after a collision in the English Channel."
+    ]
+  },
+  {
+    "date": "1916-09-22",
+    "news": [
+      "British forces consolidated positions around Courcelette and Flers, ending the Battle of Flers–Courcelette."
+    ]
+  },
+  {
+    "date": "1916-09-23",
+    "news": [
+      "Twelve German Zeppelins raided England; two were lost, including L 32 with commander Peter Strasser."
+    ]
+  },
+  {
+    "date": "1916-09-24",
+    "news": [
+      "German Zeppelin L 33 crash-landed in England and its crew was captured."
+    ]
+  },
+  {
+    "date": "1916-09-25",
+    "news": [
+      "The Battle of Morval began; British forces captured Lesbœufs.",
+      "A German Zeppelin raid bombed Sheffield, killing 28 people."
+    ]
+  },
+  {
+    "date": "1916-09-26",
+    "news": [
+      "British forces captured Combles and Gueudecourt.",
+      "The Battle of Thiepval Ridge began."
+    ]
+  },
+  {
+    "date": "1916-09-28",
+    "news": [
+      "British forces captured the south side of Schwaben Redoubt at Thiepval."
+    ]
+  },
+  {
+    "date": "1916-09-30",
+    "news": [
+      "The Arab Revolt captured the coastal ports of Rabigh, Yanbu, and Qunfida with Royal Navy support."
+    ]
+  },
+  {
+    "date": "1916-10-01",
+    "news": [
+      "The British Fourth Army launched its final offensive in the Battle of the Somme at Le Transloy.",
+      "The British Reserve Army attacked German defenses along the Ancre River, capturing part of the Regina Trench.",
+      "Royal Flying Corps pilot W. J. Tempest shot down German airship L 31 outside London, killing commander Heinrich Mathy.",
+      "Dublin Mean Time was abolished, synchronizing Irish clocks with British time."
+    ]
+  },
+  {
+    "date": "1916-10-02",
+    "news": [
+      "British forces assaulted the north side of the Schwaben Redoubt on the Ancre Heights.",
+      "German forces recaptured the Regina Trench from Canadian troops."
+    ]
+  },
+  {
+    "date": "1916-10-03",
+    "news": [
+      "British forces captured the farms of Eaucourt l'Abbaye in France."
+    ]
+  },
+  {
+    "date": "1916-10-04",
+    "news": [
+      "The British ocean liner RMS Franconia was torpedoed and sunk in the Mediterranean by a German submarine.",
+      "The French troopship SS Gallia was torpedoed and sunk with the loss of over 1,300 lives."
+    ]
+  },
+  {
+    "date": "1916-10-07",
+    "news": [
+      "British forces captured the village of Le Sars from the Germans."
+    ]
+  },
+  {
+    "date": "1916-10-08",
+    "news": [
+      "British forces assaulted the Stuff Redoubt on the Ancre Heights.",
+      "Bad weather slowed the British advance at the Battle of Le Transloy.",
+      "The Imperial German Flying Corps was reorganized and renamed the German Air Force (Luftstreitkräfte)."
+    ]
+  },
+  {
+    "date": "1916-10-09",
+    "news": [
+      "The 1st Canadian Division failed to recapture the Regina Trench, suffering 770 casualties."
+    ]
+  },
+  {
+    "date": "1916-10-10",
+    "news": [
+      "British forces claimed the northwest portion of the Stuff Redoubt."
+    ]
+  },
+  {
+    "date": "1916-10-11",
+    "news": [
+      "German forces counterattacked to reclaim portions of the Stuff Redoubt."
+    ]
+  },
+  {
+    "date": "1916-10-12",
+    "news": [
+      "Canadian flying ace Raymond Collishaw claimed his first aerial victory.",
+      "British attacks at Le Transloy failed to push the German line back."
+    ]
+  },
+  {
+    "date": "1916-10-13",
+    "news": [
+      "The Anglo-Egyptian Expedition occupied the Sudanese village of Dibbis."
+    ]
+  },
+  {
+    "date": "1916-10-14",
+    "news": [
+      "British forces occupied the entire Schwaben and Stuff Redoubts on the Ancre Heights.",
+      "The destroyer HMS Rosalind was launched at Southampton."
+    ]
+  },
+  {
+    "date": "1916-10-15",
+    "news": [
+      "German forces launched three failed assaults to recapture the Schwaben Redoubt from the British."
+    ]
+  },
+  {
+    "date": "1916-10-16",
+    "news": [
+      "T. E. Lawrence was sent on an intelligence mission to the Hejaz, where he met Faisal, a leader of the Arab Revolt."
+    ]
+  },
+  {
+    "date": "1916-10-17",
+    "news": [
+      "A British tank destroyed German defenses at the Butte de Warlencourt.",
+      "British soldier Harry Farr was executed for cowardice, a sentence later attributed to shell shock and posthumously pardoned."
+    ]
+  },
+  {
+    "date": "1916-10-18",
+    "news": [
+      "British casualties for the Battle of the Somme reached nearly 58,000 for the month of October.",
+      "German machine-gun fire halted the British advance beyond the Butte de Warlencourt."
+    ]
+  },
+  {
+    "date": "1916-10-19",
+    "news": [
+      "The British ocean liner RMS Alaunia struck a mine and sank in the English Channel.",
+      "German Navy Zeppelins participated in a failed sortie over the North Sea."
+    ]
+  },
+  {
+    "date": "1916-10-20",
+    "news": [
+      "British forces repulsed a German attack on the Schwaben Redoubt using aerial reconnaissance."
+    ]
+  },
+  {
+    "date": "1916-10-21",
+    "news": [
+      "Canadian forces launched a third attack on the Regina Trench and successfully captured it.",
+      "Count Karl von Stürgkh, Minister-President of Austria, was assassinated."
+    ]
+  },
+  {
+    "date": "1916-10-22",
+    "news": [
+      "The British consolidated their hold on the Regina Trench, capturing over 1,000 German prisoners."
+    ]
+  },
+  {
+    "date": "1916-10-24",
+    "news": [
+      "French forces recaptured Fort Douaumont near Verdun."
+    ]
+  },
+  {
+    "date": "1916-10-25",
+    "news": [
+      "The Bristol F.2 Fighter aircraft began operations with the Royal Flying Corps."
+    ]
+  },
+  {
+    "date": "1916-10-26",
+    "news": [
+      "German relief forces failed to recapture the Regina Trench from the British.",
+      "German torpedo boats raided the Strait of Dover, capturing and sinking the British steamship TSS The Queen."
+    ]
+  },
+  {
+    "date": "1916-10-27",
+    "news": [
+      "British destroyers HMS Flirt and HMS Nubian were torpedoed in the Strait of Dover; 45 crew were killed."
+    ]
+  },
+  {
+    "date": "1916-10-28",
+    "news": [
+      "A plebiscite in Australia rejected military conscription by a narrow margin.",
+      "The British hospital ship SS Galeka struck a mine and sank.",
+      "Famous German flying ace Oswald Boelcke was killed in a mid-air collision."
+    ]
+  },
+  {
+    "date": "1916-10-29",
+    "news": [
+      "Irish politician John Redmond demanded the abolition of martial law implemented during the Easter Rising."
+    ]
+  },
+  {
+    "date": "1916-10-30",
+    "news": [
+      "The British Reserve Army was renamed the Fifth Army under General Hubert Gough."
+    ]
+  },
+  {
+    "date": "1916-11-01",
+    "news": [
+      "The Australian government split over the results of the conscription plebiscite."
+    ]
+  },
+  {
+    "date": "1916-11-02",
+    "news": [
+      "German forces abandoned Fort Vaux near Verdun, allowing the French to retake it."
+    ]
+  },
+  {
+    "date": "1916-11-03",
+    "news": [
+      "British passenger ship Connemara collided with the cargo ship Retriever off Ireland, killing 97."
+    ]
+  },
+  {
+    "date": "1916-11-04",
+    "news": [
+      "German submarine U-20, which sank the Lusitania, ran aground and was scuttled."
+    ]
+  },
+  {
+    "date": "1916-11-05",
+    "news": [
+      "British forces made a final attack on the Butte de Warlencourt.",
+      "A British submarine damaged two German ships in the North Sea."
+    ]
+  },
+  {
+    "date": "1916-11-06",
+    "news": [
+      "Sultan Ali Dinar of Darfur was killed by British colonial troops, ending the rebellion in Sudan.",
+      "The British passenger ship Arabia was torpedoed in the Mediterranean."
+    ]
+  },
+  {
+    "date": "1916-11-07",
+    "news": [
+      "Woodrow Wilson was re-elected as President of the United States."
+    ]
+  },
+  {
+    "date": "1916-11-11",
+    "news": [
+      "Canadian forces captured the last of the Regina Trench, ending the Battle of the Ancre Heights."
+    ]
+  },
+  {
+    "date": "1916-11-13",
+    "news": [
+      "The Battle of the Ancre began with the British Fifth Army capturing Hawthorn Ridge.",
+      "Australian Prime Minister Billy Hughes was expelled from the Labor Party over conscription."
+    ]
+  },
+  {
+    "date": "1916-11-14",
+    "news": [
+      "Writer H.H. Munro (Saki) was killed by a German sniper at the Battle of the Ancre.",
+      "Australian Prime Minister Billy Hughes formed the National Labor Party.",
+      "The Canadian Forestry Corps was established."
+    ]
+  },
+  {
+    "date": "1916-11-15",
+    "news": [
+      "British forces captured Beaumont Hamel on the Ancre River."
+    ]
+  },
+  {
+    "date": "1916-11-16",
+    "news": [
+      "Nieuport & General Aircraft Company was formed in London to build military aircraft."
+    ]
+  },
+  {
+    "date": "1916-11-17",
+    "news": [
+      "British forces attacked and briefly held Serre, France."
+    ]
+  },
+  {
+    "date": "1916-11-18",
+    "news": [
+      "General Douglas Haig called off further offensives on the Somme, ending the battle after four and a half months.",
+      "Total British casualties for the Battle of the Somme were recorded at 419,654."
+    ]
+  },
+  {
+    "date": "1916-11-20",
+    "news": [
+      "The first groups of the South African Native Labour Corps arrived in France."
+    ]
+  },
+  {
+    "date": "1916-11-21",
+    "news": [
+      "The hospital ship HMHS Britannic sank in the Aegean Sea after hitting a mine.",
+      "Emperor Franz Joseph I of Austria died after a 68-year reign."
+    ]
+  },
+  {
+    "date": "1916-11-23",
+    "news": [
+      "British ace Lanoe Hawker was shot down and killed by Manfred von Richthofen."
+    ]
+  },
+  {
+    "date": "1916-11-25",
+    "news": [
+      "David Beatty replaced John Jellicoe as commander of the Grand Fleet."
+    ]
+  },
+  {
+    "date": "1916-11-27",
+    "news": [
+      "German Zeppelins raided the British Midlands; L 21 was shot down."
+    ]
+  },
+  {
+    "date": "1916-11-28",
+    "news": [
+      "A German aircraft dropped bombs near Victoria station in the first raid on central London."
+    ]
+  },
+  {
+    "date": "1916-11-29",
+    "news": [
+      "The British troopship Minnewaska struck a mine off Crete."
+    ]
+  },
+  {
+    "date": "1916-11-30",
+    "news": [
+      "The Royal Navy Q-ship HMS Penshurst sank the German submarine UB-19."
+    ]
+  },
+  {
+    "date": "1916-12-01",
+    "news": [
+      "British submarine HMS E37 was lost in the North Sea."
+    ]
+  },
+  {
+    "date": "1916-12-03",
+    "news": [
+      "Ottoman forces attempted to capture the British-held port of Yanbu during the Arab Revolt."
+    ]
+  },
+  {
+    "date": "1916-12-05",
+    "news": [
+      "British Prime Minister H. H. Asquith resigned.",
+      "An explosion at the Barnbow munitions factory near Leeds killed 35 female workers."
+    ]
+  },
+  {
+    "date": "1916-12-06",
+    "news": [
+      "German forces occupied Bucharest, Romania.",
+      "HMS Ariel sank the German submarine UC-19."
+    ]
+  },
+  {
+    "date": "1916-12-07",
+    "news": [
+      "David Lloyd George succeeded H. H. Asquith as Prime Minister of the United Kingdom."
+    ]
+  },
+  {
+    "date": "1916-12-08",
+    "news": [
+      "The Cavalry Division of India was established for the Mesopotamian campaign."
+    ]
+  },
+  {
+    "date": "1916-12-09",
+    "news": [
+      "The German raider SMS Möwe captured and scuttled the British cargo ship Georgic."
+    ]
+  },
+  {
+    "date": "1916-12-11",
+    "news": [
+      "Prime Minister David Lloyd George established a war cabinet.",
+      "General Joseph Joffre called off the Allied offensive in Macedonia."
+    ]
+  },
+  {
+    "date": "1916-12-12",
+    "news": [
+      "Ottoman forces abandoned their attempt to take the port of Yanbu."
+    ]
+  },
+  {
+    "date": "1916-12-13",
+    "news": [
+      "French General Robert Nivelle replaced Joseph Joffre as Commander-in-Chief of the French Army.",
+      "A British force mobilized to recapture Kut in Mesopotamia.",
+      "HMS Landrail sank the German submarine UB-29."
+    ]
+  },
+  {
+    "date": "1916-12-14",
+    "news": [
+      "The British cargo ship Russian was torpedoed and sunk in the Mediterranean."
+    ]
+  },
+  {
+    "date": "1916-12-15",
+    "news": [
+      "French forces launched a second offensive at Verdun, collapsing German defenses."
+    ]
+  },
+  {
+    "date": "1916-12-16",
+    "news": [
+      "French forces recaptured Vacherauville and Louvemont near Verdun.",
+      "Robert Baden-Powell gave the first public display of the Wolf Cub section of Scouting."
+    ]
+  },
+  {
+    "date": "1916-12-17",
+    "news": [
+      "The French consolidated a new line near Verdun, pushing the Germans back.",
+      "The Royal Guernsey Light Infantry was established."
+    ]
+  },
+  {
+    "date": "1916-12-18",
+    "news": [
+      "The Battle of Verdun officially ended in a German defeat."
+    ]
+  },
+  {
+    "date": "1916-12-19",
+    "news": [
+      "The Imperial Camel Corps was established for the Senussi campaign."
+    ]
+  },
+  {
+    "date": "1916-12-20",
+    "news": [
+      "The ship Aurora departed to rescue the Ross Sea party in the Antarctic.",
+      "British ace Arthur Gerald Knight was shot down and killed by the Red Baron."
+    ]
+  },
+  {
+    "date": "1916-12-21",
+    "news": [
+      "British forces occupied El Arish in the Sinai Peninsula.",
+      "The release of Irish prisoners involved in the Easter Rising was announced.",
+      "HMS Hoste and HMS Negro collided and sank in the North Sea."
+    ]
+  },
+  {
+    "date": "1916-12-22",
+    "news": [
+      "The Desert Column was established under Philip Chetwode.",
+      "The Sopwith Camel prototype was flown for the first time."
+    ]
+  },
+  {
+    "date": "1916-12-23",
+    "news": [
+      "The Desert Column captured the Ottoman garrison at the Battle of Magdhaba."
+    ]
+  },
+  {
+    "date": "1916-12-25",
+    "news": [
+      "The last group of Irish prisoners involved in the Easter Rising were released in Dublin."
+    ]
+  },
+  {
+    "date": "1916-12-27",
+    "news": [
+      "Togoland was divided into British and French administrative zones."
+    ]
+  },
+  {
+    "date": "1916-12-28",
+    "news": [
+      "Six German Zeppelins attempted a raid on England but were recalled due to weather; two were destroyed."
+    ]
+  },
+  {
+    "date": "1916-12-29",
+    "news": [
+      "George Noble Plunkett was dismissed from the National Museum of Ireland due to his son's role in the Easter Rising."
+    ]
+  },
+  {
+    "date": "1916-12-30",
+    "news": [
+      "Russian mystic Grigori Rasputin was murdered."
+    ]
+  },
+  {
+    "date": "1916-12-31",
+    "news": [
+      "Douglas Haig was promoted to Field Marshal of the British Army.",
+      "By year's end, over 17,000 officers and men were deployed in Great Britain for home air defense."
+    ]
+  }  
+  
+
+] as any);

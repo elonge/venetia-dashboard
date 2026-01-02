@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getNextDailyRecordByDate } from '@/lib/daily_records';
+import { majorDailyEvents } from '@/major_daily_events';
 
 export async function GET(request: Request) {
   try {
@@ -19,7 +20,17 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'No next daily record found' }, { status: 404 });
     }
 
-    return NextResponse.json(nextDay);
+    // Attach major event if exists
+    // nextDay is a Document, assume it has date_string property or we convert date object
+    const dateStr = nextDay.date_string || (nextDay.date instanceof Date ? nextDay.date.toISOString().split('T')[0] : String(nextDay.date));
+    
+    const event = majorDailyEvents.find(e => e.date === dateStr);
+    const responseData = {
+        ...nextDay,
+        major_event: event ? event.news : undefined
+    };
+
+    return NextResponse.json(responseData);
   } catch (error) {
     console.error('Error in next daily record API:', error);
     return NextResponse.json({ error: 'Failed to fetch next daily record' }, { status: 500 });

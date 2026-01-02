@@ -27,6 +27,7 @@ export async function GET(
 
     // Attach major event if exists
     const event = majorDailyEvents.find(e => e.date === normalizedDate);
+    console.log('Found major event for date', normalizedDate, ':', event);
     const responseData = {
         ...day,
         major_event: event ? event.news : undefined
