@@ -8,7 +8,7 @@ const DB_NAME = 'venetia_project';
 const TARGET_COLLECTION = 'document_chunks';
 const EMBEDDING_MODEL = process.env.EMBEDDING_MODEL || 'text-embedding-3-small';
 const EMBEDDING_DIMENSIONS = 1536;
-const INPUT_DIR = '/Users/elongecht/code/venetia/test_scan/ocr_output_times';
+const INPUT_DIR = '/Users/elongecht/code/venetia/test_scan/ocr_output_times_1915';
 
 function estimateTokens(text: string): number {
   return Math.ceil(text.length / 4);

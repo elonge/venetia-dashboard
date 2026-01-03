@@ -39,6 +39,7 @@ export interface DayData {
   diaries_summary?: DiarySummary[];
   weather?: string;
   met_venetia?: boolean;
+  meeting_reason?: LocationReasonAnswer | null;
   total_number_letters?: number;
   
   // Optional fields used in UI

@@ -33,7 +33,7 @@ export default function LocationReasonModal({
       onClick={onClose}
     >
       <div 
-        className="bg-card-bg w-full max-w-sm rounded-xl shadow-2xl border-2 border-border-beige overflow-hidden animate-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col"
+        className="bg-card-bg w-full max-w-sm md:max-w-xl rounded-xl shadow-2xl border-2 border-border-beige overflow-hidden animate-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="p-4 border-b border-border-beige bg-page-bg/50 flex items-center justify-between shrink-0">
@@ -56,8 +56,8 @@ export default function LocationReasonModal({
             <span className="text-[9px] font-bold text-accent-brown uppercase tracking-widest opacity-60">
               Determined Context
             </span>
-            <p className="text-sm font-serif italic text-navy leading-relaxed">
-              &quot;{reasonText}&quot;
+            <p className="text-sm font-serif text-navy leading-relaxed">
+              {reasonText}
             </p>
           </div>
 

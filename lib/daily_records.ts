@@ -1,7 +1,7 @@
 import clientPromise from './mongodb';
 import type { DayData } from '@/components/daily/types';
 import type { DailyRecordDocument, LocationReasonAnswer } from '@/types';
-import { LocationActivitiesAnswer } from './schemas';
+import { LocationActivitiesAnswer, MeetingCheckerAnswer } from './schemas';
 
 const DB_NAME = 'venetia_project';
 const COLLECTION_NAME = 'daily_records';
@@ -52,18 +52,8 @@ function getLocationString(value: unknown): string | undefined {
   if (!value) return undefined;
   if (typeof value === 'string') return cleanString(value);
   if (isRecord(value)) {
-    return (
-      cleanString(value.full_string) ??
-      joinNonEmpty(
-        [
-          cleanString(value.venue),
-          cleanString(value.area),
-          cleanString(value.context),
-        ],
-        ', '
-      ) ??
-      undefined
-    );
+    value = value.area || value.venue || value.full_string || "";
+    return value ? cleanString(value) : undefined;
   }
   return undefined;
 }
@@ -180,6 +170,7 @@ export function mapDailyRecordToDayData(doc: DailyRecordDocument | unknown): Day
 
   const venetiaLocationReasonsRecord = isRecord(record.venetia_location_reason) ? record.venetia_location_reason : undefined;
   const pmLocationReasonsRecord = isRecord(record.pm_location_reason) ? record.pm_location_reason : undefined;
+  const meetingReasonRecord = isRecord(record.meeting_reason) ? record.meeting_reason : undefined;
 
   return {
     date,
@@ -197,6 +188,7 @@ export function mapDailyRecordToDayData(doc: DailyRecordDocument | unknown): Day
     diaries_summary: diariesSummary?.length ? diariesSummary : undefined,
     weather,
     met_venetia: record.met_venetia === true,
+    meeting_reason: meetingReasonRecord as LocationReasonAnswer | null | undefined,
     total_number_letters: totalNumberLetters ? totalNumberLetters : letters?.length || 0,
   };
 }
@@ -368,6 +360,23 @@ export async function updateDailyRecordLocationActivity(
   );
 }
 
+export async function updateDailyRecordWithMetVenetia(
+  dateString: string, 
+  data: MeetingCheckerAnswer
+): Promise<void> {  
+  const client = await clientPromise;
+  const db = client.db(DB_NAME);
+  const col = db.collection<DailyRecordDocument>(COLLECTION_NAME);
+
+  const updateFields: Record<string, unknown> = {};
+  updateFields['met_venetia'] = data.met;
+  updateFields['meeting_reason'] = data.reason;
+  
+  await col.updateOne(
+    { date_string: dateString },
+    { $set: updateFields }
+  );
+}
 const DAILY_RECORD_PROJECTION = {
   _id: 0,
   date: 1,
@@ -383,6 +392,7 @@ const DAILY_RECORD_PROJECTION = {
   weather: 1,
   weather_short: 1,
   met_venetia: 1,
+  meeting_reason: 1,
   total_number_letters: 1,
   asquith_venetia_proximity: 1,
   venetia_location_reason: 1,

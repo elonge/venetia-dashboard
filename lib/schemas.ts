@@ -46,5 +46,12 @@ export const LocationActivitiesAnswerSchema = z.object({
   reason: LocationReasonAnswerSchema.describe("The reason you think this was this person's location and activities on that date."),
 });
 
+export const MeetingCheckerAnswerSchema = z.object({
+  met: z.boolean().describe("Whether a meeting between the PM and Venetia likely took place on that date."),
+  meeting_context: z.string().optional().describe("Additional context or details about the meeting, if applicable."),
+  reason: LocationReasonAnswerSchema.describe("The reason or context supporting whether a meeting took place."),
+});
+
 export type LocationReasonAnswer = z.infer<typeof LocationReasonAnswerSchema>;
 export type LocationActivitiesAnswer = z.infer<typeof LocationActivitiesAnswerSchema>;
+export type MeetingCheckerAnswer = z.infer<typeof MeetingCheckerAnswerSchema>;
