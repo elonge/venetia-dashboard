@@ -19,9 +19,10 @@ import {
   Newspaper,
 } from "lucide-react";
 import { format } from "date-fns";
-import type { DayData } from "./types";
+import type { DayData, DailyLetter, DiarySummary } from "./types";
 import { PEOPLE_IMAGES } from "@/constants";
 import { getDayByDate } from "./dayUtils";
+import LocationReasonModal from "./LocationReasonModal";
 
 interface DailyPopupProps {
   day: DayData;
@@ -78,6 +79,7 @@ export default function DailyPopup({
   const [hasPrevious, setHasPrevious] = useState(false);
   const [dateInput, setDateInput] = useState("");
   const [datePickerError, setDatePickerError] = useState<string | null>(null);
+  const [activeReason, setActiveReason] = useState<{ person: string; reason: any } | null>(null);
   const dateInputRef = useRef<HTMLInputElement>(null);
 
   // Get current date in YYYY-MM-DD format for date input
@@ -100,8 +102,6 @@ export default function DailyPopup({
   // Total slides in the carousel: existing letters + 1 for missing card if needed
   const totalSlides = letters.length + (showMissingCard ? 1 : 0);
   const hasDisplayableContent = totalSlides > 0;
-
-  const meetingNote = currentDay.meeting_reference  || "The Prime Minister and Venetia met in person";
 
   // Check for next/previous days
   useEffect(() => {
@@ -437,7 +437,7 @@ export default function DailyPopup({
                 /* Letter Card Carousel */
                 <div className="space-y-6">
                   <div className="relative">
-                    {letters.map((letter, idx) => (
+                    {letters.map((letter: DailyLetter, idx: number) => (
                       <div
                         key={idx}
                         className={`${
@@ -554,7 +554,7 @@ export default function DailyPopup({
                                     Thematic Tags
                                   </h3>
                                   <div className="flex flex-wrap gap-1.5">
-                                    {letter.topics.map((topic, topicIdx) => (
+                                    {letter.topics.map((topic: string, topicIdx: number) => (
                                       <span
                                         key={topicIdx}
                                         className="px-2 py-1 bg-navy text-card-bg text-[12px] font-bold uppercase tracking-wider rounded-sm shadow-sm transition-all duration-300 cursor-default"
@@ -674,7 +674,7 @@ export default function DailyPopup({
                           <div className="px-6 py-2 bg-accent-green text-card-bg rounded-full shadow-lg border-2 border-card-bg">
                             <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest">
                               <MessageSquare className="w-4 h-4" />
-                              <span>{meetingNote}</span>
+                              <span>{"The Prime Minister and Venetia met in person"}</span>
                             </div>
                           </div>
                         </div>
@@ -720,10 +720,19 @@ export default function DailyPopup({
                           <div className="flex-1 relative pt-1">
                             {/* Location "Postmark" (Top Right Corner) */}
                             {currentDay.pm_location && (
-                              <div className="absolute top-0 right-0 transform translate-x-1 -translate-y-2 rotate-[3deg] opacity-80 z-10">
+                              <div className="absolute top-0 right-0 transform translate-x-1 -translate-y-2 rotate-[3deg] opacity-80 z-10 flex flex-col items-end gap-1">
                                 <div className="border border-accent-brown/40 rounded-sm px-2 py-0.5 text-[10px] font-bold text-accent-brown uppercase tracking-widest bg-card-bg/50 backdrop-blur-[1px]">
                                   {currentDay.pm_location}
                                 </div>
+                                {currentDay.pm_location_reason && (
+                                  <button 
+                                    onClick={() => setActiveReason({ person: "H.H. Asquith", reason: currentDay.pm_location_reason })}
+                                    className="flex items-center gap-1 px-1.5 py-0.5 bg-accent-brown text-white text-[8px] font-black uppercase tracking-widest rounded-full shadow-sm hover:scale-105 transition-transform cursor-pointer"
+                                  >
+                                    <MessageSquare className="w-2 h-2" />
+                                    Why here?
+                                  </button>
+                                )}
                               </div>
                             )}
           
@@ -787,19 +796,27 @@ export default function DailyPopup({
                             <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-2 bg-border-beige opacity-60 rotate-[-2deg]"></div>
                           </div>
           
-                          {/* Right: Content */}
-                          <div className="flex-1 relative pt-1">
-                            {/* Location Postmark */}
-                            {currentDay.venetia_location && (
-                              <div className="absolute top-0 right-0 transform translate-x-1 -translate-y-2 rotate-[-2deg] opacity-80 z-10">
-                                <div className="border border-accent-burgundy/40 rounded-sm px-2 py-0.5 text-[10px] font-bold text-accent-burgundy uppercase tracking-widest bg-card-bg/50 backdrop-blur-[1px]">
-                                  {currentDay.venetia_location}
-                                </div>
-                              </div>
-                            )}
-          
-                            <div className="space-y-4 pr-8">
-                              {currentDay.venetia_activities && (
+                                                    {/* Right: Content */}
+                                                    <div className="flex-1 relative pt-1">
+                                                      {/* Location Postmark */}
+                                                      {currentDay.venetia_location && (
+                                                        <div className="absolute top-0 right-0 transform translate-x-1 -translate-y-2 rotate-[-2deg] opacity-80 z-10 flex flex-col items-end gap-1">
+                                                          <div className="border border-accent-burgundy/40 rounded-sm px-2 py-0.5 text-[10px] font-bold text-accent-burgundy uppercase tracking-widest bg-card-bg/50 backdrop-blur-[1px]">
+                                                            {currentDay.venetia_location}
+                                                          </div>
+                                                          {currentDay.venetia_location_reason && (
+                                                            <button 
+                                                              onClick={() => setActiveReason({ person: "Venetia Stanley", reason: currentDay.venetia_location_reason })}
+                                                              className="flex items-center gap-1 px-1.5 py-0.5 bg-accent-burgundy text-white text-[8px] font-black uppercase tracking-widest rounded-full shadow-sm hover:scale-105 transition-transform cursor-pointer"
+                                                            >
+                                                              <MessageSquare className="w-2 h-2" />
+                                                              Why here?
+                                                            </button>
+                                                          )}
+                                                        </div>
+                                                      )}
+                          
+                                                      <div className="space-y-4 pr-8">                              {currentDay.venetia_activities && (
                                 <div className="text-sm font-serif text-navy/90 leading-relaxed">
                                   <span className="text-[10px] font-sans font-bold text-accent-burgundy uppercase tracking-wider block mb-1 opacity-70">
                                     Activities
@@ -999,7 +1016,7 @@ export default function DailyPopup({
                 </h3>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {currentDay.diaries_summary.map((diary, idx) => {
+                  {currentDay.diaries_summary.map((diary: DiarySummary, idx: number) => {
                     const personImage =
                       PEOPLE_IMAGES[diary.writer as keyof typeof PEOPLE_IMAGES];
                     return (
@@ -1020,7 +1037,7 @@ export default function DailyPopup({
                             <div className="w-14 h-14 rounded-full bg-page-bg flex items-center justify-center flex-shrink-0 border border-border-beige text-accent-brown text-xs font-bold">
                               {diary.writer
                                 .split(" ")
-                                .map((n) => n[0])
+                                .map((n: string) => n[0])
                                 .join("")
                                 .slice(0, 2)
                                 .toUpperCase()}
@@ -1045,6 +1062,14 @@ export default function DailyPopup({
             )}
         </div>
       </div>
+
+      {/* Location Reason Overlay */}
+      <LocationReasonModal 
+        isOpen={!!activeReason}
+        onClose={() => setActiveReason(null)}
+        person={activeReason?.person || ''}
+        reason={activeReason?.reason || ''}
+      />
     </div>
   );
 }

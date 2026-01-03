@@ -1,6 +1,7 @@
 import clientPromise from './mongodb';
 import type { DayData } from '@/components/daily/types';
-import type { DailyRecordDocument } from '@/types';
+import type { DailyRecordDocument, LocationReasonAnswer } from '@/types';
+import { LocationActivitiesAnswer } from './schemas';
 
 const DB_NAME = 'venetia_project';
 const COLLECTION_NAME = 'daily_records';
@@ -98,12 +99,12 @@ export function mapDailyRecordToDayData(doc: DailyRecordDocument | unknown): Day
 
   const pmActivitiesRaw = record.pm_activities;
   const pmActivities = Array.isArray(pmActivitiesRaw)
-    ? joinNonEmpty(pmActivitiesRaw.map((v) => cleanString(v)), ' ')
+    ? joinNonEmpty(pmActivitiesRaw.map((v) => cleanString(v)), '. ')
     : cleanString(pmActivitiesRaw);
 
   const venetiaActivitiesRaw = record.venetia_activities;
   const venetiaActivities = Array.isArray(venetiaActivitiesRaw)
-    ? joinNonEmpty(venetiaActivitiesRaw.map((v) => cleanString(v)), ' ')
+    ? joinNonEmpty(venetiaActivitiesRaw.map((v) => cleanString(v)), '. ')
     : cleanString(venetiaActivitiesRaw);
 
   const lettersRaw = record.letters;
@@ -177,6 +178,9 @@ export function mapDailyRecordToDayData(doc: DailyRecordDocument | unknown): Day
     (isRecord(record.weather_short) ? cleanString(record.weather_short.oxford) : undefined) ??
     undefined;
 
+  const venetiaLocationReasonsRecord = isRecord(record.venetia_location_reason) ? record.venetia_location_reason : undefined;
+  const pmLocationReasonsRecord = isRecord(record.pm_location_reason) ? record.pm_location_reason : undefined;
+
   return {
     date,
     letters,
@@ -186,6 +190,9 @@ export function mapDailyRecordToDayData(doc: DailyRecordDocument | unknown): Day
     venetia_location: getLocationString(record.venetia_location),
     meeting_reference: cleanString(record.meeting_reference),
     meeting_details: cleanString(record.meeting_details),
+    asquith_venetia_proximity: isRecord(record.asquith_venetia_proximity) ? record.asquith_venetia_proximity as any : undefined,
+    venetia_location_reason: venetiaLocationReasonsRecord as LocationReasonAnswer | string | undefined,
+    pm_location_reason: pmLocationReasonsRecord as LocationReasonAnswer | string | undefined,
     politics,
     diaries_summary: diariesSummary?.length ? diariesSummary : undefined,
     weather,
@@ -310,6 +317,57 @@ export async function getDailyRecordByDate(dateString: string): Promise<DayData 
   return mapDailyRecordToDayData(doc);
 }
 
+export async function updateDailyRecordLocationReason(
+  dateString: string, 
+  person: 'pm' | 'venetia', 
+  reason: LocationReasonAnswer
+): Promise<void> {
+  const client = await clientPromise;
+  const db = client.db(DB_NAME);
+  const col = db.collection<DailyRecordDocument>(COLLECTION_NAME);
+
+  const updateField = person === 'pm' ? 'pm_location_reason' : 'venetia_location_reason';
+  
+  await col.updateOne(
+    { date_string: dateString },
+    { $set: { [updateField]: reason } }
+  );
+}
+
+export async function updateDailyRecordLocationActivity(
+  dateString: string, 
+  person: 'pm' | 'venetia', 
+  data: LocationActivitiesAnswer
+): Promise<void> {
+  const client = await clientPromise;
+  const db = client.db(DB_NAME);
+  const col = db.collection<DailyRecordDocument>(COLLECTION_NAME);
+
+  const updateFields: Record<string, unknown> = {};
+  if (person === 'pm') {
+    updateFields['pm_location'] = data.location;
+    if (data.activities) {
+      updateFields['pm_activities'] = data.activities;
+    }
+    if (data.reason) {
+      updateFields['pm_location_reason'] = data.reason;
+    }
+  } else {
+    updateFields['venetia_location'] = data.location;
+    if (data.activities) {
+      updateFields['venetia_activities'] = data.activities;
+    }
+    if (data.reason) {
+      updateFields['venetia_location_reason'] = data.reason;
+    }
+  }
+  
+  await col.updateOne(
+    { date_string: dateString },
+    { $set: updateFields }
+  );
+}
+
 const DAILY_RECORD_PROJECTION = {
   _id: 0,
   date: 1,
@@ -326,6 +384,9 @@ const DAILY_RECORD_PROJECTION = {
   weather_short: 1,
   met_venetia: 1,
   total_number_letters: 1,
+  asquith_venetia_proximity: 1,
+  venetia_location_reason: 1,
+  pm_location_reason: 1,
 } as const;
 
 export async function getNextDailyRecordByDate(dateString: string): Promise<DayData | null> {

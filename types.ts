@@ -1,5 +1,8 @@
 // types/index.ts
 import { ObjectId } from "mongodb";
+export { ProbabilityEnum, LocationReasonAnswerSchema } from './lib/schemas';
+export type { LocationReasonAnswer } from './lib/schemas';
+import type { LocationReasonAnswer } from './lib/schemas';
 
 export interface Scores {
   romantic_adoration?: number;
@@ -110,7 +113,9 @@ export interface DailyRecordDocument {
   met_venetia?: boolean | null;
   meeting_reference?: string | null;
   meeting_details?: string | null;
-  asquith_venetia_proximity?: AsquithVenetiaProximity | null
+  asquith_venetia_proximity?: AsquithVenetiaProximity | null;
+  venetia_location_reason?: LocationReasonAnswer | null;
+  pm_location_reason?: LocationReasonAnswer | null;
   letters?: DailyRecordLetter[] | null;
   politics?: DailyRecordPolitics | null;
   diaries?: DailyRecordDiary[] | null;

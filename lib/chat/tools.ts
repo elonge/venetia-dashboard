@@ -220,6 +220,45 @@ export const createGetCabinetChunksTool = (
     },
   });
 
+export const createGetNewspaperChunksTool = (
+  onStatus?: (status: string) => void
+) =>
+  tool({
+    name: "get_newspaper_chunks_in_range",
+    description:
+      "Search newspaper archives for public events, social happenings, or reported movements within a date range.",
+    parameters: z.object({
+      start_date: z.string().describe("YYYY-MM-DD"),
+      end_date: z.string().describe("YYYY-MM-DD"),
+      query: z
+        .string()
+        .describe('Search query, e.g., "Venetia", "Prime Minister"'),
+    }),
+    execute: async (args) => {
+      onStatus?.("Searching newspapers...");
+      console.log(
+        "🗄️ [Tool: get_newspaper_chunks] Searching newspapers for:",
+        JSON.stringify(args)
+      );
+
+      // Use the new source_type: 'newspaper' filter directly in vector search
+      const results = await searchSimilarChunks(args.query, 10, {
+        dateRange: { start: args.start_date, end: args.end_date },
+        source_type: "newspaper",
+      });
+
+      if (results.length === 0) {
+        console.log("🗄️ [Tool: get_newspaper_chunks] No newspapers found.");
+        return JSON.stringify([]);
+      }
+
+      console.log(
+        `🗄️ [Tool: get_newspaper_chunks] Found ${results.length} relevant chunks.`
+      );
+      return JSON.stringify([{Message: "No newspapers found on these dates and query."}]);
+    },
+  });
+
 export const createGetPersonalChunksTool = (
   onStatus?: (status: string) => void
 ) =>
