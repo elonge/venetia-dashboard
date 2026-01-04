@@ -919,8 +919,7 @@ export default function ChartRenderer({
                       </div>
 
                       <p className="text-[#1A2A40] font-serif italic text-base leading-relaxed border-l-2 border-[#F5F0E8] pl-4 group-hover:border-[#4A7C59]/30 transition-colors">
-                        {meeting.meeting_details ||
-                          "No supplementary details recorded."}
+                        {meeting.meeting_details || ""}
                       </p>
                     </a>
                   </div>
