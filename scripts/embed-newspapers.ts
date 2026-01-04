@@ -8,7 +8,7 @@ const DB_NAME = 'venetia_project';
 const TARGET_COLLECTION = 'document_chunks';
 const EMBEDDING_MODEL = process.env.EMBEDDING_MODEL || 'text-embedding-3-small';
 const EMBEDDING_DIMENSIONS = 1536;
-const INPUT_DIR = '/Users/elongecht/code/venetia/test_scan/ocr_output_times_1915';
+const INPUT_DIR = '/Users/elongecht/code/venetia/test_scan/more_newspaper';
 
 function estimateTokens(text: string): number {
   return Math.ceil(text.length / 4);
@@ -63,17 +63,34 @@ async function generateEmbedding(openai: OpenAI, text: string): Promise<number[]
   return response.data[0].embedding;
 }
 
-function parseDateFromFilename(filename: string): Date | null {
-  // Format: yyyy-mm-dd_ID.txt
-  const match = filename.match(/^(\d{4}-\d{2}-\d{2})_/);
-  if (match && match[1]) {
-    const date = new Date(match[1]);
-    if (!isNaN(date.getTime())) {
-      return date;
+function parseDateFromFilename(filename: string, isTimes: boolean): { date: Date | null; newspaperName: string } {
+  if (isTimes) {
+    // Format: yyyy-mm-dd_ID.txt
+    const match = filename.match(/^(\d{4}-\d{2}-\d{2})_/);
+    if (match && match[1]) {
+      const date = new Date(match[1]);
+      if (!isNaN(date.getTime())) {
+        return { date, newspaperName: "The Times" };
+      }
+    }
+  } else {
+    // Format: NewspaperName_YYYY_MM_DD.txt (e.g., DailyMirror_1914_07_20.txt)
+    const parts = filename.replace(/\.[^/.]+$/, "").split('_');
+    if (parts.length >= 4) {
+      const day = parts.pop();
+      const month = parts.pop();
+      const year = parts.pop();
+      const name = parts.join(" "); // Reconstruct name if it had underscores
+      
+      const dateStr = `${year}-${month}-${day}`;
+      const date = new Date(dateStr);
+      if (!isNaN(date.getTime())) {
+        return { date, newspaperName: name };
+      }
     }
   }
   
-  return null;
+  return { date: null, newspaperName: "" };
 }
 
 async function main() {
@@ -86,6 +103,7 @@ async function main() {
     throw new Error(`Input directory not found: ${INPUT_DIR}`);
   }
 
+  const isTimes = INPUT_DIR.toLowerCase().includes('_times');
   const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
   const client = await clientPromise;
   const db = client.db(DB_NAME);
@@ -103,9 +121,9 @@ async function main() {
     
     if (!stats.isFile()) continue;
 
-    const date = parseDateFromFilename(file);
+    const { date, newspaperName } = parseDateFromFilename(file, isTimes);
     if (!date) {
-      console.warn(`Could not parse date from filename: ${file}. Skipping.`);
+      console.warn(`Could not parse date/name from filename: ${file}. Skipping.`);
       continue;
     }
 
@@ -125,7 +143,7 @@ async function main() {
     const newDocs = chunks.map((chunkContent, idx) => {
       const new_metadata = {
         source_type: "newspaper",
-        source: "The Times",
+        source: newspaperName,
         date: date,
         filename: file,
         is_primary: true
@@ -134,12 +152,12 @@ async function main() {
       return {
         content: chunkContent,
         embedding: embeddings[idx],
-        source: `Newspaper: The Times (${date.toISOString().split('T')[0]})`,
+        source: `Newspaper: ${newspaperName} (${date.toISOString().split('T')[0]})`,
         chunkIndex: idx,
         metadata: {
-          documentTitle: `The Times - ${date.toDateString()}`,
+          documentTitle: `${newspaperName} - ${date.toDateString()}`,
           source_type: "newspaper",
-          source: "The Times",
+          source: newspaperName,
           date: date,
           filename: file
         },

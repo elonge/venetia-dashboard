@@ -15,6 +15,7 @@ export default function Politics({
   majorEvent,
   dateString,
 }: PoliticsProps) {
+  const majorEventString = Array.isArray(majorEvent) ? majorEvent.join(" ") : majorEvent;
   return (
     <div className="mt-8 border-t-2 border-navy/10 pt-6">
       {/* 1. HEADER: Official Metadata */}
@@ -45,11 +46,11 @@ export default function Politics({
 
           {/* News Content */}
           <div className="relative">
-            {majorEvent ? (
+            {majorEventString ? (
               <div className="space-y-3">
                 <div className="h-0.5 w-full bg-navy/10 mb-3"></div>
                 <p className="font-sans text-[13px] text-navy/90 leading-relaxed text-justify hyphens-auto selection:bg-accent-amber/30">
-                  {majorEvent}
+                  {majorEventString}
                 </p>
                 <div className="h-px w-12 bg-navy/20 ml-auto"></div>
               </div>

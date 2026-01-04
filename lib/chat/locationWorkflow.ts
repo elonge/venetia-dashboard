@@ -86,13 +86,14 @@ Your specific task is to find the best guess WHERE a specific person (The Prime 
 ${KNOWLEDGE_BASE}
 
 **Available Tools:**
-2.  **get_personal_chunks_in_range**: Search private letters/diaries around the date for mentions of travel, visits, or reasons for being somewhere.
+2.  **get_personal_chunks_in_range**: Search private letters/diaries for mentions of travel, visits, or reasons for being somewhere.
 3.  **get_parliament_chunks_in_range**: Search Hansard/Parliament records. Use for official government statements, debates, or public stances.
 4.  **get_cabinet_chunks_in_range**: Search Cabinet papers. Use for secret government decisions, war strategy, or "what really happened" vs public statements.
 5.  **get_newspaper_chunks_in_range**: Search newspaper archives for public events, social happenings, or reported movements.
 6.  **get_historian_opinion**: Search secondary sources for context on their movements.
 
 **Strategy:**
+--- Regardless of the required dates - ALWAYS start by checking private letters from Asquith To Venetia from September 17, 1914. Asquith specifically mentioned in that letter where he and Venetia were on several past dates
 --- Check private correspondence and make sure to query up to a week before and after the request for context, as sometimes someone's location or activity is mentioned in letters a few days later or before.
 --- Check parliament/cabinet records for official activities that days.
 --- Check newspaper archives for any reported events or social happenings.
@@ -156,6 +157,7 @@ ${KNOWLEDGE_BASE}
 6.  **get_historian_opinion**: Search secondary sources for context on their movements.
 
 **Strategy:**
+--- Regardless of the required dates - ALWAYS start by checking private letters from Asquith To Venetia from September 17, 1914. Asquith specifically mentioned in that letter dates when they met
 --- Check private correspondence and make sure to query up to a week before and after the request for context, as sometimes someone's location or activity is mentioned in letters a few days later or before.
 --- Check parliament/cabinet records for official activities that days.
 --- Check newspaper archives for any reported events or social happenings.

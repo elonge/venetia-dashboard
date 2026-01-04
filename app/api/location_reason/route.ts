@@ -18,7 +18,8 @@ export async function GET(request: Request) {
     // 1. Check if we already have the reason in the DB
     const dayRecord = await getDailyRecordByDate(date);
     const personLocation = personKey === 'pm' ? dayRecord?.pm_location : dayRecord?.venetia_location;
-    if (!personLocation || personLocation == null || personLocation === 'Unknown' || personLocation === '') {
+    const force = true; // For development/testing, always try to find location if missing
+    if (force || !personLocation || personLocation == null || personLocation === 'Unknown' || personLocation === '') {
       console.log(`[LocationReason] No personLocation found for ${date}, attempting to find location for ${person}...`);
       const foundLocation = await runLocationFinderWorkflow(date, personKey === 'pm' ? 'PM' : 'Venetia');
       if (foundLocation.location && foundLocation.reason.probability !== 'unknown') {

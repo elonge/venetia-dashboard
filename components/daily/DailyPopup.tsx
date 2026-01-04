@@ -83,8 +83,9 @@ export default function DailyPopup({
     ? format(date, "EEEE, MMMM d, yyyy")
     : currentDay.date;
   const dateString = formatDateString(currentDay.date);
-  const hasMeeting = currentDay.met_venetia;
-  const meetingReason = currentDay.meeting_reason;
+  const proximity = currentDay.asquith_venetia_proximity;
+  const distance = proximity?.distance_km;
+  const hasMeeting = !!currentDay.met_venetia && typeof distance === 'number' && distance < 60;
   const letters = currentDay.letters ?? [];
 
   // Check for next/previous days
