@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getAllDailyRecords } from '@/lib/daily_records';
 import { getAsquithVenetiaProximitySeries } from '@/lib/daily_records';
 import { PEOPLE_DESCRIPTIONS } from '@/constants';
+import type { DailyLetter } from '@/components/daily/types';
 
 // Mock data for the Data Room
 // TODO: Replace with actual database queries later
@@ -712,7 +713,7 @@ export async function GET() {
           const letters = day.letters || [];
           console.log(`  Day ${idx + 1} (${day.date}):`);
           console.log(`    Letters: ${letters.length}`);
-          letters.slice(0, 2).forEach((letter, letterIdx) => {
+          letters.slice(0, 2).forEach((letter: DailyLetter, letterIdx: number) => {
             const topics = letter.topics || [];
             console.log(`      Letter ${letterIdx + 1}: ${topics.length} topic(s)`, topics);
           });

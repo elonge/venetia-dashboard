@@ -19,7 +19,7 @@ function FitBounds({ points }: { points: [Coords, Coords] }) {
   );
 
   useEffect(() => {
-    map.fitBounds(bounds, { animate: false });
+    map.fitBounds(bounds, { animate: false, maxZoom: 12 });
   }, [map, bounds]);
 
   return null;
@@ -28,9 +28,11 @@ function FitBounds({ points }: { points: [Coords, Coords] }) {
 export default function ProximityMap({
   pm,
   venetia,
+  hasMeeting,
 }: {
   pm: Coords;
   venetia: Coords;
+  hasMeeting?: boolean;
 }) {
   const center: [number, number] = useMemo(
     () => [(pm.lat + venetia.lat) / 2, (pm.lng + venetia.lng) / 2],
@@ -44,6 +46,14 @@ export default function ProximityMap({
     ],
     [pm.lat, pm.lng, venetia.lat, venetia.lng]
   );
+
+  const distance = useMemo(() => {
+    if (typeof window === 'undefined') return 10000; // Default large distance on server
+    return L.latLng(pm.lat, pm.lng).distanceTo(L.latLng(venetia.lat, venetia.lng));
+  }, [pm, venetia]);
+
+  const isClose = distance < 2000; // Less than 2km
+  const showMergedPin = isClose || hasMeeting;
 
   return (
     // THE PHYSICAL ARTIFACT CONTAINER
@@ -94,40 +104,65 @@ export default function ProximityMap({
         <TileLayer
           url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
           className="archival-tiles"
+          maxNativeZoom={12} // Prevents loading high-detail tiles with building footprints
         />
 
-        {/* 4. HAND-DRAWN CONNECTION LINE */}
-        <Polyline 
-          positions={polyline} 
-          pathOptions={{ 
-            color: "#8B4513", 
-            weight: 2, 
-            opacity: 0.6, 
-            dashArray: "6, 8" // Creates the 'dotted line' effect
-          }} 
-        />
+        {/* 4. HAND-DRAWN CONNECTION LINE (Only if NOT merged) */}
+        {!showMergedPin && (
+          <Polyline 
+            positions={polyline} 
+            pathOptions={{ 
+              color: "#8B4513", 
+              weight: 2, 
+              opacity: 0.6, 
+              dashArray: "6, 8" // Creates the 'dotted line' effect
+            }} 
+          />
+        )}
 
-        {/* 5. PM MARKER (NAVY) */}
-        <CircleMarker
-          center={[pm.lat, pm.lng]}
-          radius={5}
-          pathOptions={{ color: "#1A2A40", fillColor: "#1A2A40", fillOpacity: 1, weight: 1 }}
-        >
-          <Tooltip direction="top" offset={[0, -5]} opacity={1} permanent>
-            <span className="text-[#1A2A40]">Asquith</span>
-          </Tooltip>
-        </CircleMarker>
+        {/* 5. MARKERS */}
+        {showMergedPin ? (
+          /* MERGED MARKER */
+          <CircleMarker
+            center={center} // Use midpoint
+            radius={hasMeeting ? 8 : 6}
+            pathOptions={{ 
+              color: hasMeeting ? "#8B4513" : "#555555", // Darker brown for meeting, neutral grey-ish for just close
+              fillColor: hasMeeting ? "#8B4513" : "#555555", 
+              fillOpacity: 1, 
+              weight: hasMeeting ? 2 : 1 
+            }}
+          >
+            <Tooltip direction="top" offset={[0, -8]} opacity={1} permanent>
+              <span className={hasMeeting ? "text-[#8B4513]" : "text-[#555555]"}>
+                {hasMeeting ? "Meeting" : "Together"}
+              </span>
+            </Tooltip>
+          </CircleMarker>
+        ) : (
+          /* SEPARATE MARKERS */
+          <>
+            <CircleMarker
+              center={[pm.lat, pm.lng]}
+              radius={5}
+              pathOptions={{ color: "#1A2A40", fillColor: "#1A2A40", fillOpacity: 1, weight: 1 }}
+            >
+              <Tooltip direction="top" offset={[0, -5]} opacity={1} permanent>
+                <span className="text-[#1A2A40]">Asquith</span>
+              </Tooltip>
+            </CircleMarker>
 
-        {/* 6. VENETIA MARKER (SAGE) */}
-        <CircleMarker
-          center={[venetia.lat, venetia.lng]}
-          radius={5}
-          pathOptions={{ color: "#4A7C59", fillColor: "#4A7C59", fillOpacity: 1, weight: 1 }}
-        >
-          <Tooltip direction="bottom" offset={[0, 5]} opacity={1} permanent>
-             <span className="text-[#4A7C59]">Venetia</span>
-          </Tooltip>
-        </CircleMarker>
+            <CircleMarker
+              center={[venetia.lat, venetia.lng]}
+              radius={5}
+              pathOptions={{ color: "#4A7C59", fillColor: "#4A7C59", fillOpacity: 1, weight: 1 }}
+            >
+              <Tooltip direction="bottom" offset={[0, 5]} opacity={1} permanent>
+                 <span className="text-[#4A7C59]">Venetia</span>
+              </Tooltip>
+            </CircleMarker>
+          </>
+        )}
       </MapContainer>
     </div>
   );

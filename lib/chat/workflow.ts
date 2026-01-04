@@ -8,6 +8,7 @@ import {
   createGetCorrespondenceMetricsTool,
   createGetParliamentChunksTool,
   createGetCabinetChunksTool,
+  createGetNewspaperChunksTool,
   createGetPersonalChunksTool,
   createGetHistorianOpinionTool,
   createGetDailyLocationsTool,
@@ -34,17 +35,19 @@ ${KNOWLEDGE_BASE}
 2.  **get_personal_chunks_in_range**: Search private letters/diaries. Use this for specific quotes, opinions on people (Churchill, Montagu), or personal events.
 3.  **get_parliament_chunks_in_range**: Search Hansard/Parliament records. Use for official government statements, debates, or public stances.
 4.  **get_cabinet_chunks_in_range**: Search Cabinet papers. Use for secret government decisions, war strategy, or "what really happened" vs public statements.
-5.  **get_historian_opinion**: Search secondary sources (books). Use for context, analysis, or consensus views.
-6.  **get_daily_locations_and_proximity**: Get geo-spatial data. Use for "where were they?", "were they together?", or mapping movements.
-7.  **find_dates_of_venetia_asquith_correspondance**: Find specific dates of letters matching a topic.
-8.  **get_weather_records**: Check historical weather.
-9.  **format_final_response**: Use this to polish your synthesized findings into a clear, academic structure with Markdown and footnotes.
+5.  **get_newspaper_chunks_in_range**: Search newspaper archives for public events, social happenings, or reported movements.
+6.  **get_historian_opinion**: Search secondary sources (books). Use for context, analysis, or consensus views.
+7.  **get_daily_locations_and_proximity**: Get geo-spatial data. Use for "where were they?", "were they together?", or mapping movements.
+8.  **find_dates_of_venetia_asquith_correspondance**: Find specific dates of letters matching a topic.
+9.  **get_weather_records**: Check historical weather.
+10.  **format_final_response**: Use this to polish your synthesized findings into a clear, academic structure with Markdown and footnotes.
 
 **Strategy:**
 - **Date-Check**: If asked about someone's location or activity on a specific date (or date range):
 --- first use *get_daily_locations_and_proximity* to confirm where they were.:
 --- Check private correspondence and make sure to query up to a week before and after the request for context, as sometimes someone's location or activity is mentioned in letters a few days later or before.
 --- Check parliament/cabinet records for official activities that days.
+--- Check newspaper archives for any reported events or social happenings.
 --- If cannot find answer, check historian opinions for their opinions.
 - **Triangulate**: If asked about an event (e.g. Shells Scandal), check *Personal* (letters), *Cabinet* (reality), and *Historian* (analysis) sources to compare perspectives.
 - **Visualize**: If asked about trends/correlations, use *Metrics*.
@@ -82,6 +85,7 @@ export async function runAgentWorkflow(
     createGetParliamentChunksTool(onStatus),
     createGetCabinetChunksTool(onStatus),
     createGetPersonalChunksTool(onStatus),
+    createGetNewspaperChunksTool(onStatus),
     createGetHistorianOpinionTool(onStatus),
     createGetDailyLocationsTool(onStatus),
     createFindCorrespondenceDatesTool(onStatus),

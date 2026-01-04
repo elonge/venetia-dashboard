@@ -231,7 +231,7 @@ export default function DailyWidget({
           </p>
 
           <div className="mt-4 md:mt-5 flex flex-wrap items-center gap-1.5 md:gap-2">
-            {topics.slice(0, 3).map((topic) => (
+            {topics.slice(0, 3).map((topic: string) => (
               <span
                 key={topic}
                 className="inline-flex items-center rounded-full border border-border-beige bg-page-bg/55 px-2 md:px-3 py-0.5 md:py-1 text-[10px] md:text-xs text-slate"
