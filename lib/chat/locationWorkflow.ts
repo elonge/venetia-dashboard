@@ -11,6 +11,7 @@ import {
 import { LocationReasonAnswer, LocationReasonAnswerSchema } from '@/types';
 import { LocationActivitiesAnswer, LocationActivitiesAnswerSchema, MeetingCheckerAnswer, MeetingCheckerAnswerSchema } from '../schemas';
 
+const OPENAI_MODEL = 'gpt-5.2-2025-12-11'; // Example model name
 // --- System Prompt ---
 const LOCATION_SYSTEM_PROMPT = `You are an expert historian specializing in the Asquith-Venetia Stanley correspondence.
 
@@ -57,7 +58,7 @@ export async function runLocationAnalysisWorkflow(
   const agent = new Agent({
     name: 'LocationHistorian',
     instructions: LOCATION_SYSTEM_PROMPT,
-    model: 'gpt-5.2-2025-12-11', 
+    model: OPENAI_MODEL, 
     tools: tools,
     outputType: LocationReasonAnswerSchema
   });
@@ -93,7 +94,6 @@ ${KNOWLEDGE_BASE}
 6.  **get_historian_opinion**: Search secondary sources for context on their movements.
 
 **Strategy:**
---- Regardless of the required dates - ALWAYS start by checking private letters from Asquith To Venetia from September 17, 1914. Asquith specifically mentioned in that letter where he and Venetia were on several past dates
 --- Check private correspondence and make sure to query up to a week before and after the request for context, as sometimes someone's location or activity is mentioned in letters a few days later or before.
 --- Check parliament/cabinet records for official activities that days.
 --- Check newspaper archives for any reported events or social happenings.
@@ -121,7 +121,7 @@ export async function runLocationFinderWorkflow(
   const agent = new Agent({
     name: 'LocationFinderHistorian',
     instructions: LOCATION_ACTIVITIES_FINDER_SYSTEM_PROMPT,
-    model: 'gpt-5.2-2025-12-11', 
+    model: OPENAI_MODEL, 
     tools: tools,
     outputType: LocationActivitiesAnswerSchema
   });
@@ -157,7 +157,6 @@ ${KNOWLEDGE_BASE}
 6.  **get_historian_opinion**: Search secondary sources for context on their movements.
 
 **Strategy:**
---- Regardless of the required dates - ALWAYS start by checking private letters from Asquith To Venetia from September 17, 1914. Asquith specifically mentioned in that letter dates when they met
 --- Check private correspondence and make sure to query up to a week before and after the request for context, as sometimes someone's location or activity is mentioned in letters a few days later or before.
 --- Check parliament/cabinet records for official activities that days.
 --- Check newspaper archives for any reported events or social happenings.
@@ -185,7 +184,7 @@ export async function runMeetingCheckerWorkflow(
   const agent = new Agent({
     name: 'MeetingCheckerHistorian',
     instructions: MEETING_CHECKER_SYSTEM_PROMPT,
-    model: 'gpt-5.2-2025-12-11', 
+    model: OPENAI_MODEL, 
     tools: tools,
     outputType: MeetingCheckerAnswerSchema
   });

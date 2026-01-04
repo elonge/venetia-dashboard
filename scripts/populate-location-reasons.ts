@@ -1,15 +1,15 @@
 import { format, addDays, startOfYear, endOfYear, eachDayOfInterval } from 'date-fns';
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-const YEAR = 1914;
-const PERSON = 'venetia';
+const YEAR = 1915;
+const PERSON = 'venetia'; // 'pm' or 'venetia'
 
 async function main() {
   console.log(`Starting population of location reasons for ${YEAR}, person: ${PERSON}`);
   console.log(`Target URL: ${BASE_URL}/api/location_reason`);
 
-  const startDate = new Date(YEAR, 8, 1); // September 1, 1914
-  const endDate = new Date(YEAR, 11, 31); // December 31, 1914
+  const startDate = new Date(YEAR, 3, 1); // April 1, 1915
+  const endDate = new Date(YEAR, 5, 30); //  June 30, 1915
 
   const dates = eachDayOfInterval({ start: startDate, end: endDate });
   
@@ -22,7 +22,7 @@ async function main() {
     // const url = `${BASE_URL}/api/location_reason?date=${dateString}&person=${PERSON}`;
     const url = `${BASE_URL}/api/meeting_checker?date=${dateString}`;
 
-    console.log(`Processing meeting_checker for ${dateString}...`);
+    console.log(`Processing location_reason for ${dateString}...`);
 
     try {
       const response = await fetch(url);
@@ -32,10 +32,10 @@ async function main() {
         const source = data.source; // 'cache' or 'agent' 
         
         if (source === 'cache') {
-          console.log(`  -> Cached (${data.answer.met})`);
+          console.log(`  -> Cached (${source})`);
           skipCount++;
         } else {
-          console.log(`  -> Analyzed (${data.answer.met})`);
+          console.log(`  -> Analyzed (${source})`);
           successCount++;
         }
       } else {

@@ -185,12 +185,14 @@ export const PODCASTS: Array<{
     {
         "title": "Marconi Scandal: The Razor Thin Defense",
         "description": "Uncovering the clever legal distinction that saved British ministers from a massive insider trading scandal in 1912.",
-        "chapter_id": "marconi_scandal"
+        "chapter_id": "marconi_scandal",
+        "spotify_url": "https://open.spotify.com/episode/3oiDcaQmtXPuK5Vq77uhWf"
       },
       {
         "title": "The Friday Drives",
         "description": "Asquith's weekly escape: the intimate car rides with Venetia where state secrets were shared.",
         "chapter_id": "friday_drives",
+        "spotify_url": "https://open.spotify.com/episode/64M3kp93IvuxTsNPCYmM5Z"
       },
       {
         "title": "The Corrupt Coterie",
@@ -250,6 +252,7 @@ export const sourceNameMapping: Record<string, string> = {
         "Asquith - Roy Jenkins.txt": "Asquith (Roy Jenkins)",
         "The_Asquiths_Book-full.txt": "The Asquiths Book",
         "violet-diaries.txt": "Violet Asquith Diaries",
+        "violet-full.txt": "Violet Asquith Diaries",
         "Margot Asquith's Great War Diary - Michael Brock.txt": "Margot Asquith's Great War Diary",
       
         // Venetia Stanley & Montagu
@@ -261,6 +264,7 @@ export const sourceNameMapping: Record<string, string> = {
         "Diana_Cooper-full.txt": "Diana Cooper",
         "Frances_Stevenson-full.txt": "Frances Stevenson",
         "naomi_levine_full.txt": "Naomi Levine",
+        "naomi_levine-full.txt": "Naomi Levine",
         "Lord_Riddel-full.txt": "Lord Riddell",
         "Maurice_Hankey-full.txt": "Maurice Hankey",
         "maurice_hunkey_man_of_secrets_relevant_years.txt": "Maurice Hankey: Man of Secrets",
@@ -278,7 +282,6 @@ export const sourceNameMapping: Record<string, string> = {
       
       // Helper function to safely get the name
 export const getRealSourceName = (name: string): string => {
-  console.log("Original source name:", name, sourceNameMapping[name]);
     if (!name) return 'Unknown Source';
     
     // 1. Check direct mapping
