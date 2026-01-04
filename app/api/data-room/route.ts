@@ -961,7 +961,7 @@ export async function GET() {
       const meetingDates = meetingDays
         .map(day => ({
           date: day.date,
-          meeting_details: day.meeting_reference || ''
+          meeting_details: day.meeting_details || ''
         }))
         .sort((a, b) => a.date.localeCompare(b.date));
       

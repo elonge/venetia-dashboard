@@ -112,7 +112,6 @@ export interface DailyRecordDocument {
   venetia_location?: DailyRecordLocation | null;
   met_venetia?: boolean | null;
   meeting_reason?: LocationReasonAnswer | null;
-  meeting_reference?: string | null;
   meeting_details?: string | null;
   asquith_venetia_proximity?: AsquithVenetiaProximity | null;
   venetia_location_reason?: LocationReasonAnswer | null;

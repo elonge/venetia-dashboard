@@ -27,7 +27,6 @@ export interface DayData {
   pm_location?: string;
   venetia_activities?: string;
   venetia_location?: string;
-  meeting_reference?: string;
   meeting_details?: string;
   asquith_venetia_proximity?: BaseProximity | any;
   venetia_location_reason?: LocationReasonAnswer | string;

@@ -122,9 +122,7 @@ export default function DailyWidget({
   const topics = firstLetter?.topics ?? [];
   const primaryScore = pickPrimaryScore(day);
 
-  const hasMeeting = day.meeting_reference && 
-    (day.meeting_reference.toLowerCase().includes('yes') || 
-     day.meeting_reference.toLowerCase().includes('met'));
+  const hasMeeting = day.met_venetia;
   
   const letterCount = day.letters?.length ?? 0;
   const primaryLocation = day.pm_location || day.venetia_location || null;

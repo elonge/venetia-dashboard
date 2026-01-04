@@ -353,7 +353,7 @@ export default function DailyPopup({
             letters={letters}
             totalLettersRecorded={currentDay.total_number_letters}
             hasMeeting={hasMeeting}
-            meetingReference={currentDay.meeting_reference}
+            meetingReference={currentDay.meeting_details}
           />
 
           {/* Activities & Locations */}
