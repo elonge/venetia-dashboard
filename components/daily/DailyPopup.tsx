@@ -209,7 +209,6 @@ export default function DailyPopup({
         }
 
         setCurrentDay(foundDay);
-        onNavigateToDay?.(foundDay.date);
         setDateInput("");
         setDatePickerError(null);
         return;
@@ -225,7 +224,6 @@ export default function DailyPopup({
 
       const fetchedDay = (await response.json()) as DayData;
       setCurrentDay(fetchedDay);
-      onNavigateToDay?.(fetchedDay.date);
       setDateInput("");
       setDatePickerError(null);
     } catch (error) {

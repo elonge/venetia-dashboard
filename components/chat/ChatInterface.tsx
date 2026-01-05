@@ -6,6 +6,7 @@ import { Send, Loader2, Sparkles, Search, Trash2, AlertTriangle, ArrowRight } fr
 import MessageBubble, { Message } from './MessageBubble';
 
 const CHAT_STORAGE_KEY = 'chatMessages';
+const CONVERSATION_ID_STORAGE_KEY = 'chatConversationId';
 
 const SUGGESTED_QUESTIONS = [
   {
@@ -40,6 +41,7 @@ export default function ChatInterface() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isClearConfirmOpen, setIsClearConfirmOpen] = useState(false);
+  const [conversationId, setConversationId] = useState<string>('');
   const hasAutoSentRef = useRef(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -52,7 +54,7 @@ export default function ChatInterface() {
     scrollToBottom();
   }, [messages, isLoading]);
 
-  // Restore chat history on mount
+  // Restore chat history and conversationId on mount
   useEffect(() => {
     const savedMessages = localStorage.getItem(CHAT_STORAGE_KEY);
     if (savedMessages) {
@@ -76,6 +78,12 @@ export default function ChatInterface() {
         console.error('Failed to parse saved chat messages', err);
       }
     }
+
+    // Restore conversationId
+    const savedConversationId = localStorage.getItem(CONVERSATION_ID_STORAGE_KEY);
+    if (savedConversationId) {
+      setConversationId(savedConversationId);
+    }
   }, []);
 
   // Persist chat history across pages
@@ -88,9 +96,20 @@ export default function ChatInterface() {
     }
   }, [messages]);
 
+  // Persist conversationId to localStorage
+  useEffect(() => {
+    if (conversationId) {
+      localStorage.setItem(CONVERSATION_ID_STORAGE_KEY, conversationId);
+    } else {
+      localStorage.removeItem(CONVERSATION_ID_STORAGE_KEY);
+    }
+  }, [conversationId]);
+
   const handleClearChat = () => {
     setMessages([]);
+    setConversationId('');
     localStorage.removeItem(CHAT_STORAGE_KEY);
+    localStorage.removeItem(CONVERSATION_ID_STORAGE_KEY);
     setIsClearConfirmOpen(false);
   };
 
@@ -103,11 +122,12 @@ export default function ChatInterface() {
       content: questionToSend,
     };
 
+    console.log('Old messages:', messages);
     const historyToSend = messages
       .filter((m) => !m.isStreaming)
       .map((m) => ({
         role: m.role,
-        content: m.content,
+        content: m.content || m.markdownText,
       }));
 
     console.log('Sending chat payload', {
@@ -137,6 +157,7 @@ export default function ChatInterface() {
         body: JSON.stringify({
           message: questionToSend,
           conversationHistory: historyToSend,
+          conversationId: conversationId
         }),
       });
 
@@ -251,6 +272,10 @@ export default function ChatInterface() {
                 const finalContent = markdownText ? '' : fullContent;
                 updateMessage(finalContent, true, undefined, markdownText, footnotes);
               }
+              if (data.conversationId) {
+                console.log('Conversation ID:', data.conversationId);
+                setConversationId(data.conversationId);
+              }
             } catch {
               // Ignore JSON parse errors
             }
@@ -279,7 +304,7 @@ export default function ChatInterface() {
       setIsLoading(false);
       inputRef.current?.focus();
     }
-  }, [isLoading, input, messages]);
+  }, [isLoading, input, messages, conversationId]);
 
   useEffect(() => {
     const question = searchParams.get('q');

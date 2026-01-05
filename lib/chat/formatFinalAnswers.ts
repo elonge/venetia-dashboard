@@ -60,7 +60,6 @@ export async function formatFinalAnswers(
   const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
   onStatus?.("Finalizing response formatting...");
-  console.log("📝 [Formatter] Formatting final answers with OpenAI...", answer);
   try {
     const response = await openai.chat.completions.create({
       model: "gpt-4o-mini",

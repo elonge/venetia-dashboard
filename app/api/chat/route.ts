@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { message, conversationHistory = [] } = body;
+    const { message, conversationId = "" } = body;
 
     if (!message) {
       return NextResponse.json({ error: 'Message is required' }, { status: 400 });
@@ -23,15 +23,16 @@ export async function POST(request: NextRequest) {
 
           // 2. Execute Agent Workflow (Planner -> Tools -> Answer)
           console.log('🤖 Starting Agent Workflow for:');
-          const result = await runAgentWorkflow(message, conversationHistory, (status) => {
+          const result = await runAgentWorkflow(message, conversationId, (status) => {
              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ status })}\n\n`));
           });
           
           // 3. Send Final Result
           controller.enqueue(encoder.encode(`data: ${JSON.stringify({ 
-            markdownText: result.markdownText,
-            footnotes: result.footnotes,
-            done: true 
+            markdownText: result.output.markdownText,
+            footnotes: result.output.footnotes,
+            done: true, 
+            conversationId: result.responseId 
           })}\n\n`));
           
           controller.close();
@@ -42,7 +43,7 @@ export async function POST(request: NextRequest) {
           // Client might not parse an error JSON in data stream easily without modification,
           // but we can try sending a content error message.
           try {
-             controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content: `Error: ${msg}`, done: true })}\n\n`));
+             controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content: `Error: ${msg}`, done: true, })}\n\n`));
           } catch (e) {}
           controller.close();
         }

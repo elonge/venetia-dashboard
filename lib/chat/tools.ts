@@ -3,6 +3,7 @@ import { z } from "zod";
 import { searchPrimaryEntries, searchSimilarChunks } from "@/lib/vector-search";
 import { getWeather } from "@/lib/weather";
 import { getAsquithVenetiaProximitySeries } from "@/lib/daily_records";
+import { getPrimarySourceCount } from "@/lib/statistics";
 import OpenAI from "openai";
 import { AuthorEnum, RecipientEnum } from "@/types/chat";
 import { KNOWLEDGE_BASE } from "./knowledge";
@@ -109,7 +110,7 @@ export const createGetCorrespondenceMetricsTool = (
         dateRange: { start: args.start_date, end: args.end_date },
         author: args.sender || undefined,
         recipient: args.recipient || undefined,
-        source_type: "letter",
+        source_type: args.recipient ? "letter" : "diary",
       });
 
       console.log(
@@ -286,7 +287,7 @@ export const createGetPersonalChunksTool = (
         dateRange: { start: args.start_date, end: args.end_date },
         author: args.author || undefined,
         recipient: args.recipient || undefined,
-        source_type: "letter", // or 'diary' or 'primary_entry'. Let's trust buildFilter logic
+        source_type: args.recipient ? "letter" : "diary",
       });
 
       // If vector search returns nothing, try primary search fallback (regex)
@@ -460,12 +461,41 @@ export const createGetWeatherRecordsTool = (
         args.location || "London"
       );
       console.log(
-        `☀️ [Tool: get_weather_records] Found ${
-          Array.isArray(results) ? results.length : 0
+        `☀️ [Tool: get_weather_records] Found ${ 
+          Array.isArray(results) ? results.length : 0 
         } records.`
       );
       return JSON.stringify(results);
     },
+  });
+
+export const createGetPrimarySourceStatisticsTool = (
+  onStatus?: (status: string) => void
+) =>
+  tool({
+    name: "get_primary_source_statistics",
+    description: "Get quantitative statistics about primary sources, such as the number of letters exchanged between specific people over a period.",
+    parameters: z.object({
+      start_date: z.string().describe("YYYY-MM-DD"),
+      end_date: z.string().describe("YYYY-MM-DD"),
+      sender: AuthorEnum.nullable().describe("Sender name or null for all"),
+      recipient: RecipientEnum.nullable().describe("Recipient name or null for all"),
+      source_type: z.string().nullable().describe("Type of source to count, e.g. 'letter', 'diary', or null for all"),
+    }),
+    execute: async (args) => {
+      onStatus?.("Calculating statistics...");
+      console.log("📈 [Tool: get_primary_source_statistics] Counting for:", JSON.stringify(args));
+      
+      const count = await getPrimarySourceCount({
+        dateRange: { start: args.start_date, end: args.end_date },
+        author: args.sender || undefined,
+        recipient: args.recipient || undefined,
+        source_type: args.source_type || undefined
+      });
+      
+      console.log(`📈 [Tool: get_primary_source_statistics] Count result: ${count}`);
+      return JSON.stringify({ count, message: `Found ${count} ${args.source_type || 'entries'} matching the criteria.` });
+    }
   });
 
 export const createFormatFinalResponseTool = (
@@ -483,7 +513,6 @@ export const createFormatFinalResponseTool = (
         args,
         onStatus
       );
-      console.log("✨ [Tool: format_final_response] Formatting complete.", formatted);
       return JSON.stringify(formatted);
     },
   });

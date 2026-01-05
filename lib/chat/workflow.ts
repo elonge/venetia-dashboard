@@ -14,6 +14,7 @@ import {
   createGetDailyLocationsTool,
   createFindCorrespondenceDatesTool,
   createGetWeatherRecordsTool,
+  createGetPrimarySourceStatisticsTool,
   createFormatFinalResponseTool
 } from './tools';
 // --- Types ---
@@ -40,7 +41,8 @@ ${KNOWLEDGE_BASE}
 7.  **get_daily_locations_and_proximity**: Get geo-spatial data. Use for "where were they?", "were they together?", or mapping movements.
 8.  **find_dates_of_venetia_asquith_correspondance**: Find specific dates of letters matching a topic.
 9.  **get_weather_records**: Check historical weather.
-10.  **format_final_response**: Use this to polish your synthesized findings into a clear, academic structure with Markdown and footnotes.
+10. **get_primary_source_statistics**: Get quantitative counts of letters/diaries. Use for questions like "How many letters did X send Y?".
+11. **format_final_response**: Use this to polish your synthesized findings into a clear, academic structure with Markdown and footnotes.
 
 **Strategy:**
 - **Date-Check**: If asked about someone's location or activity on a specific date (or date range):
@@ -51,8 +53,10 @@ ${KNOWLEDGE_BASE}
 --- If cannot find answer, check historian opinions for their opinions.
 - **Triangulate**: If asked about an event (e.g. Shells Scandal), check *Personal* (letters), *Cabinet* (reality), and *Historian* (analysis) sources to compare perspectives.
 - **Visualize**: If asked about trends/correlations, use *Metrics*.
+- **Quantify**: If asked about counts/volume (e.g. "How many letters?"), use *get_primary_source_statistics*.
 - **Contextualize**: If asked about "Why...", use *Historian* opinions + *Personal* letters.
 - **Fact-Check**: If asked to find or check quotes, dates, or locations, use the relevant tools. 
+- Due to copy limitations, you cannot provide the full text of any source or a letter, only short excerpts.
 
 **Output:**
 - **Refine**: Once you have synthesized your answer from tool outputs, call 'format_final_response' to ensure clear formatting and academic footnotes.
@@ -66,20 +70,9 @@ ${KNOWLEDGE_BASE}
 // --- Runner ---
 export async function runAgentWorkflow(
   message: string, 
-  history: Message[],
+  conversationId: string,
   onStatus?: (status: string) => void
 ) {
-  const historyContext = history
-    .slice(-8) // Only pass the last 8 interactions
-    .filter(m => m.content)
-    .map(m => `${m.role.toUpperCase()}: ${m.content}`)
-    .join('\n\n');
-
-  const inputs = [
-    { role: 'system' as const, content: `Conversation Context:\n${historyContext}` },
-    { role: 'user' as const, content: message }
-  ];
-
   const tools = [
     createGetCorrespondenceMetricsTool(onStatus),
     createGetParliamentChunksTool(onStatus),
@@ -90,6 +83,7 @@ export async function runAgentWorkflow(
     createGetDailyLocationsTool(onStatus),
     createFindCorrespondenceDatesTool(onStatus),
     createGetWeatherRecordsTool(onStatus),
+    createGetPrimarySourceStatisticsTool(onStatus),
     createFormatFinalResponseTool(onStatus)
   ];
 
@@ -102,8 +96,9 @@ export async function runAgentWorkflow(
   });
 
   try {
-    console.log('🤖 [Agent] Executing workflow for message:', message);
-    const result = await run(historianAgent, inputs);
+    console.log('🤖 [Agent] Executing workflow for message:', conversationId);
+    const config = conversationId ? { previousResponseId:conversationId} : undefined;
+    const result = await run(historianAgent, message, config);
 
     if (!result.finalOutput) {
       throw new Error('Agent run completed without a final output.');
@@ -112,51 +107,54 @@ export async function runAgentWorkflow(
     const sources: any[] = [];
     console.log('📝 [Agent] Final Answer Generated');
 
-    for (const msg of result.history) {
-      if (msg.type !== 'function_call_result') continue;
+    // Iterate through agent execution history to extract sources from tool outputs.
+    // This logic reconstructs the 'sources' list for debugging or potential usage, 
+    // although the final answer usually contains its own formatted citations.
+    // for (const msg of result.history) {
+    //   if (msg.type !== 'function_call_result') continue;
 
-      const outputText =
-        typeof msg.output === 'string'
-          ? msg.output
-          : msg.output && typeof msg.output === 'object' && 'type' in msg.output && msg.output.type === 'text'
-            ? msg.output.text
-            : null;
+    //   const outputText =
+    //     typeof msg.output === 'string'
+    //       ? msg.output
+    //       : msg.output && typeof msg.output === 'object' && 'type' in msg.output && msg.output.type === 'text'
+    //         ? msg.output.text
+    //         : null;
 
-      if (!outputText) continue;
+    //   if (!outputText) continue;
 
-      try {
-        const data = JSON.parse(outputText);
-        if (!Array.isArray(data)) continue;
+    //   try {
+    //     const data = JSON.parse(outputText);
+    //     if (!Array.isArray(data)) continue;
 
-        for (const item of data) {
-          if (item?.content && (item.source || item.metadata)) {
-            sources.push({
-              source: item.source || item.metadata?.documentTitle || 'Unknown',
-              documentTitle: item.metadata?.documentTitle || item.source,
-              chunkIndex: item.chunkIndex || 0,
-              score: item.score || 1.0,
-              content: item.content
-            });
-          } else if (item?.date && item.geo_coords) {
-            sources.push({
-              source: 'Daily Locations',
-              documentTitle: `Location Data: ${item.date}`,
-              chunkIndex: 0,
-              score: 1.0
-            });
-          } else if (typeof item?.score === 'number') {
-            sources.push({
-              source: 'Sentiment Analysis',
-              documentTitle: `Analysis: ${item.date}`,
-              chunkIndex: 0,
-              score: 1.0
-            });
-          }
-        }
-      } catch (_e) {}
-    }
+    //     for (const item of data) {
+    //       if (item?.content && (item.source || item.metadata)) {
+    //         sources.push({
+    //           source: item.source || item.metadata?.documentTitle || 'Unknown',
+    //           documentTitle: item.metadata?.documentTitle || item.source,
+    //           chunkIndex: item.chunkIndex || 0,
+    //           score: item.score || 1.0,
+    //           content: item.content
+    //         });
+    //       } else if (item?.date && item.geo_coords) {
+    //         sources.push({
+    //           source: 'Daily Locations',
+    //           documentTitle: `Location Data: ${item.date}`,
+    //           chunkIndex: 0,
+    //           score: 1.0
+    //         });
+    //       } else if (typeof item?.score === 'number') {
+    //         sources.push({
+    //           source: 'Sentiment Analysis',
+    //           documentTitle: `Analysis: ${item.date}`,
+    //           chunkIndex: 0,
+    //           score: 1.0
+    //         });
+    //       }
+    //     }
+    //   } catch (_e) {}
+    // }
 
-    return result.finalOutput;
+    return {output: result.finalOutput, responseId: result.lastResponseId};
   } catch (error) {
     console.error("Agent workflow error:", error);
     throw error;
