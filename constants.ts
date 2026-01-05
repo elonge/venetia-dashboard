@@ -23,7 +23,7 @@ export const PEOPLE_IMAGES = {
     "Lady Gwendeline Churchill": "https://commons.wikimedia.org/wiki/Special:FilePath/Portrait_of_Lady_Gwendoline_Churchill.jpg",
     "Lady Sheffield": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg",
     "Lord Fisher": "https://commons.wikimedia.org/wiki/Special:FilePath/First_Sea_Lord_Admiral_John_Fisher_1915.jpg",
-    "Lord Kitchener": "https://en.wikipedia.org/wiki/Herbert_Kitchener,_1st_Earl_Kitchener#/media/File:Horatio_Herbert_Kitchener_(cropped).jpg",
+    "Lord Kitchener": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/KitchenerWants.tif/lossless-page1-200px-KitchenerWants.tif.png",
     "Lord Murray": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg",
     "Lord Northcliffe": "https://commons.wikimedia.org/wiki/Special:FilePath/Alfred_Harmsworth,_1st_Viscount_Northcliffe_(37858960494).jpg",
     "Lord Sheffield": "https://commons.wikimedia.org/wiki/Special:FilePath/Edward_Stanley_4th_Baron_Sheffield.jpg",
@@ -243,6 +243,12 @@ export const PODCASTS: Array<{
         "title": "After the breakup: Asquith's Darkest Days",
         "description": "The emotional fallout of Venetia ending her correspondence with Asquith, coinciding with political turmoil and personal loss.",
         "chapter_id": "after_breakup"
+      },
+      {
+        "title": "State Secrets Shared",
+        "description": "The quiet sharing of war secrets that turned private confidence into a national risk.",
+        "chapter_id": "secrets",
+        "spotify_url": "https://open.spotify.com/episode/4vxB4fUHNMQvQ0kMqRoluE"
       }
     
     ]
@@ -266,7 +272,7 @@ export const sourceNameMapping: Record<string, string> = {
         "naomi_levine_full.txt": "Naomi Levine",
         "naomi_levine-full.txt": "Naomi Levine",
         "Lord_Riddel-full.txt": "Lord Riddell",
-        "Maurice_Hankey-full.txt": "Maurice Hankey",
+        "Maurice_Hankey-full.txt": "Maurice Hankey - The Supreme Command",
         "maurice_hunkey_man_of_secrets_relevant_years.txt": "Maurice Hankey: Man of Secrets",
       
         // Official Records & Churchill
