@@ -106,7 +106,7 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
               H. H. Asquith wrote hundreds of letters to Venetia Stanley—letters
               that survive in remarkable detail. But{" "}
               <span className="my-highlight">
-                Venetia&apos;s own voice is largely missing
+                Venetia&apos;s own voice during these years is largely missing
               </span>
               . We hear him constantly: his doubts, his political calculations,
               his emotional dependence. What we don&apos;t have is a clean,
@@ -184,7 +184,7 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
               of a historical relationship without smoothing it into a story it
               never was.
             </p>
-            <SectionDivider />
+            <HistoricalDivider />
             <h2 className="text-3xl font-serif font-bold text-navy mt-12 mb-6">
               What you&apos;ll find on the site
             </h2>
@@ -226,7 +226,7 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
               </li>
             </ul>
             <p>Some days are dense. Some are empty. Both matter.</p>
-            <SectionDivider />
+            <HistoricalDivider />
             <h2 className="text-3xl font-serif font-bold text-navy mt-12 mb-6">
               An open-ended project
             </h2>
