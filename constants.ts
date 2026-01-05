@@ -157,100 +157,119 @@ export const PEOPLE_DESCRIPTIONS = {
   "Woodrow Wilson": "The President of the United States, whose policy of neutrality was a constant source of calculation and anxiety for the Cabinet."
 };
 
-export const PODCASTS: Array<{
-    title: string;
-    description: string;
-    chapter_id: string;
-    video_exists?: boolean;
-    spotify_url?: string;
-  }> = [
+export type Podcast = {
+  title: string;
+  description: string;
+  chapter_id: string;
+  video_exists?: boolean;
+  spotify_url?: string;
+  orderIndex?: number;
+};
+
+let orderIndex = 1;
+export const PODCASTS: Podcast[] = [
     {
         "title": "Introduction: The Asquith-Stanley Letters",
         "description": "An overview of the intimate correspondence between Prime Minister H.H. Asquith and Venetia Stanley, revealing the personal and political dynamics of early 20th-century Britain.",
         "chapter_id": "the_letters",
-        "spotify_url": "https://open.spotify.com/show/6sSEg9Sf5MHjcrqFVIb4SJ"
+        "spotify_url": "https://open.spotify.com/show/6sSEg9Sf5MHjcrqFVIb4SJ",
+        "orderIndex": orderIndex++
     },
     {
         "title": "Sicily 1912: The Prime Minister's Holiday",
         "description": "A sun-drenched trip to Sicily reveals the shifting dynamics of Asquith's inner circle and the dawn of his obsession with Venetia Stanley.",
         "chapter_id": "sicily",
-        "spotify_url": "https://open.spotify.com/episode/7AxobMLQMReieM3UneHWcV"
+        "spotify_url": "https://open.spotify.com/episode/7AxobMLQMReieM3UneHWcV",
+        "orderIndex": orderIndex++
       },
       {
         "title": "The Asquith family",
         "description": "Introducing the asquith family members and their dynamics that shaped the prime minister's world.",
         "chapter_id": "asquith_family",
-        "spotify_url": "https://open.spotify.com/episode/5rvRGt2liB67qxwDZgW7VS"
-      },
-    {
-        "title": "Marconi Scandal: The Razor Thin Defense",
-        "description": "Uncovering the clever legal distinction that saved British ministers from a massive insider trading scandal in 1912.",
-        "chapter_id": "marconi_scandal",
-        "spotify_url": "https://open.spotify.com/episode/3oiDcaQmtXPuK5Vq77uhWf"
+        "spotify_url": "https://open.spotify.com/episode/5rvRGt2liB67qxwDZgW7VS",
+        "orderIndex": orderIndex++
       },
       {
         "title": "The Friday Drives",
         "description": "Asquith's weekly escape: the intimate car rides with Venetia where state secrets were shared.",
         "chapter_id": "friday_drives",
-        "spotify_url": "https://open.spotify.com/episode/64M3kp93IvuxTsNPCYmM5Z"
-      },
-      {
-        "title": "The Corrupt Coterie",
-        "description": "Inside the brilliant, doomed circle of young aristocrats, including Violet Asquith and Diana Manners.",
-        "chapter_id": "corrupt_coterie",
-      },
-      {
-        "title": "The Enchantress Cruise",
-        "description": "Luxury meets impending doom on the Admiralty yacht as Churchill and Asquith sail the Mediterranean.",
-        "chapter_id": "enchantress_cruise",
-      },
-      {
-        "title": "The Home Rule Crisis",
-        "description": "Ireland on the brink of civil war, and the political firestorm consuming Asquith's government.",
-        "chapter_id": "home_rule_crisis",
-      },
-      {
-        "title": "The End of Peace",
-        "description": "The final, frantic days before WWI, as the lights go out all over Europe.",
-        "chapter_id": "end_of_piece",
-      },
-      {
-        "title": "Venetia the Nurse",
-        "description": "Venetia leaves high society for the harsh reality of training as a nurse at the London Hospital.",
-        "chapter_id": "venetia_nurse",
-      },
-      {
-        "title": "The Betrayal",
-        "description": "The shock engagement to Edwin Montagu that broke the Prime Minister's heart and changed the war.",
-        "chapter_id": "venetia_engagement",
-      },
-      {
-        "title": "Fisher vs. Churchill",
-        "description": "The explosive clash between the First Sea Lord and the First Lord of the Admiralty that rocked the war effort.",
-        "chapter_id": "fisher_churchill_crisis",
-      },
-      {
-        "title": "The Shells Scandal",
-        "description": "The munitions crisis that brought down the Liberal government and forced a coalition.",
-        "chapter_id": "shells_scandal",
-      },
-      {
-        "title": "Venetia's Conversion",
-        "description": "Venetia's controversial decision to convert to Judaism to marry Edwin Montagu.",
-        "chapter_id": "venetia_conversion",
-      },
-            {
-        "title": "After the breakup: Asquith's Darkest Days",
-        "description": "The emotional fallout of Venetia ending her correspondence with Asquith, coinciding with political turmoil and personal loss.",
-        "chapter_id": "after_breakup"
+        "spotify_url": "https://open.spotify.com/episode/64M3kp93IvuxTsNPCYmM5Z",
+        "orderIndex": orderIndex++
       },
       {
         "title": "State Secrets Shared",
         "description": "The quiet sharing of war secrets that turned private confidence into a national risk.",
         "chapter_id": "secrets",
-        "spotify_url": "https://open.spotify.com/episode/4vxB4fUHNMQvQ0kMqRoluE"
-      }
-    
+        "spotify_url": "https://open.spotify.com/episode/4vxB4fUHNMQvQ0kMqRoluE",
+        "orderIndex": orderIndex++
+      },
+      {
+        "title": "The Corrupt Coterie",
+        "description": "Inside the brilliant, doomed circle of young aristocrats, including Violet Asquith and Diana Manners.",
+        "chapter_id": "corrupt_coterie",
+        "orderIndex": orderIndex++
+      },
+      {
+        "title": "The Enchantress Cruise",
+        "description": "Luxury meets impending doom on the Admiralty yacht as Churchill and Asquith sail the Mediterranean.",
+        "chapter_id": "enchantress_cruise",
+        "orderIndex": orderIndex++
+      },
+      {
+        "title": "Marconi Scandal: The Razor Thin Defense",
+        "description": "Uncovering the clever legal distinction that saved British ministers from a massive insider trading scandal in 1912.",
+        "chapter_id": "marconi_scandal",
+        "spotify_url": "https://open.spotify.com/episode/3oiDcaQmtXPuK5Vq77uhWf",
+        "orderIndex": orderIndex++
+      },
+      {
+        "title": "The Home Rule Crisis",
+        "description": "Ireland on the brink of civil war, and the political firestorm consuming Asquith's government.",
+        "chapter_id": "home_rule_crisis",
+        "orderIndex": orderIndex++
+      },
+      {
+        "title": "The End of Peace",
+        "description": "The final, frantic days before WWI, as the lights go out all over Europe.",
+        "chapter_id": "end_of_piece",
+        "orderIndex": orderIndex++
+      },
+      {
+        "title": "Venetia the Nurse",
+        "description": "Venetia leaves high society for the harsh reality of training as a nurse at the London Hospital.",
+        "chapter_id": "venetia_nurse",
+        "orderIndex": orderIndex++
+      },
+      {
+        "title": "The Betrayal",
+        "description": "The shock engagement to Edwin Montagu that broke the Prime Minister's heart and changed the war.",
+        "chapter_id": "venetia_engagement",
+        "orderIndex": orderIndex++
+      },
+      {
+        "title": "Fisher vs. Churchill",
+        "description": "The explosive clash between the First Sea Lord and the First Lord of the Admiralty that rocked the war effort.",
+        "chapter_id": "fisher_churchill_crisis",
+        "orderIndex": orderIndex++
+      },
+      {
+        "title": "The Shells Scandal",
+        "description": "The munitions crisis that brought down the Liberal government and forced a coalition.",
+        "chapter_id": "shells_scandal",
+        "orderIndex": orderIndex++
+      },
+      {
+        "title": "Venetia's Conversion",
+        "description": "Venetia's controversial decision to convert to Judaism to marry Edwin Montagu.",
+        "chapter_id": "venetia_conversion",
+        "orderIndex": orderIndex++
+      },
+      {
+        "title": "After the breakup: Asquith's Darkest Days",
+        "description": "The emotional fallout of Venetia ending her correspondence with Asquith, coinciding with political turmoil and personal loss.",
+        "chapter_id": "after_breakup",
+        "orderIndex": orderIndex++
+      },    
     ]
 export const sourceNameMapping: Record<string, string> = {
         // Asquith & Family

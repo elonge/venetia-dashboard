@@ -40,21 +40,22 @@ export default function HeroSection() {
 
                 {/* The "Hook" Label */}
 
-                <span className="text-[8px] font-black text-accent-brown uppercase tracking-[0.25em] mb-1">
-
-                  The Venetia Project
-
+                <span className="text-[10px] md:text-[12px] font-black text-accent-brown uppercase tracking-[0.25em] mb-1 block md:hidden">
+                  The story behind the Venetia Project
+                </span>
+                <span className="hidden md:block text-[10px] text-center md:text-[12px] font-black text-accent-brown uppercase tracking-[0.25em] mb-1 leading-snug">
+                  The story behind<br />the Venetia Project
                 </span>
 
 
 
                 {/* The Inviting Title */}
 
-                <span className="font-serif text-[15px] font-bold text-navy italic leading-none group-hover:text-accent-red transition-colors">
+                {/* <span className="font-serif text-[15px] font-bold text-navy italic leading-none group-hover:text-accent-red transition-colors">
 
                   Applying AI to read primary sources
 
-                </span>
+                </span> */}
 
               </div>
 

@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { useChatVisibility } from '@/components/chat/useChatVisibility';
-import { BookOpen, Sparkles, Gem, Brain, Code, Terminal, Mic, Palette, Database } from 'lucide-react';
 
 export default function AboutPage() {
   useChatVisibility(false);
@@ -13,59 +12,139 @@ export default function AboutPage() {
       <div className="max-w-3xl mx-auto px-6 py-12">
         <div className="prose prose-lg prose-p:text-navy prose-headings:text-navy prose-li:text-slate">
           <h1 className="text-4xl font-serif font-bold text-navy mb-8">
-            What Is The Venetia Project?
+            About The Venetia Project
           </h1>
           <div className="space-y-6 text-navy leading-relaxed">
             <p>
-              The Venetia Project is a historical reconstruction experiment that <span className="bg-accent-amber/60 font-semibold p-1 rounded-sm">blends archival research, data analysis, and modern AI tools</span> to retell, day by day, the private world surrounding Venetia Stanley, Prime Minister H. H. Asquith, and Edwin Montagu during the turbulent years 1912–1916.
+              The Venetia Project began with a gap.
             </p>
 
             <p>
-              It rebuilds history not as a summary, but as a <span className="bg-accent-amber/60 font-semibold p-1 rounded-sm">living timeline</span> of letters, diaries, Cabinet minutes, political pressures, emotional turning points, and shifting alliances.
+              H. H. Asquith wrote hundreds of letters to Venetia Stanley—letters that survive in remarkable detail. But Venetia&apos;s own voice is largely missing. We hear him constantly: his doubts, his political calculations, his emotional dependence. What we don&apos;t have is a clean, balanced record of what surrounded those letters day by day.
             </p>
 
             <p>
-              At its core, the project explores one question:
+              At some point, that imbalance stopped feeling like a limitation and started feeling like a challenge.
             </p>
 
-            <p className="text-xl font-medium italic text-navy text-center border-y border-border-beige py-6 my-8 leading-relaxed">
-              What really happened—emotionally, politically, privately—on each day of this extraordinary relationship?
+            <p>
+              So instead of trying to &quot;complete&quot; Venetia&apos;s voice, I decided to do something else.
             </p>
 
             <h2 className="text-3xl font-serif font-bold text-navy mt-12 mb-6">
-              How the Reconstruction Works
+              What I decided to do
             </h2>
 
             <p>
-              Using the primary sources listed in the research brief—letters, diaries, Hansard debates, Cabinet papers, memoirs, and eyewitness writing—the system attempts to answer for <span className="bg-accent-amber/60 font-semibold p-1 rounded-sm">every day between 1912 and 1916</span>: 
+              I decided to approach the problem the way I usually do when something feels unresolved: by experimenting.
+            </p>
+
+            <p>
+              I&apos;m a technologist, and I&apos;m deeply interested in what recent AI tools make newly possible—not in replacing human judgment, but in handling scale, complexity, and cross-reference in ways that were previously impractical. This felt like exactly the kind of historical problem those tools might help with.
+            </p>
+
+            <p>
+              So instead of trying to reconstruct Venetia&apos;s missing voice directly, I decided to gather everything else.
+            </p>
+
+            <p>
+              Every letter I could find.<br />
+              Diaries of people around them.<br />
+              Cabinet minutes. Parliamentary debates. Newspapers. Political crises. Travel records. Social events. Even the weather.
+            </p>
+
+            <p>
+              I then aligned all of it chronologically and started asking questions—not grand theories, but small, practical ones that accumulate meaning:
             </p>
 
             <ul className="list-disc list-inside space-y-3 ml-4 mt-4 text-slate">
-              <li>Where were Venetia, Asquith, and Edwin?</li>
-              <li>Did they meet? With whom?</li>
-              <li>How many letters were exchanged that day, and what was their tone?</li>
-              <li>What topics appeared—politics, affection, gossip, anxiety?</li>
-              <li>What was happening in Parliament or Cabinet?</li>
+              <li>Where was Asquith on this day?</li>
+              <li>What had just happened politically before he wrote this letter?</li>
+              <li>Where was Venetia, and what was happening in her immediate world?</li>
               <li>What did contemporaries like Violet Asquith, Margot Asquith, Cynthia Asquith, and Diana Manners record in their diaries?</li>
-              <li>Were there <span className="bg-accent-amber/60 font-semibold p-1 rounded-sm">noticeable shifts in mood, influence, or emotional distance?</span></li>
+              <li>What was happening in Parliament or Cabinet?</li>
             </ul>
 
-            <p className="mt-6">
-              The website compiles this into:
+            <p>
+              The experiment was simple in spirit but ambitious in scale:
+              to see whether modern AI tools could help reconstruct the daily texture of a historical relationship without smoothing it into a story it never was.
+            </p>
+
+            <h2 className="text-3xl font-serif font-bold text-navy mt-12 mb-6">
+              How the project works
+            </h2>
+
+            <p>
+              Once the material was assembled, AI became a tool for navigation rather than invention.
+            </p>
+
+            <p>
+              It helped me:
             </p>
 
             <ul className="list-disc list-inside space-y-3 ml-4 mt-4 text-slate">
-              <li>Letter-volume timelines</li>
-              <li>Topic heat maps</li>
-              <li>Emotional tone graphs</li>
-              <li>Daily summaries</li>
-              <li>Maps of movement</li>
-              <li>Cross-perspective views (&quot;what others did&quot;)</li>
-              <li>Links between private correspondence and public events</li>
+              <li>Align thousands of documents by date</li>
+              <li>Trace emotional shifts across correspondence</li>
+              <li>Surface patterns that only appear at scale</li>
+              <li>Ask questions across sources that were never meant to be read together</li>
             </ul>
 
-            <p className="mt-6">
-              It turns the scattered sources of 1912–1916 into a <span className="bg-accent-amber/60 font-semibold p-1 rounded-sm">unified, interactive archive.</span>
+            <p>
+              Crucially, the AI is not filling gaps with speculation. When something is uncertain, it stays uncertain. When evidence is thin, that thinness is visible.
+            </p>
+
+            <p>
+              The project moves forward day by day, not chapter by chapter—because that&apos;s how the letters were written, and how the pressure accumulated.
+            </p>
+
+            <h2 className="text-3xl font-serif font-bold text-navy mt-12 mb-6">
+              What you&apos;ll find on the site
+            </h2>
+
+            <p>
+              The Venetia Project is designed to be explored, not consumed linearly.
+            </p>
+
+            <p>
+              It includes:
+            </p>
+
+            <ul className="list-disc list-inside space-y-3 ml-4 mt-4 text-slate">
+              <li>A daily view reconstructing what was happening on specific dates</li>
+              <li>The underlying archive and timelines</li>
+              <li>Thematic chapters on key episodes and pressures</li>
+              <li>Context around political crises, social circles, and wartime decisions</li>
+              <li>Experiments in asking questions directly of the historical record</li>
+            </ul>
+
+            <p>
+              Some days are dense. Some are empty. Both matter.
+            </p>
+
+            <h2 className="text-3xl font-serif font-bold text-navy mt-12 mb-6">
+              An open-ended project
+            </h2>
+
+            <p>
+              This project isn&apos;t finished, and it isn&apos;t definitive.
+            </p>
+
+            <p>
+              If you spot an error, disagree with an interpretation, have a question, or know of a source I should look at—I&apos;d genuinely like to hear from you.
+            </p>
+
+            <p>
+              You can reach me at:{' '}
+              <a 
+                href="mailto:elon@consi.io" 
+                className="text-accent-green hover:text-navy transition-colors underline decoration-accent-green/30 underline-offset-4"
+              >
+                elon@consi.io
+              </a>
+            </p>
+
+            <p>
+              History gets more interesting when it&apos;s examined closely, and more honest when its gaps are left visible.
             </p>
 
             <h2 className="text-3xl font-serif font-bold text-navy mt-12 mb-6">
@@ -146,44 +225,8 @@ export default function AboutPage() {
             </p>
 
             <h2 className="text-3xl font-serif font-bold text-navy mt-12 mb-6">
-              Why I Built This
+              Sources and perspective
             </h2>
-
-            <p>
-              I built the Venetia Project for two reasons:
-            </p>
-
-            <div className="space-y-6 mt-8">
-              <div className="bg-white p-8 rounded-sm border border-border-beige border-l-4 border-l-accent-brown shadow-sm transition-all hover:shadow-md">
-                <h3 className="font-serif font-bold text-navy text-xl md:text-2xl mb-3 tracking-tight">1. I love history.</h3>
-                <p className="text-navy text-base md:text-lg leading-relaxed italic">
-                  Especially the moments when personal relationships intersect with political events — when private letters illuminate public decisions, and when human emotion reshapes the course of nations.
-                </p>
-              </div>
-
-              <div className="bg-white p-8 rounded-sm border border-border-beige border-l-4 border-l-accent-green shadow-sm transition-all hover:shadow-md">
-                <h3 className="font-serif font-bold text-navy text-xl md:text-2xl mb-3 tracking-tight">2. I love working with new AI technologies.</h3>
-                <p className="text-navy text-base md:text-lg leading-relaxed italic">
-                  This project allowed me to combine both passions: to take cutting-edge tools like Gemini, Claude, Cursor, Codex, NotebookLM, and Base44, and use them not to replace history, but to restructure it, explore it, and bring it to life.
-                </p>
-              </div>
-            </div>
-
-            <p className="mt-6">
-              The result is a <span className="bg-accent-amber/60 font-semibold p-1 rounded-sm">personal experiment</span> — part research platform, part storytelling engine, part technical challenge — built out of curiosity, admiration for the past, and excitement for the future.
-            </p>
-
-            <h2 className="text-3xl font-serif font-bold text-navy mt-12 mb-6">
-              Sources
-            </h2>
-
-            <p className="mb-6 text-muted-gray">
-              Here is an assessment of the reliability and credibility of the provided sources, classified by their nature (primary vs. secondary) and the specific context of their creation.
-            </p>
-
-            <h3 className="text-2xl font-serif font-semibold text-navy mt-10 mb-4">
-              Primary Sources (Diaries, Letters, and Official Records)
-            </h3>
 
             <div className="space-y-8 mt-6">
               <div>
@@ -293,6 +336,7 @@ export default function AboutPage() {
                   These texts are edited selections of diaries and letters from Asquith&apos;s daughter, intensely loyal to the Asquithian liberal viewpoint.
                 </p>
               </div>
+
               <div>
                 <h4 className="text-xl font-serif font-semibold text-navy mb-2">
                   10. The Supreme Command 1914–1918 by Lord Hankey
@@ -328,9 +372,10 @@ export default function AboutPage() {
                   Historical weather data from the UK Met Office archives, used to contextualize daily events and confirm atmospheric details mentioned in letters.
                 </p>
               </div>
+
               <div>
                 <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  12.5. The Times Archives (1912–1916) & special pages from Liverpool Echo, Yorskshire post & Dundee Evenning Telegraph
+                  13. The Times Archives & special pages from Liverpool Echo, Yorskshire post & Dundee Evenning Telegraph
                 </h4>
                 <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
                   Classification: High Reliability / Contemporary News Source
@@ -341,14 +386,14 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <h3 className="text-2xl font-serif font-semibold text-navy mt-12 mb-4">
-              Secondary Sources (Biographies and Histories)
-            </h3>
+            <p className="mt-6">
+              Alongside these, I deliberately use secondary sources—biographies and historical studies—not to settle debates, but to show how historians have interpreted the same evidence over time. Including those perspectives makes disagreements, assumptions, and blind spots visible rather than implicit. This is not about replacing historians, but about placing their interpretations back next to the raw material.
+            </p>
 
             <div className="space-y-8 mt-6">
               <div>
                 <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  13. The Asquiths by Colin Clifford
+                  14. The Asquiths by Colin Clifford
                 </h4>
                 <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
                   Classification: High Reliability / Secondary Biography
@@ -360,7 +405,7 @@ export default function AboutPage() {
 
               <div>
                 <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  14. Politics, Religion and Love by Naomi B. Levine
+                  15. Politics, Religion and Love by Naomi B. Levine
                 </h4>
                 <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
                   Classification: Good Reliability / Secondary Biography
@@ -372,56 +417,15 @@ export default function AboutPage() {
 
               <div>
                 <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  15. Asquith by Roy Jenkins
+                  16. Asquith by Roy Jenkins
                 </h4>
                 <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
                   Classification: High Credibility / Authoritative Biography
                 </p>
                 <p className="text-slate">
-                  A seminal biography written by a former Home Secretary and Chancellor. It offers deep political insight into Asquith's career and decisions.
+                  A seminal biography written by a former Home Secretary and Chancellor. It offers deep political insight into Asquith&apos;s career and decisions.
                 </p>
               </div>
-            </div>
-
-            <div className="mt-16 p-8 bg-section-bg/30 border-2 border-dashed border-border-beige rounded-md">
-              <h3 className="text-2xl font-serif font-bold text-navy mb-6">Future Archives</h3>
-              <p className="text-muted-gray italic mb-8">
-                The Venetia Project is an ongoing reconstruction. The following primary sources are currently being sought for integration into the daily timeline:
-              </p>
-              
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="space-y-2">
-                  <h4 className="font-serif font-bold text-navy">Raymond Asquith: Life and Letters</h4>
-                  <p className="text-sm text-slate">To integrate the perspective of the Prime Minister's eldest son—a core member of the Coterie whose wit and cynicism offer a vital counterpoint to his father's romanticism.</p>
-                </div>
-                
-                <div className="space-y-2">
-                  <h4 className="font-serif font-bold text-navy">Daily Newspaper Headlines</h4>
-                  <p className="text-sm text-slate">Digital archives of the Times and Daily Mail (1912–1916) to provide the daily public backdrop to the private correspondence.</p>
-                </div>
-                
-                <div className="space-y-2">
-                  <h4 className="font-serif font-bold text-navy">Edwin Montagu&apos;s Letters (Post-May 1912)</h4>
-                  <p className="text-sm text-slate">Locating the missing side of the correspondence between Edwin and Venetia during the critical years of their courtship and conversion.</p>
-                </div>
-                
-                <div className="space-y-2">
-                  <h4 className="font-serif font-bold text-navy">The Henley Archives</h4>
-                  <p className="text-sm text-slate">The private papers of Sylvia Henley and her husband; critical because they provide rare access to Asquith&apos;s personal state and correspondence after Venetia&apos;s engagement and his subsequent breakdown.</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-16 pt-8 border-t border-border-beige">
-              <p className="text-muted-gray text-sm italic">
-                For any questions or requests, please contact me by email:{' '}
-                <a 
-                  href="mailto:elon@consi.io" 
-                  className="text-accent-green hover:text-navy transition-colors underline decoration-accent-green/30 underline-offset-4"
-                >
-                  elon@consi.io
-                </a>
-              </p>
             </div>
           </div>
         </div>

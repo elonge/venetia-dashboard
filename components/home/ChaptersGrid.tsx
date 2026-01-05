@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { PODCASTS } from '@/constants';
+import { Podcast, PODCASTS } from '@/constants';
 
 interface Chapter {
   _id: string;
@@ -10,6 +10,7 @@ interface Chapter {
   chapter_title: string;
   main_story: string;
   image?: string;
+  podcast_info?: Podcast;
 }
 
 type CoverUrlState = string | null | undefined;
@@ -72,22 +73,27 @@ function useChapterCoverUrl(chapterId: string): CoverUrlState {
 }
 
 function sortChapters(chapters: Chapter[]): Chapter[] {
-  if (chapters.length === 0) return chapters;
-
-  const chapterOrder = PODCASTS.map((p) => p.chapter_id);
-  const chapterMap = new Map(chapters.map((c) => [c.chapter_id, c]));
-
-  const ordered: Chapter[] = [];
-  chapterOrder.forEach((id) => {
-    const chapter = chapterMap.get(id);
-    if (chapter) {
-      ordered.push(chapter);
-      chapterMap.delete(id);
-    }
+  return chapters.sort((a, b) => {
+    const indexA = a.podcast_info?.orderIndex || 9999;
+    const indexB = b.podcast_info?.orderIndex || 9999;
+    return indexA - indexB;
   });
+  // if (chapters.length === 0) return chapters;
 
-  chapterMap.forEach((chapter) => ordered.push(chapter));
-  return ordered;
+  // const chapterOrder = PODCASTS.map((p) => p.chapter_id);
+  // const chapterMap = new Map(chapters.map((c) => [c.chapter_id, c]));
+
+  // const ordered: Chapter[] = [];
+  // chapterOrder.forEach((id) => {
+  //   const chapter = chapterMap.get(id);
+  //   if (chapter) {
+  //     ordered.push(chapter);
+  //     chapterMap.delete(id);
+  //   }
+  // });
+
+  // chapterMap.forEach((chapter) => ordered.push(chapter));
+  // return ordered;
 }
 
 export default function ChaptersGrid() {
@@ -95,6 +101,12 @@ export default function ChaptersGrid() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const extendWithPodcastInfo = (chapters: Chapter[]): Chapter[] => {
+      return chapters.map((chapter) => {
+        const podcast = PODCASTS.find((p) => p.chapter_id === chapter.chapter_id);
+        return podcast ? { ...chapter, podcast_info: podcast } : chapter;
+      });
+    }
     async function fetchChapters() {
       try {
         const response = await fetch('/api/chapters');
@@ -103,7 +115,7 @@ export default function ChaptersGrid() {
           return;
         }
         const data = (await response.json()) as Chapter[];
-        setChapters(data);
+        setChapters(extendWithPodcastInfo(data));
       } catch (error) {
         console.error('Error fetching chapters:', error);
       } finally {
@@ -114,7 +126,7 @@ export default function ChaptersGrid() {
     fetchChapters();
   }, []);
 
-  const sortedChapters = useMemo(() => sortChapters(chapters), [chapters]);
+  const sortedChapters = chapters?.length > 0 ? sortChapters(chapters) : [];
 
   if (loading) {
     return (
