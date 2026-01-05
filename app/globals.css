@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+@layer components {
+  /* Define your custom class here */
+  .my-highlight {
+    @apply bg-accent-amber/60 font-semibold px-1 rounded-sm box-decoration-clone text-inherit;
+  }
+}
+
 :root {
   /* Core Brand Colors */
   --color-page-bg: #F5F0E8;    /* Lighter, warmer parchment - Base background */

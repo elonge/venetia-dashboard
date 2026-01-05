@@ -486,7 +486,17 @@ export default function AboutPage() {
             <div className="space-y-8 mt-6">
               <div>
                 <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  14. The Asquiths by Colin Clifford
+                  14. Asquith by Roy Jenkins
+                </h4>
+                <p className="text-slate">
+                  A seminal biography written by a former Home Secretary and
+                  Chancellor. It offers deep political insight into
+                  Asquith&apos;s career and decisions.
+                </p>
+              </div>              
+              <div>
+                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
+                  15. The Asquiths by Colin Clifford
                 </h4>
                 <p className="text-slate">
                   Published in 2002, this is a synthesis of diaries and letters.
@@ -497,7 +507,7 @@ export default function AboutPage() {
 
               <div>
                 <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  15. Politics, Religion and Love by Naomi B. Levine
+                  16. Politics, Religion and Love by Naomi B. Levine
                 </h4>
                 <p className="text-slate">
                   This text reconstructs the life of Edwin Montagu using his
@@ -505,16 +515,7 @@ export default function AboutPage() {
                 </p>
               </div>
 
-              <div>
-                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  16. Asquith by Roy Jenkins
-                </h4>
-                <p className="text-slate">
-                  A seminal biography written by a former Home Secretary and
-                  Chancellor. It offers deep political insight into
-                  Asquith&apos;s career and decisions.
-                </p>
-              </div>
+
             </div>
           </div>
         </div>
