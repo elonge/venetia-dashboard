@@ -187,7 +187,7 @@ export const TIMELINE_DATA = [
       "Adopted a new hairstyle (wearing a fringe)",
     ],
     sources: ["Reconstruction from Asquith's letter (Apr 18, 1914)."],
-    visualBackground: "/timeline/Kent.jpg",
+    visualBackground: "/timeline/Kent_Paint.jpg",
     visualPrompt:
       "View of a calm English seaside at Littlestone, 1914, looking out from a window with white lace curtains blowing in the breeze, a silver hand-mirror and scissors on the windowsill, soft coastal light.",
     visualAlt: "A hand mirror and scissors by a window overlooking the sea",
@@ -443,6 +443,7 @@ export const TIMELINE_DATA = [
       "Stayed at Viceregal Lodge, Dublin, as part of a house party",
       "Guests included the Prime Minister, the McKennas, and her parents (Lord and Lady Sheffield)",
       "Attended to meet the Prime Minister and Mrs. Asquith",
+      "Picture is reconstructed from a photograph appeared in The Sketch, October 7, 1914",
     ],
     sources: ["Reconstruction from Asquith's letter (Sep 26, 1914).", "Yorskshire post (Sep, 30, 1914)"],
     visualBackground: "/timeline/1914-09-25.jpg",
