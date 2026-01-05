@@ -1,9 +1,12 @@
 import { MetadataRoute } from 'next';
+import { getAllChapters } from '@/lib/chapters';
+import { getAllDailyRecords } from '@/lib/daily_records';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://the-venetia-project.vercel.app';
 
-  return [
+  // 1. Static Routes
+  const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
       lastModified: new Date(),
@@ -47,4 +50,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     },
   ];
+
+  // 2. Dynamic Chapter Routes
+  const chapters = await getAllChapters();
+  const chapterRoutes: MetadataRoute.Sitemap = chapters.map((chapter) => ({
+    url: `${baseUrl}/chapter?chapter_id=${encodeURIComponent(chapter.chapter_id)}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }));
+
+  // 3. Dynamic Daily Entry Routes
+  const dailyRecords = await getAllDailyRecords();
+  const dailyRoutes: MetadataRoute.Sitemap = dailyRecords.map((record) => ({
+    url: `${baseUrl}/daily/${encodeURIComponent(record.date)}`,
+    lastModified: new Date(), // Ideally this would be record.last_modified if available
+    changeFrequency: 'never', // Historical records rarely change
+    priority: 0.5,
+  }));
+
+  return [...staticRoutes, ...chapterRoutes, ...dailyRoutes];
 }

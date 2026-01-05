@@ -1,0 +1,283 @@
+'use client';
+
+import React from 'react';
+import dynamic from 'next/dynamic';
+import Link from 'next/link';
+import { Play, Sparkles } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { PEOPLE_IMAGES, PODCASTS, getRealSourceName, sourceNameMapping } from '@/constants';
+import { useChatVisibility } from '@/components/chat/useChatVisibility';
+import { Chapter } from '@/lib/chapters';
+import Timeline from '@/components/chapter/Timeline';
+
+// Dynamically import SicilyMap with SSR disabled
+const SicilyMap = dynamic(() => import('@/components/chapter/SicilyMap'), {
+  ssr: false,
+});
+
+// Extended interface to match what the view expects (including potential extra fields not yet in lib type)
+interface ChapterViewProps {
+  chapterData: Chapter & {
+    podcast?: {
+      title: string;
+      description: string;
+      spotify_url?: string;
+    };
+    video?: {
+      title: string;
+      thumbnail: string;
+    };
+  };
+}
+
+export default function ChapterView({ chapterData }: ChapterViewProps) {
+  useChatVisibility(false);
+
+  const replaceSourceNames = (text: string): string => {
+    const entries = Object.entries(sourceNameMapping).sort(([a], [b]) => b.length - a.length);
+    return entries.reduce((acc, [sourceName, displayName]) => {
+      if (!sourceName) return acc;
+      return acc.split(sourceName).join(displayName);
+    }, text);
+  };
+
+  if (!chapterData) {
+    return (
+      <div className="h-full bg-page-bg">
+        <main className="max-w-5xl mx-auto p-8">
+          <div className="text-navy text-center">
+            <p className="text-lg mb-4">Chapter not found</p>
+            <Link href="/">
+              <Button className="bg-navy hover:bg-navy/80 text-white">
+                Return to Home
+              </Button>
+            </Link>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  const perspectivesArray = Object.entries(chapterData.perspectives).map(([character, description]) => ({
+    character,
+    description,
+    image: PEOPLE_IMAGES[character as keyof typeof PEOPLE_IMAGES] || null
+  }));
+
+  const podcastData = PODCASTS.find(p => p.chapter_id === chapterData.chapter_id);
+  const hasPodcast = !!(podcastData || chapterData.podcast);
+  const activePodcast = podcastData || chapterData.podcast;
+  const spotifyUrl = activePodcast?.spotify_url;
+
+  return (
+    <div className="h-full bg-page-bg">
+      <div className="flex relative h-full">
+        <main className="p-8 transition-all overflow-y-auto flex-1 min-w-[300px]">
+          <div className="max-w-5xl mx-auto">
+            
+            {/* 1. MAIN TITLE */}
+            <div className="mb-8">
+              <h1 className="text-4xl font-serif font-bold text-navy leading-tight">
+                {chapterData.chapter_title}
+              </h1>
+            </div>
+
+            {/* 2. DUAL INTRO SECTION */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mb-12 items-start">
+              
+              {/* LEFT: STORY */}
+              <div className={`${hasPodcast ? 'md:col-span-7' : 'md:col-span-12'} bg-card-bg border border-border-beige p-8 rounded-sm shadow-sm relative overflow-hidden`}>
+                <div className="absolute top-0 left-0 w-1 h-full bg-accent-red/80" />
+                <span className="text-[9px] font-black text-accent-brown uppercase tracking-[0.25em] mb-4 block">
+                  The Context
+                </span>
+                <p className="font-serif text-[15px] leading-relaxed text-navy">
+                  {replaceSourceNames(chapterData.main_story)}
+                </p>
+              </div>
+
+              {/* RIGHT: PODCAST CARD */}
+              {hasPodcast && activePodcast && (
+                <div className="md:col-span-5 h-full">
+                  <div className="bg-section-bg border border-border-beige p-6 rounded-sm shadow-md h-full flex flex-col relative group">
+                    
+                    {/* Header */}
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-[9px] font-black text-navy uppercase tracking-[0.25em] flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-accent-green animate-pulse"></span>
+                        Audio Guide
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="font-serif text-lg text-navy leading-tight mb-2">
+                      {activePodcast.title}
+                    </h3>
+                    
+                    {activePodcast.description && (
+                      <p className="text-xs text-muted-gray mb-4 line-clamp-2">
+                        {activePodcast.description}
+                      </p>
+                    )}
+
+                    {/* CUSTOM PLAYER (The Archive Look) */}
+                    <div className="mb-4">
+                      <audio 
+                        controls 
+                        className="w-full h-8"
+                      >
+                        <source src={`/audio/${chapterData.chapter_id}.mp3`} type="audio/mpeg" />
+                        <source src={`/audio/${chapterData.chapter_id}.m4a`} type="audio/mp4" />
+                        Your browser does not support the audio element.
+                      </audio>
+                    </div>
+
+                    {/* SPOTIFY BUTTON (The Alternative) */}
+                    {spotifyUrl && (
+                      <div className="mt-auto border-t border-border-beige/50 pt-3">
+                        <a 
+                          href={spotifyUrl} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center gap-2 w-full py-2 bg-[#1DB954]/10 hover:bg-[#1DB954]/20 text-[#15883e] hover:text-[#117a37] text-[10px] font-bold uppercase tracking-widest rounded-sm transition-colors"
+                        >
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="shrink-0">
+                            <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.299z"/>
+                          </svg>
+                          Listen on Spotify
+                        </a>
+                      </div>
+                    )}
+
+                    {/* Paper Clip Visual */}
+                    <div className="absolute -top-3 right-8 w-4 h-8 border-2 border-border-beige border-b-0 rounded-t-full z-0 opacity-50 hidden md:block" />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* 3. TIMELINE / MAP */}
+            {chapterData.locations && chapterData.locations.length > 0 ? (
+              <section className="mb-6 border-t border-dashed border-border-beige pt-8">
+                <SicilyMap 
+                  locations={chapterData.locations}
+                  title="Chapter Locations"
+                  description="Locations mentioned in this chapter"
+                />
+              </section>
+            ) : chapterData.timeline && chapterData.timeline.length > 0 ? (
+              <section className="mb-6 border-t border-dashed border-border-beige pt-8">
+                <Timeline 
+                  events={chapterData.timeline}
+                  title="Chapter Timeline"
+                  description="Key events in chronological order"
+                />
+              </section>
+            ) : null}
+
+            {/* 4. PERSPECTIVES */}
+            {perspectivesArray.length > 0 && (
+              <section className="mb-8">
+                <h2 className="text-xs font-semibold text-muted-gray uppercase tracking-wider mb-4">
+                  Character Perspectives
+                  <span className="text-muted-gray/60 font-normal ml-2">(How each character saw that)</span>
+                </h2>
+                <div className="space-y-4">
+                  {perspectivesArray.map((perspective, idx) => (
+                    <div 
+                      key={idx}
+                      className="bg-card-bg border border-border-beige/50 shadow-sm rounded-lg p-5 flex gap-4"
+                    >
+                      {perspective.image && (
+                        <img 
+                          src={perspective.image}
+                          alt={perspective.character}
+                          className="w-16 h-16 rounded-full object-cover border-2 border-border-beige flex-shrink-0"
+                          onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                        />
+                      )}
+                      <div>
+                        <h3 className="font-serif text-lg font-semibold text-navy mb-2">
+                          {perspective.character}
+                        </h3>
+                        <p className="text-slate leading-relaxed">
+                          {replaceSourceNames(perspective.description)}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* 5. FUN FACT */}
+            {chapterData.fun_fact && (
+              <section className="bg-section-bg border-2 border-accent-brown/20 rounded-lg p-6 mb-8 shadow-md relative">
+                <div className="flex items-center gap-2 mb-3">
+                  <Sparkles className="w-5 h-5 text-accent-brown" />
+                  <h2 className="text-xs font-semibold uppercase tracking-wider text-accent-brown">
+                    Fun Fact
+                  </h2>
+                </div>
+                <p className="text-lg font-serif leading-relaxed text-navy">
+                  {replaceSourceNames(chapterData.fun_fact)}
+                </p>
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-border-beige/80 rotate-45 shadow-sm"></div>
+              </section>
+            )}
+
+            {/* 6. VIDEO */}
+            {chapterData.video && (
+              <section className="mb-8 bg-card-bg rounded-lg overflow-hidden border border-border-beige shadow-sm">
+                <div className="p-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Play className="w-5 h-5 text-accent-burgundy" />
+                    <h2 className="text-xs font-semibold text-muted-gray uppercase tracking-wider">
+                      Visual Reconstruction
+                    </h2>
+                  </div>
+                  
+                  <div className="rounded-lg overflow-hidden bg-navy mb-4 shadow-lg">
+                    <video 
+                      controls
+                      className="w-full aspect-video"
+                      src={`/video/${chapterData.chapter_id}.mp4`}
+                      poster={chapterData.video?.thumbnail}
+                    >
+                      Your browser does not support the video element.
+                    </video>
+                  </div>
+                  
+                  <h3 className="font-serif text-lg font-semibold text-navy mb-1">
+                    {chapterData.video?.title || "Archival Footage"}
+                  </h3>
+                </div>
+              </section>
+            )}
+
+            {/* 7. SOURCES */}
+            {chapterData.sources && chapterData.sources.length > 0 && (
+              <section className="bg-card-bg border border-border-beige/50 rounded-lg p-4 mb-12">
+                <div className="flex items-start gap-2">
+                  <div>
+                    <h2 className="text-base font-semibold text-muted-gray uppercase tracking-wider mb-2">
+                      Sources
+                    </h2>
+                    <ul className="space-y-1">
+                      {chapterData.sources.map((source, idx) => (
+                        <li key={idx} className="text-sm text-slate">
+                          • {getRealSourceName(source)}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </section>
+            )}
+
+          </div>
+        </main>
+      </div>
+    </div>
+  );
+}

@@ -1,80 +1,42 @@
-'use client';
+import { Metadata } from 'next';
+import { getDailyRecordByDate, getNextDailyRecordByDate, getPreviousDailyRecordByDate } from '@/lib/daily_records';
+import { normalizeDayDate } from '@/components/daily/dayUtils';
+import DailyPageClient from '@/components/daily/DailyPageClient';
 
-import React, { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { DailyPopup, normalizeDayDate } from '@/components/daily';
-import type { DayData } from '@/components/daily';
-import { useChatVisibility } from '@/components/chat/useChatVisibility';
-import DailyEntrySkeleton from '@/components/daily/DailyEntrySkeleton';
+type Props = {
+  params: Promise<{ date: string }>;
+}
 
-export default function DailyPage() {
-  useChatVisibility(false);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { date } = await params;
+  const normalizedDate = normalizeDayDate(decodeURIComponent(date));
+  const day = await getDailyRecordByDate(normalizedDate);
 
-  const params = useParams<{ date?: string | string[] }>();
-  const router = useRouter();
-  const [day, setDay] = useState<DayData | null>(null);
-  const [loadingDay, setLoadingDay] = useState(true);
-  const rawDate = params?.date ? (Array.isArray(params.date) ? params.date[0] : params.date) : '';
-  const normalizedDate = normalizeDayDate(rawDate);
+  if (!day) return { title: 'Day Not Found | The Venetia Project' };
 
-  useEffect(() => {
-    let cancelled = false;
+  return {
+    title: `Daily Entry: ${normalizedDate} | The Venetia Project`,
+    description: `Daily activities and correspondence for ${normalizedDate}. Letters: ${day.total_number_letters || 0}.`,
+  };
+}
 
-    async function loadDay() {
-      try {
-        setLoadingDay(true);
-        const response = await fetch(`/api/daily_records/${encodeURIComponent(normalizedDate)}`);
-        if (!response.ok) throw new Error(`Failed to load daily record for ${normalizedDate}`);
-        const data = (await response.json()) as DayData;
-        if (!cancelled) setDay(data);
-      } catch (error) {
-        console.error('Error loading day:', error);
-        if (!cancelled) setDay(null);
-      } finally {
-        if (!cancelled) setLoadingDay(false);
-      }
-    }
-
-    if (normalizedDate) loadDay();
-    return () => {
-      cancelled = true;
-    };
-  }, [normalizedDate]);
+export default async function DailyPage({ params }: Props) {
+  const { date } = await params;
+  const normalizedDate = normalizeDayDate(decodeURIComponent(date));
+  
+  // Parallel fetch for performance
+  const [day, nextDay, prevDay] = await Promise.all([
+    getDailyRecordByDate(normalizedDate),
+    getNextDailyRecordByDate(normalizedDate),
+    getPreviousDailyRecordByDate(normalizedDate)
+  ]);
 
   return (
-    <div className="h-full bg-page-bg">
-      <div className="max-w-7xl mx-auto px-6 py-6">
-        {loadingDay ? (
-          <DailyEntrySkeleton />
-        ) : day ? (
-          <DailyPopup
-            mode="page"
-            day={day}
-            onClose={() => router.push('/')}
-            getNextDay={async (date) => {
-              const response = await fetch(
-                `/api/daily_records/next?date=${encodeURIComponent(normalizeDayDate(date))}`
-              );
-              if (!response.ok) return null;
-              return (await response.json()) as DayData;
-            }}
-            getPreviousDay={async (date) => {
-              const response = await fetch(
-                `/api/daily_records/previous?date=${encodeURIComponent(normalizeDayDate(date))}`
-              );
-              if (!response.ok) return null;
-              return (await response.json()) as DayData;
-            }}
-            onNavigateToDay={(date) => {
-              router.replace(`/daily/${normalizeDayDate(date)}`);
-            }}
-          />
-        ) : (
-          <div className="bg-card-bg rounded-2xl p-6 text-center text-slate border border-border-beige min-h-[250px] flex items-center justify-center shadow-[0_14px_34px_rgba(0,0,0,0.08)]">
-            No data available for {normalizedDate}.
-          </div>
-        )}
-      </div>
-    </div>
+    <DailyPageClient 
+        day={day} 
+        date={normalizedDate}
+        nextDate={nextDay ? normalizeDayDate(nextDay.date) : null}
+        prevDate={prevDay ? normalizeDayDate(prevDay.date) : null}
+    />
   );
 }

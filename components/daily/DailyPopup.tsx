@@ -24,6 +24,8 @@ interface DailyPopupProps {
   getNextDay?: (currentDate: string) => Promise<DayData | null>;
   getPreviousDay?: (currentDate: string) => Promise<DayData | null>;
   allDays?: DayData[]; // All available days for date picker
+  nextDate?: string | null;
+  prevDate?: string | null;
 }
 
 // Helper to parse date from various formats
@@ -63,6 +65,8 @@ export default function DailyPopup({
   getNextDay,
   getPreviousDay,
   allDays = [],
+  nextDate,
+  prevDate,
 }: DailyPopupProps) {
   const [currentDay, setCurrentDay] = useState<DayData>(day);
   const [loading, setLoading] = useState(false);
@@ -91,19 +95,31 @@ export default function DailyPopup({
   // Check for next/previous days
   useEffect(() => {
     async function checkNavigation() {
-      if (getNextDay) {
+      // If explicit dates are provided, use them
+      if (nextDate !== undefined) {
+        setHasNext(!!nextDate);
+      } else if (getNextDay) {
         const next = await getNextDay(dateString);
         setHasNext(!!next);
       }
-      if (getPreviousDay) {
+
+      if (prevDate !== undefined) {
+        setHasPrevious(!!prevDate);
+      } else if (getPreviousDay) {
         const prev = await getPreviousDay(dateString);
         setHasPrevious(!!prev);
       }
     }
     checkNavigation();
-  }, [dateString, getNextDay, getPreviousDay]);
+  }, [dateString, getNextDay, getPreviousDay, nextDate, prevDate]);
 
   const handleNext = async () => {
+    // Priority: URL Navigation if nextDate is provided and onNavigateToDay exists
+    if (nextDate && onNavigateToDay) {
+        onNavigateToDay(nextDate);
+        return;
+    }
+
     if (!getNextDay) return;
     setLoading(true);
     try {
@@ -122,6 +138,12 @@ export default function DailyPopup({
   };
 
   const handlePrevious = async () => {
+    // Priority: URL Navigation if prevDate is provided and onNavigateToDay exists
+    if (prevDate && onNavigateToDay) {
+        onNavigateToDay(prevDate);
+        return;
+    }
+
     if (!getPreviousDay) return;
     setLoading(true);
     try {
@@ -157,6 +179,24 @@ export default function DailyPopup({
     setDatePickerError(null);
     if (!selectedDate) {
       return;
+    }
+
+    // If onNavigateToDay is present, assume we want to navigate there directly
+    if (onNavigateToDay) {
+        // If we have allDays, validate first
+        if (allDays.length > 0) {
+            const foundDay = getDayByDate(allDays, selectedDate);
+            if (!foundDay) {
+                setDatePickerError("No data available for this date");
+                return;
+            }
+        }
+        // In page mode, we just navigate. 
+        // Note: checking if date exists via fetch might be needed if we want to show error before nav.
+        // But for now, let's assume if it fails, the page will show 404 or empty state.
+        onNavigateToDay(selectedDate);
+        setDateInput("");
+        return;
     }
 
     setLoading(true);
@@ -239,7 +279,6 @@ export default function DailyPopup({
     ? "relative w-full h-full md:h-auto md:max-w-[95vw] md:max-h-[90vh] md:rounded-2xl bg-card-bg shadow-2xl overflow-hidden flex flex-col"
     : "relative w-full max-w-5xl bg-card-bg rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-border-beige";
 
-  console.log("Current Day:", currentDay);
   return (
     <div
       className={containerClassName}
