@@ -2,10 +2,95 @@
 
 import React from "react";
 import { useChatVisibility } from "@/components/chat/useChatVisibility";
+import PrimarySource from "@/components/about/PrimarySource";
 
 export default function AboutPage() {
   useChatVisibility(false);
 
+const HistoricalDivider = ({ icon = 'nib' }) => {
+  return (
+    <div className="flex items-center justify-center py-16 opacity-40 text-stone-900">
+      
+      {/* Left Line */}
+      <div className="h-px w-12 bg-current hidden md:block opacity-50 mr-4"></div>
+
+      {/* The Icon */}
+      <div className="text-current">
+        
+        {/* OPTION 1: THE FOUNTAIN PEN NIB (Writing/Letters) */}
+        {icon === 'nib' && (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 2C12 2 4.5 9 4.5 15C4.5 19.5 7.5 22 12 22C16.5 22 19.5 19.5 19.5 15C19.5 9 12 2 12 2Z" />
+            <path d="M12 2V13" />
+            <path d="M12 22C12 22 10 18 10 15" />
+            <path d="M12 22C12 22 14 18 14 15" />
+          </svg>
+        )}
+
+        {/* OPTION 2: THE VICTORIAN FLOURISH (Editorial/Bookish) */}
+        {icon === 'flourish' && (
+           <svg width="42" height="14" viewBox="0 0 42 14" fill="none" stroke="currentColor" strokeWidth="1">
+             <path d="M21 7C26 7 28 2 33 2C38 2 41 5 41 7C41 9 38 12 33 12C28 12 26 7 21 7Z" />
+             <path d="M21 7C16 7 14 2 9 2C4 2 1 5 1 7C1 9 4 12 9 12C14 12 16 7 21 7Z" />
+             <circle cx="21" cy="7" r="1.5" fill="currentColor" stroke="none"/>
+           </svg>
+        )}
+
+        {/* OPTION 3: THE INK POT (Research/Work) */}
+        {icon === 'ink' && (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 20H19V14C19 14 19 10 16 8V5H8V8C5 10 5 14 5 14V20Z" />
+            <path d="M12 15L15 3" /> 
+            <path d="M8 20L5 22" />
+            <path d="M16 20L19 22" />
+          </svg>
+        )}
+      </div>
+
+      {/* Right Line */}
+      <div className="h-px w-12 bg-current hidden md:block opacity-50 ml-4"></div>
+      
+    </div>
+  );
+};
+  
+  const SectionDivider = ({ variant = "stars" }) => {
+    if (variant === "line") {
+      return (
+        <div className="flex items-center justify-center my-16 opacity-30">
+          <div className="h-px w-24 bg-stone-900"></div>
+        </div>
+      );
+    }
+
+    if (variant === "fleuron") {
+      return (
+        <div className="flex items-center justify-center my-16 text-stone-900/40">
+          {/* A simple elegant SVG flourish */}
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+            className="w-8 h-8"
+          >
+            <path d="M12 4C14 8 18 10 22 12C18 14 14 16 12 20C10 16 6 14 2 12C6 10 10 8 12 4Z" />
+          </svg>
+        </div>
+      );
+    }
+
+    // Default: The Classic "Dinkus" (Three Asterisks)
+    return (
+      <div className="text-center my-16">
+        <span className="font-serif text-2xl tracking-[1em] text-stone-900/40 ml-[1em]">
+          ***
+        </span>
+      </div>
+    );
+  };
   return (
     <div className="h-full bg-page-bg">
       {/* Content */}
@@ -37,7 +122,7 @@ export default function AboutPage() {
               So instead of trying to &quot;complete&quot; Venetia&apos;s voice,
               I decided to do something else.
             </p>
-
+            <HistoricalDivider icon="nib" />
             <h2 className="text-3xl font-serif font-bold text-navy mt-12 mb-6">
               What I decided to do
             </h2>
@@ -99,7 +184,7 @@ export default function AboutPage() {
               of a historical relationship without smoothing it into a story it
               never was.
             </p>
-
+            <SectionDivider />
             <h2 className="text-3xl font-serif font-bold text-navy mt-12 mb-6">
               What you&apos;ll find on the site
             </h2>
@@ -113,23 +198,35 @@ export default function AboutPage() {
 
             <ul className="list-disc list-inside space-y-3 ml-4 mt-4 text-slate">
               <li>
-                <strong>A daily view</strong> reconstructing what was happening on specific dates
+                <strong>A daily view</strong> reconstructing what was happening
+                on specific dates
               </li>
               <li>
-                <strong>The Data Room:</strong> A statistical breakdown of the archive, visualizing correspondence patterns, sentiment analysis, and metadata
+                <strong>The Data Room:</strong> A statistical breakdown of the
+                archive, visualizing correspondence patterns, sentiment
+                analysis, and metadata
               </li>
               <li>
-                <strong>The Speculative Studio:</strong> An experimental space attempting to <span className="my-highlight">reconstruct Venetia's missing diary</span> and explore "what if" scenarios
+                <strong>The Speculative Studio:</strong> An experimental space
+                attempting to{" "}
+                <span className="my-highlight">
+                  reconstruct Venetia's missing diary
+                </span>{" "}
+                and explore "what if" scenarios
               </li>
               <li>
                 <strong>Thematic chapters</strong> on key episodes and pressures
               </li>
               <li>
-                <strong>The underlying archive:</strong> A fully searchable database where you can <span className="my-highlight">chat directly with the primary sources</span>
+                <strong>The underlying archive:</strong> A fully searchable
+                database where you can{" "}
+                <span className="my-highlight">
+                  chat directly with the primary sources
+                </span>
               </li>
             </ul>
             <p>Some days are dense. Some are empty. Both matter.</p>
-
+            <SectionDivider />
             <h2 className="text-3xl font-serif font-bold text-navy mt-12 mb-6">
               An open-ended project
             </h2>
@@ -158,7 +255,7 @@ export default function AboutPage() {
               History gets more interesting when it&apos;s examined closely, and
               more honest when its gaps are left visible.
             </p>
-
+            <HistoricalDivider icon="ink"/>
             <h2 className="text-3xl font-serif font-bold text-navy mt-12 mb-6">
               AI Tools Used in the Project
             </h2>
@@ -167,355 +264,287 @@ export default function AboutPage() {
               This project was built through multiple AI tools working together,
               each chosen for its strengths.
             </p>
-
-            <div className="grid md:grid-cols-2 gap-6 mt-6">
-              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:border-accent-green/30">
-                <h3 className="text-xl font-serif font-semibold text-navy mb-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+              {/* Card 1: NotebookLM */}
+              <div className="group flex flex-col p-5 border border-stone-900/15 rounded-sm hover:border-stone-900/40 hover:bg-stone-900/5 transition-all duration-300">
+                <h3 className="text-xl font-serif font-medium text-stone-900 mb-3 group-hover:text-black">
                   NotebookLM
                 </h3>
-                <p className="text-muted-gray text-sm">
+                <p className="font-sans text-sm leading-relaxed text-stone-600 group-hover:text-stone-900 transition-colors">
                   Served as the project&apos;s &quot;brain,&quot; ingesting
                   historical documents to reason across raw data without the
                   bias of hindsight.
                 </p>
               </div>
 
-              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:border-accent-green/30">
-                <h3 className="text-xl font-serif font-semibold text-navy mb-2">
+              {/* Card 2: Gemini */}
+              <div className="group flex flex-col p-5 border border-stone-900/15 rounded-sm hover:border-stone-900/40 hover:bg-stone-900/5 transition-all duration-300">
+                <h3 className="text-xl font-serif font-medium text-stone-900 mb-3 group-hover:text-black">
                   Gemini
                 </h3>
-                <p className="text-muted-gray text-sm">
+                <p className="font-sans text-sm leading-relaxed text-stone-600 group-hover:text-stone-900 transition-colors">
                   Functioned as the chief assistant for infrastructural work:
                   writing Python code to download, scrape, and reconcile data
                   from various sources.
                 </p>
               </div>
 
-              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:border-accent-green/30">
-                <h3 className="text-xl font-serif font-semibold text-navy mb-2">
+              {/* Card 3: Gemini Gem */}
+              <div className="group flex flex-col p-5 border border-stone-900/15 rounded-sm hover:border-stone-900/40 hover:bg-stone-900/5 transition-all duration-300">
+                <h3 className="text-xl font-serif font-medium text-stone-900 mb-3 group-hover:text-black">
                   Gemini Gem
                 </h3>
-                <p className="text-muted-gray text-sm">
+                <p className="font-sans text-sm leading-relaxed text-stone-600 group-hover:text-stone-900 transition-colors">
                   Configured as a history assistant to find additional primary
                   sources by answering targeted questions about dates, authors,
                   and corroborating materials.
                 </p>
               </div>
 
-              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:border-accent-green/30">
-                <h3 className="text-xl font-serif font-semibold text-navy mb-2">
+              {/* Card 4: Claude */}
+              <div className="group flex flex-col p-5 border border-stone-900/15 rounded-sm hover:border-stone-900/40 hover:bg-stone-900/5 transition-all duration-300">
+                <h3 className="text-xl font-serif font-medium text-stone-900 mb-3 group-hover:text-black">
                   Claude
                 </h3>
-                <p className="text-muted-gray text-sm">
+                <p className="font-sans text-sm leading-relaxed text-stone-600 group-hover:text-stone-900 transition-colors">
                   Acted as a &quot;thinking partner&quot; for reframing
                   questions and resolving narrative difficulties when data
                   models hit a wall.
                 </p>
               </div>
 
-              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:border-accent-green/30">
-                <h3 className="text-xl font-serif font-semibold text-navy mb-2">
+              {/* Card 5: Codex */}
+              <div className="group flex flex-col p-5 border border-stone-900/15 rounded-sm hover:border-stone-900/40 hover:bg-stone-900/5 transition-all duration-300">
+                <h3 className="text-xl font-serif font-medium text-stone-900 mb-3 group-hover:text-black">
                   Codex
                 </h3>
-                <p className="text-muted-gray text-sm">
+                <p className="font-sans text-sm leading-relaxed text-stone-600 group-hover:text-stone-900 transition-colors">
                   Collaborated with Claude to stabilize the UI produced by
                   Base44, transitioning exploratory designs into a functional
                   platform.
                 </p>
               </div>
 
-              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:border-accent-green/30">
-                <h3 className="text-xl font-serif font-semibold text-navy mb-2">
+              {/* Card 6: Cursor */}
+              <div className="group flex flex-col p-5 border border-stone-900/15 rounded-sm hover:border-stone-900/40 hover:bg-stone-900/5 transition-all duration-300">
+                <h3 className="text-xl font-serif font-medium text-stone-900 mb-3 group-hover:text-black">
                   Cursor
                 </h3>
-                <p className="text-muted-gray text-sm">
+                <p className="font-sans text-sm leading-relaxed text-stone-600 group-hover:text-stone-900 transition-colors">
                   My main development environment—connecting AI-assisted
                   reasoning directly to the codebase while building the site.
                 </p>
               </div>
 
-              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:border-accent-green/30">
-                <h3 className="text-xl font-serif font-semibold text-navy mb-2">
+              {/* Card 7: ElevenLabs */}
+              <div className="group flex flex-col p-5 border border-stone-900/15 rounded-sm hover:border-stone-900/40 hover:bg-stone-900/5 transition-all duration-300">
+                <h3 className="text-xl font-serif font-medium text-stone-900 mb-3 group-hover:text-black">
                   ElevenLabs
                 </h3>
-                <p className="text-muted-gray text-sm">
+                <p className="font-sans text-sm leading-relaxed text-stone-600 group-hover:text-stone-900 transition-colors">
                   To generate the audio reconstruction of Asquith reading his
                   letters.
                 </p>
               </div>
 
-              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:border-accent-green/30">
-                <h3 className="text-xl font-serif font-semibold text-navy mb-2">
+              {/* Card 8: MongoDB */}
+              <div className="group flex flex-col p-5 border border-stone-900/15 rounded-sm hover:border-stone-900/40 hover:bg-stone-900/5 transition-all duration-300">
+                <h3 className="text-xl font-serif font-medium text-stone-900 mb-3 group-hover:text-black">
                   MongoDB
                 </h3>
-                <p className="text-muted-gray text-sm">
+                <p className="font-sans text-sm leading-relaxed text-stone-600 group-hover:text-stone-900 transition-colors">
                   Underpins the archive with Vector Search, storing embeddings
                   to facilitate live, conversational interaction across
                   thousands of documents.
                 </p>
               </div>
 
-              <div className="bg-card-bg p-6 rounded-sm border border-border-beige shadow-sm md:col-span-2 transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:border-accent-green/30">
-                <h3 className="text-xl font-serif font-semibold text-navy mb-2">
+              {/* Card 9: Base44 */}
+              {/* Note: This item spans 2 cols on Tablet (md) to avoid being an orphan, but 1 col on Desktop (lg) */}
+              <div className="group flex flex-col p-5 border border-stone-900/15 rounded-sm hover:border-stone-900/40 hover:bg-stone-900/5 transition-all duration-300 md:col-span-2 lg:col-span-1">
+                <h3 className="text-xl font-serif font-medium text-stone-900 mb-3 group-hover:text-black">
                   Base44
                 </h3>
-                <p className="text-muted-gray text-sm">
+                <p className="font-sans text-sm leading-relaxed text-stone-600 group-hover:text-stone-900 transition-colors">
                   Used heavily for &quot;vibe-coding&quot;: enabling rapid
                   iteration on layout, structure, and UI to maintain flexibility
                   as ideas evolved.
                 </p>
               </div>
             </div>
-
             <p className="mt-6">
               Together, these tools made it possible to build a research system
               that combines storytelling, data, and historical methodology.
             </p>
+            <div>
+              <HistoricalDivider icon="flourish" />
+              <h2 className="font-serif text-2xl font-bold text-stone-900 mb-8">
+                Sources & Perspective
+              </h2>
 
-            <h2 className="text-3xl font-serif font-bold text-navy mt-12 mb-6">
-              Sources and perspective
-            </h2>
+              {/* Dense 3-column grid for bibliography style */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10">
+                {/* 1. Asquith Letters */}
+                <PrimarySource
+                  title="H.H. Asquith: Letters to Venetia Stanley"
+                  credibility="High Credibility / Primary Source"
+                  description="Contemporary letters written by the Prime Minister. They offer a unique, unfiltered view of the executive mindset, containing state secrets and private anxieties shared in real-time."
+                  link="https://www.amazon.com/H-H-Asquith-Letters-Venetia-Stanley/dp/0192122002"
+                  author="Michael Brock"
+                />
 
-            <div className="space-y-8 mt-6">
-              <div>
-                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  1. H.H. Asquith: Letters to Venetia Stanley (Edited by M. & E.
-                  Brock)
-                </h4>
-                <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
-                  Classification: High Credibility / Primary Source
-                </p>
-                <p className="text-slate">
-                  These are contemporary letters written by the Prime Minister.
-                  They offer a unique, unfiltered view of the executive mindset,
-                  containing state secrets and private anxieties shared in
-                  real-time.
-                </p>
-              </div>
+                {/* 2. Venetia & Edwin Correspondence */}
+                <PrimarySource
+                  title="The Venetia Stanley & Edwin Montagu Correspondence"
+                  credibility="High Reliability / Personal Primary Source"
+                  description="Raw transcripts of private letters. Highly credible evidence of the personal relationship and social maneuvering between Venetia and Edwin."
+                />
 
+                {/* 3. Margot Asquith Diary */}
+                <PrimarySource
+                  title="Margot Asquith's Great War Diary 1914–1916"
+                  credibility="Mixed Reliability / Subjective Primary Source"
+                  description={'Valuable for access to the PM\'s inner circle, though editors warn Margot was "an opinionated egotist, often inaccurate... and occasionally prone to fantasy."'}
+                  link="https://www.amazon.com/Margot-Asquiths-Great-Diary-1914-1916-ebook/dp/B00KB1BROG"
+                  author="Michael Brock & Eleanor Brock"
+                />
 
-              <div>
-                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  2. The Venetia Stanley & Edwin Montagu Correspondence
-                </h4>
-                <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
-                  Classification: High Reliability / Personal Primary Source
-                </p>
-                <p className="text-slate">
-                  These are raw transcripts of private letters. They are highly
-                  credible evidence of the personal relationship and social
-                  maneuvering between Venetia and Edwin.
-                </p>
-              </div>
+                {/* 4. Violet Bonham Carter */}
+                <PrimarySource
+                  title="Lantern Slides"
+                  credibility="High Credibility / Edited Primary Source"
+                  description="Edited selections of diaries and letters from Asquith's daughter, intensely loyal to the Asquithian liberal viewpoint."
+                  link="https://www.amazon.com/Lantern-Slides-Diaries-Letters-1904-1914/dp/0297816497"
+                  author="Violet Bonham Carter"
+                />
 
-              <div>
-                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  3. Margot Asquith&apos;s Great War Diary 1914–1916 (Edited by
-                  M. & E. Brock)
-                </h4>
-                <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
-                  Classification: Mixed Reliability / Subjective Primary Source
-                </p>
-                <p className="text-slate">
-                  While valuable for its access to the Prime Minister&apos;s
-                  inner circle, the editors explicitly warn that Margot was
-                  &quot;an opinionated egotist, often inaccurate... and
-                  occasionally prone to fantasy&quot;.
-                </p>
-              </div>
-              <div>
-                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  4. Champion Redoubtable / Lantern Slides (Violet Bonham
-                  Carter)
-                </h4>
-                <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
-                  Classification: High Credibility / Edited Primary Source
-                </p>
-                <p className="text-slate">
-                  These texts are edited selections of diaries and letters from
-                  Asquith&apos;s daughter, intensely loyal to the Asquithian
-                  liberal viewpoint.
-                </p>
-              </div>
-              <div>
-                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  5. Lady Cynthia Asquith: Diaries 1915–1918
-                </h4>
-                <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
-                  Classification: High Credibility / Primary Source
-                </p>
-                <p className="text-slate">
-                  These diaries are described as an &quot;intimate,
-                  unselfconscious record&quot;. They are highly reliable for
-                  social history and the mood of the aristocracy during the war.
-                </p>
-              </div>
+                {/* 5. Lady Cynthia Asquith */}
+                <PrimarySource
+                  title="Lady Cynthia Asquith: Diaries 1915–1918"
+                  credibility="High Credibility / Primary Source"
+                  description='An "intimate, unselfconscious record." Highly reliable for social history and the mood of the aristocracy during the war.'
+                  link="https://www.amazon.com/Diaries-Lady-Cynthia-Asquith-1915-1918/dp/B004H5UMLQ"
+                  author="Lady Cynthia Asquith"
+                />
 
-              <div>
-                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  6. Lloyd George: A Diary by Frances Stevenson (Edited by
-                  A.J.P. Taylor)
-                </h4>
-                <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
-                  Classification: High Credibility / Partisan Primary Source
-                </p>
-                <p className="text-slate">
-                  Stevenson was both Lloyd George&apos;s secretary and mistress,
-                  placing her at the center of power. The diary reflects his
-                  biases and justifications.
-                </p>
-              </div>
+                {/* 6. Lloyd George / Stevenson */}
+                <PrimarySource
+                  title="Lloyd George: A Diary by Frances Stevenson"
+                  credibility="High Credibility / Partisan Primary Source"
+                  description="Stevenson was both Lloyd George's secretary and mistress. The diary reflects his biases and justifications from the center of power."
+                  link="https://www.amazon.com/Lloyd-George-Diary-Frances-Stevenson/dp/0060141166"
+                  author="Frances Stevenson"
+                />
 
+                {/* 7. Lord Riddell */}
+                <PrimarySource
+                  title="Lord Riddell's War Diary 1914–1918"
+                  credibility="High Credibility / Journalistic Primary Source"
+                  description="Riddell was a press baron and intermediary. Highly reliable regarding the relationship between the media and the government."
+                  link="https://www.amazon.com/Lord-Riddells-war-diary-1914-1918/dp/B000857OVA"
+                  author="Lord Riddell"
+                />
 
-              <div>
-                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  7. Lord Riddell&apos;s War Diary 1914–1918
-                </h4>
-                <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
-                  Classification: High Credibility / Journalistic Primary Source
-                </p>
-                <p className="text-slate">
-                  Riddell was a press baron and intermediary. His diary is
-                  highly reliable regarding the relationship between the media
-                  and the government.
-                </p>
-              </div>
-              <div>
-                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  8. The Rainbow Comes and Goes by Lady Diana Cooper
-                </h4>
-                <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
-                  Classification: Medium Reliability / Memoir
-                </p>
-                <p className="text-slate">
-                  Written in 1958, this is a retrospective memoir. It captures
-                  the spirit and romance of the Coterie and the era.
-                </p>
-              </div>
-              <div>
-                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  9. The Supreme Command 1914–1918 by Lord Hankey
-                </h4>
-                <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
-                  Classification: High Reliability / Authoritative
-                  Memoir-History
-                </p>
-                <p className="text-slate">
-                  Hankey was the Secretary to the War Council. It is considered
-                  a definitive administrative history of the war&apos;s
-                  direction.
-                </p>
-              </div>
+                {/* 8. Lady Diana Cooper */}
+                <PrimarySource
+                  title="The Rainbow Comes and Goes (Lady Diana Cooper)"
+                  credibility="Medium Reliability / Memoir"
+                  description="Written in 1958, this is a retrospective memoir. It captures the spirit and romance of the Coterie and the era."
+                  link="https://www.amazon.com/Rainbow-Comes-Diana-Cooper-Autobiog-ebook/dp/B074MBTCKQ"
+                  author="Lady Diana Cooper"
+                />
 
+                {/* 9. Lord Hankey */}
+                <PrimarySource
+                  title="The Supreme Command 1914–1918 (Lord Hankey)"
+                  credibility="High Reliability / Authoritative Memoir-History"
+                  description="Hankey was Secretary to the War Council. Considered a definitive administrative history of the war's direction."
+                  link="https://www.amazon.com/Supreme-Command-1914-1918-Routledge-Revivals-ebook/dp/B0B36PJRMR"
+                  author="Lord Hankey"
+                />
 
-              <div>
-                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  10. Hansard Parliamentary Debates (Various files from
-                  1912–1916)
-                </h4>
-                <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
-                  Classification: High Reliability / Official Record
-                </p>
-                <p className="text-slate">
-                  These files contain verbatim transcripts of speeches and
-                  debates in the House of Commons. As an official government
-                  record, they are the definitive source for what was publicly
-                  said in Parliament.
-                </p>
-              </div>
-              <div>
-                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  11. Winston S. Churchill: Companion Volumes (Vol II Part 3; Vol
-                  III Parts 1 & 2)
-                </h4>
-                <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
-                  Classification: Highest Reliability / Primary Documentary
-                  Collection
-                </p>
-                <p className="text-slate">
-                  These volumes, edited by Randolph Churchill and Martin
-                  Gilbert, consist of raw primary documents: telegrams, secret
-                  memos, and private letters from Churchill, Asquith, Fisher,
-                  and others.
-                </p>
-              </div>
-              <div>
-                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  12. Weather Records (1912–1916)
-                </h4>
-                <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
-                  Classification: Highest Reliability / Official Meteorological
-                  Data
-                </p>
-                <p className="text-slate">
-                  Historical weather data from the UK Met Office archives, used
-                  to contextualize daily events and confirm atmospheric details
-                  mentioned in letters.
-                </p>
-              </div>
+                {/* 10. Hansard */}
+                <PrimarySource
+                  title="Hansard Parliamentary Debates (1912–1916)"
+                  credibility="High Reliability / Official Record"
+                  description="Verbatim transcripts of speeches in the House of Commons. The definitive source for what was publicly said in Parliament."
+                />
 
-              <div>
-                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  13. The Times Archives & special pages from Liverpool Echo,
-                  Yorskshire post & Dundee Evenning Telegraph
-                </h4>
-                <p className="text-sm font-medium text-accent-green mb-2 uppercase tracking-widest">
-                  Classification: High Reliability / Contemporary News Source
-                </p>
-                <p className="text-slate">
-                  Daily newspapers from The Times provide contemporaneous
-                  accounts of public events, political developments, and social
-                  context relevant to the timeline.
-                </p>
+                {/* 11. Winston Churchill */}
+                <PrimarySource
+                  title="Winston S. Churchill: Companion Volumes"
+                  credibility="Highest Reliability / Primary Documentary Collection"
+                  description="Raw primary documents: telegrams, secret memos, and private letters from Churchill, Asquith, Fisher, and others."
+                  link="https://www.amazon.com/Winston-Churchill-Companion-1874-1895-1896-1900/dp/B0097RP0UW"
+                  author="Randolph S. Churchill"
+                />
+
+                {/* 12. Weather Records */}
+                <PrimarySource
+                  title="UK Met Office Weather Records (1912–1916)"
+                  credibility="Highest Reliability / Official Meteorological Data"
+                  description="Historical weather data used to contextualize daily events and confirm atmospheric details mentioned in letters."
+                />
+
+                {/* 13. Newspapers */}
+                <PrimarySource
+                  title="The Times Archives & Regional Papers"
+                  credibility="High Reliability / Contemporary News Source"
+                  description="Contemporaneous accounts of public events, political developments, and social context from The Times, Liverpool Echo, Yorkshire Post, etc."
+                />
               </div>
             </div>
+            <div className="mt-16 mb-24">
+              <h2 className="font-serif text-2xl font-bold text-stone-900 mb-6">
+                Secondary Sources (Biographies and Histories)
+              </h2>
 
-            <h2 className="text-3xl font-serif font-bold text-navy mt-12 mb-6">
-              Secondary Sources (Biographies and Histories)
-            </h2>
-            <p className="mt-6">
-              Alongside these, I deliberately use secondary sources—biographies
-              and historical studies—not to settle debates, but to show how
-              historians have interpreted the same evidence over time. Including
-              those perspectives makes disagreements, assumptions, and blind
-              spots visible rather than implicit. This is not about replacing
-              historians, but about placing their interpretations back next to
-              the raw material.
-            </p>
-
-            <div className="space-y-8 mt-6">
-              <div>
-                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  14. Asquith by Roy Jenkins
-                </h4>
-                <p className="text-slate">
-                  A seminal biography written by a former Home Secretary and
-                  Chancellor. It offers deep political insight into
-                  Asquith&apos;s career and decisions.
-                </p>
-              </div>              
-              <div>
-                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  15. The Asquiths by Colin Clifford
-                </h4>
-                <p className="text-slate">
-                  Published in 2002, this is a synthesis of diaries and letters.
-                  It provides a reliable narrative overview, utilizing primary
-                  sources.
+              {/* Editorial Note - styled to look like an abstract or headnote */}
+              <div className="max-w-3xl mb-10">
+                <p className="font-serif text-lg leading-relaxed text-stone-600 italic">
+                  Alongside these, I deliberately use secondary
+                  sources—biographies and historical studies—not to settle
+                  debates, but to show how historians have interpreted the same
+                  evidence over time. Including those perspectives makes
+                  disagreements, assumptions, and blind spots visible rather
+                  than implicit. This is not about replacing historians, but
+                  about placing their interpretations back next to the raw
+                  material.
                 </p>
               </div>
 
-              <div>
-                <h4 className="text-xl font-serif font-semibold text-navy mb-2">
-                  16. Politics, Religion and Love by Naomi B. Levine
-                </h4>
-                <p className="text-slate">
-                  This text reconstructs the life of Edwin Montagu using his
-                  letters and other primary archives.
-                </p>
+              {/* 3-Column Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10">
+                {/* Source 14 */}
+                <PrimarySource
+                  title="Asquith (Roy Jenkins)"
+                  credibility="Political Biography"
+                  description="A seminal biography written by a former Home Secretary and Chancellor. It offers deep political insight into Asquith's career and decisions."
+                  link="https://www.amazon.com/Asquith-Roy-Jenkins-ebook/dp/B00BWL8L02"
+                  author="Roy Jenkins"
+                  badgeColor="stone"
+                />
+
+                {/* Source 15 */}
+                <PrimarySource
+                  title="The Asquiths (Colin Clifford)"
+                  credibility="Narrative History"
+                  description="Published in 2002, this is a synthesis of diaries and letters. It provides a reliable narrative overview, utilizing primary sources."
+                  badgeColor="stone"
+                  link="https://www.amazon.com/Asquiths-Colin-Clifford-ebook/dp/B0FK3NQQK2"
+                  author="Colin Clifford"
+                />
+
+                {/* Source 16 */}
+                <PrimarySource
+                  title="Politics, Religion and Love (Naomi B. Levine)"
+                  credibility="Biographical Study"
+                  description="This text reconstructs the life of Edwin Montagu using his letters and other primary archives."
+                  badgeColor="stone"
+                  link="https://www.amazon.com/Politics-Religion-Love-Asquith-Venetia/dp/0814750575"
+                  author="Naomi B. Levine"
+                />
               </div>
-
-
             </div>
           </div>
         </div>
