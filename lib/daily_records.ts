@@ -2,6 +2,7 @@ import clientPromise from './mongodb';
 import type { DayData } from '@/components/daily/types';
 import type { DailyRecordDocument, LocationReasonAnswer } from '@/types';
 import { LocationActivitiesAnswer, MeetingCheckerAnswer } from './schemas';
+import { majorDailyEvents } from '@/major_daily_events';
 
 const DB_NAME = 'venetia_project';
 const COLLECTION_NAME = 'daily_records';
@@ -171,6 +172,7 @@ export function mapDailyRecordToDayData(doc: DailyRecordDocument | unknown): Day
   const venetiaLocationReasonsRecord = isRecord(record.venetia_location_reason) ? record.venetia_location_reason : undefined;
   const pmLocationReasonsRecord = isRecord(record.pm_location_reason) ? record.pm_location_reason : undefined;
   const meetingReasonRecord = isRecord(record.meeting_reason) ? record.meeting_reason : undefined;
+  const event = majorDailyEvents.find(e => e.date === date);
 
   return {
     date,
@@ -189,6 +191,7 @@ export function mapDailyRecordToDayData(doc: DailyRecordDocument | unknown): Day
     met_venetia: record.met_venetia === true,
     meeting_reason: meetingReasonRecord as LocationReasonAnswer | null | undefined,
     total_number_letters: totalNumberLetters ? totalNumberLetters : letters?.length || 0,
+    major_event: event ? event.news?.join(". ") : undefined,
   };
 }
 
