@@ -8290,315 +8290,315 @@ export const majorDailyEvents: { date: string; news: string[] }[] = (
   },
     {
     "date": "1914-09-01",
-    "news": "Due to the war with Germany, the Russian city of Saint Petersburg changes its name to Petrograd to remove German linguistic associations [1], [2]. During the Great Retreat, the British 1st Cavalry Brigade engages in the Affair of Néry, where 'L' Battery of the Royal Horse Artillery fights off a superior German force; three Victoria Crosses are awarded for the action [3], [2]. In the United States, martial law is declared in Butte, Montana, following labor violence [4], [2]."
+    "news": ["Due to the war with Germany, the Russian city of Saint Petersburg changes its name to Petrograd to remove German linguistic associations [1], [2]. During the Great Retreat, the British 1st Cavalry Brigade engages in the Affair of Néry, where 'L' Battery of the Royal Horse Artillery fights off a superior German force; three Victoria Crosses are awarded for the action [3], [2]. In the United States, martial law is declared in Butte, Montana, following labor violence [4], [2]."]
   },
   {
     "date": "1914-09-02",
-    "news": "Japan lands between 15,000 and 20,000 troops at Longkou, China, to lay siege to the German port of Tsingtao, violating Chinese neutrality [5], [6]. The French government moves from Paris to Bordeaux as the German army threatens the capital [7]. The British government's secret War Propaganda Bureau is formed at Wellington House [8], [6]."
+    "news": ["Japan lands between 15,000 and 20,000 troops at Longkou, China, to lay siege to the German port of Tsingtao, violating Chinese neutrality [5], [6]. The French government moves from Paris to Bordeaux as the German army threatens the capital [7]. The British government's secret War Propaganda Bureau is formed at Wellington House [8], [6]."]
   },
   {
     "date": "1914-09-07",
-    "news": "The German cruiser *Nürnberg* destroys the cable station on Fanning Island in the Pacific [9], [10]. Survivors of the *Karluk* shipwreck are rescued from Wrangel Island by the schooner *King and Winge* [11], [10]. In France, German attacks drive French defenders back south of Verdun during the Battle of Grand Couronné [12], [10]."
+    "news": ["The German cruiser *Nürnberg* destroys the cable station on Fanning Island in the Pacific [9], [10]. Survivors of the *Karluk* shipwreck are rescued from Wrangel Island by the schooner *King and Winge* [11], [10]. In France, German attacks drive French defenders back south of Verdun during the Battle of Grand Couronné [12], [10]."]
   },
   {
     "date": "1914-09-08",
-    "news": "In the First Battle of the Marne, the French Fifth Army launches a surprise attack against the German Second Army, forcing a retreat [13], [14]. Private Thomas Highgate becomes the first British soldier executed for desertion during the war [15], [14]. The British armed merchant cruiser *Oceanic* runs aground and is wrecked off the Shetland Islands [16], [14]."
+    "news": ["In the First Battle of the Marne, the French Fifth Army launches a surprise attack against the German Second Army, forcing a retreat [13], [14]. Private Thomas Highgate becomes the first British soldier executed for desertion during the war [15], [14]. The British armed merchant cruiser *Oceanic* runs aground and is wrecked off the Shetland Islands [16], [14]."]
   },
   {
     "date": "1914-09-11",
-    "news": "Australian naval and military forces land at Rabaul, German New Guinea, capturing the port and wireless stations during the Battle of Bita Paka [17], [18]. In the East, Austro-Hungarian forces are defeated by the Russians at the Battle of Rawa, sustaining 50,000 casualties [19], [18]. Several new divisions of Kitchener's Army are established in Britain [20], [18]."
+    "news": ["Australian naval and military forces land at Rabaul, German New Guinea, capturing the port and wireless stations during the Battle of Bita Paka [17], [18]. In the East, Austro-Hungarian forces are defeated by the Russians at the Battle of Rawa, sustaining 50,000 casualties [19], [18]. Several new divisions of Kitchener's Army are established in Britain [20], [18]."]
   },
   {
     "date": "1914-09-12",
-    "news": "The First Battle of the Marne ends with the retreat of the German armies to the River Aisne, marking the failure of the Schlieffen Plan [21], [22]. In East Prussia, German forces capture Gumbinnen [23], [22]. The Australian flag is hoisted in the newly captured German territory of New Britain [24]."
+    "news": ["The First Battle of the Marne ends with the retreat of the German armies to the River Aisne, marking the failure of the Schlieffen Plan [21], [22]. In East Prussia, German forces capture Gumbinnen [23], [22]. The Australian flag is hoisted in the newly captured German territory of New Britain [24]."]
   },
   {
     "date": "1914-09-13",
-    "news": "The First Battle of the Aisne begins as British and French forces cross the river to attack German positions [25], [26]. The British submarine *E9* sinks the German cruiser *Hela* in the North Sea [27], [26]. The last survivors of the *Karluk* expedition arrive in Nome, Alaska [28], [26]."
+    "news": ["The First Battle of the Aisne begins as British and French forces cross the river to attack German positions [25], [26]. The British submarine *E9* sinks the German cruiser *Hela* in the North Sea [27], [26]. The last survivors of the *Karluk* expedition arrive in Nome, Alaska [28], [26]."]
   },
   {
     "date": "1914-09-15",
-    "news": "General Koos de la Rey, a prominent South African leader, is accidentally shot and killed by police near Johannesburg while travelling with General Beyers [29], [30]. The first trenches of the Western Front are dug at the Aisne [25], [30]. President Woodrow Wilson orders the withdrawal of U.S. troops from Veracruz, Mexico [31], [30]."
+    "news": ["General Koos de la Rey, a prominent South African leader, is accidentally shot and killed by police near Johannesburg while travelling with General Beyers [29], [30]. The first trenches of the Western Front are dug at the Aisne [25], [30]. President Woodrow Wilson orders the withdrawal of U.S. troops from Veracruz, Mexico [31], [30]."]
   },
   {
     "date": "1914-09-16",
-    "news": "Russian forces begin the Siege of Przemyśl in Galicia [32], [33]. The Canadian Aviation Corps is formed [34], [33]. Sir Maurice de Bunsen's despatch regarding the events leading to the war is published in London [35]."
+    "news": ["Russian forces begin the Siege of Przemyśl in Galicia [32], [33]. The Canadian Aviation Corps is formed [34], [33]. Sir Maurice de Bunsen's despatch regarding the events leading to the war is published in London [35]."]
   },
   {
     "date": "1914-09-17",
-    "news": "Andrew Fisher becomes Prime Minister of Australia for the third time [36], [37]. The German Governor of New Guinea surrenders to Australian forces [38], [37]. The training ship HMS *Fisgard II* (formerly *Invincible*) sinks in the English Channel during a storm, with the loss of 21 lives [39], [40]."
+    "news": ["Andrew Fisher becomes Prime Minister of Australia for the third time [36], [37]. The German Governor of New Guinea surrenders to Australian forces [38], [37]. The training ship HMS *Fisgard II* (formerly *Invincible*) sinks in the English Channel during a storm, with the loss of 21 lives [39], [40]."]
   },
   {
     "date": "1914-09-19",
-    "news": "Union of South Africa forces occupy Lüderitzbucht in German South-West Africa [41], [42]. The American steamship *Francis H. Leggett* sinks in a storm off Oregon with the loss of 60 lives [43], [44]. Serbia declares it will not conclude a separate peace from the Triple Entente [45]."
+    "news": ["Union of South Africa forces occupy Lüderitzbucht in German South-West Africa [41], [42]. The American steamship *Francis H. Leggett* sinks in a storm off Oregon with the loss of 60 lives [43], [44]. Serbia declares it will not conclude a separate peace from the Triple Entente [45]."]
   },
   {
     "date": "1914-09-21",
-    "news": "German forces in New Guinea formally surrender to the Australian Naval and Military Expeditionary Force [38], [46]. The First Battle of Picardy begins [47], [46]. Laurence Binyon's poem 'For the Fallen' is published in *The Times* [48], [46]."
+    "news": ["German forces in New Guinea formally surrender to the Australian Naval and Military Expeditionary Force [38], [46]. The First Battle of Picardy begins [47], [46]. Laurence Binyon's poem 'For the Fallen' is published in *The Times* [48], [46]."]
   },
   {
     "date": "1914-09-24",
-    "news": "German naval officer Wilhelm Souchon is commissioned as a Vice Admiral in the Ottoman Navy [49], [50]."
+    "news": ["German naval officer Wilhelm Souchon is commissioned as a Vice Admiral in the Ottoman Navy [49], [50]."]
   },
   {
     "date": "1914-09-26",
-    "news": "German South-West African forces defeat Union of South Africa troops at the Battle of Sandfontein [51], [52]. The U.S. Federal Trade Commission is established [53], [52]. In Australia, the Carlton Football Club wins the VFL Premiership [54], [52]."
+    "news": ["German South-West African forces defeat Union of South Africa troops at the Battle of Sandfontein [51], [52]. The U.S. Federal Trade Commission is established [53], [52]. In Australia, the Carlton Football Club wins the VFL Premiership [54], [52]."]
   },
   {
     "date": "1914-09-27",
-    "news": "British and French colonial forces invade German Cameroon [41]. A riot occurs at Budge Budge, Calcutta, involving passengers of the *Komagata Maru* who had been refused entry to Canada; police fire on the crowd, killing 19 [55], [56], [57]. In the Battle of Albert, Germans push back French reserve armies [58], [56]."
+    "news": ["British and French colonial forces invade German Cameroon [41]. A riot occurs at Budge Budge, Calcutta, involving passengers of the *Komagata Maru* who had been refused entry to Canada; police fire on the crowd, killing 19 [55], [56], [57]. In the Battle of Albert, Germans push back French reserve armies [58], [56]."]
   },
   {
     "date": "1914-09-28",
-    "news": "German forces begin the bombardment of the fortress city of Antwerp [59], [60]. Ulster Day is celebrated in Belfast with a demonstration of patriotism for the Empire [61]. Several German naval ships are scuttled at Tsingtao to prevent capture [62], [60]."
+    "news": ["German forces begin the bombardment of the fortress city of Antwerp [59], [60]. Ulster Day is celebrated in Belfast with a demonstration of patriotism for the Empire [61]. Several German naval ships are scuttled at Tsingtao to prevent capture [62], [60]."]
   },
   {
     "date": "1914-09-29",
-    "news": "The Siege of Antwerp intensifies as Belgian forces prepare to evacuate; the outer forts are rendered useless by German bombardment [63], [64]. The Battle of the Vistula River begins on the Eastern Front [65], [64]. Arthur Machen's story 'The Bowmen', origin of the 'Angels of Mons' legend, is published [66], [64]."
+    "news": ["The Siege of Antwerp intensifies as Belgian forces prepare to evacuate; the outer forts are rendered useless by German bombardment [63], [64]. The Battle of the Vistula River begins on the Eastern Front [65], [64]. Arthur Machen's story 'The Bowmen', origin of the 'Angels of Mons' legend, is published [66], [64]."]
   },
   {
     "date": "1914-09-30",
-    "news": "French forces arrive at Arras, initiating the Battle of Arras [67], [68]. British Indian Army Expeditionary Force A arrives at Marseille for service on the Western Front [68]. British theologians issue a reply to an appeal by German theologians regarding the war [69]."
+    "news": ["French forces arrive at Arras, initiating the Battle of Arras [67], [68]. British Indian Army Expeditionary Force A arrives at Marseille for service on the Western Front [68]. British theologians issue a reply to an appeal by German theologians regarding the war [69]."]
   },
     {
     "date": "1914-10-01",
-    "news": "The Battle of Arras begins with an attack by the French Tenth Army southeast of Arras,. Mexican revolutionary leader Venustiano Carranza calls for a convention in Mexico City. The Kiever Synagogue is established in Toronto. The Edward VII Monument is unveiled in Montreal by Prince Arthur."
+    "news": ["The Battle of Arras begins with an attack by the French Tenth Army southeast of Arras,. Mexican revolutionary leader Venustiano Carranza calls for a convention in Mexico City. The Kiever Synagogue is established in Toronto. The Edward VII Monument is unveiled in Montreal by Prince Arthur."]
   },
   {
     "date": "1914-10-03",
-    "news": "Sixteen Sikhs are killed in a riot near Calcutta involving passengers from the *Komagata Maru*,. In Albania, Essad Pasha Toptani's forces take Durrës with no resistance. The Port Adelaide Football Club are crowned Champions of Australia for a record fourth time."
+    "news": ["Sixteen Sikhs are killed in a riot near Calcutta involving passengers from the *Komagata Maru*,. In Albania, Essad Pasha Toptani's forces take Durrës with no resistance. The Port Adelaide Football Club are crowned Champions of Australia for a record fourth time."]
   },
   {
     "date": "1914-10-04",
-    "news": "A severe earthquake in Burdur, Turkey, kills approximately 4,000 people. The Canadian Expeditionary Force of 31,000 men departs for Great Britain,. The 'Manifesto of the Ninety-Three' prominent German intellectuals supporting the war is proclaimed."
+    "news": ["A severe earthquake in Burdur, Turkey, kills approximately 4,000 people. The Canadian Expeditionary Force of 31,000 men departs for Great Britain,. The 'Manifesto of the Ninety-Three' prominent German intellectuals supporting the war is proclaimed."]
   },
   {
     "date": "1914-10-05",
-    "news": "Sergeant Joseph Frantz and Corporal Louis Quenault achieve the first aerial victory in history by shooting down a German Aviatik,. Essad Pasha Toptani becomes Prime Minister of Albania. Winston Churchill visits Antwerp and offers to resign from the Cabinet to take command of the Royal Naval Division there."
+    "news": ["Sergeant Joseph Frantz and Corporal Louis Quenault achieve the first aerial victory in history by shooting down a German Aviatik,. Essad Pasha Toptani becomes Prime Minister of Albania. Winston Churchill visits Antwerp and offers to resign from the Cabinet to take command of the Royal Naval Division there."]
   },
   {
     "date": "1914-10-06",
-    "news": "The British submarine *E5* sinks a German destroyer (reported as S167 or S179) off the Dutch coast,,. Joseph Kennedy marries Rose Fitzgerald in Boston."
+    "news": ["The British submarine *E5* sinks a German destroyer (reported as S167 or S179) off the Dutch coast,,. Joseph Kennedy marries Rose Fitzgerald in Boston."]
   },
   {
     "date": "1914-10-07",
-    "news": "The German bombardment of the city of Antwerp begins at midnight,. British and French colonial forces capture Jabassi in German Cameroon. In Belgium, German troops cross the Scheldt between Termonde and Wetteren."
+    "news": ["The German bombardment of the city of Antwerp begins at midnight,. British and French colonial forces capture Jabassi in German Cameroon. In Belgium, German troops cross the Scheldt between Termonde and Wetteren."]
   },
   {
     "date": "1914-10-08",
-    "news": "British naval airmen raid the Zeppelin sheds at Düsseldorf and Cologne; Flight Lieutenant Marix destroys Zeppelin *Z IX*,. The Germans capture Lodz in Poland,. In Belgium, the defenders of Antwerp decide to retire."
+    "news": ["British naval airmen raid the Zeppelin sheds at Düsseldorf and Cologne; Flight Lieutenant Marix destroys Zeppelin *Z IX*,. The Germans capture Lodz in Poland,. In Belgium, the defenders of Antwerp decide to retire."]
   },
   {
     "date": "1914-10-10",
-    "news": "King Carol I of Romania dies and is succeeded by his nephew Ferdinand,,. The Japanese and British formally take over the German colonial port of Tsingtao (though the siege continues). Mexican revolutionary leaders meet at the Convention of Aguascalientes. The Battle of La Bassée begins in northern France."
+    "news": ["King Carol I of Romania dies and is succeeded by his nephew Ferdinand,,. The Japanese and British formally take over the German colonial port of Tsingtao (though the siege continues). Mexican revolutionary leaders meet at the Convention of Aguascalientes. The Battle of La Bassée begins in northern France."]
   },
   {
     "date": "1914-10-11",
-    "news": "Two German aeroplanes drop bombs on Paris, one striking Notre Dame,. The Russian cruiser *Pallada* is sunk by a German submarine in the Baltic with all hands. The Battle of Ypres-Armentières begins."
+    "news": ["Two German aeroplanes drop bombs on Paris, one striking Notre Dame,. The Russian cruiser *Pallada* is sunk by a German submarine in the Baltic with all hands. The Battle of Ypres-Armentières begins."]
   },
   {
     "date": "1914-10-12",
-    "news": "German forces occupy Ghent, Belgium,. Martial law is declared in the Union of South Africa due to the Maritz rebellion,. The trial of the conspirators in the assassination of Archduke Franz Ferdinand begins in Sarajevo."
+    "news": ["German forces occupy Ghent, Belgium,. Martial law is declared in the Union of South Africa due to the Maritz rebellion,. The trial of the conspirators in the assassination of Archduke Franz Ferdinand begins in Sarajevo."]
   },
   {
     "date": "1914-10-14",
-    "news": "The first Canadian troops arrive at Plymouth,. The U.S. House of Representatives passes a bill promising independence to the Philippines. Allied troops and cavalry close the last gaps in the offensive at the Battle of Messines."
+    "news": ["The first Canadian troops arrive at Plymouth,. The U.S. House of Representatives passes a bill promising independence to the Philippines. Allied troops and cavalry close the last gaps in the offensive at the Battle of Messines."]
   },
   {
     "date": "1914-10-18",
-    "news": "The British submarine *E3* is torpedoed and sunk by the German submarine *U-27* in the North Sea. Benito Mussolini declares in favour of intervention on the side of the Triple Entente. The German Sixth Army attacks the Allied line from Armentières to Langemark."
+    "news": ["The British submarine *E3* is torpedoed and sunk by the German submarine *U-27* in the North Sea. Benito Mussolini declares in favour of intervention on the side of the Triple Entente. The German Sixth Army attacks the Allied line from Armentières to Langemark."]
   },
   {
     "date": "1914-10-19",
-    "news": "The First Battle of Ypres officially begins,. The Race to the Sea effectively ends. British monitors begin bombarding German positions along the Belgian coast."
+    "news": ["The First Battle of Ypres officially begins,. The Race to the Sea effectively ends. British monitors begin bombarding German positions along the Belgian coast."]
   },
   {
     "date": "1914-10-20",
-    "news": "The British merchant steamer *Glitra* is scuttled by a German submarine, the first merchant ship sunk by a U-boat,. British and French colonial troops begin the assault on Edéa in German Cameroon. The German army breaks through at Ennetières during the Battle of Armentières."
+    "news": ["The British merchant steamer *Glitra* is scuttled by a German submarine, the first merchant ship sunk by a U-boat,. British and French colonial troops begin the assault on Edéa in German Cameroon. The German army breaks through at Ennetières during the Battle of Armentières."]
   },
   {
     "date": "1914-10-22",
-    "news": "German forces capture Langemark, Belgium,. In the Battle of the Yser, Germans cross the river at Tervaete at night. Immigration officer William C. Hopkinson is shot dead in Vancouver by a Sikh nationalist."
+    "news": ["German forces capture Langemark, Belgium,. In the Battle of the Yser, Germans cross the river at Tervaete at night. Immigration officer William C. Hopkinson is shot dead in Vancouver by a Sikh nationalist."]
   },
   {
     "date": "1914-10-23",
-    "news": "Italian forces occupy the port of Vlorë (Avlona) in Albania,. The trial hearings for the assassination of Archduke Franz Ferdinand conclude in Sarajevo. The Northwestern Pacific Railroad is completed in California."
+    "news": ["Italian forces occupy the port of Vlorë (Avlona) in Albania,. The trial hearings for the assassination of Archduke Franz Ferdinand conclude in Sarajevo. The Northwestern Pacific Railroad is completed in California."]
   },
   {
     "date": "1914-10-24",
-    "news": "The session of the United States Congress closes. The importation of sugar into the United Kingdom is prohibited,. Rebel Boer forces under General Maritz are defeated."
+    "news": ["The session of the United States Congress closes. The importation of sugar into the United Kingdom is prohibited,. Rebel Boer forces under General Maritz are defeated."]
   },
   {
     "date": "1914-10-25",
-    "news": "General Erich von Falkenhayn replaces Helmuth von Moltke as German Chief of Staff. Ottoman War Minister Enver Pasha orders the fleet to attack Russian ships. In the First Battle of Ypres, German attacks push the south flank of the Allied line."
+    "news": ["General Erich von Falkenhayn replaces Helmuth von Moltke as German Chief of Staff. Ottoman War Minister Enver Pasha orders the fleet to attack Russian ships. In the First Battle of Ypres, German attacks push the south flank of the Allied line."]
   },
   {
     "date": "1914-10-26",
-    "news": "The French liner *Amiral Ganteaume*, carrying refugees, is torpedoed in the Channel,. The Ottoman fleet leaves port for the Black Sea. Survivors of the *Karluk* shipwreck arrive in Victoria, British Columbia."
+    "news": ["The French liner *Amiral Ganteaume*, carrying refugees, is torpedoed in the Channel,. The Ottoman fleet leaves port for the Black Sea. Survivors of the *Karluk* shipwreck arrive in Victoria, British Columbia."]
   },
   {
     "date": "1914-10-28",
-    "news": "The German cruiser *Emden* sinks the Russian cruiser *Zhemchug* and a French destroyer in the Battle of Penang,. Turkish Bedouins invade the Sinai Peninsula and the Turkish fleet bombards Russian Black Sea ports,. Rebellion breaks out in the Northern Orange Free State and Western Transvaal led by Generals De Wet and Beyers."
+    "news": ["The German cruiser *Emden* sinks the Russian cruiser *Zhemchug* and a French destroyer in the Battle of Penang,. Turkish Bedouins invade the Sinai Peninsula and the Turkish fleet bombards Russian Black Sea ports,. Rebellion breaks out in the Northern Orange Free State and Western Transvaal led by Generals De Wet and Beyers."]
   },
     {
     "date": "1914-11-06",
-    "news": "The German spy Carl Hans Lody is executed by firing squad at the Tower of London, the first such execution there in 167 years [1], [2]. In the House of Commons, Captain Arthur O'Neill becomes the first Member of Parliament to be killed in action [3], [4]. Japanese infantry storm the German trenches at Tsingtao [5], [4]. The British Indian Army lands at Fao on the Persian Gulf [6], [4]."
+    "news": ["The German spy Carl Hans Lody is executed by firing squad at the Tower of London, the first such execution there in 167 years [1], [2]. In the House of Commons, Captain Arthur O'Neill becomes the first Member of Parliament to be killed in action [3], [4]. Japanese infantry storm the German trenches at Tsingtao [5], [4]. The Br itish Indian Army lands at Fao on the Persian Gulf [6], [4]."]
   },
   {
     "date": "1914-11-07",
-    "news": "The German colonial port of Tsingtao in China surrenders to Japanese and British forces [7], [8], [9]. British Indian troops occupy Fao in Mesopotamia [7], [4]. The planet Mercury visibly crosses the face of the sun [10], [9]."
+    "news": ["The German colonial port of Tsingtao in China surrenders to Japanese and British forces [7], [8], [9]. British Indian troops occupy Fao in Mesopotamia [7], [4]. The planet Mercury visibly crosses the face of the sun [10], [9]."]
   },
   {
     "date": "1914-11-08",
-    "news": "British Indian forces capture the fortress at Fao, Iraq [11], [12], [13]. The German cruiser SMS *Emden* arrives at the Cocos Islands to destroy the wireless station [14], [12]. Russian troops repulse a Turkish attack at Kuprikeui in Armenia [15], [12]."
+    "news": ["British Indian forces capture the fortress at Fao, Iraq [11], [12], [13]. The German cruiser SMS *Emden* arrives at the Cocos Islands to destroy the wireless station [14], [12]. Russian troops repulse a Turkish attack at Kuprikeui in Armenia [15], [12]."]
   },
   {
     "date": "1914-11-10",
-    "news": "News reaches London that the German cruiser *Emden* has been destroyed by H.M.A.S. *Sydney* at the Cocos Islands [16], [17], [18]. It is announced that the German cruiser *Königsberg* has been blocked in the Rufiji Delta [16], [19], [18]. At the Lord Mayor's Banquet, the Prime Minister and Mr. Churchill speak on the war, with Mr. Churchill stating the German navy will be 'dug out like rats in a hole' [20], [21], [22]."
+    "news": ["News reaches London that the German cruiser *Emden* has been destroyed by H.M.A.S. *Sydney* at the Cocos Islands [16], [17], [18]. It is announced that the German cruiser *Königsberg* has been blocked in the Rufiji Delta [16], [19], [18]. At the Lord Mayor's Banquet, the Prime Minister and Mr. Churchill speak on the war, with Mr. Churchill stating the German navy will be 'dug out like rats in a hole' [20], [21], [22]."]
   },
   {
     "date": "1914-11-12",
-    "news": "Union forces under General Botha defeat the rebel commando of General De Wet in South Africa [23], [24], [25]. At the First Battle of Ypres, German forces break through the British line but are checked by cavalry [26], [25]. The British liner *Empress of Russia* arrives at Cocos to pick up *Emden* survivors [27], [25]."
+    "news": ["Union forces under General Botha defeat the rebel commando of General De Wet in South Africa [23], [24], [25]. At the First Battle of Ypres, German forces break through the British line but are checked by cavalry [26], [25]. The British liner *Empress of Russia* arrives at Cocos to pick up *Emden* survivors [27], [25]."]
   },
   {
     "date": "1914-11-13",
-    "news": "Turkey formally declares war on Great Britain [13]. In Morocco, a French colonial garrison is annihilated by Zayan tribesmen at the Battle of El Herri [28], [29]. At Ypres, severe weather with snow sets in as the Germans launch a surprise attack [30], [29]."
+    "news": ["Turkey formally declares war on Great Britain [13]. In Morocco, a French colonial garrison is annihilated by Zayan tribesmen at the Battle of El Herri [28], [29]. At Ypres, severe weather with snow sets in as the Germans launch a surprise attack [30], [29]."]
   },
   {
     "date": "1914-11-15",
-    "news": "British and Indian troops defeat Turkish forces at Sahil on the Shatt-el-Arab [31], [13]. The first major fatality in professional football occurs in the US when Harry Turner dies during a match [32], [33]. Benito Mussolini founds the newspaper *Il Popolo d'Italia* [34], [33]."
+    "news": ["British and Indian troops defeat Turkish forces at Sahil on the Shatt-el-Arab [31], [13]. The first major fatality in professional football occurs in the US when Harry Turner dies during a match [32], [33]. Benito Mussolini founds the newspaper *Il Popolo d'Italia* [34], [33]."]
   },
   {
     "date": "1914-11-16",
-    "news": "The first nine Victoria Crosses of the war are gazetted [16], [35]. In the House of Commons, the Prime Minister moves a Vote of Credit for £225,000,000 [36], [35]. Austro-Hungarian forces launch a third invasion of Serbia at the Battle of Kolubara [37], [35]. The Federal Reserve opens for business in the United States [38], [35]."
+    "news": ["The first nine Victoria Crosses of the war are gazetted [16], [35]. In the House of Commons, the Prime Minister moves a Vote of Credit for £225,000,000 [36], [35]. Austro-Hungarian forces launch a third invasion of Serbia at the Battle of Kolubara [37], [35]. The Federal Reserve opens for business in the United States [38], [35]."]
   },
   {
     "date": "1914-11-18",
-    "news": "A naval engagement takes place in the Black Sea where the Russian fleet damages the German battlecruiser *Goeben* [16], [39], [13]. A Parliamentary Committee is appointed to deal with pensions and allowances for soldiers' dependents [40], [41]. In Parliament, the rumour of Russian troops passing through Britain is officially denied [42], [41]. Funeral of Earl Roberts takes place in St. Paul's Cathedral [16], [41]."
+    "news": ["A naval engagement takes place in the Black Sea where the Russian fleet damages the German battlecruiser *Goeben* [16], [39], [13]. A Parliamentary Committee is appointed to deal with pensions and allowances for soldiers' dependents [40], [41]. In Parliament, the rumour of Russian troops passing through Britain is officially denied [42], [41]. Funeral of Earl Roberts takes place in St. Paul's Cathedral [16], [41]."]
   },
   {
     "date": "1914-11-20",
-    "news": "The German Naval Corps is established to command land-based naval forces in Flanders [43], [44]. In Somaliland, the camel corps encounters strong Dervish opposition at Burao [45], [44]. Turkey bombards Tuapse [46]."
+    "news": ["The German Naval Corps is established to command land-based naval forces in Flanders [43], [44]. In Somaliland, the camel corps encounters strong Dervish opposition at Burao [45], [44]. Turkey bombards Tuapse [46]."]
   },
   {
     "date": "1914-11-22",
-    "news": "British troops occupy Basra in Mesopotamia [47], [48], [13]. The First Battle of Ypres winds down with heavy casualties on both sides, marking the end of mobile warfare on the Western Front [49], [50]. The Ottoman minelayer *Nilufer* sinks in the Black Sea [51], [50]."
+    "news": ["British troops occupy Basra in Mesopotamia [47], [48], [13]. The First Battle of Ypres winds down with heavy casualties on both sides, marking the end of mobile warfare on the Western Front [49], [50]. The Ottoman minelayer *Nilufer* sinks in the Black Sea [51], [50]."]
   },
   {
     "date": "1914-11-24",
-    "news": "The Government announces a concession on the beer tax, granting a rebate to brewers [52]. Havildar Gangna Singh becomes the first Indian soldier recommended for the Victoria Cross [46], [53]. Benito Mussolini is expelled from the Italian Socialist Party [54], [55]."
+    "news": ["The Government announces a concession on the beer tax, granting a rebate to brewers [52]. Havildar Gangna Singh becomes the first Indian soldier recommended for the Victoria Cross [46], [53]. Benito Mussolini is expelled from the Italian Socialist Party [54], [55]."]
   },
   {
     "date": "1914-11-25",
-    "news": "The British submarine *D2* is rammed and sunk by a German patrol boat [56], [57]. In Parliament, the Government reports on violations of neutrality by Colombia and Ecuador regarding wireless stations [52], [57]. Debate on the spy peril takes place in the House of Lords [58], [57]."
+    "news": ["The British submarine *D2* is rammed and sunk by a German patrol boat [56], [57]. In Parliament, the Government reports on violations of neutrality by Colombia and Ecuador regarding wireless stations [52], [57]. Debate on the spy peril takes place in the House of Lords [58], [57]."]
   },
   {
     "date": "1914-11-27",
-    "news": "The Chancellor of the Exchequer reviews the financial position and war loan obligations in the Commons [59], [60]. A severe earthquake strikes Western Greece and the Ionian Islands [46], [61], [60]. The German landing party from the *Emden* is allowed entry to Padang [62], [60]."
+    "news": ["The Chancellor of the Exchequer reviews the financial position and war loan obligations in the Commons [59], [60]. A severe earthquake strikes Western Greece and the Ionian Islands [46], [61], [60]. The German landing party from the *Emden* is allowed entry to Padang [62], [60]."]
   },
   {
     "date": "1914-11-28",
-    "news": "The New York Stock Exchange reopens for bond trading [63], [64]. In Japan, a methane gas explosion at the New Yūbari coal mine kills over 400 people [64]. The landing party from the *Emden* leaves Padang to avoid internment [62], [64]. Arthur O'Hara Wood wins the Australian Open tennis championship [65], [64]."
+    "news": ["The New York Stock Exchange reopens for bond trading [63], [64]. In Japan, a methane gas explosion at the New Yūbari coal mine kills over 400 people [64]. The landing party from the *Emden* leaves Padang to avoid internment [62], [64]. Arthur O'Hara Wood wins the Australian Open tennis championship [65], [64]."]
   },
   {
     "date": "1914-11-29",
-    "news": "King George V arrives in France to visit the troops at the front, the first British monarch to do so since 1743 [47], [66], [67]. In Poland, Russian forces withdraw towards Warsaw following the Battle of Łódź [68], [69]. Serbian forces order the evacuation of Belgrade [70], [69]."
+    "news": ["King George V arrives in France to visit the troops at the front, the first British monarch to do so since 1743 [47], [66], [67]. In Poland, Russian forces withdraw towards Warsaw following the Battle of Łódź [68], [69]. Serbian forces order the evacuation of Belgrade [70], [69]."]
   },
   {
     "date": "1914-11-30",
-    "news": "King George V visits the headquarters of the British Army in France and meets with Allied commanders [47], [66], [67]. A British trawler recovers a German code book from the sunken destroyer *S-119*, a significant intelligence coup [71], [72]. General Joffre orders French commanders to advance trenches closer to German positions [73], [72]."
+    "news": ["King George V visits the headquarters of the British Army in France and meets with Allied commanders [47], [66], [67]. A British trawler recovers a German code book from the sunken destroyer *S-119*, a significant intelligence coup [71], [72]. General Joffre orders French commanders to advance trenches closer to German positions [73], [72]."]
   },
    {
     "date": "1914-12-01",
-    "news": "A colliery accident at a mine in Hokkaido, Japan, kills 437 miners [1]. The Battle of Kolubara continues with Austro-Hungarian forces occupying Belgrade, while the Serbian army withdraws to Niš [1]. In South Africa, Boer rebel leader Christiaan de Wet is captured by Colonel Britz at a farm at Wartenburg [1, 2]. Luxury car manufacturer Maserati is founded in Bologna [1]."
+    "news": ["A colliery accident at a mine in Hokkaido, Japan, kills 437 miners [1]. The Battle of Kolubara continues with Austro-Hungarian forces occupying Belgrade, while the Serbian army withdraws to Niš [1]. In South Africa, Boer rebel leader Christiaan de Wet is captured by Colonel Britz at a farm at Wartenburg [1, 2]. Luxury car manufacturer Maserati is founded in Bologna [1]."]
   },
   {
     "date": "1914-12-02",
-    "news": "At the Cleckheaton Chemical Works in Heckmondwike, seven lives are lost due to a lyddite explosion [3]. Austro-Hungarian forces capture Belgrade after violent fighting [4]. Russian forces enter Wieliczka, near Cracow [5]. In London, the censorship permits an official statement that Australian and New Zealand contingents have disembarked in Egypt to assist in defence [6]."
+    "news": ["At the Cleckheaton Chemical Works in Heckmondwike, seven lives are lost due to a lyddite explosion [3]. Austro-Hungarian forces capture Belgrade after violent fighting [4]. Russian forces enter Wieliczka, near Cracow [5]. In London, the censorship permits an official statement that Australian and New Zealand contingents have disembarked in Egypt to assist in defence [6]."]
   },
   {
     "date": "1914-12-03",
-    "news": "A riot occurs among interned Belgian soldiers near Zeist, Holland; the guard fires, killing seven and wounding twenty-two [3]. The No Conscription Fellowship is formed in the United Kingdom [7]. Fresh Serbian troops launch a counter-offensive against the Austrians, leading to a heavy defeat for the latter over the next few days [8]."
+    "news": ["A riot occurs among interned Belgian soldiers near Zeist, Holland; the guard fires, killing seven and wounding twenty-two [3]. The No Conscription Fellowship is formed in the United Kingdom [7]. Fresh Serbian troops launch a counter-offensive against the Austrians, leading to a heavy defeat for the latter over the next few days [8]."]
   },
   {
     "date": "1914-12-05",
-    "news": "King George V concludes his visit to the British Army in France and returns to England [9]. In the Italian Chamber, Signor Giolitti reveals that Austria-Hungary had wished to attack Serbia in 1913 but was refused Italian support [10]. The German mercantile cruiser *Prince Eitel Friedrich* sinks the British steamer *Charcas* south of Valparaiso [11]. A French air raid is announced on the Zeppelin sheds at Freiburg-im-Breisgau [11]."
+    "news": ["King George V concludes his visit to the British Army in France and returns to England [9]. In the Italian Chamber, Signor Giolitti reveals that Austria-Hungary had wished to attack Serbia in 1913 but was refused Italian support [10]. The German mercantile cruiser *Prince Eitel Friedrich* sinks the British steamer *Charcas* south of Valparaiso [11]. A French air raid is announced on the Zeppelin sheds at Freiburg-im-Breisgau [11]."]
   },
   {
     "date": "1914-12-06",
-    "news": "Battle of Łódź ends with German forces occupying the city [12]. A heavy gale causes serious floods in Wales [13]. In Dublin, the Labour party holds a street demonstration of protest, numbering about 600 people [14]."
+    "news": ["Battle of Łódź ends with German forces occupying the city [12]. A heavy gale causes serious floods in Wales [13]. In Dublin, the Labour party holds a street demonstration of protest, numbering about 600 people [14]."]
   },
   {
     "date": "1914-12-07",
-    "news": "General Beyers, Boer rebel leader, is defeated and drowned in the Vaal River while trying to escape Union forces [13, 15]. The Council of the Football Association in the UK confirms the decision to abandon international matches due to the war [16]. The Paris Bourse resumes operations for cash transactions after being closed since September 3 [17]."
+    "news": ["General Beyers, Boer rebel leader, is defeated and drowned in the Vaal River while trying to escape Union forces [13, 15]. The Council of the Football Association in the UK confirms the decision to abandon international matches due to the war [16]. The Paris Bourse resumes operations for cash transactions after being closed since September 3 [17]."]
   },
   {
     "date": "1914-12-09",
-    "news": "General Botha issues a statement announcing the practically successful termination of the rebellion in South Africa [18]. At the Durham Assizes, Nicolaus Ahlers, a naturalised Englishman and former German Consul, is convicted of high treason for assisting German reservists (conviction later quashed) [19]. The Edison Works at West Orange, New Jersey, are burnt down [20]."
+    "news": ["General Botha issues a statement announcing the practically successful termination of the rebellion in South Africa [18]. At the Durham Assizes, Nicolaus Ahlers, a naturalised Englishman and former German Consul, is convicted of high treason for assisting German reservists (conviction later quashed) [19]. The Edison Works at West Orange, New Jersey, are burnt down [20]."]
   },
   {
     "date": "1914-12-10",
-    "news": "News reaches London of the British naval victory off the Falkland Islands (fought Dec 8) where Admiral Sturdee's squadron destroyed the German squadron of Admiral von Spee [19, 21]. Lieutenant-General Sir James Wolfe Murray is appointed Chief of the Imperial General Staff [20]. The British Government proposes to Germany an exchange of incapacitated prisoners of war [22]."
+    "news": ["News reaches London of the British naval victory off the Falkland Islands (fought Dec 8) where Admiral Sturdee's squadron destroyed the German squadron of Admiral von Spee [19, 21]. Lieutenant-General Sir James Wolfe Murray is appointed Chief of the Imperial General Staff [20]. The British Government proposes to Germany an exchange of incapacitated prisoners of war [22]."]
   },
   {
     "date": "1914-12-11",
-    "news": "Winston Churchill, First Lord of the Admiralty, formally declares Allied victory has been achieved in the Pacific [23]. In Portugal, a new Ministry is formed with Dom Victor-Hugo Azevedo Coutinho as Prime Minister [24]."
+    "news": ["Winston Churchill, First Lord of the Admiralty, formally declares Allied victory has been achieved in the Pacific [23]. In Portugal, a new Ministry is formed with Dom Victor-Hugo Azevedo Coutinho as Prime Minister [24]."]
   },
   {
     "date": "1914-12-12",
-    "news": "The New York Stock Exchange re-opens for general trading [23]. In the North, Russian forces temporarily abandon the advance on Cracow after heavy fighting [25]. A young German lieutenant, Otto Koehn, is discovered in a packing case at Tilbury, attempting to escape to Rotterdam [26]."
+    "news": ["The New York Stock Exchange re-opens for general trading [23]. In the North, Russian forces temporarily abandon the advance on Cracow after heavy fighting [25]. A young German lieutenant, Otto Koehn, is discovered in a packing case at Tilbury, attempting to escape to Rotterdam [26]."]
   },
   {
     "date": "1914-12-14",
-    "news": "The Serbian Army re-enters Belgrade after the Austrian retreat becomes a rout [8, 27]. In Portugal, the Chamber approves the new Ministry's declaration to defend the Republic and prepare for intervention in the war [28]."
+    "news": ["The Serbian Army re-enters Belgrade after the Austrian retreat becomes a rout [8, 27]. In Portugal, the Chamber approves the new Ministry's declaration to defend the Republic and prepare for intervention in the war [28]."]
   },
   {
     "date": "1914-12-15",
-    "news": "Battle of Kolubara concludes with the Serbian Army retaking control of Belgrade [29]. A gas explosion at the Mitsubishi Hōjō mine in Kyushu, Japan, kills 687 miners [30]. The British polar ship *Aurora*, part of Shackleton's expedition, leaves Sydney for Hobart [30]."
+    "news": ["Battle of Kolubara concludes with the Serbian Army retaking control of Belgrade [29]. A gas explosion at the Mitsubishi Hōjō mine in Kyushu, Japan, kills 687 miners [30]. The British polar ship *Aurora*, part of Shackleton's expedition, leaves Sydney for Hobart [30]."]
   },
   {
     "date": "1914-12-17",
-    "news": "Egypt is proclaimed a British Protectorate, terminating Turkish suzerainty; Lieut.-Col. Sir Arthur Henry MacMahon is appointed High Commissioner [27, 31]. The First Battle of Artois begins on the Western Front [32]. In the United States, President Wilson signs the Harrison Narcotics Tax Act [32]."
+    "news": ["Egypt is proclaimed a British Protectorate, terminating Turkish suzerainty; Lieut.-Col. Sir Arthur Henry MacMahon is appointed High Commissioner [27, 31]. The First Battle of Artois begins on the Western Front [32]. In the United States, President Wilson signs the Harrison Narcotics Tax Act [32]."]
   },
   {
     "date": "1914-12-19",
-    "news": "The British government deposes Abbas Hilmi II and proclaims Prince Hussein Kamel Pasha as Sultan of Egypt [33]. The French submarine *Curie* is sunk and captured by the Austro-Hungarian Navy near Pula [34]. The meeting of the Kings of Denmark, Norway, and Sweden takes place at Malmö [35, 36]."
+    "news": ["The British government deposes Abbas Hilmi II and proclaims Prince Hussein Kamel Pasha as Sultan of Egypt [33]. The French submarine *Curie* is sunk and captured by the Austro-Hungarian Navy near Pula [34]. The meeting of the Kings of Denmark, Norway, and Sweden takes place at Malmö [35, 36]."]
   },
   {
     "date": "1914-12-20",
-    "news": "The First Battle of Champagne begins with French attacks [37]. Herbertshire Castle in Stirlingshire is burnt down, resulting in three deaths [36]. The British ocean liner SS *Montrose* breaks free of moorings in Dover harbor and is wrecked [37]."
+    "news": ["The First Battle of Champagne begins with French attacks [37]. Herbertshire Castle in Stirlingshire is burnt down, resulting in three deaths [36]. The British ocean liner SS *Montrose* breaks free of moorings in Dover harbor and is wrecked [37]."]
   },
   {
     "date": "1914-12-21",
-    "news": "Great Britain is bombed by a German aircraft for the first time when an Etrich Taube drops two bombs near the Admiralty Pier in Dover [38]. The Colonial Office announces the opening of the port of Duala (Cameroons) to trade [39]. In the US, the Supreme Court decides Harry Thaw must be extradited to New York [40]."
+    "news": ["Great Britain is bombed by a German aircraft for the first time when an Etrich Taube drops two bombs near the Admiralty Pier in Dover [38]. The Colonial Office announces the opening of the port of Duala (Cameroons) to trade [39]. In the US, the Supreme Court decides Harry Thaw must be extradited to New York [40]."]
   },
   {
     "date": "1914-12-22",
-    "news": "Battle of Sarikamish begins with an Ottoman offensive against the Russians in the Caucasus [41]. The first Ministry of Food is established in the UK [42]. Portugal resolves to take vigorous measures for military defence and preparation for intervention in the war [43]."
+    "news": ["Battle of Sarikamish begins with an Ottoman offensive against the Russians in the Caucasus [41]. The first Ministry of Food is established in the UK [42]. Portugal resolves to take vigorous measures for military defence and preparation for intervention in the war [43]."]
   },
   {
     "date": "1914-12-23",
-    "news": "The announcement is made that the London Stock Exchange will reopen on January 4 [44]. In the Battle of Sarikamish, a friendly fire incident costs Ottoman forces 2,000 lives [45]. The German submarine U-18 is rammed and sunk by a British patrol vessel off the coast of Scotland [46]."
+    "news": ["The announcement is made that the London Stock Exchange will reopen on January 4 [44]. In the Battle of Sarikamish, a friendly fire incident costs Ottoman forces 2,000 lives [45]. The German submarine U-18 is rammed and sunk by a British patrol vessel off the coast of Scotland [46]."]
   },
   {
     "date": "1914-12-26",
-    "news": "The British Expeditionary Force is reorganized into the First and Second Armies under Sir Douglas Haig and Horace Smith-Dorrien respectively [47]. The German forces retake Mlawa near the Prussian frontier [48]. In South Africa, Treasury figures indicate a large deficit due to the war and rebellion [49]."
+    "news": ["The British Expeditionary Force is reorganized into the First and Second Armies under Sir Douglas Haig and Horace Smith-Dorrien respectively [47]. The German forces retake Mlawa near the Prussian frontier [48]. In South Africa, Treasury figures indicate a large deficit due to the war and rebellion [49]."]
   },
   {
     "date": "1914-12-27",
-    "news": "A British destroyer is wrecked near St. Andrews; all hands are saved [50]. In the First Battle of Champagne, French forces group near Perthes for a fresh assault [51]. Austro-Hungarian casualties in the Serbian campaign reach 215,000 [51]."
+    "news": ["A British destroyer is wrecked near St. Andrews; all hands are saved [50]. In the First Battle of Champagne, French forces group near Perthes for a fresh assault [51]. Austro-Hungarian casualties in the Serbian campaign reach 215,000 [51]."]
   },
   {
     "date": "1914-12-28",
-    "news": "A sudden storm in southern England blows down a house in Clapham, killing one person [50]. In the Caucasus, the Ottoman advance at Sarikamish slows due to exhaustion and cold [52]. The British film *A Study in Scarlet*, the first to feature Sherlock Holmes, is released [52]."
+    "news": ["A sudden storm in southern England blows down a house in Clapham, killing one person [50]. In the Caucasus, the Ottoman advance at Sarikamish slows due to exhaustion and cold [52]. The British film *A Study in Scarlet*, the first to feature Sherlock Holmes, is released [52]."]
   },
   {
     "date": "1914-12-29",
-    "news": "Ottoman forces attack Sarikamish but are driven off by Russian defenders [53]. In Edinburgh, Kate Hume is convicted of forging letters about German outrages [50]. The Imperial German Army forms the II Royal Bavarian Reserve Corps [53]."
+    "news": ["Ottoman forces attack Sarikamish but are driven off by Russian defenders [53]. In Edinburgh, Kate Hume is convicted of forging letters about German outrages [50]. The Imperial German Army forms the II Royal Bavarian Reserve Corps [53]."]
   },
   {
     "date": "1914-12-30",
-    "news": "German aeroplanes raid Dunkirk, dropping bombs on the market-place and killing fifteen people [50]. The Sultan of Turkey deprives the new Sultan of Egypt of his decorations [54]. The United States Government protests against British detention of American ships and seizure of cargoes [55]."
+    "news": ["German aeroplanes raid Dunkirk, dropping bombs on the market-place and killing fifteen people [50]. The Sultan of Turkey deprives the new Sultan of Egypt of his decorations [54]. The United States Government protests against British detention of American ships and seizure of cargoes [55]."]
   },
    {
     "date": "1916-01-10",

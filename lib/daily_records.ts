@@ -191,7 +191,9 @@ export function mapDailyRecordToDayData(doc: DailyRecordDocument | unknown): Day
     met_venetia: record.met_venetia === true,
     meeting_reason: meetingReasonRecord as LocationReasonAnswer | null | undefined,
     total_number_letters: totalNumberLetters ? totalNumberLetters : letters?.length || 0,
-    major_event: event ? event.news?.join(". ") : undefined,
+    major_event: event 
+      ? (Array.isArray(event.news) ? event.news.join(". ") : event.news as string) 
+      : undefined,
   };
 }
 
