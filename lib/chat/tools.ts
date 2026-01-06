@@ -476,8 +476,8 @@ export const createGetPrimarySourceStatisticsTool = (
     name: "get_primary_source_statistics",
     description: "Get quantitative statistics about primary sources, such as the number of letters exchanged between specific people over a period. Can also group results by fields like author, recipient, year, etc.",
     parameters: z.object({
-      start_date: z.string().describe("YYYY-MM-DD"),
-      end_date: z.string().describe("YYYY-MM-DD"),
+      start_date: z.string().nullable().describe("YYYY-MM-DD"),
+      end_date: z.string().nullable().describe("YYYY-MM-DD"),
       sender: AuthorEnum.nullable().describe("Sender name or null for all"),
       recipient: RecipientEnum.nullable().describe("Recipient name or null for all"),
       source_type: z.string().nullable().describe("Type of source to count, e.g. 'letter', 'diary', or null for all"),
@@ -487,8 +487,10 @@ export const createGetPrimarySourceStatisticsTool = (
       onStatus?.("Calculating statistics...");
       console.log("📈 [Tool: get_primary_source_statistics] Counting for:", JSON.stringify(args));
       
+      const startDate = args.start_date || "1900-01-01";
+      const endDate = args.end_date || "1930-12-31";
       const filter = {
-        dateRange: { start: args.start_date, end: args.end_date },
+        dateRange: { start: startDate, end: endDate },
         author: args.sender || undefined,
         recipient: args.recipient || undefined,
         source_type: args.source_type || undefined
