@@ -226,6 +226,7 @@ export const PODCASTS: Podcast[] = [
         "title": "The Home Rule Crisis",
         "description": "Ireland on the brink of civil war, and the political firestorm consuming Asquith's government.",
         "chapter_id": "home_rule_crisis",
+        "spotify_url": "https://open.spotify.com/episode/2ynWBvP0xu3K9pzJN1hS6w",
         "orderIndex": orderIndex++
       },
       {
