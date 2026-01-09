@@ -16,37 +16,37 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: `${baseUrl}/1914-diary`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'daily',
       priority: 0.9,
     },
     {
       url: `${baseUrl}/lab`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'daily',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/data-room`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'daily',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/venetia`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'daily',
       priority: 0.7,
     },
     {
       url: `${baseUrl}/about`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'daily',
       priority: 0.6,
     },
     {
       url: `${baseUrl}/essentials`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'daily',
       priority: 0.6,
     },
   ];
@@ -56,7 +56,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const chapterRoutes: MetadataRoute.Sitemap = chapters.map((chapter) => ({
     url: `${baseUrl}/chapter?chapter_id=${encodeURIComponent(chapter.chapter_id)}`,
     lastModified: new Date(),
-    changeFrequency: 'monthly',
+    changeFrequency: 'daily',
     priority: 0.7,
   }));
 
