@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Shuffle, FlaskConical } from "lucide-react";
+import { ArrowRight, Shuffle, FlaskConical, Search } from "lucide-react";
 import HeroSection from "@/components/home/HeroSection";
 import { useChatVisibility } from "@/components/chat/useChatVisibility";
 import {
@@ -198,6 +198,28 @@ export default function Home() {
 
           {/* Data Room + Simulation Lab (1/3) */}
           <section className="space-y-4 md:space-y-6">
+            <Link
+              href="/archive_search"
+              className="relative block w-full overflow-hidden rounded-md bg-white p-5 group transition-all duration-300 border border-stone-200 hover:border-stone-300 hover:shadow-sm"
+            >
+              <div className="flex items-center gap-4">
+                <div className="p-2.5 rounded-full bg-stone-100 text-stone-600 group-hover:bg-stone-200 transition-colors">
+                  <Search size={20} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg font-serif font-bold text-stone-800 group-hover:text-stone-900 truncate">
+                    Trace a Person
+                  </h3>
+                  <p className="text-xs md:text-sm text-stone-500 mt-0.5 truncate">
+                    Search the archive by name or alias
+                  </p>
+                </div>
+                <div className="shrink-0 text-stone-400 group-hover:text-stone-600 transition-colors">
+                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </Link>
+
             <DataRoomPreview />
             <Link
               href="/lab"
@@ -315,7 +337,7 @@ export default function Home() {
                       Fun Facts
                     </div>
                     <div className="mt-1 md:mt-2 text-base md:text-lg font-bold text-amber-950">
-                      Did you know?
+                      From the Archive
                     </div>
                   </div>
 	                  <button
