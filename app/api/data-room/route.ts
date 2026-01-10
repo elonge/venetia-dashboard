@@ -791,7 +791,7 @@ export async function GET() {
       
       // Process each day and aggregate by week
       for (const day of filteredDays) {
-        const letterCount = day.letters?.length || 0;
+        const letterCount = day.total_number_letters ? day.total_number_letters : (day.letters?.length || 0);
         totalLettersFromDB += letterCount;
         
         const weekNumber = getWeekNumber(day.date);
