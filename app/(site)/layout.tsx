@@ -27,19 +27,20 @@ export default function SiteLayout({
   const [isChatOpen, setIsChatOpen] = useState(false); // For mobile bottom sheet - always starts closed
 
   const isHome = pathname === '/';
+  const hideChat = pathname === '/archive_search';
 
   // Ensure chat is closed on mobile by default when switching views
   useEffect(() => {
-    if (isMobile) {
+    if (isMobile || hideChat) {
       setShowChat(false);
       setIsChatOpen(false);
     }
-  }, [isMobile]);
+  }, [isMobile, hideChat]);
 
   // On mobile, never auto-open the chat drawer across route changes.
   useEffect(() => {
-    if (isMobile) setIsChatOpen(false);
-  }, [isMobile, pathname]);
+    if (isMobile || hideChat) setIsChatOpen(false);
+  }, [isMobile, pathname, hideChat]);
 
   useEffect(() => {
     const savedChatWidth = localStorage.getItem('chatWidth');
@@ -184,7 +185,7 @@ export default function SiteLayout({
           </div>
 
           {/* Desktop Chat Sidebar */}
-          {!isMobile && (
+          {!isMobile && !hideChat && (
             <>
               <div
                 className={`w-1 bg-border-beige hover:bg-accent-green cursor-col-resize transition-colors ${
@@ -221,7 +222,7 @@ export default function SiteLayout({
           )}
 
           {/* Mobile Chat Bottom Sheet */}
-          {isMobile && (
+          {isMobile && !hideChat && (
             <>
               {/* Backdrop */}
               {isChatOpen && (
