@@ -7,7 +7,7 @@ export const AuthorEnum = z.enum([
   'Margot Asquith',
   'Venetia Stanley',
   'Violet Asquith',
-  'M.B.C.',
+  'Maurice Bonham Carter',
   'Hugh Godley',
   'Venetia Montagu',
   'Arnold Ward',
@@ -19,10 +19,10 @@ export const AuthorEnum = z.enum([
   'Arthur Godley',
   'Augustine Birrell',
   'Dudley Gordon',
-  'Eddie Marsh',
+  'Edward Marsh',
   'Lord Murray',
   'Roderick Meiklejohn',
-  'Rufus Isaacs',
+  'Lord Reading (Rufus Isaacs)',
   'Winston Churchill'
 ]);
 
@@ -31,7 +31,7 @@ export const RecipientEnum = z.enum([
   'Edwin Montagu',
   'Margot Asquith',
   'Violet Asquith',
-  'M.B.C.',
+  'Maurice Bonham Carter',
   'Hugh Godley',
   'Arnold Ward',
   'Archie Gordon',

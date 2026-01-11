@@ -7,7 +7,8 @@ const ALIAS_COLLECTION = 'name_alias_collection';
 const DEFAULT_PAGE_SIZE = 20;
 const MAX_PAGE_SIZE = 100;
 
-function generateSnippet(text: string, aliases: string[]): string {
+function generateSnippet(debugInfo: {canonicalName: string, docId: string}, text: string, aliases: string[]): string {
+  const { canonicalName, docId } = debugInfo;
   if (!text) return "";
   
   // Escape regex special chars in aliases and sort by length
@@ -23,7 +24,7 @@ function generateSnippet(text: string, aliases: string[]): string {
   const matches = Array.from(text.matchAll(pattern));
   
   if (matches.length === 0) {
-    console.log(`No matches found for aliases in text.`);
+    console.log(`No matches found for aliases in text.`, docId, canonicalName, aliases);
     return ""
     // return text.substring(0, 300) + "...";
   }
@@ -113,14 +114,31 @@ export async function GET(request: NextRequest) {
     
     // 2. Fetch all aliases for this canonical name to use for highlighting
     const allAliasesDocs = await aliasCollection.find({ canonical: canonicalName }).toArray();
-    const allAliases = allAliasesDocs.map(d => d.alias);
-    if (!allAliases.includes(canonicalName)) {
-        allAliases.push(canonicalName);
+    
+    // Parse aliases to handle conditional authors: "Alias[[Author1, Author2]]"
+    const parsedAliases = allAliasesDocs.map(d => {
+      const match = d.alias.match(/^(.+?)(\[\[(.+)\]\])?$/);
+      if (match) {
+        return { 
+          text: match[1].trim(), 
+          authors: match[3] ? match[3].split(',').map(s => s.trim()) : null
+        };
+      }
+      return { text: d.alias, authors: null };
+    });
+
+    // Add canonical name as unconditional alias if not present
+    if (!parsedAliases.some(p => p.text === canonicalName)) {
+        parsedAliases.push({ text: canonicalName, authors: null });
     }
 
     // 3. Search Primary Sources
     // Note: User specified 'normalized_persons' as the field name
-    const filters: Record<string, any> = { normalized_persons: canonicalName };
+    // Also filtering out where the searched person is the author to reduce noise
+    const filters: Record<string, any> = { 
+      normalized_persons: canonicalName,
+      author: { $ne: canonicalName }
+    };
 
     if (authorParam?.trim()) {
       filters.author = { $regex: escapeRegex(authorParam.trim()), $options: 'i' };
@@ -175,15 +193,22 @@ export async function GET(request: NextRequest) {
       page: safePage,
       page_size: pageSize,
       total_pages: totalPages,
-      documents: docs.map(doc => ({
-        _id: doc._id,
-        date: doc.date,
-        author: doc.author,
-        recipient: doc.recipient,
-        full_text: doc.full_text || '',
-        snippet: generateSnippet(doc.full_text || '', allAliases), 
-        source_type: doc.source_type
-      })).filter(d => d.snippet?.length > 0),
+      documents: docs.map(doc => {
+        // Filter aliases based on document author
+        const relevantAliases = parsedAliases
+          .filter(a => !a.authors || (doc.author && a.authors.includes(doc.author)))
+          .map(a => a.text);
+
+        return {
+          _id: doc._id,
+          date: doc.date,
+          author: doc.author,
+          recipient: doc.recipient,
+          full_text: doc.full_text || '',
+          snippet: generateSnippet({ canonicalName, docId: doc._id.toString() }, doc.full_text || '', relevantAliases), 
+          source_type: doc.source_type
+        };
+      }),
     });
 
   } catch (error) {
