@@ -121,7 +121,7 @@ export async function GET(request: NextRequest) {
       if (match) {
         return { 
           text: match[1].trim(), 
-          authors: match[3] ? match[3].split(',').map(s => s.trim()) : null
+          authors: match[3] ? match[3].split(',').map((s: string) => s.trim()) : null
         };
       }
       return { text: d.alias, authors: null };
