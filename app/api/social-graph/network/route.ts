@@ -81,6 +81,8 @@ export async function GET() {
       // Add nodes
       // Filter when source and target are the same
       if (source === target) return;
+      // Filter on you (ignore case)
+      if (source.toLowerCase() === 'you' || target.toLowerCase() === 'you') return;
       // Source is always an author -> Group 1
       if (!nodesMap.has(source)) {
         nodesMap.set(source, { id: source, group: 1, val: 0 }); 

@@ -36,7 +36,7 @@ export const PEOPLE_IMAGES = {
     "Rufus Isaacs": "https://commons.wikimedia.org/wiki/Special:FilePath/Rufus_Isaacs.jpg",
     "Sir Arthur Wilson": "https://commons.wikimedia.org/wiki/Special:FilePath/Adm._Sir_A.K._Wilson_LCCN2014682751_(cropped).jpg",
     "Sir Edward Carson": "https://commons.wikimedia.org/wiki/Special:FilePath/Portrait_of_Edward_Carson,_Baron_Carson.jpg",
-    "Sir Edward Grey": "https://commons.wikimedia.org/wiki/Special:FilePath/Edward_Grey,_1st_Viscount_Grey_of_Fallodon.jpg",
+    "Sir Edward Grey": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Portrait_of_Edward_Grey%2C_1st_Viscount_Grey_of_Fallodon.jpg/500px-Portrait_of_Edward_Grey%2C_1st_Viscount_Grey_of_Fallodon.jpg",
     "Sir John French": "https://commons.wikimedia.org/wiki/Special:FilePath/John_French_GW.png",
     "Sylvia Henley": "/sylvia_henley.jpg",
     "Venetia Stanley": "https://upload.wikimedia.org/wikipedia/en/1/1c/Venetia_Stanley.jpg",
