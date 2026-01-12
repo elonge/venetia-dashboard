@@ -177,13 +177,17 @@ export default function SocialGraphPage() {
   return (
     <div className="container mx-auto py-10 px-4">
       <div className="max-w-3xl mx-auto text-center mb-12">
-        <h1 className="text-3xl font-bold mb-4 text-stone-800">
-          Trace a Person Across the Archive
-        </h1>
-        <p className="text-stone-600 mb-8 text-lg">
-          Search letters and diaries from 1912–1916, across names, titles, and
-          aliases
-        </p>
+        {!results && (
+          <>
+            <h1 className="text-3xl font-bold mb-4 text-stone-800">
+              Trace a Person Across the Archive
+            </h1>
+            <p className="text-stone-600 mb-8 text-lg">
+              Search letters and diaries from 1912–1916, across names, titles, and
+              aliases
+            </p>
+          </>
+        )}
 
         <div className="space-y-4 text-left">
           <div className="flex flex-wrap gap-3 items-start justify-center">

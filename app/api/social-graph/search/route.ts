@@ -9,15 +9,14 @@ const MAX_PAGE_SIZE = 100;
 
 function generateSnippet(debugInfo: {canonicalName: string, docId: string}, text: string, aliases: string[]): string {
   const { canonicalName, docId } = debugInfo;
-  if (!text) return "";
   
   // Escape regex special chars in aliases and sort by length
   const escapedAliases = aliases
     .filter(a => a && a.trim().length > 0)
-    .map(a => a.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+    .map(a => a.replace(/[.*+?^${}()|[\\]/g, '\\$&'))
     .sort((a, b) => b.length - a.length);
   
-  if (escapedAliases.length === 0) return text.substring(0, 300) + "...";
+  if (escapedAliases.length === 0) return "";
 
   // Find all matches
   const pattern = new RegExp(`(${escapedAliases.join('|')})`, 'gi');
@@ -26,7 +25,6 @@ function generateSnippet(debugInfo: {canonicalName: string, docId: string}, text
   if (matches.length === 0) {
     console.log(`No matches found for aliases in text.`, docId, canonicalName, aliases);
     return ""
-    // return text.substring(0, 300) + "...";
   }
   
   // Find the match with the longest string length
@@ -54,7 +52,7 @@ function generateSnippet(debugInfo: {canonicalName: string, docId: string}, text
 }
 
 function escapeRegex(value: string): string {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return value.replace(/[.*+?^${}()|[\\]/g, '\\$&');
 }
 
 function normalizeDateParam(value: string | null): string | null {
@@ -110,31 +108,43 @@ export async function GET(request: NextRequest) {
     if (aliasDoc) {
         canonicalName = aliasDoc.canonical;
     }
-    console.log(`Resolved query "${query}" to canonical name "${canonicalName}"`); 
     
-    // 2. Fetch all aliases for this canonical name to use for highlighting
+    // 2. Fetch all aliases for this canonical name
     const allAliasesDocs = await aliasCollection.find({ canonical: canonicalName }).toArray();
     
-    // Parse aliases to handle conditional authors: "Alias[[Author1, Author2]]"
+    // Parse aliases to handle conditional authors/recipients: "Alias[["Author="]]" or "Alias[["Recipient="]]"
     const parsedAliases = allAliasesDocs.map(d => {
-      const match = d.alias.match(/^(.+?)(\[\[(.+)\]\])?$/);
+      const match = d.alias.match(/^(.+?)\[\[(.+)\]\]$/);
       if (match) {
+        const conditionPart = match[2];
+        let type: 'Author' | 'Recipient' = 'Author';
+        let names: string[] = [];
+
+        if (conditionPart.startsWith('Author=')) {
+          type = 'Author';
+          names = conditionPart.replace('Author=', '').split(',').map((s: string) => s.trim());
+        } else if (conditionPart.startsWith('Recipient=')) {
+          type = 'Recipient';
+          names = conditionPart.replace('Recipient=', '').split(',').map((s: string) => s.trim());
+        } else {
+          // Default to Author for legacy format alias[[name1,name2]]
+          names = conditionPart.split(',').map((s: string) => s.trim());
+        }
+
         return { 
           text: match[1].trim(), 
-          authors: match[3] ? match[3].split(',').map((s: string) => s.trim()) : null
+          condition: { type, names } 
         };
       }
-      return { text: d.alias, authors: null };
+      return { text: d.alias, condition: null };
     });
 
     // Add canonical name as unconditional alias if not present
-    if (!parsedAliases.some(p => p.text === canonicalName)) {
-        parsedAliases.push({ text: canonicalName, authors: null });
+    if (!parsedAliases.some(p => p.text.toLowerCase() === canonicalName.toLowerCase())) {
+        parsedAliases.push({ text: canonicalName, condition: null });
     }
 
     // 3. Search Primary Sources
-    // Note: User specified 'normalized_persons' as the field name
-    // Also filtering out where the searched person is the author to reduce noise
     const filters: Record<string, any> = { 
       normalized_persons: canonicalName,
       author: { $ne: canonicalName }
@@ -194,9 +204,19 @@ export async function GET(request: NextRequest) {
       page_size: pageSize,
       total_pages: totalPages,
       documents: docs.map(doc => {
-        // Filter aliases based on document author
+        // Filter aliases based on document author and recipient
         const relevantAliases = parsedAliases
-          .filter(a => !a.authors || (doc.author && a.authors.includes(doc.author)))
+          .filter(a => {
+            if (!a.condition) return true;
+            const { type, names } = a.condition;
+            if (type === 'Author') {
+              return doc.author && names.includes(doc.author);
+            }
+            if (type === 'Recipient') {
+              return doc.recipient && names.includes(doc.recipient);
+            }
+            return false;
+          })
           .map(a => a.text);
 
         return {
