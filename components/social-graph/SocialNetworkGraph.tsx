@@ -21,7 +21,7 @@ export default function SocialNetworkGraph({ onSearchMode }: SocialNetworkGraphP
   const [minMentions, setMinMentions] = useState(3);
   const [focusedNode, setFocusedNode] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const fgRef = useRef<any>();
+  const fgRef = useRef<any>(null);
   const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
   
   const [selectedNode, setSelectedNode] = useState<any | null>(null);
@@ -296,9 +296,9 @@ export default function SocialNetworkGraph({ onSearchMode }: SocialNetworkGraphP
             >
                 <div className="flex items-start gap-4 mb-3">
                     <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-[#D4AF37] flex-shrink-0 bg-white">
-                        {PEOPLE_IMAGES[selectedNode.id as keyof typeof PEOPLE_IMAGES] ? (
+                        {PEOPLE_IMAGES[selectedNode.id as keyof typeof PEOPLE_IMAGES] || bioData?.image ? (
                             <img 
-                                src={PEOPLE_IMAGES[selectedNode.id as keyof typeof PEOPLE_IMAGES]} 
+                                src={PEOPLE_IMAGES[selectedNode.id as keyof typeof PEOPLE_IMAGES] || bioData?.image} 
                                 alt={selectedNode.id}
                                 className="w-full h-full object-cover"
                             />
