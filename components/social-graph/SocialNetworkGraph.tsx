@@ -55,10 +55,12 @@ export default function SocialNetworkGraph({ onSearchMode }: SocialNetworkGraphP
   // Configure forces when graph is ready
   useEffect(() => {
     if (fgRef.current) {
-      // Force nodes apart further
-      fgRef.current.d3Force('charge').strength(-300);
+      // Force nodes apart further - increased repulsion from -300 to -500
+      fgRef.current.d3Force('charge').strength(-500);
       // Add collision force to prevent overlap
       fgRef.current.d3Force('collide', (node: any) => Math.max(10, Math.sqrt(node.val || 1) * 2));
+      // Increase link distance slightly to spread things out
+      fgRef.current.d3Force('link').distance(50);
     }
   }, [loading, focusedNode]);
 
@@ -234,8 +236,8 @@ export default function SocialNetworkGraph({ onSearchMode }: SocialNetworkGraphP
             }}
             nodeCanvasObject={(node: any, ctx, globalScale) => {
                 const weight = node.val || 0;
-                // Min radius 6 to fit text
-                const r = Math.max(6, Math.sqrt(weight) * 0.5); 
+                // Min radius 5, multiplier 0.42 (approx 15% decrease from 6 and 0.5)
+                const r = Math.max(5, Math.sqrt(weight) * 0.42); 
                 const isHovered = node.id === hoveredNodeId;
                 const isSelected = selectedNode?.id === node.id;
                 

@@ -19,9 +19,12 @@ export async function GET(request: NextRequest) {
     const collection = db.collection(COLLECTION_NAME);
 
     // Try to find in MongoDB
+    console.log("Searching for person bio in DB for name:", name);
+    // Escape special regex characters to prevent errors with names like "Name (Alias)"
+    const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const personBio = await collection.findOne({ 
       $or: [
-        { name: { $regex: new RegExp(`^${name}$`, 'i') } },
+        { name: { $regex: new RegExp(`^${escapedName}$`, 'i') } },
         { id: name }
       ]
     });
@@ -31,7 +34,20 @@ export async function GET(request: NextRequest) {
     }
 
     // Fallback to constants
-    const description = (PEOPLE_DESCRIPTIONS as any)[name];
+    let description = (PEOPLE_DESCRIPTIONS as any)[name];
+    
+    // If exact match fails, try to find a key that is contained within the name or vice versa
+    if (!description) {
+        const lowerName = name.toLowerCase();
+        const foundKey = Object.keys(PEOPLE_DESCRIPTIONS).find(key => {
+            const lowerKey = key.toLowerCase();
+            return lowerName.includes(lowerKey) || lowerKey.includes(lowerName);
+        });
+        if (foundKey) {
+            description = (PEOPLE_DESCRIPTIONS as any)[foundKey];
+        }
+    }
+
     if (description) {
       return NextResponse.json({
         name,

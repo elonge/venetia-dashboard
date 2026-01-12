@@ -173,16 +173,16 @@ export default function SocialGraphPage() {
   return (
     <div className="container mx-auto py-10 px-4 min-h-[calc(100vh-64px)] flex flex-col relative">
       <div className="flex justify-end mb-6">
-        <div className="bg-stone-100 p-1 rounded-lg inline-flex shadow-sm border border-stone-200">
+        <div className="bg-white p-1 rounded-lg inline-flex shadow-sm border border-[#D4AF37]">
             <button 
                 onClick={() => setViewMode('search')}
-                className={`cursor-pointer px-4 py-1.5 rounded-md text-sm font-medium transition-all ${viewMode === 'search' ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-500 hover:text-stone-700'}`}
+                className={`cursor-pointer px-4 py-1.5 rounded-md text-sm font-bold font-serif transition-all ${viewMode === 'search' ? 'bg-[#D4AF37] text-[#111111] shadow-sm' : 'text-stone-600 hover:text-stone-900'}`}
             >
                 Search
             </button>
             <button 
                 onClick={() => setViewMode('network')}
-                className={`cursor-pointer px-4 py-1.5 rounded-md text-sm font-medium transition-all ${viewMode === 'network' ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-500 hover:text-stone-700'}`}
+                className={`cursor-pointer px-4 py-1.5 rounded-md text-sm font-bold font-serif transition-all ${viewMode === 'network' ? 'bg-[#D4AF37] text-[#111111] shadow-sm' : 'text-stone-600 hover:text-stone-900'}`}
             >
                 Network
             </button>
