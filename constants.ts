@@ -233,12 +233,14 @@ export const PODCASTS: Podcast[] = [
         "title": "The End of Peace",
         "description": "The final, frantic days before WWI, as the lights go out all over Europe.",
         "chapter_id": "end_of_piece",
+        "spotify_url": "https://open.spotify.com/episode/251fjs8sBuHbBjXhXRtXmW?si=1CwE8Sk5SK6fcRstpeAzLw",
         "orderIndex": orderIndex++
       },
       {
         "title": "Venetia the Nurse",
         "description": "Venetia leaves high society for the harsh reality of training as a nurse at the London Hospital.",
         "chapter_id": "venetia_nurse",
+        "spotify_url": "https://open.spotify.com/episode/6XPAytwI6EOCOTqpiqzgLK",
         "orderIndex": orderIndex++
       },
       {
