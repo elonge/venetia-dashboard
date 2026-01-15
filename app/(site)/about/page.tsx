@@ -319,7 +319,7 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
                   Codex
                 </h3>
                 <p className="font-sans text-sm leading-relaxed text-stone-600 group-hover:text-stone-900 transition-colors">
-                  Collaborated with Claude to stabilize the UI produced by
+                  Collaborated with Cursor to stabilize the UI produced by
                   Base44, transitioning exploratory designs into a functional
                   platform.
                 </p>
@@ -342,8 +342,7 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
                   ElevenLabs
                 </h3>
                 <p className="font-sans text-sm leading-relaxed text-stone-600 group-hover:text-stone-900 transition-colors">
-                  To generate the audio reconstruction of Asquith reading his
-                  letters.
+                  was used to generate the audio reconstructions of Asquith reading his letters. The voice was cloned from a surviving recording of a speech he delivered in 1909.
                 </p>
               </div>
 
