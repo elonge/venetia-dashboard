@@ -29,6 +29,11 @@ export const metadata: Metadata = {
   applicationName: "The Venetia Project",
   keywords: ["Venetia Stanley", "H.H. Asquith", "WWI", "History", "Letters", "Archive", "AI", "Data Visualization", "Edwardian Era", "Politics"],
   authors: [{ name: "The Venetia Project Team" }],
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon-16x16.png',
+    apple: '/apple-touch-icon.png',
+  },  
   openGraph: {
     title: "The Venetia Project",
     description: "A data-driven archive of Venetia Stanley, Asquith, and the secrets stitched across their letters.",
