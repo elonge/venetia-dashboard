@@ -55,10 +55,10 @@ export const TIMELINE_DATA = [
       "Down at Tilstone Lodge for the hunting. The mud is frightful but the run was glorious—real fun. H. mocks my 'calls and cares,' but he is quite right—this life is its own little tyranny. Mother sent a hilarious cutting claiming H.'s visits to Alderley are motivated by the 'Non-conformist grievance in single-school areas'! I sent it on to him; he needs the laugh, with the King so agitated about the Army and Ulster. Also wrote to Edwin—it is his birthday tomorrow. I must pin him down for dinner Sunday; his cynicism is sometimes a relief after H.'s intense devotion.",
     historicalFacts: [
       "Went hunting from Tilstone Lodge, Tarporley",
-      "Admitted to Asquith that his account of her social 'calls & cares' was accurate [cite: 17, 18]",
+      "Admitted to Asquith that his account of her social 'calls & cares' was accurate",
       "Sent Asquith a newspaper cutting claiming his visits were for 'Non-conformist grievances'",
       "Wrote to Edwin Montagu for his birthday and invited him to dine",
-      "Planned to return to London on Saturday night [cite: 18]",
+      "Planned to return to London on Saturday night",
     ],
     sources: [
       "Reconstruction from Asquith's letter (Feb 6, 1914)",
@@ -422,9 +422,9 @@ export const TIMELINE_DATA = [
     diaryEntry:
       "Poor Percy is gone. I feel it acutely—the first of us to fall. I wrote to H. this morning; he has no particulars yet about Diana. My Indian trip is cancelled, thank heavens. We dine with the Bencks at Stanmore tonight, though I have little appetite for diplomacy. Tomorrow, I escape to Edinburgh with Raymond and Cys on the 10 o'clock train. I find myself suddenly, violently revolted by Bluey—I cannot explain the intensity of it, but H. will understand.",
     historicalFacts: [
-      "Attended a crowded session in the House of Commons [cite: 119]",
-      "Witnessed the Speaker's deference to Bonar Law [cite: 120]",
-      "Heard a speech regarding the treatment of the minority [cite: 120]",
+      "Attended a crowded session in the House of Commons",
+      "Witnessed the Speaker's deference to Bonar Law",
+      "Heard a speech regarding the treatment of the minority",
     ],
     sources: ["Reconstruction from Asquith's letter (Sep 17, 1914)."],
     visualBackground: "/timeline/Train_Paint_Sep.jpg",
