@@ -476,16 +476,16 @@ export const TIMELINE_DATA = [
     id: "oct-30",
     date: "1914-10-30",
     displayDate: "October 30th, 1914",
-    location: "The Royal London Hospital",
+    location: "Mansfield 18, London",
     coords: [51.518503594919025, -0.05905330419722828],
     diaryEntry:
-     "I am writing this from my little room at the London Hospital. The smell of carbolic and the cries from the wards are a strange accompaniment to my thoughts of Downing Street. Here, I am just a probationer learning to bandage; yet on my table sits the 'gaudy casket'—that flashy little box holding H.'s most secret papers on the Dardanelles and the crashing of Turkey into the war. It is a bizarre dual existence: scrubbing floors by day, guarding the Empire's secrets by night. I only wish he were here in this narrow room with me, though I know his place is in the Cabinet Room, and mine is... where?",
+     "I am surrounded by trunks as I leave for Alderley tomorrow. H. is in a state of high anxiety, terrified that the rigorous schedule of the London Hospital will leave me no time for him. He fears that between the scrubbing and the bandaging, his letters will go unanswered and our meetings will vanish, starved by my new duties. Yet, for now, I am still his confidante: here on my table sits the 'gaudy casket'—that flashy little box holding H.'s most secret papers on the Dardanelles and the crashing of Turkey into the war. It is a bizarre dual existence: preparing to be a probationer by day, while guarding the Empire's secrets by night. I only wish he were here in this quiet room with me, though I know his place is in the Cabinet Room, and mine is... where?",
     historicalFacts: [
-      "Begun nursing training/work at The Royal London Hospital",
+      "Asquith concerned about her working at the London Hospital and that she might have less time for him",
       "Kept sealed documents for Asquith in a 'gaudy casket' in her room",
       "Wished Asquith were present in her 'little room'",
     ],
-    sources: ["Reconstruction from Asquith's letter (Oct 31, 1914)."],
+    sources: ["Reconstruction from Asquith's letters (Oct 30 & 31, 1914)."],
     visualBackground: "/timeline/London_Hospital_Paint.jpg",
     visualPrompt:
       "Exterior view of The Royal London Hospital in Whitechapel, 1914, imposing Edwardian red brick architecture, busy street scene with early ambulances and nurses in uniform walking near the gates, atmospheric and slightly gritty.",
