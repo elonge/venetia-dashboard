@@ -1267,7 +1267,7 @@ const VenetiaSimulationLabNew = () => {
             <div className="max-w-2xl text-left">
               <h3 className="font-bold text-slate-900 mb-2">What is this?</h3>
               <p className="text-sm text-slate-600 mb-4 leading-relaxed">
-                An interactive reconstruction of a possible 1914 diary,
+                An interactive imagining of the diary she never kept,
                 connecting Venetia’s movements with the probable subjects she
                 was writing about, inferred from primary sources and rendered in
                 her characteristic style and tone.
