@@ -30,7 +30,7 @@ const correspondenceData = [
     asquithHeader: "10 Downing Street, Whitehall — Feb 5th 1914",
     asquith:
       "My darling Venetia, Thank you for your 'very dear letter' received this morning. When you say you would like to be me, with 'crowded hours' &c, I wonder if you realise what it means... to have to tackle (1) your Cabinet (2) your deep-sea fishes (3) your Sovereign.",
-    logic: `• "Crowded hours": In 5 Feb, 1914, Asquith writes: "When you say you would like to be me, with 'crowded hours' &c, I wonder if you realise what it means... to have to tackle (1) your Cabinet (2) your deep-sea fishes (3) your Sovereign."
+    logic: `• "Crowded hours": Based on his letter from In 5 Feb, 1914 (see above)"
 
 • The Paragraph: In 5 Feb, 1914, Asquith responds: "Of course I would have shewn you the 'paragraph', if you had given me a hint that you wanted to see it." Later, in Feb 12, he confirms: "Yes—that was the Alderley paragraph... composed... in a rather gloomy half-hour at Alderley." This refers to a paragraph regarding Home Rule inserted into the King's Speech.
 
@@ -990,9 +990,8 @@ const instagramPosts = [
 const VenetiaSimulationLabNew = () => {
   const reconstructionAudioRef = useRef<HTMLAudioElement>(null);
   const [isReconstructionPlaying, setIsReconstructionPlaying] = useState(false);
-  const [activeCorrespondence, setActiveCorrespondence] = useState(
-    correspondenceData[0]
-  );
+  const [activeCorrespondenceIndex, setActiveCorrespondenceIndex] = useState(0);
+  const activeCorrespondence = correspondenceData[activeCorrespondenceIndex];
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [hasScrolled, setHasScrolled] = useState(false);
@@ -1064,13 +1063,16 @@ const VenetiaSimulationLabNew = () => {
     }
   };
 
-  const handleRegenerate = () => {
-    // Cycle through correspondence for "regeneration" effect
-    const currentIndex = correspondenceData.findIndex(
-      (c) => c.id === activeCorrespondence.id
-    );
-    const nextIndex = (currentIndex + 1) % correspondenceData.length;
-    setActiveCorrespondence(correspondenceData[nextIndex]);
+  const handleNext = () => {
+    if (activeCorrespondenceIndex < correspondenceData.length - 1) {
+      setActiveCorrespondenceIndex((prev) => prev + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (activeCorrespondenceIndex > 0) {
+      setActiveCorrespondenceIndex((prev) => prev - 1);
+    }
   };
 
   return (
@@ -1208,19 +1210,27 @@ const VenetiaSimulationLabNew = () => {
                 <div className="h-20"></div>
               </div>
 
-              <div className="absolute bottom-8 right-8 z-20">
+              <div className="absolute bottom-8 right-8 z-20 flex gap-3">
                 <button
-                  onClick={handleRegenerate}
-                  className="flex items-center gap-2 px-6 py-3 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/50 rounded-full transition-all duration-300 backdrop-blur-sm text-xs font-mono font-bold uppercase tracking-widest hover:shadow-[0_0_15px_rgba(34,211,238,0.3)]"
+                  onClick={handlePrevious}
+                  disabled={activeCorrespondenceIndex === 0}
+                  className="flex items-center gap-2 px-4 py-2 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/50 rounded-full transition-all duration-300 backdrop-blur-sm text-[10px] font-mono font-bold uppercase tracking-widest hover:shadow-[0_0_15px_rgba(34,211,238,0.3)] disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:hover:bg-cyan-500/10"
                 >
-                  {`Next Simulation (${
-                    ((correspondenceData.findIndex(
-                      (c) => c.id === activeCorrespondence.id
-                    ) +
-                      1) %
-                      correspondenceData.length) +
-                    1
-                  } / 3)`}
+                  <ArrowRight size={14} className="rotate-180" />
+                  Prev
+                </button>
+                <div className="flex items-center px-3 bg-cyan-500/5 border border-cyan-500/20 rounded-full text-[10px] font-mono text-cyan-400/60 uppercase tracking-tighter">
+                  {activeCorrespondenceIndex + 1} / {correspondenceData.length}
+                </div>
+                <button
+                  onClick={handleNext}
+                  disabled={
+                    activeCorrespondenceIndex === correspondenceData.length - 1
+                  }
+                  className="flex items-center gap-2 px-4 py-2 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/50 rounded-full transition-all duration-300 backdrop-blur-sm text-[10px] font-mono font-bold uppercase tracking-widest hover:shadow-[0_0_15px_rgba(34,211,238,0.3)] disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:hover:bg-cyan-500/10"
+                >
+                  Next
+                  <ArrowRight size={14} />
                 </button>
               </div>
             </div>
