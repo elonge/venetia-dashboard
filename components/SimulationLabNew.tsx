@@ -26,7 +26,7 @@ const correspondenceData = [
     id: 31,
     venetiaHeader: "Alderley Park, Chelford, Cheshire — Feb 4th 1914",
     venetia:
-      "My dearest H. Thank you for your letter. It sounds as if you are having a fierce time with the Cabinet and the King. I must say I envy you, I should like to be you with your 'crowded hours' and excitement, instead of staying here where nothing happens and one day is exactly like another. I was wondering what had happened to the paragraph, the one you wrote when you were here. Has it gone in? I suppose I ought to have asked to see it, but I didn’t like to bother you. I am going to hunt tomorrow if it is fine. I hope you are winning at Bridge. Yrs Venetia",
+      "My dearest H. Thank you for your letter. It sounds as if you are having a fierce time with the Cabinet and the King. I must say I envy you, I should like to be you with your 'crowded hours' and excitement, instead of staying here where nothing happens and one day is exactly like another. I was wondering what had happened to the paragraph, the one you wrote when you were here. Has it gone in? I suppose I ought to have asked to see it, but I didn’t like to bother you. I am going to hunt tomorrow if it is fine. I hope you are winning at Bridge. Yrs V.",
     asquithHeader: "10 Downing Street, Whitehall — Feb 5th 1914",
     asquith:
       "My darling Venetia, Thank you for your 'very dear letter' received this morning. When you say you would like to be me, with 'crowded hours' &c, I wonder if you realise what it means... to have to tackle (1) your Cabinet (2) your deep-sea fishes (3) your Sovereign.",
@@ -1213,10 +1213,6 @@ const VenetiaSimulationLabNew = () => {
                   onClick={handleRegenerate}
                   className="flex items-center gap-2 px-6 py-3 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/50 rounded-full transition-all duration-300 backdrop-blur-sm text-xs font-mono font-bold uppercase tracking-widest hover:shadow-[0_0_15px_rgba(34,211,238,0.3)]"
                 >
-                  <RefreshCw
-                    size={14}
-                    className={isReconstructionPlaying ? "animate-spin" : ""}
-                  />
                   {`Next Simulation (${
                     ((correspondenceData.findIndex(
                       (c) => c.id === activeCorrespondence.id
