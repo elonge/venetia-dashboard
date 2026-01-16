@@ -1326,6 +1326,7 @@ const VenetiaSimulationLabNew = () => {
                   <Link
                     href="/1914-diary"
                     className="group/btn inline-flex items-center gap-3"
+                    target="_blank"
                   >
                     <div className="w-10 h-10 rounded-full bg-white border border-stone-200 flex items-center justify-center group-hover/btn:border-blue-300 group-hover/btn:text-blue-600 transition-colors">
                       <ArrowRight
