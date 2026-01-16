@@ -157,7 +157,7 @@ const VenetiaDiaryLayout = () => {
 
             <div className="relative mb-8 group">
               {/* <div className="absolute -left-10 top-0 text-6xl text-stone-200 font-serif select-none">“</div> */}
-              <p className="text-xl md:text-2xl font-serif leading-relaxed text-stone-800 italic relative z-10 md:pr-4">
+              <p className="text-xl md:text-2xl font-serif leading-relaxed text-stone-800 italic relative z-10 md:pr-12">
                 {entry.diaryEntry}
               </p>
 
