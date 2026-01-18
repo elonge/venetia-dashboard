@@ -348,7 +348,7 @@ function VenetiaPromoCard() {
 
             {/* CTA Button - BLACK Button on Gold Card */}
             <div className="mt-auto">
-              <div className="inline-flex items-center justify-center px-5 py-2.5 bg-stone-900 text-amber-50 border border-transparent text-[10px] font-bold uppercase tracking-widest rounded-sm shadow-lg group-hover/card:bg-stone-800 group-hover/card:text-white transition-all">
+              <div className="font-sans inline-flex items-center justify-center px-5 py-2.5 bg-stone-900 text-amber-50 border border-transparent text-xs font-bold uppercase tracking-widest rounded-sm shadow-lg group-hover/card:bg-stone-800 group-hover/card:text-white transition-all">
                 Enter Archive
               </div>
             </div>
@@ -422,7 +422,7 @@ function CoteriePromoCard() {
 
             {/* CTA Button - BLACK Button on Gold Card */}
             <div className="mt-auto">
-              <div className="inline-flex items-center justify-center px-5 py-2.5 bg-stone-900 text-amber-50 border border-transparent text-[10px] font-bold uppercase tracking-widest rounded-sm shadow-lg group-hover/card:bg-stone-800 group-hover/card:text-white transition-all">
+              <div className="font-sans inline-flex items-center justify-center px-5 py-2.5 bg-stone-900 text-amber-50 border border-transparent text-xs font-bold uppercase tracking-widest rounded-sm shadow-lg group-hover/card:bg-stone-800 group-hover/card:text-white transition-all">
                 Explore the circle
               </div>
             </div>
