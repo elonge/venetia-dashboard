@@ -164,6 +164,7 @@ export type Podcast = {
   video_exists?: boolean;
   spotify_url?: string;
   orderIndex?: number;
+  duration?: string;
 };
 
 let orderIndex = 1;
@@ -173,41 +174,24 @@ export const PODCASTS: Podcast[] = [
         "description": "An overview of the intimate correspondence between Prime Minister H.H. Asquith and Venetia Stanley, revealing the personal and political dynamics of early 20th-century Britain.",
         "chapter_id": "the_letters",
         "spotify_url": "https://open.spotify.com/show/6sSEg9Sf5MHjcrqFVIb4SJ",
-        "orderIndex": orderIndex++
+        "orderIndex": orderIndex++,
+        "duration": "6 min"
     },
     {
         "title": "Sicily 1912: The Prime Minister's Holiday",
         "description": "A sun-drenched trip to Sicily reveals the shifting dynamics of Asquith's inner circle and the dawn of his obsession with Venetia Stanley.",
         "chapter_id": "sicily",
         "spotify_url": "https://open.spotify.com/episode/7AxobMLQMReieM3UneHWcV",
-        "orderIndex": orderIndex++
+        "orderIndex": orderIndex++,
+        "duration": "6 min"
       },
       {
         "title": "The Asquith family",
         "description": "Introducing the asquith family members and their dynamics that shaped the prime minister's world.",
         "chapter_id": "asquith_family",
         "spotify_url": "https://open.spotify.com/episode/5rvRGt2liB67qxwDZgW7VS",
-        "orderIndex": orderIndex++
-      },
-      {
-        "title": "The Friday Drives",
-        "description": "Asquith's weekly escape: the intimate car rides with Venetia where state secrets were shared.",
-        "chapter_id": "friday_drives",
-        "spotify_url": "https://open.spotify.com/episode/64M3kp93IvuxTsNPCYmM5Z",
-        "orderIndex": orderIndex++
-      },
-      {
-        "title": "State Secrets Shared",
-        "description": "The quiet sharing of war secrets that turned private confidence into a national risk.",
-        "chapter_id": "secrets",
-        "spotify_url": "https://open.spotify.com/episode/4vxB4fUHNMQvQ0kMqRoluE",
-        "orderIndex": orderIndex++
-      },
-      {
-        "title": "The Corrupt Coterie",
-        "description": "Inside the brilliant, doomed circle of young aristocrats, including Violet Asquith and Diana Manners.",
-        "chapter_id": "corrupt_coterie",
-        "orderIndex": orderIndex++
+        "orderIndex": orderIndex++,
+        "duration": "12 min"
       },
       {
         "title": "The Enchantress Cruise",
@@ -220,6 +204,21 @@ export const PODCASTS: Podcast[] = [
         "description": "Uncovering the clever legal distinction that saved British ministers from a massive insider trading scandal in 1912.",
         "chapter_id": "marconi_scandal",
         "spotify_url": "https://open.spotify.com/episode/3oiDcaQmtXPuK5Vq77uhWf",
+        "orderIndex": orderIndex++,
+        "duration": "12 min"
+      },
+      {
+        "title": "The Friday Drives",
+        "description": "Asquith's weekly escape: the intimate car rides with Venetia where state secrets were shared.",
+        "chapter_id": "friday_drives",
+        "spotify_url": "https://open.spotify.com/episode/64M3kp93IvuxTsNPCYmM5Z",
+        "orderIndex": orderIndex++,
+        "duration": "12 min"
+      },
+      {
+        "title": "The Corrupt Coterie",
+        "description": "Inside the brilliant, doomed circle of young aristocrats, including Violet Asquith and Diana Manners.",
+        "chapter_id": "corrupt_coterie",
         "orderIndex": orderIndex++
       },
       {
@@ -227,21 +226,32 @@ export const PODCASTS: Podcast[] = [
         "description": "Ireland on the brink of civil war, and the political firestorm consuming Asquith's government.",
         "chapter_id": "home_rule_crisis",
         "spotify_url": "https://open.spotify.com/episode/2ynWBvP0xu3K9pzJN1hS6w",
-        "orderIndex": orderIndex++
+        "orderIndex": orderIndex++,
+        "duration": "11 min"
       },
       {
         "title": "The End of Peace",
         "description": "The final, frantic days before WWI, as the lights go out all over Europe.",
         "chapter_id": "end_of_piece",
         "spotify_url": "https://open.spotify.com/episode/251fjs8sBuHbBjXhXRtXmW?si=1CwE8Sk5SK6fcRstpeAzLw",
-        "orderIndex": orderIndex++
+        "orderIndex": orderIndex++,
+        "duration": "10 min"
+      },
+      {
+        "title": "State Secrets Shared",
+        "description": "The quiet sharing of war secrets that turned private confidence into a national risk.",
+        "chapter_id": "secrets",
+        "spotify_url": "https://open.spotify.com/episode/4vxB4fUHNMQvQ0kMqRoluE",
+        "orderIndex": orderIndex++,
+        "duration": "13 min"
       },
       {
         "title": "Venetia the Nurse",
         "description": "Venetia leaves high society for the harsh reality of training as a nurse at the London Hospital.",
         "chapter_id": "venetia_nurse",
         "spotify_url": "https://open.spotify.com/episode/6XPAytwI6EOCOTqpiqzgLK",
-        "orderIndex": orderIndex++
+        "orderIndex": orderIndex++,
+        "duration": "12 min"
       },
       {
         "title": "The Betrayal",

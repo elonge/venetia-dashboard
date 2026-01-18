@@ -15,6 +15,7 @@ import {
 import type { DayData } from "@/components/daily";
 import ChaptersGrid from "@/components/home/ChaptersGrid";
 import DataRoomPreview from "@/components/data-room/DataRoomPreview";
+import ChaptersThread from "@/components/home/ChaptersThread";
 
 export default function Home() {
   const router = useRouter();
@@ -98,23 +99,25 @@ export default function Home() {
 
         // Fallback logic if no interesting day found
         const fallbackYear = month < 7 ? 1915 : 1914;
-        const fallbackDate = `${fallbackYear}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-        
+        const fallbackDate = `${fallbackYear}-${String(month).padStart(
+          2,
+          "0"
+        )}-${String(day).padStart(2, "0")}`;
+
         // Fetch specific fallback date directly to ensure data consistency
         const fallbackRes = await fetch(`/api/daily_records/${fallbackDate}`);
         if (fallbackRes.ok) {
-           const fallbackData = await fallbackRes.json();
-           setTodayInHistory(fallbackData);
+          const fallbackData = await fallbackRes.json();
+          setTodayInHistory(fallbackData);
         } else {
-           // Absolute minimal fallback if API fails
-           setTodayInHistory({
-             date: fallbackDate,
-             summary: "No historical record available for this date.",
-             events: [],
-             letters: []
-           } as DayData);
+          // Absolute minimal fallback if API fails
+          setTodayInHistory({
+            date: fallbackDate,
+            summary: "No historical record available for this date.",
+            events: [],
+            letters: [],
+          } as DayData);
         }
-
       } catch (error) {
         console.error("Error loading days:", error);
       } finally {
@@ -176,7 +179,9 @@ export default function Home() {
           <section className="min-w-0">
             {loadingDays ? (
               <div className="bg-card-bg rounded-md p-4 md:p-6 text-center text-slate border border-border-beige min-h-[200px] md:min-h-[250px] flex items-center justify-center shadow-[0_14px_34px_rgba(0,0,0,0.08)]">
-                <span className="text-sm md:text-base">Loading today&apos;s date in 1912–1915...</span>
+                <span className="text-sm md:text-base">
+                  Loading today&apos;s date in 1912–1915...
+                </span>
               </div>
             ) : todayInHistory ? (
               <DailyWidget
@@ -191,7 +196,9 @@ export default function Home() {
               />
             ) : (
               <div className="bg-card-bg rounded-2xl p-4 md:p-6 text-center text-slate border border-border-beige min-h-[200px] md:min-h-[250px] flex items-center justify-center shadow-[0_14px_34px_rgba(0,0,0,0.08)]">
-                <span className="text-sm md:text-base">No interesting day found for today&apos;s date in 1912–1915.</span>
+                <span className="text-sm md:text-base">
+                  No interesting day found for today&apos;s date in 1912–1915.
+                </span>
               </div>
             )}
           </section>
@@ -215,7 +222,10 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="shrink-0 text-stone-400 group-hover:text-stone-600 transition-colors">
-                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight
+                    size={18}
+                    className="group-hover:translate-x-1 transition-transform"
+                  />
                 </div>
               </div>
             </Link>
@@ -226,21 +236,22 @@ export default function Home() {
               className="relative block min-h-[160px] md:min-h-[180px] w-full overflow-hidden rounded-md bg-card-bg p-6 group transition-all duration-300 border border-dashed border-accent-brown/30 hover:border-accent-brown hover:shadow-[0_8px_30px_rgba(120,53,15,0.06)] hover:bg-[#FDFBF7]"
             >
               {/* Abstract "Blueprint" Background */}
-              <div 
-                className="absolute inset-0 pointer-events-none opacity-[0.03]" 
-                style={{ 
-                  backgroundImage: 'radial-gradient(circle, #78350F 1px, transparent 1px)', 
-                  backgroundSize: '16px 16px' 
-                }} 
+              <div
+                className="absolute inset-0 pointer-events-none opacity-[0.03]"
+                style={{
+                  backgroundImage:
+                    "radial-gradient(circle, #78350F 1px, transparent 1px)",
+                  backgroundSize: "16px 16px",
+                }}
               />
-              
+
               <div className="relative z-10 flex flex-col h-full justify-between">
                 <div>
                   <div className="flex items-center gap-2 mb-3">
-                     <div className="px-2 py-0.5 rounded-full bg-accent-brown/10 border border-accent-brown/20 text-[9px] font-sans font-bold uppercase tracking-widest text-accent-brown flex items-center gap-1.5">
-                       <FlaskConical size={10} className="stroke-[2.5]" />
-                       <span>Experimental</span>
-                     </div>
+                    <div className="px-2 py-0.5 rounded-full bg-accent-brown/10 border border-accent-brown/20 text-[9px] font-sans font-bold uppercase tracking-widest text-accent-brown flex items-center gap-1.5">
+                      <FlaskConical size={10} className="stroke-[2.5]" />
+                      <span>Experimental</span>
+                    </div>
                   </div>
 
                   <h3 className="text-xl md:text-2xl font-serif font-bold text-navy mb-2 group-hover:text-accent-brown transition-colors">
@@ -248,81 +259,53 @@ export default function Home() {
                   </h3>
 
                   <p className="text-sm text-slate font-sans leading-relaxed max-w-[90%]">
-                    What if history happened differently? Use AI to fill the gaps and reconstruct missing timelines.
+                    What if history happened differently? Use AI to fill the
+                    gaps and reconstruct missing timelines.
                   </p>
                 </div>
 
                 <div className="flex justify-end mt-2">
                   <div className="p-2 rounded-full bg-accent-brown/5 group-hover:bg-accent-brown/10 transition-colors text-accent-brown">
-                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight
+                      size={18}
+                      className="group-hover:translate-x-1 transition-transform"
+                    />
                   </div>
                 </div>
               </div>
             </Link>
           </section>
 
-          {/* Who is Venetia? (2/3) */}
+          {/* Fun Facts (1/3) */}
           <section className="min-w-0">
-            <Link
-              href="/venetia"
-              className="block min-h-[200px] md:min-h-62.5 rounded-md overflow-hidden border border-white/10 shadow-2xl hover:border-accent-green/50 hover:scale-102 transition-all relative group duration-700"
-              style={{
-                backgroundImage: "url('/asquith_venetia_split_screen3.jpg')",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
+            <div className="flex items-baseline justify-between gap-4">
+              <h2 className="text-navy font-serif text-xl md:text-2xl font-semibold">
+                Get to Know the Story
+              </h2>
+            </div>
+            <div className="mt-3 md:mt-4">
+              <ChaptersThread />
+            </div>
+          </section>          
+          <section>
+            <div
+              className="relative cursor-pointer rounded-md border min-h-50 border-accent-amber/50 bg-accent-amber p-4 md:p-6 shadow-[0_14px_34px_rgba(0,0,0,0.10)] rotate-[0.6deg] overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-900/40 focus-visible:ring-offset-2 focus-visible:ring-offset-page-bg transition-all duration-500 hover:rotate-0 hover:shadow-2xl hover:-translate-y-1 group"
+              role="button"
+              tabIndex={0}
+              aria-label="Fun facts (click to shuffle)"
+              onClick={handleShuffleFunFact}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  handleShuffleFunFact();
+                }
               }}
             >
-              {/* Darker gradient at bottom to make text readable */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2A]/95 via-[#0D1B2A]/70 to-[#0D1B2A]/40" />
-
-              <div className="relative h-full p-4 md:p-6 flex flex-col justify-between z-10">
-                <div>
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-2 md:gap-3">
-                      {/* Pulse Indicator: Sage Green is the "Active" signal */}
-                      <div className="w-2 h-2 md:w-2.5 md:h-2.5 bg-white rounded-full animate-pulse shadow-[0_0_8px_#4A7C59]" />
-                      <div className="font-serif font-semibold uppercase tracking-[0.14em] text-white text-lg md:text-[22px]">
-                        Venetia
-                      </div>
-                    </div>
-                    <ArrowRight className="h-4 w-4 md:h-5 md:w-5 text-[#C8D5EA]/30 group-hover:text-accent-green group-hover:translate-x-1 transition-all shrink-0" />
-                  </div>
-
-                  {/* Main Text: Switched to Off-White (card-bg) for maximum readability */}
-                  <p className="mt-3 md:mt-4 text-sm md:text-[16px] font-serif italic text-card-bg leading-relaxed max-w-[28ch]">
-                    Reconstructed from primary sources
-                  </p>
-                </div>
-
-                {/* The Call to Action: Switched from low-opacity blue to bright Off-White/Sage */}
-                <div className="mt-4 md:mt-6 inline-flex items-center gap-2 text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] text-[#C8D5EA] group-hover:text-white transition-colors">
-                  <span>Enter the archive</span>
-                  <span className="text-accent-green font-black">→</span>
-                </div>
-              </div>
-            </Link>
-          </section>
-
-	          {/* Fun Facts (1/3) */}
-	          <section>
-	            <div
-	              className="relative cursor-pointer rounded-md border min-h-70 border-accent-amber/50 bg-accent-amber p-4 md:p-6 shadow-[0_14px_34px_rgba(0,0,0,0.10)] rotate-[0.6deg] overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-900/40 focus-visible:ring-offset-2 focus-visible:ring-offset-page-bg transition-all duration-500 hover:rotate-0 hover:shadow-2xl hover:-translate-y-1 group"
-	              role="button"
-	              tabIndex={0}
-	              aria-label="Fun facts (click to shuffle)"
-	              onClick={handleShuffleFunFact}
-	              onKeyDown={(e) => {
-	                if (e.key === "Enter" || e.key === " ") {
-	                  e.preventDefault();
-	                  handleShuffleFunFact();
-	                }
-	              }}
-	            >
-	              <div
-	                className="absolute inset-0 pointer-events-none opacity-45"
-	                style={{
-	                  backgroundImage:
-	                    "radial-gradient(circle at 14px 14px, rgba(120, 53, 15, 0.10) 1px, transparent 1px)",
+              <div
+                className="absolute inset-0 pointer-events-none opacity-45"
+                style={{
+                  backgroundImage:
+                    "radial-gradient(circle at 14px 14px, rgba(120, 53, 15, 0.10) 1px, transparent 1px)",
                   backgroundSize: "26px 26px",
                 }}
               />
@@ -340,18 +323,18 @@ export default function Home() {
                       From the Archive
                     </div>
                   </div>
-	                  <button
-	                    type="button"
-	                    onClick={(e) => {
-	                      e.stopPropagation();
-	                      handleShuffleFunFact();
-	                    }}
-	                    className="inline-flex h-9 w-9 md:h-9 md:w-9 items-center justify-center rounded-md border border-accent-amber/50 bg-white/60 text-amber-900 hover:bg-white transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shrink-0 min-w-[44px] min-h-[44px]"
-	                    disabled={
-	                      loadingFunFacts || !funFacts || funFacts.length === 0
-	                    }
-	                    aria-label="Shuffle fun fact"
-	                    title="Shuffle"
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleShuffleFunFact();
+                    }}
+                    className="inline-flex h-9 w-9 md:h-9 md:w-9 items-center justify-center rounded-md border border-accent-amber/50 bg-white/60 text-amber-900 hover:bg-white transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shrink-0 min-w-[44px] min-h-[44px]"
+                    disabled={
+                      loadingFunFacts || !funFacts || funFacts.length === 0
+                    }
+                    aria-label="Shuffle fun fact"
+                    title="Shuffle"
                   >
                     <Shuffle className="h-4 w-4" />
                   </button>
@@ -368,25 +351,13 @@ export default function Home() {
                     </p>
                   ) : (
                     <p className="text-sm md:text-[15px] leading-relaxed text-amber-950">
-                      In 1914, the UK&apos;s Parliament was debating crises at home
-                      and abroad—while private letters carried entirely
+                      In 1914, the UK&apos;s Parliament was debating crises at
+                      home and abroad—while private letters carried entirely
                       different stakes.
                     </p>
                   )}
                 </div>
               </div>
-            </div>
-          </section>
-
-          {/* Chapters (full width) */}
-          <section className="min-w-0 lg:col-span-2">
-            <div className="flex items-baseline justify-between gap-4">
-              <h2 className="text-navy font-serif text-xl md:text-2xl font-semibold">
-                Chapters
-              </h2>
-            </div>
-            <div className="mt-3 md:mt-4">
-              <ChaptersGrid />
             </div>
           </section>
         </main>

@@ -180,7 +180,7 @@ export default function DailyWidget({
                 onPrev?.();
               }}
               disabled={isPrevDisabled}
-              className="cursor-pointer p-1.5 hover:bg-white rounded transition-colors disabled:opacity-30 disabled:cursor-not-allowed text-navy"
+              className="cursor-pointer p-1.5 hover:bg-card-bg rounded transition-colors disabled:opacity-30 disabled:cursor-not-allowed text-navy"
               title="Previous Day"
             >
               <ChevronLeft size={18} />
@@ -192,7 +192,7 @@ export default function DailyWidget({
                 onNext?.();
               }}
               disabled={isNextDisabled}
-              className="cursor-pointer p-1.5 hover:bg-white rounded transition-colors disabled:opacity-30 disabled:cursor-not-allowed text-navy"
+              className="cursor-pointer p-1.5 hover:bg-card-bg rounded transition-colors disabled:opacity-30 disabled:cursor-not-allowed text-navy"
               title="Next Day"
             >
               <ChevronRight size={18} />

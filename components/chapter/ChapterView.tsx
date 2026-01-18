@@ -92,7 +92,7 @@ export default function ChapterView({ chapterData }: ChapterViewProps) {
                   The Context
                 </span>
                 <p className="font-serif text-[15px] leading-relaxed text-navy">
-                  {replaceSourceNames(chapterData.main_story)}
+                  {replaceSourceNames(chapterData.main_story).replace(/\[.*?\]/g, '').trim()}
                 </p>
               </div>
 

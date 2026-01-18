@@ -81,7 +81,7 @@ export default function EssentialsPage() {
                     <h3 className="text-xl font-serif font-bold text-navy group-hover/link-card:text-accent-red transition-colors">Venetia Stanley</h3>
                     <ArrowRight className="w-4 h-4 text-accent-red opacity-0 group-hover/link-card:opacity-100 group-hover/link-card:translate-x-1 transition-all" />
                 </div>
-                <p className="text-xs font-bold text-accent-brown uppercase tracking-wider mb-4">The Muse</p>
+                <p className="text-xs font-bold text-accent-brown uppercase tracking-wider mb-4">"The Pole-star"</p>
                 <div className="space-y-4 text-sm text-slate leading-relaxed">
                     <p>
                         <strong>Character:</strong> Noted for her &quot;masculine intellect,&quot; and an &quot;unsurprised&quot; quality that allowed her to absorb shocks.
@@ -92,7 +92,7 @@ export default function EssentialsPage() {
                 </div>
                 <div className="mt-6 border-t border-border-beige/50 pt-4 text-center">
                     <span className="text-[10px] font-black uppercase tracking-widest text-accent-red group-hover/link-card:tracking-[0.2em] transition-all duration-500">
-                        Read Her Story
+                        Read Who She Was
                     </span>
                 </div>
               </Link>
@@ -297,11 +297,11 @@ export default function EssentialsPage() {
         {/* Footer Link */}
         <div className="bg-page-bg py-16 text-center">
             <Link 
-                href="/data-room" 
+                href="/chapter?chapter_id=the_letters" 
                 className="inline-flex items-center gap-2 px-8 py-4 bg-navy text-card-bg rounded-sm hover:bg-accent-red transition-all duration-500 shadow-lg hover:shadow-accent-red/20 font-serif group/cta"
             >
-                <BarChart2 size={20} className="group-hover/cta:scale-110 group-hover/cta:rotate-3 transition-transform duration-500" />
-                <span className="group-hover/cta:tracking-wider transition-all duration-500">Explore the Data Room</span>
+                <BookOpen size={20} className="group-hover/cta:scale-110 group-hover/cta:rotate-3 transition-transform duration-500" />
+                <span className="group-hover/cta:tracking-wider transition-all duration-500">Start the Story</span>
                 <ArrowRight size={18} className="opacity-0 group-hover/cta:opacity-100 group-hover/cta:translate-x-1 transition-all duration-500" />
             </Link>
         </div>
