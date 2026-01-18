@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Headphones } from 'lucide-react';
 import { useChatVisibility } from '@/components/chat/useChatVisibility';
 import { PEOPLE_IMAGES } from '@/constants';
 
@@ -254,14 +254,24 @@ export default function VenetiaPage() {
                       </span>
                    </div>
                 </div>
-                <audio 
-                  controls 
-                  className="w-full h-8"
+                
+                <a
+                  href="https://open.spotify.com/episode/1fj9bK1vInH8Vcfh13GCXC?si=Dmpmkn5cTiC67imwXJUnzA"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-sm px-4 py-3 transition-colors group/link w-full"
                 >
-                  <source src="/audio/venetia.mp3" type="audio/mpeg" />
-                  <source src="/audio/venetia.m4a" type="audio/mp4" />
-                  Your browser does not support the audio element.
-                </audio>
+                  <div className="p-2 bg-accent-green/20 rounded-full text-accent-green group-hover/link:bg-accent-green/30 transition-colors">
+                    <Headphones size={20} />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-xs font-bold text-page-bg uppercase tracking-wider">Listen on Spotify</span>
+                    <span className="text-[10px] text-muted-gray">Ep. 1: The Enigma</span>
+                  </div>
+                  <div className="ml-auto text-page-bg/50 group-hover/link:text-page-bg group-hover/link:translate-x-1 transition-all">
+                    →
+                  </div>
+                </a>
               </div>
 
             </div>

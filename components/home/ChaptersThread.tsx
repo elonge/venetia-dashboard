@@ -347,10 +347,23 @@ function VenetiaPromoCard() {
             </div>
 
             {/* CTA Button - BLACK Button on Gold Card */}
-            <div className="mt-auto">
+            <div className="mt-auto flex items-center gap-4">
               <div className="font-sans inline-flex items-center justify-center px-5 py-2.5 bg-stone-900 text-amber-50 border border-transparent text-xs font-bold uppercase tracking-widest rounded-sm shadow-lg group-hover/card:bg-stone-800 group-hover/card:text-white transition-all">
                 Enter Archive
               </div>
+              <a
+                  href="https://open.spotify.com/episode/1fj9bK1vInH8Vcfh13GCXC?si=Dmpmkn5cTiC67imwXJUnzA"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative z-20 border border-stone-900/20 p-2 pointer-events-auto group/listen inline-flex items-center gap-1.5 py-2 text-[10px] font-bold uppercase tracking-widest text-stone-900 hover:text-black hover:border-stone-900 transition-colors rounded-sm"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Headphones
+                    size={16}
+                    className="group-hover/listen:scale-110 transition-transform"
+                  />
+                  <span>Listen</span>
+                </a>
             </div>
           </div>
         </div>
