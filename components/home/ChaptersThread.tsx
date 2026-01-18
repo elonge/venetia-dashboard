@@ -361,7 +361,7 @@ function VenetiaPromoCard() {
 
 function CoteriePromoCard() {
   return (
-    <div className="relative pl-8 md:pl-16 group">
+    <div className="relative pl-8 md:pl-16 group cursor-pointer">
       
       {/* Timeline Node - Dark Stone to contrast with the page, or Amber to match card */}
       <div className="absolute left-[11px] md:left-[27px] top-6 h-2.5 w-2.5 rounded-full bg-stone-900 border-2 border-page-bg z-10 shadow-[0_0_0_4px_rgba(251,191,36,0.2)] group-hover:scale-125 transition-transform duration-300" />
