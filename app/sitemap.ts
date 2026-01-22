@@ -3,7 +3,7 @@ import { getAllChapters } from '@/lib/chapters';
 import { getAllDailyRecords } from '@/lib/daily_records';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://the-venetia-project.vercel.app';
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.thevenetiaproject.com';
 
   // 1. Static Routes
   const staticRoutes: MetadataRoute.Sitemap = [
