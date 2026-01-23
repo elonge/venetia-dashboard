@@ -13,7 +13,6 @@ import {
   normalizeDayDate,
 } from "@/components/daily";
 import type { DayData } from "@/components/daily";
-import ChaptersGrid from "@/components/home/ChaptersGrid";
 import DataRoomPreview from "@/components/data-room/DataRoomPreview";
 import ChaptersThread from "@/components/home/ChaptersThread";
 

@@ -386,7 +386,7 @@ function CoteriePromoCard() {
         <div
           className="absolute inset-0 z-0 opacity-10 group-hover/card:opacity-20 transition-opacity duration-700 mix-blend-multiply"
           style={{
-            backgroundImage: "url('/covers/cover-corrupt_coterie.jpg')",
+            backgroundImage: "url('/covers/cover-corrupt_coterie.png')",
             backgroundSize: "cover",
             backgroundPosition: "center 20%",
           }}
@@ -406,7 +406,7 @@ function CoteriePromoCard() {
           {/* Left: Image (Sepia/Multiply effect) */}
           <div className="relative w-full md:w-48 aspect-[16/9] md:aspect-[4/3] shrink-0 overflow-hidden rounded-sm border border-stone-900/10 shadow-sm bg-amber-200">
             <img
-              src="/covers/cover-corrupt_coterie.jpg"
+              src="/covers/cover-corrupt_coterie.png"
               className="w-full h-full object-cover opacity-100 grayscale mix-blend-multiply group-hover/card:scale-105 transition-all duration-700"
               alt="Venetia Stanley"
             />
