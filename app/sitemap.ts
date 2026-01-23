@@ -62,7 +62,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // 3. Dynamic Daily Entry Routes
   const dailyRecords = await getAllDailyRecords();
-  const dailyRoutes: MetadataRoute.Sitemap = dailyRecords.map((record) => ({
+  const interestingDailyRecords = dailyRecords.filter(record => (record?.letters?.length && record.letters.length > 0));
+  const dailyRoutes: MetadataRoute.Sitemap = interestingDailyRecords.map((record) => ({
     url: `${baseUrl}/daily/${encodeURIComponent(record.date)}`,
     lastModified: new Date(), // Ideally this would be record.last_modified if available
     changeFrequency: 'never', // Historical records rarely change

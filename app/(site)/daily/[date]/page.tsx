@@ -12,7 +12,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const normalizedDate = normalizeDayDate(decodeURIComponent(date));
   const day = await getDailyRecordByDate(normalizedDate);
 
-  if (!day) return { title: 'Day Not Found | The Venetia Project' };
+  if (!day || !day.letters?.length || day.letters?.length < 1) {
+    return {
+      title: `Archive: ${date}`,
+      description: 'No letters from Asquith to Venetia found for this date.',
+      // 🛑 STOP GOOGLE HERE
+      robots: {
+        index: false,
+        follow: true, // Let them follow links (like "Next Day"), but don't save this page
+      },
+    };
+  }
 
   return {
     title: `Daily Entry: ${normalizedDate} | The Venetia Project`,
