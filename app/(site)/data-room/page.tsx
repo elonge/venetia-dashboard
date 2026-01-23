@@ -1,5 +1,6 @@
 'use client';
 
+import { WithContext, Dataset } from 'schema-dts'; 
 import React, { Suspense, useCallback, useMemo } from 'react';
 import type { ReadonlyURLSearchParams } from 'next/navigation';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -63,6 +64,19 @@ function DataRoomContent() {
 }
 
 export default function DataRoomPage() {
+const jsonLd: WithContext<Dataset> = {
+    '@context': 'https://schema.org',
+    '@type': 'Dataset',
+    name: 'The Venetia Stanley Correspondence Dataset',
+    description: 'A structured archive of 500+ letters between H.H. Asquith and Venetia Stanley (1912-1915), including sentiment analysis and geo-temporal metadata.',
+    url: 'https://www.thevenetiaproject.com/data-room',
+    creator: {
+      '@type': 'Organization',
+      name: 'The Venetia Project',
+    },
+    isAccessibleForFree: true,
+    temporalCoverage: '1912-01-01/1915-05-31', // The exact date range of your history
+  };  
   return (
     <Suspense
       fallback={
@@ -71,6 +85,10 @@ export default function DataRoomPage() {
         </div>
       }
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <DataRoomContent />
     </Suspense>
   );

@@ -182,6 +182,20 @@ export default function VenetiaPage() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentQuote, setCurrentQuote] = useState(0);
   const carouselRef = React.useRef<HTMLDivElement>(null);
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    dateCreated: '2026-01-23',
+    mainEntity: {
+      '@type': 'Person',
+      name: 'Venetia Stanley',
+      alternateName: 'Venetia Montagu',
+      birthDate: '1887-08-22',
+      deathDate: '1948-08-03',
+      description: 'British socialite and correspondent of Prime Minister H.H. Asquith.',
+      image: 'https://www.thevenetiaproject.com/venetia-without-clementine.png',
+    }
+  };  
 
   const nextSlide = () => {
     setCurrentSlide((prev) => Math.min(prev + 1, carouselSlides.length - 1));
@@ -201,9 +215,13 @@ export default function VenetiaPage() {
 
   return (
     <div className="h-full bg-page-bg">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="mx-auto max-w-7xl">
         {/* 1. Hero Section - COMPACT VERSION */}
-<section className="w-full bg-navy/95 py-12 md:py-20 border-b border-white/10 relative overflow-hidden">
+        <section className="w-full bg-navy/95 py-12 md:py-20 border-b border-white/10 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-8 md:gap-16">
 
             {/* LEFT COL: The Portrait (Sized Down) */}
