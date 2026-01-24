@@ -1,3 +1,4 @@
+import React, { Suspense } from 'react';
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next"
@@ -92,7 +93,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <Analytics />
-        <MixpanelAnalytics />
+        <Suspense fallback={null}>
+          <MixpanelAnalytics />
+        </Suspense>
         {children}
       </body>
     </html>
