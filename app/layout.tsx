@@ -22,7 +22,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://the-venetia-project.vercel.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://www.thevenetiaproject.com"),
   title: {
     default: "The Venetia Project | The Secret Letters of H.H. Asquith",
     template: "%s | The Venetia Project",
