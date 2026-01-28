@@ -398,6 +398,11 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
                   credibility="High Reliability / Personal Primary Source"
                   description="Raw transcripts of private letters. Highly credible evidence of the personal relationship and social maneuvering between Venetia and Edwin."
                 />
+                <PrimarySource
+                  title="H.H. Asquith: Letters to Sylvia Henley (1915)"
+                  credibility="High Reliability / Personal Primary Source"
+                  description="Raw transcripts of private letters. Highly credible evidence of Asquith's emotions after Venetia's engagement."
+                />
 
                 {/* 3. Margot Asquith Diary */}
                 <PrimarySource
