@@ -257,6 +257,7 @@ export const PODCASTS: Podcast[] = [
         "title": "The Betrayal",
         "description": "The shock engagement to Edwin Montagu that broke the Prime Minister's heart and changed the war.",
         "chapter_id": "venetia_engagement",
+        "spotify_url": "https://open.spotify.com/episode/3rM7QrnvrygSBhVAoczalT?si=2Qk_2nQST7S5Couyp4-8Cg",
         "orderIndex": orderIndex++
       },
       {
