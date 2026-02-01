@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import { PEOPLE_IMAGES } from '@/constants';
 import { Button } from '@/components/ui/button';
 import { Search, UserPlus } from 'lucide-react';
+import { trackEvent } from '@/lib/mixpanel';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), {
   ssr: false,
@@ -137,6 +138,11 @@ export default function SocialNetworkGraph({ onSearchMode }: SocialNetworkGraphP
   }, [data, minMentions, focusedNode]);
 
   const handleNodeClick = async (node: any) => {
+    trackEvent('Social Graph: Node Clicked', { 
+        name: node.id,
+        group: node.group,
+        mentions: node.val
+    });
     if (selectedNode?.id === node.id) {
         // Deselect if already selected
         setSelectedNode(null);
@@ -188,7 +194,11 @@ export default function SocialNetworkGraph({ onSearchMode }: SocialNetworkGraphP
                     min="1" 
                     max="50" 
                     value={minMentions} 
-                    onChange={(e) => setMinMentions(parseInt(e.target.value))}
+                    onChange={(e) => {
+                        const val = parseInt(e.target.value);
+                        setMinMentions(val);
+                        trackEvent('Social Graph: Min Mentions Changed', { value: val });
+                    }}
                     className="w-24 h-1.5 bg-stone-700 rounded-lg appearance-none cursor-pointer accent-[#D4AF37] disabled:opacity-50"
                 />
             </div>
@@ -225,6 +235,7 @@ export default function SocialNetworkGraph({ onSearchMode }: SocialNetworkGraphP
             onBackgroundClick={() => {
                 setFocusedNode(null);
                 setSelectedNode(null);
+                trackEvent('Social Graph: Background Clicked');
             }}
             onNodeHover={(node: any) => {
                 document.body.style.cursor = node ? 'pointer' : 'default';
@@ -233,6 +244,7 @@ export default function SocialNetworkGraph({ onSearchMode }: SocialNetworkGraphP
             onNodeDragEnd={node => {
               node.fx = node.x;
               node.fy = node.y;
+              trackEvent('Social Graph: Node Dragged', { name: node.id });
             }}
             nodeCanvasObject={(node: any, ctx, globalScale) => {
                 const weight = node.val || 0;
@@ -334,6 +346,7 @@ export default function SocialNetworkGraph({ onSearchMode }: SocialNetworkGraphP
                                 className="w-full h-8 text-[10px] bg-[#D4AF37] hover:bg-[#B8962E] text-[#111111] font-bold"
                                 onClick={() => {
                                     setFocusedNode(selectedNode.id);
+                                    trackEvent('Social Graph: Focus Correspondence', { name: selectedNode.id });
                                     // Keep selectedNode open
                                 }}
                             >
@@ -346,6 +359,7 @@ export default function SocialNetworkGraph({ onSearchMode }: SocialNetworkGraphP
                                 variant="outline"
                                 className="w-full h-8 text-[10px] border-stone-400 text-[#111111] hover:bg-stone-200"
                                 onClick={() => {
+                                    trackEvent('Social Graph: Switch to Search Mode', { name: selectedNode.id });
                                     if (onSearchMode) onSearchMode(selectedNode.id);
                                 }}
                             >

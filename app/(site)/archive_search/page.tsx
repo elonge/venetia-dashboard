@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search, FileQuestion } from 'lucide-react';
 import SocialNetworkGraph from '@/components/social-graph/SocialNetworkGraph';
+import { trackEvent } from '@/lib/mixpanel';
 
 interface SearchResult {
   _id: string;
@@ -95,6 +96,16 @@ export default function SocialGraphPage() {
       setResults(null);
     }
 
+    trackEvent('Archive Search: Performed', {
+      query: trimmedQuery,
+      page,
+      filters_active: showFilters,
+      author: showFilters ? author : undefined,
+      recipient: showFilters ? recipient : undefined,
+      from: showFilters ? dateFrom : undefined,
+      to: showFilters ? dateTo : undefined
+    });
+
     try {
       const params = new URLSearchParams();
       params.set('q', trimmedQuery);
@@ -121,6 +132,10 @@ export default function SocialGraphPage() {
   const handleSelectSuggestion = (suggestion: Suggestion) => {
     const targetName = suggestion.canonical; 
     setQuery(targetName);
+    trackEvent('Archive Search: Suggestion Selected', {
+      alias: suggestion.alias,
+      canonical: suggestion.canonical
+    });
     handleSearch({ searchQuery: targetName, page: 1 });
   };
 
@@ -175,13 +190,19 @@ export default function SocialGraphPage() {
       <div className="flex justify-end mb-6">
         <div className="bg-white p-1 rounded-lg inline-flex shadow-sm border border-[#D4AF37]">
             <button 
-                onClick={() => setViewMode('search')}
+                onClick={() => {
+                  setViewMode('search');
+                  trackEvent('Archive Search: View Mode Changed', { mode: 'search' });
+                }}
                 className={`cursor-pointer px-4 py-1.5 rounded-md text-sm font-bold font-serif transition-all ${viewMode === 'search' ? 'bg-[#D4AF37] text-[#111111] shadow-sm' : 'text-stone-600 hover:text-stone-900'}`}
             >
                 Search
             </button>
             <button 
-                onClick={() => setViewMode('network')}
+                onClick={() => {
+                  setViewMode('network');
+                  trackEvent('Archive Search: View Mode Changed', { mode: 'network' });
+                }}
                 className={`cursor-pointer px-4 py-1.5 rounded-md text-sm font-bold font-serif transition-all ${viewMode === 'network' ? 'bg-[#D4AF37] text-[#111111] shadow-sm' : 'text-stone-600 hover:text-stone-900'}`}
             >
                 Network
@@ -194,6 +215,7 @@ export default function SocialGraphPage() {
             <SocialNetworkGraph onSearchMode={(name) => {
               setViewMode('search');
               setQuery(name);
+              trackEvent('Archive Search: Graph Node Clicked', { name });
               handleSearch({ searchQuery: name, page: 1 });
             }} />
         </div>
@@ -248,7 +270,11 @@ export default function SocialGraphPage() {
                 <Button
                   variant="outline"
                   type="button"
-                  onClick={() => setShowFilters((prev) => !prev)}
+                  onClick={() => {
+                    const next = !showFilters;
+                    setShowFilters(next);
+                    trackEvent('Archive Search: Filters Toggled', { visible: next });
+                  }}
                   className="h-11"
                 >
                   {showFilters ? 'Hide filters' : 'Refine'}
@@ -321,6 +347,7 @@ export default function SocialGraphPage() {
                     <button
                       onClick={() => {
                         setQuery(name);
+                        trackEvent('Archive Search: Example Clicked', { name });
                         handleSearch({ searchQuery: name, page: 1 });
                       }}
                       className="text-stone-700 hover:text-stone-900 font-medium underline decoration-stone-300 hover:decoration-stone-600 transition-all cursor-pointer"
@@ -339,7 +366,7 @@ export default function SocialGraphPage() {
               <FileQuestion className="w-16 h-16 mb-4 opacity-20" />
               <p className="text-lg font-medium text-stone-500">No results found</p>
               <p className="text-sm">
-                We couldn't find any documents matching "{results.query}".<br />
+                We couldn&apos;t find any documents matching &quot;{results.query}&quot;.<br />
                 Try checking the spelling or using a different alias.
               </p>
             </div>
@@ -351,9 +378,9 @@ export default function SocialGraphPage() {
                 <p className="text-lg">
                   Found <strong>{totalCount}</strong> documents for
                   {results.resolved_name ? (
-                    <> "<strong>{results.resolved_name}</strong>" (resolved from "{results.query}")</>
+                    <> &quot;<strong>{results.resolved_name}</strong>&quot; (resolved from &quot;{results.query}&quot;)</>
                   ) : (
-                    <> "{results.query}"</>
+                    <> &quot;{results.query}&quot;</>
                   )}
                 </p>
                 <p className="text-sm text-stone-600 mt-1">
@@ -398,7 +425,10 @@ export default function SocialGraphPage() {
                 <div className="flex items-center gap-3">
                   <Button
                     variant="outline"
-                    onClick={() => handlePageChange(currentPage - 1)}
+                    onClick={() => {
+                      trackEvent('Archive Search: Page Changed', { page: currentPage - 1, direction: 'prev' });
+                      handlePageChange(currentPage - 1);
+                    }}
                     disabled={loading || currentPage <= 1}
                   >
                     Previous
@@ -408,7 +438,10 @@ export default function SocialGraphPage() {
                   </span>
                   <Button
                     variant="outline"
-                    onClick={() => handlePageChange(currentPage + 1)}
+                    onClick={() => {
+                      trackEvent('Archive Search: Page Changed', { page: currentPage + 1, direction: 'next' });
+                      handlePageChange(currentPage + 1);
+                    }}
                     disabled={loading || currentPage >= totalPages}
                   >
                     Next
