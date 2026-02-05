@@ -91,6 +91,13 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
       </div>
     );
   };
+  const socialLinks = [
+    { label: "Podcast", href: process.env.NEXT_PUBLIC_PODCAST_URL },
+    { label: "Substack", href: process.env.NEXT_PUBLIC_SUBSTACK_URL },
+    { label: "Medium", href: process.env.NEXT_PUBLIC_MEDIUM_URL },
+  ].filter(
+    (link): link is { label: string; href: string } => Boolean(link.href)
+  );
   return (
     <div className="h-full bg-page-bg">
       {/* Content */}
@@ -250,6 +257,24 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
                 elon@consi.io
               </a>
             </p>
+            {socialLinks.length > 0 && (
+              <p>
+                Elsewhere:{" "}
+                {socialLinks.map((link, index) => (
+                  <React.Fragment key={link.label}>
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-accent-green hover:text-navy transition-colors underline decoration-accent-green/30 underline-offset-4"
+                    >
+                      {link.label}
+                    </a>
+                    {index < socialLinks.length - 1 ? ", " : "."}
+                  </React.Fragment>
+                ))}
+              </p>
+            )}
 
             <p>
               History gets more interesting when it&apos;s examined closely, and
