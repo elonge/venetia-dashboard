@@ -445,7 +445,7 @@ export const TIMELINE_DATA = [
       "Attended to meet the Prime Minister and Mrs. Asquith",
       "Picture is reconstructed from a photograph appeared in The Sketch, October 7, 1914",
     ],
-    sources: ["Reconstruction from Asquith's letter (Sep 26, 1914).", "Yorskshire post (Sep, 30, 1914)"],
+    sources: ["Reconstruction from Asquith's letter (Sep 29, 1914).", "Yorskshire post (Sep, 30, 1914)"],
     visualBackground: "/timeline/1914-09-25.jpg",
     visualPrompt:
       "Exterior of the Viceregal Lodge in Dublin, 1914, imposing white neoclassical architecture, immaculate lawns with guests in formal Edwardian garden party attire, Union Jack flying, sense of occasion.",
