@@ -148,7 +148,7 @@ export default function SiteLayout({
         <button
           type="button"
           onClick={handleHeaderBack}
-          className="group flex items-center gap-3 text-navy hover:text-accent-green transition-colors min-w-0"
+          className="cursor-pointer group flex items-center gap-3 text-navy hover:text-accent-green transition-colors min-w-0"
         >
           <ArrowLeft className="w-4 h-4 shrink-0 transition-transform group-hover:-translate-x-1" />
           <div className="flex flex-col items-start">

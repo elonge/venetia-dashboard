@@ -49,6 +49,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'daily',
       priority: 0.6,
     },
+    {
+      url: `${baseUrl}/precipice-fact-vs-fiction`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.6,
+    },
   ];
 
   // 2. Dynamic Chapter Routes

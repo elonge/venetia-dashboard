@@ -3,6 +3,7 @@
 import React from "react";
 import { useChatVisibility } from "@/components/chat/useChatVisibility";
 import PrimarySource from "@/components/about/PrimarySource";
+import Link from "next/link";
 
 export default function AboutPage() {
   useChatVisibility(false);
@@ -94,7 +95,6 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
   const socialLinks = [
     { label: "Podcast", href: process.env.NEXT_PUBLIC_PODCAST_URL },
     { label: "Substack", href: process.env.NEXT_PUBLIC_SUBSTACK_URL },
-    { label: "Medium", href: process.env.NEXT_PUBLIC_MEDIUM_URL },
   ].filter(
     (link): link is { label: string; href: string } => Boolean(link.href)
   );
@@ -230,6 +230,16 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
                 <span className="my-highlight">
                   chat directly with the primary sources
                 </span>
+              </li>
+              <li>
+                <strong>Fact vs. Fiction:</strong> A guide to the historical
+                accuracy of{" "}
+                <Link
+                  href="/precipice-fact-vs-fiction"
+                  className="text-accent-green hover:text-navy transition-colors underline decoration-accent-green/30 underline-offset-4"
+                >
+                  Robert Harris&apos;s &apos;Precipice&apos;
+                </Link>
               </li>
             </ul>
             <p>Some days are dense. Some are empty. Both matter.</p>
