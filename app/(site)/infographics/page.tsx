@@ -8,17 +8,28 @@ import { useChatVisibility } from "@/components/chat/useChatVisibility";
 const infographics = [
   {
     slug: "weimar-republic-hyperinflation-1923-infographic",
-    title: "Weimar Republic",
+    title: "Weimar Hyperinflation, 1923",
     description:
-      "A visual map of Germany's fragile democracy after World War I, tracking the political shocks and economic pressures that destabilized the republic.",
-    alt: "Weimar Republic hyperinflation infographic showing the 1923 price of bread and currency collapse - The Venetia Project",
+      "A visual briefing on the inflationary spiral that hollowed out the Weimar economy and accelerated political instability.",
+    alt: "Infographic showing the hyperinflation crisis in the Weimar Republic",
   },
   {
     slug: "ww1-origins-domino-effect-infographic",
     title: "World War I Origins",
     description:
       "A chain-reaction view of the July Crisis, showing how alliances, mobilizations, and miscalculations escalated a regional dispute into a world war.",
-    alt: "Infographic of the 1914 July Crisis domino effect and causes of World War I - The Venetia Project",
+    alt: "Infographic showing the cascading origins of World War I",
+    link: "/ww1-origins",
+    linkLabel: "View the World War I origins page",
+  },
+  {
+    slug: "venetia-stanley-asquith-letters-infographic",
+    title: "Venetia & Asquith Letters",
+    description:
+      "A visual map of the correspondence network and key moments between Venetia Stanley and H. H. Asquith.",
+    alt: "Infographic showing the Venetia Stanley and H. H. Asquith letters and their key moments",
+    link: "/",
+    linkLabel: "Return to the Venetia Project home page",
   },
 ];
 
@@ -51,36 +62,29 @@ Compact visual summaries of a world in transition. While rooted in the archives 
             const pngPath = `/infographics/${item.slug}.png`;
             const pdfPath = `/infographics/${item.slug}.pdf`;
 
+            const imageElement = (
+              <Image
+                src={pngPath}
+                alt={item.alt}
+                width={1024}
+                height={1536}
+                className="h-auto w-full object-cover"
+                sizes="(min-width: 1024px) 520px, (min-width: 768px) 45vw, 90vw"
+              />
+            );
+
             return (
               <article
                 key={item.slug}
                 className="rounded-3xl border border-border-beige bg-card-bg/90 p-6 shadow-[0_24px_46px_rgba(36,27,21,0.12)]"
               >
                 <div className="overflow-hidden rounded-2xl border border-border-beige bg-page-bg">
-                  {item.slug === "ww1_origins" ? (
-                    <Link
-                      href="/ww1-origins"
-                      aria-label="View the World War I origins page"
-                      className="block"
-                    >
-                      <Image
-                        src={pngPath}
-                        alt={item.alt}
-                        width={1024}
-                        height={1536}
-                        className="h-auto w-full object-cover"
-                        sizes="(min-width: 1024px) 520px, (min-width: 768px) 45vw, 90vw"
-                      />
+                  {item.link ? (
+                    <Link href={item.link} aria-label={item.linkLabel} className="block">
+                      {imageElement}
                     </Link>
                   ) : (
-                    <Image
-                      src={pngPath}
-                      alt={item.alt}
-                      width={1024}
-                      height={1536}
-                      className="h-auto w-full object-cover"
-                      sizes="(min-width: 1024px) 520px, (min-width: 768px) 45vw, 90vw"
-                    />
+                    imageElement
                   )}
                 </div>
                 <div className="mt-6">
