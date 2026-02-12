@@ -12,6 +12,7 @@ const infographics = [
     description:
       "A visual briefing on the inflationary spiral that hollowed out the Weimar economy and accelerated political instability.",
     alt: "Infographic showing the hyperinflation crisis in the Weimar Republic",
+    tileClass: "md:col-span-7 md:row-span-5 md:-rotate-1",
   },
   {
     slug: "ww1-origins-domino-effect-infographic",
@@ -21,6 +22,7 @@ const infographics = [
     alt: "Infographic showing the cascading origins of World War I",
     link: "/ww1-origins",
     linkLabel: "View the World War I origins page",
+    tileClass: "md:col-span-5 md:row-span-4 md:translate-y-6 md:rotate-1",
   },
   {
     slug: "venetia-stanley-asquith-letters-infographic",
@@ -30,6 +32,15 @@ const infographics = [
     alt: "Infographic showing the Venetia Stanley and H. H. Asquith letters and their key moments",
     link: "/",
     linkLabel: "Return to the Venetia Project home page",
+    tileClass: "md:col-span-5 md:row-span-5 md:-translate-y-4 md:rotate-1",
+  },
+  {
+    slug: "suffragettes-asquith-infographic",
+    title: "Suffragettes & Asquith",
+    description:
+      "A briefing on the suffragette campaign, tracing key flashpoints and the government's response under Asquith.",
+    alt: "Infographic showing suffragette actions and Asquith-era government responses",
+    tileClass: "md:col-span-7 md:row-span-4 md:translate-y-2 md:-rotate-1",
   },
 ];
 
@@ -57,7 +68,10 @@ export default function InfographicsPage() {
 Compact visual summaries of a world in transition. While rooted in the archives of the Edwardian period, these briefings explore the cascading political and economic events of the 20th century          </p>
         </div>
 
-        <div className="mt-12 grid gap-8 md:grid-cols-2">
+        <div className="relative mt-12">
+          <div className="pointer-events-none absolute -left-8 top-10 h-40 w-40 rounded-full bg-[radial-gradient(circle_at_center,rgba(255,214,135,0.45),transparent_65%)] blur-2xl" />
+          <div className="pointer-events-none absolute right-0 top-32 h-56 w-56 rounded-full bg-[radial-gradient(circle_at_center,rgba(194,78,66,0.25),transparent_65%)] blur-3xl" />
+          <div className="grid gap-6 md:auto-rows-[150px] md:grid-cols-12">
           {infographics.map((item) => {
             const pngPath = `/infographics/${item.slug}.png`;
             const pdfPath = `/infographics/${item.slug}.pdf`;
@@ -76,7 +90,9 @@ Compact visual summaries of a world in transition. While rooted in the archives 
             return (
               <article
                 key={item.slug}
-                className="rounded-3xl border border-border-beige bg-card-bg/90 p-6 shadow-[0_24px_46px_rgba(36,27,21,0.12)]"
+                className={`group flex h-full flex-col rounded-3xl border border-border-beige bg-card-bg/90 p-6 shadow-[0_24px_46px_rgba(36,27,21,0.12)] transition-transform duration-500 hover:-translate-y-1 ${
+                  item.tileClass ?? ""
+                }`}
               >
                 <div className="overflow-hidden rounded-2xl border border-border-beige bg-page-bg">
                   {item.link ? (
@@ -115,6 +131,7 @@ Compact visual summaries of a world in transition. While rooted in the archives 
               </article>
             );
           })}
+        </div>
         </div>
 
 {socialLinks.length > 0 && (
