@@ -155,8 +155,8 @@ export default function WW1OriginsPage() {
             </div>
             <div className="mt-6 overflow-hidden rounded-2xl border border-border-beige bg-page-bg">
               <img
-                src="/infographics/ww1_origins.png"
-                alt="Infographic showing the cascading origins of World War I"
+                src="/infographics/ww1-origins-domino-effect-infographic.png"
+                alt="Infographic of the 1914 July Crisis domino effect and causes of World War I - The Venetia Project"
                 width={1200}
                 height={800}
                 className="h-auto w-full object-cover"
