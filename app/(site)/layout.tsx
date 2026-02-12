@@ -28,6 +28,13 @@ export default function SiteLayout({
 
   const isHome = pathname === '/';
   const hideChat = pathname === '/archive_search';
+  const isWw1Origins = pathname === '/ww1-origins';
+  const footerLinks = isWw1Origins
+    ? [
+        { href: '/', label: 'Home' },
+        { href: '/about', label: 'About the Project' },
+      ]
+    : undefined;
 
   // Ensure chat is closed on mobile by default when switching views
   useEffect(() => {
@@ -181,7 +188,7 @@ export default function SiteLayout({
               {children}
             </div>
             
-            <Footer />
+            <Footer links={footerLinks} />
           </div>
 
           {/* Desktop Chat Sidebar */}

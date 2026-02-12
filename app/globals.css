@@ -14,6 +14,51 @@
   @apply px-1 rounded box-decoration-clone;
 }
 }
+
+@keyframes ww1-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ww1-fade {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@layer components {
+  .ww1-hero-title {
+    animation: ww1-rise 700ms ease-out both;
+  }
+
+  .ww1-hero-subtitle {
+    animation: ww1-rise 900ms ease-out both;
+    animation-delay: 120ms;
+  }
+
+  .ww1-domino-card {
+    animation: ww1-fade 900ms ease-out both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ww1-hero-title,
+  .ww1-hero-subtitle,
+  .ww1-domino-card {
+    animation: none;
+  }
+}
 :root {
   /* Core Brand Colors */
   --color-page-bg: #F5F0E8;    /* Lighter, warmer parchment - Base background */

@@ -183,6 +183,7 @@ export default function ChaptersThread() {
             <ChapterThreadItem chapter={chapter} index={index} />
             {index === 2 && <VenetiaPromoCard />}
             {index === 5 && <CoteriePromoCard />}
+            {chapter.chapter_id === "end_of_piece" && <WW1OriginsPromoCard />}
           </React.Fragment>
         ))}
       </div>
@@ -437,6 +438,63 @@ function CoteriePromoCard() {
             <div className="mt-auto">
               <div className="font-sans inline-flex items-center justify-center px-5 py-2.5 bg-stone-900 text-amber-50 border border-transparent text-xs font-bold uppercase tracking-widest rounded-sm shadow-lg group-hover/card:bg-stone-800 group-hover/card:text-white transition-all">
                 Explore the circle
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function WW1OriginsPromoCard() {
+  return (
+    <div className="relative pl-8 md:pl-16 group cursor-pointer">
+      <div className="absolute left-[11px] md:left-[27px] top-6 h-2.5 w-2.5 rounded-full bg-stone-900 border-2 border-page-bg z-10 shadow-[0_0_0_4px_rgba(251,191,36,0.2)] group-hover:scale-125 transition-transform duration-300" />
+
+      <div className="relative bg-amber-400 border border-amber-500/50 rounded-sm p-1 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group/card hover:scale-[1.005]">
+        <div
+          className="absolute inset-0 z-0 opacity-10 group-hover/card:opacity-20 transition-opacity duration-700 mix-blend-multiply"
+          style={{
+            backgroundImage: "url('/infographics/ww1_origins.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+        <div className="absolute inset-0 z-0 bg-gradient-to-r from-amber-400 via-amber-400/90 to-amber-400/60" />
+
+        <Link href="/ww1-origins" className="absolute inset-0 z-10">
+          <span className="sr-only">Explore the origins of World War I</span>
+        </Link>
+
+        <div className="flex flex-col md:flex-row gap-4 md:gap-6 relative z-20 pointer-events-none">
+          <div className="relative w-full md:w-48 aspect-[16/9] md:aspect-[4/3] shrink-0 overflow-hidden rounded-sm border border-stone-900/10 shadow-sm bg-amber-200">
+            <img
+              src="/infographics/ww1_origins.png"
+              className="w-full h-full object-cover opacity-100 grayscale mix-blend-multiply group-hover/card:scale-105 transition-all duration-700"
+              alt="World War I origins infographic"
+            />
+          </div>
+
+          <div className="flex flex-col justify-center py-2 pr-4 pl-2 md:pl-0 w-full">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[10px] font-bold tracking-[0.2em] text-stone-900 uppercase flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-stone-900 animate-pulse" />
+                Context Primer
+              </span>
+            </div>
+
+            <h3 className="text-2xl font-serif font-bold text-stone-900 mb-1 drop-shadow-none group-hover/card:text-black transition-colors">
+              WWI Origins: The Domino Effect
+            </h3>
+
+            <div className="flex items-center gap-3 text-[10px] md:text-xs text-stone-800 uppercase tracking-wider font-bold mb-4 opacity-80">
+              <span>How July 1914 cascaded into war</span>
+            </div>
+
+            <div className="mt-auto">
+              <div className="font-sans inline-flex items-center justify-center px-5 py-2.5 bg-stone-900 text-amber-50 border border-transparent text-xs font-bold uppercase tracking-widest rounded-sm shadow-lg group-hover/card:bg-stone-800 group-hover/card:text-white transition-all">
+                Explore origins
               </div>
             </div>
           </div>
