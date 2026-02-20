@@ -6,7 +6,6 @@ export const initMixpanel = () => {
   if (MIXPANEL_TOKEN) {
     mixpanel.init(MIXPANEL_TOKEN, {
       debug: process.env.NODE_ENV === 'development',
-      track_pageview: true,
       persistence: 'localStorage',
     });
   } else {

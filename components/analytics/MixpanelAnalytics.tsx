@@ -54,5 +54,38 @@ export default function MixpanelAnalytics() {
     };
   }, []);
 
+  useEffect(() => {
+    const handleToggle = (e: Event) => {
+      const target = e.target;
+      if (!(target instanceof HTMLDetailsElement)) return;
+
+      const summary = target.querySelector('summary');
+      const summaryText = summary?.innerText
+        ?.replace(/\s+/g, ' ')
+        .trim()
+        .substring(0, 120);
+
+      const sectionId =
+        target.dataset.trackSection ||
+        target.closest('section')?.id ||
+        undefined;
+
+      trackEvent('Content Toggle', {
+        pathname,
+        component: target.dataset.trackComponent || 'details',
+        item: target.dataset.trackItem || undefined,
+        sectionId,
+        state: target.open ? 'expanded' : 'collapsed',
+        summaryText,
+      });
+    };
+
+    document.addEventListener('toggle', handleToggle, true);
+
+    return () => {
+      document.removeEventListener('toggle', handleToggle, true);
+    };
+  }, [pathname]);
+
   return null;
 }

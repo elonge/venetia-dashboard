@@ -313,6 +313,9 @@ export default function FranzVonPapenPage() {
                       <details
                         className={`group/case rounded-2xl border bg-card-bg/95 p-4 shadow-[0_12px_24px_rgba(26,42,64,0.08)] ${tone.cardBorder}`}
                         open={index === 0}
+                        data-track-component="franz_timeline_item"
+                        data-track-section="franz-von-papen-timeline"
+                        data-track-item={`${event.year}-${event.title}`}
                       >
                         <summary className="cursor-pointer list-none">
                           <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-accent-brown">
@@ -373,6 +376,9 @@ export default function FranzVonPapenPage() {
                 key={item.question}
                 className="group py-4"
                 open={index === 0}
+                data-track-component="franz_faq_item"
+                data-track-section="franz-von-papen-faq"
+                data-track-item={item.question}
               >
                 <summary className="cursor-pointer list-none pr-8 text-lg font-semibold text-navy marker:content-none">
                   {item.question}
