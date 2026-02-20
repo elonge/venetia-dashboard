@@ -4,7 +4,58 @@ import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useChatVisibility } from "@/components/chat/useChatVisibility";
 import { ArrowRight, BookOpen, ExternalLink, Info, List } from "lucide-react";
-import DataRoomPreview from "@/components/data-room/DataRoomPreview";
+
+type RelatedChapterLinkProps = {
+  chapterId: string;
+  chapterTitle: string;
+};
+
+type InlineArchiveFigureProps = {
+  src: string;
+  alt: string;
+  caption: string;
+};
+
+type QuestionHeadingProps = {
+  children: React.ReactNode;
+};
+
+function RelatedChapterLink({ chapterId, chapterTitle }: RelatedChapterLinkProps) {
+  return (
+    <Link
+      href={`/chapter?chapter_id=${encodeURIComponent(chapterId)}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="mt-5 inline-flex items-center gap-2 text-[15px] font-semibold leading-snug text-accent-brown transition-colors duration-200 hover:text-navy"
+    >
+      <ArrowRight size={15} className="shrink-0" />
+      <span>{chapterTitle}</span>
+    </Link>
+  );
+}
+
+function InlineArchiveFigure({ src, alt, caption }: InlineArchiveFigureProps) {
+  return (
+    <figure className="not-prose my-6">
+      <img
+        src={src}
+        alt={alt}
+        className="w-full h-auto rounded-sm shadow-lg sepia-[0.25] contrast-105 grayscale-[0.15]"
+      />
+      <figcaption className="mt-2 text-sm italic text-stone-500">
+        {caption}
+      </figcaption>
+    </figure>
+  );
+}
+
+function QuestionHeading({ children }: QuestionHeadingProps) {
+  return (
+    <h3 className="text-[1.75rem] md:text-[1.95rem] font-serif font-semibold leading-tight text-accent-brown mb-4">
+      {children}
+    </h3>
+  );
+}
 
 const HistoricalDivider = ({ icon = 'nib' }: { icon?: 'nib' | 'flourish' | 'ink' }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -164,16 +215,19 @@ export default function PrecipiceFactVsFictionPage() {
               <p className="text-xl text-navy/80 font-serif italic">
                 A guide to the historical reality behind the characters and events in Robert Harris&apos;s 2024 novel.
               </p>
+              <p className="mt-4 text-base italic text-navy/85">
+                The Venetia Project is a digital archive and audio series dedicated to the real letters between H.H. Asquith and Venetia Stanley. Below, we fact-check Robert Harris&apos;s novel against the primary sources.
+              </p>
             </header>
 
             <div className="space-y-12">
 
               <section id="letters-real" className="scroll-mt-20">
-                <div className="flex flex-col md:flex-row gap-6 items-start">
+                <div className="flex flex-col gap-6 md:flex-row md:items-start">
                   <div className="flex-1">
-                    <h2 className="text-2xl font-serif font-bold text-navy mb-4">
+                    <QuestionHeading>
                       Are the Asquith-Venetia Stanley Letters Real?
-                    </h2>
+                    </QuestionHeading>
                     <div className="bg-white/50 p-6 rounded-sm border-l-4 border-accent-green/30 mb-4">
                       <p className="font-bold text-navy mb-2">The Short Answer: Yes, and they are even more extraordinary than the novel suggests.</p>
                       <p className="m-0">
@@ -191,12 +245,15 @@ export default function PrecipiceFactVsFictionPage() {
                       <ArrowRight size={14} />
                     </Link>
                   </div>
-                  <figure className="w-full md:w-80 shrink-0">
+                  <figure className="w-full md:w-[140px] md:shrink-0">
                     <img
                       src="/venetia-without-clementine.png"
-                      alt="Venetia Stanley in a period photograph"
+                      alt="Portrait of Venetia Stanley"
                       className="w-full h-auto rounded-sm shadow-lg sepia-[0.25] contrast-105 grayscale-[0.15]"
                     />
+                    <figcaption className="mt-2 text-sm italic text-stone-500">
+                      Venetia Stanley c. 1912
+                    </figcaption>
                   </figure>
                 </div>
               </section>
@@ -204,9 +261,9 @@ export default function PrecipiceFactVsFictionPage() {
               <HistoricalDivider icon="nib" />
 
               <section id="paul-deemer" className="scroll-mt-20">
-                <h2 className="text-2xl font-serif font-bold text-navy mb-4">
+                <QuestionHeading>
                   Was Paul Deemer a Real Person?
-                </h2>
+                </QuestionHeading>
                 <div className="bg-white/50 p-6 rounded-sm border-l-4 border-accent-amber/30 mb-4">
                   <p className="font-bold text-navy mb-2">The Short Answer: No.</p>
                   <p className="m-0">
@@ -216,87 +273,97 @@ export default function PrecipiceFactVsFictionPage() {
                     However, Harris bases the <em>practice</em> of letter interception on historical reality. The Home Office and military intelligence did monitor communications, especially as the &quot;Shells Scandal&quot; and political leaks became a matter of national security.
                   </p>
                 </div>
+                <RelatedChapterLink chapterId="secrets" chapterTitle="Explore the secrets that PM Asquith shared with Venetia Stanley" />
               </section>
 
               <HistoricalDivider icon="flourish" />
 
               <section id="conversion" className="scroll-mt-20">
-                <div className="flex flex-col md:flex-row-reverse gap-6 items-start">
-                  <div className="flex-1">
-                    <h2 className="text-2xl font-serif font-bold text-navy mb-4">
-                      Why did Venetia Stanley Convert to Judaism?
-                    </h2>
-                    <p>
-                      In 1915, Venetia Stanley shocked Asquith and her social circle by announcing her engagement to Edwin Montagu, a Jewish Cabinet minister and one of Asquith&apos;s protégés. 
-                    </p>
-                    <p>
-                      The conversion was a legal and family requirement. Edwin&apos;s father, Lord Swaythling, had left a will that disinherited any of his children who married outside the Jewish faith or failed to remain &quot;professing Jews.&quot; To marry Edwin and preserve his inheritance (and social standing), Venetia underwent a formal conversion.
-                    </p>
-                    <div className="flex items-start gap-4 p-4 bg-stone-100 rounded-sm">
-                      <Info className="text-stone-400 shrink-0 mt-1" size={20} />
-                      <p className="text-sm text-stone-600 m-0 italic">
-                        Historians often debate whether Venetia married Edwin out of love, or as a desperate &quot;escape hatch&quot; from the overwhelming intensity of Asquith&apos;s obsession.
-                      </p>
-                    </div>
-                  </div>
-                  <figure className="w-full md:w-64 shrink-0">
-                    <img
-                      src="/venetia_marriage.png"
-                      alt="Venetia Stanley and Edwin Montagu on their wedding day"
-                      className="w-full h-auto rounded-sm shadow-lg sepia-[0.25] contrast-105 grayscale-[0.15]"
-                    />
-                  </figure>
+                <QuestionHeading>
+                  Why did Venetia Stanley Convert to Judaism?
+                </QuestionHeading>
+                <p>
+                  In 1915, Venetia Stanley shocked Asquith and her social circle by announcing her engagement to Edwin Montagu, a Jewish Cabinet minister and one of Asquith&apos;s protégés. 
+                </p>
+                <p>
+                  The conversion was a legal and family requirement. Edwin&apos;s father, Lord Swaythling, had left a will that disinherited any of his children who married outside the Jewish faith or failed to remain &quot;professing Jews.&quot; To marry Edwin and preserve his inheritance (and social standing), Venetia underwent a formal conversion.
+                </p>
+                <InlineArchiveFigure
+                  src="/venetia_marriage.png"
+                  alt="Venetia Stanley and Edwin Montagu on their wedding day"
+                  caption="Venetia Stanley and Edwin Montagu on their wedding day."
+                />
+                <div className="flex items-start gap-4 p-4 bg-stone-100 rounded-sm">
+                  <Info className="text-stone-400 shrink-0 mt-1" size={20} />
+                  <p className="text-sm text-stone-600 m-0 italic">
+                    Historians often debate whether Venetia married Edwin out of love, or as a desperate &quot;escape hatch&quot; from the overwhelming intensity of Asquith&apos;s obsession.
+                  </p>
                 </div>
+                <RelatedChapterLink chapterId="jewish_conversion" chapterTitle="Read more about Venetia's Engagement to Edwin Montagu" />
               </section>
 
+            <div className="mt-8 bg-white/50 p-6 rounded-sm border-l-4 border-accent-amber/30 mb-4">
+              <h3 className="text-[16px] font-semibold uppercase tracking-[0.32em] text-slate">
+                COMPANION AUDIO SERIES
+              </h3>
+              <p className="mt-2 mb-3 text-base italic leading-relaxed text-slate/90">
+                Press play to hear the true story about the letters, the affair, and the historical context that inspired Robert Harris&apos;s novel.
+              </p>
+              <div className="overflow-hidden border border-border-beige/70 bg-card-bg rounded-2xl">
+                <iframe
+                  src="https://open.spotify.com/embed/playlist/1VQRZpMOAQKyG2UHA1l4oP?utm_source=generator&theme=0"
+                  width="100%"
+                  height="152"
+                  allowFullScreen={false}
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"
+                />
+              </div>
+              </div>
               <HistoricalDivider icon="ink" />
 
-              <section id="shells-scandal" className="scroll-mt-20">
-                <h2 className="text-2xl font-serif font-bold text-navy mb-4">
+              <section id="shells-scandal" className="scroll-mt-10">
+                <QuestionHeading>
                   The Shells Scandal and the 1915 Government Collapse
-                </h2>
+                </QuestionHeading>
                 <p>
                   The &quot;Shells Scandal&quot; depicted in the book—where the <span className="italic">Daily Mail</span> exposed a desperate shortage of munitions on the Front—is entirely historical. 
                 </p>
                 <p>
                   The crisis, combined with the resignation of Admiral Lord Fisher over the Dardanelles (Gallipoli) campaign, forced Asquith to dissolve his Liberal government and form a Coalition. This moment marked the beginning of the end for the traditional Liberal Party and is a central pivot point in <span className="italic">Precipice</span>.
                 </p>
+                <RelatedChapterLink chapterId="shells_scandal" chapterTitle="Read more about the Shells Scandal" />
               </section>
 
               <HistoricalDivider icon="flourish" />
 
               <section id="affair-physical" className="scroll-mt-20">
-                <div className="flex flex-col md:flex-row gap-6 items-start">
-                  <div className="flex-1">
-                    <h2 className="text-2xl font-serif font-bold text-navy mb-4">
-                      Was the affair physical?
-                    </h2>
-                    <div className="bg-white/50 p-6 rounded-sm border-l-4 border-accent-amber/30 mb-4">
-                      <p className="font-bold text-navy mb-2">The Short Answer: We don't know for sure.</p>
-                    <p>
-                      Most historians believe the relationship was deeply emotional but likely not physical in the modern sense. Asquith was known for &quot;hand-holding&quot; and being physically affectionate in a way that would be seen as inappropriate today, but the letters suggest a man who was &quot;in love&quot; with an idea and a confidante rather than a physical mistress.
-                    </p>
-                    <p>
-                      Harris&apos;s novel explores the tension and the potential for a more scandalous connection, but stays largely within the bounds of the historical ambiguity that exists in the letters.
-                    </p>
-                    </div>
-                  </div>
-                  <figure className="w-full md:w-64 shrink-0">
-                    <img
-                      src="/napier.webp"
-                      alt="Period portrait of a British officer"
-                      className="w-full h-auto rounded-sm shadow-lg sepia-[0.25] contrast-105 grayscale-[0.15]"
-                    />
-                  </figure>
+                <QuestionHeading>
+                  Was the affair physical?
+                </QuestionHeading>
+                <div className="bg-white/50 p-6 rounded-sm border-l-4 border-accent-amber/30 mb-4">
+                  <p className="font-bold text-navy mb-2">The Short Answer: We don't know for sure.</p>
+                  <p className="m-0">
+                    Most historians believe the relationship was deeply emotional but likely not physical in the modern sense. Asquith was known for &quot;hand-holding&quot; and being physically affectionate in a way that would be seen as inappropriate today, but the letters suggest a man who was &quot;in love&quot; with an idea and a confidante rather than a physical mistress.
+                  </p>
                 </div>
+                <InlineArchiveFigure
+                  src="/napier.webp"
+                  alt="A Napier car from the early 20th century"
+                  caption="A Napier 1908 car like this one was the setting for some of the most intimate moments in the letters."
+                />
+                <p>
+                  Harris&apos;s novel explores the tension and the potential for a more scandalous connection, but stays largely within the bounds of the historical ambiguity that exists in the letters.
+                </p>
+                <RelatedChapterLink chapterId="friday_drives" chapterTitle="Read more about PM Asquith and Venetia Stanley's Friday drives" />
               </section>
 
               <HistoricalDivider icon="nib" />
 
               <section id="secret-codes" className="scroll-mt-20">
-                <h2 className="text-2xl font-serif font-bold text-navy mb-4">
+                <QuestionHeading>
                   Did Asquith share secret codes?
-                </h2>
+                </QuestionHeading>
                 <div className="bg-white/50 p-6 rounded-sm border-l-4 border-accent-green/30 mb-4">
                   <p className="font-bold text-navy mb-2">The Short Answer: Yes.</p>
                   <p className="m-0">
@@ -306,15 +373,15 @@ export default function PrecipiceFactVsFictionPage() {
                   In one instance, he even asked her for advice on whether to go ahead with the Dardanelles expedition. His obsession with her was so great that he prioritized his correspondence with her over his duty to keep state secrets.
                 </p>
                 </div>
-                  <DataRoomPreview />
+                <RelatedChapterLink chapterId="secrets" chapterTitle="Read more about the secrets that PM Asquith shared with Venetia Stanley" />
               </section>
 
               <HistoricalDivider icon="flourish" />
 
               <section id="car-window" className="scroll-mt-20">
-                <h2 className="text-2xl font-serif font-bold text-navy mb-4">
+                <QuestionHeading>
                   Did Asquith really throw secrets out of a car window?
-                </h2>
+                </QuestionHeading>
                 <div className="bg-white/50 p-6 rounded-sm border-l-4 border-accent-amber/30 mb-4">
                   <p className="font-bold text-navy mb-2">The Short Answer: Yes.</p>
                   <p className="m-0">
@@ -334,99 +401,90 @@ export default function PrecipiceFactVsFictionPage() {
               <HistoricalDivider icon="ink" />
 
               <section id="cabinet-meetings" className="scroll-mt-20">
-                <h2 className="text-2xl font-serif font-bold text-navy mb-4">
+                <QuestionHeading>
                   Did he write during Cabinet meetings?
-                </h2>
+                </QuestionHeading>
                 <div className="bg-white/50 p-6 rounded-sm border-l-4 border-accent-green/30 mb-4">
                   <p className="font-bold text-navy mb-2">The Short Answer: Yes.</p>
                   <p className="m-0">
                     H.H. Asquith frequently wrote personal letters, particularly to Venetia Stanley, during official government meetings. Biographers and historians analyzing his correspondence have identified that out of a collection of 425 letters, at least 15 were written in part while Asquith was "on duty": 4 during Cabinet discussions, 3 during committee meetings, 1 during a Committee of Imperial Defence meeting, 1 during a War Council session, and 6 from the Treasury Bench in the House of Commons
                   </p>
                 </div>
+                <RelatedChapterLink chapterId="the_letters" chapterTitle="Read more about the Asquith-Stanley Letters" />
               </section>
 
               <HistoricalDivider icon="nib" />
 
               <section id="reply-advice" className="scroll-mt-20">
-                <div className="flex flex-col md:flex-row gap-6 items-start">
-                  <div className="flex-1">
-                    <h2 className="text-2xl font-serif font-bold text-navy mb-4">
-                      Did she really reply with advice?
-                    </h2>
-                    <div className="bg-white/50 p-6 rounded-sm border-l-4 border-accent-amber/30 mb-4">
-                      <p className="font-bold text-navy mb-2">The Short Answer: Most likely, but we don&apos;t have her letters.</p>
-                      <p className="m-0">
-                        Venetia&apos;s replies from these years are largely missing, so we don&apos;t have her words directly.
-                      </p>
-                    </div>
-                    <p>
-                      Asquith&apos;s letters frequently reference her opinions and occasionally ask for guidance, which suggests she did offer advice—even if we only see it reflected in his responses.
-                    </p>
-                  </div>
-                  <figure className="w-full md:w-80 shrink-0">
-                    <img
-                      src="/manual_Jan._13_1915.png"
-                      alt="Handwritten page dated Jan. 13, 1915"
-                      className="w-full h-auto rounded-sm shadow-lg sepia-[0.25] contrast-105 grayscale-[0.15]"
-                    />
-                  </figure>
+                <QuestionHeading>
+                  Did she really reply with advice?
+                </QuestionHeading>
+                <div className="bg-white/50 p-6 rounded-sm border-l-4 border-accent-amber/30 mb-4">
+                  <p className="font-bold text-navy mb-2">The Short Answer: Most likely, but we don&apos;t have her letters.</p>
+                  <p className="m-0">
+                    Venetia&apos;s replies from these years are largely missing, so we don&apos;t have her words directly.
+                  </p>
                 </div>
+                <InlineArchiveFigure
+                  src="/manual_Jan._13_1915.png"
+                  alt="An excerpt from one of Asquith's letters to Venetia, dated Jan. 13, 1915"
+                  caption="An excerpt from one of Asquith's letters to Venetia, dated Jan. 13, 1915."
+                />
+                <p>
+                  Asquith&apos;s letters frequently reference her opinions and occasionally ask for guidance, which suggests she did offer advice—even if we only see it reflected in his responses.
+                </p>
+                <Link
+                  href="/lab"
+                  className="mt-5 inline-flex items-center gap-2 text-[15px] font-semibold leading-snug text-accent-brown transition-colors duration-200 hover:text-navy"
+                >
+                  Check out how we reconstruct three of Venetia Stanley's lost letters to H.H. Asquith by analyzing his responses.
+                </Link>
               </section>
 
               <HistoricalDivider icon="ink" />
 
               <section id="after-the-book" className="scroll-mt-20">
-                <div className="flex flex-col md:flex-row-reverse gap-6 items-start">
-                  <div className="flex-1">
-                    <h2 className="text-2xl font-serif font-bold text-navy mb-4">
-                      What happened to Venetia Stanley after the book?
-                    </h2>
-                    <p>
-                      Following her marriage to Edwin Montagu in 1915, Venetia moved away from the center of Asquith&apos;s world. She and Edwin had one daughter, Judith, though rumors persisted that Judith&apos;s biological father might have been someone else (possibly William Humble Ward, 2nd Earl of Dudley).
-                    </p>
-                    <p>
-                      After Edwin&apos;s early death in 1924, Venetia lived a colorful, independent life, traveling widely and remaining a fixture in British social circles until her death in 1948.
-                    </p>
-                  </div>
-                  <figure className="w-full md:w-64 shrink-0">
-                    <img
-                      src="/venetia_and_her_daughter.jpg"
-                      alt="Venetia Stanley with her daughter Judith"
-                      className="w-full h-auto rounded-sm shadow-lg sepia-[0.25] contrast-105 grayscale-[0.15]"
-                    />
-                  </figure>
-                </div>
+                <QuestionHeading>
+                  What happened to Venetia Stanley after the book?
+                </QuestionHeading>
+                <p>
+                  Following her marriage to Edwin Montagu in 1915, Venetia moved away from the center of Asquith&apos;s world. She and Edwin had one daughter, Judith, though rumors persisted that Judith&apos;s biological father might have been someone else (possibly William Humble Ward, 2nd Earl of Dudley).
+                </p>
+                <InlineArchiveFigure
+                  src="/venetia_and_her_daughter.jpg"
+                  alt="Venetia Stanley with her daughter Judith"
+                  caption="Venetia Stanley with her daughter Judith."
+                />
+                <p>
+                  After Edwin&apos;s early death in 1924, Venetia lived a colorful, independent life, traveling widely and remaining a fixture in British social circles until her death in 1948.
+                </p>
+                <RelatedChapterLink chapterId="after_breakup" chapterTitle="Read more about Venetia Stanley's life after announcing her engagement to Edwin Montagu" />
               </section>
 
               <HistoricalDivider icon="flourish" />
 
               <section id="nurse-painting" className="scroll-mt-20">
-                <div className="flex flex-col md:flex-row gap-6 items-start">
-                  <div className="flex-1">
-                    <h2 className="text-2xl font-serif font-bold text-navy mb-4">
-                      Is the painting of Venetia Stanley as a nurse real?
-                    </h2>
-                    <div className="bg-white/50 p-6 rounded-sm border-l-4 border-accent-amber/30 mb-4">
-                      <p className="font-bold text-navy mb-2">The Short Answer: The attribution is uncertain.</p>
-                      <p className="m-0">
-                        It&apos;s often linked to Venetia, but the identification isn&apos;t consistently sourced.
-                      </p>
-                    <p>
-                      The painting is frequently associated with Venetia in modern reproductions, but the attribution is not uniformly sourced across references.
-                    </p>
-                    <p>
-                      The safest framing is that it captures the wartime mood around her, while remaining an uncertain identification rather than a confirmed portrait.
-                    </p>
-                    </div>
-                  </div>
-                  <figure className="w-full md:w-64 shrink-0">
-                    <img
-                      src="/venetia_nurse.jpeg"
-                      alt="Painting of a nurse attributed to Venetia Stanley"
-                      className="w-full h-auto rounded-sm shadow-lg sepia-[0.25] contrast-105 grayscale-[0.15]"
-                    />
-                  </figure>
+                <QuestionHeading>
+                  Is the painting of Venetia Stanley as a nurse real?
+                </QuestionHeading>
+                <div className="bg-white/50 p-6 rounded-sm border-l-4 border-accent-amber/30 mb-4">
+                  <p className="font-bold text-navy mb-2">The Short Answer: The attribution is uncertain.</p>
+                  <p className="m-0">
+                    It&apos;s often linked to Venetia, but the identification isn&apos;t consistently sourced.
+                  </p>
+                  <p>
+                    The painting is frequently associated with Venetia in modern reproductions, but the attribution is not uniformly sourced across references.
+                  </p>
+                  <p>
+                    The safest framing is that it captures the wartime mood around her, while remaining an uncertain identification rather than a confirmed portrait.
+                  </p>
                 </div>
+                <InlineArchiveFigure
+                  src="/venetia_nurse.jpeg"
+                  alt="Painting often associated with Venetia Stanley's when she was in nursering school ."
+                  caption="Painting often associated with Venetia Stanley's when she was in nursering school ."
+                />
+                <RelatedChapterLink chapterId="venetia_nurse" chapterTitle="Read more about Venetia Stanley's time as a nurse" />
               </section>
 
               <section className="bg-navy text-white p-8 rounded-sm mt-16">

@@ -246,7 +246,7 @@ export default function FranzVonPapenPage() {
               <p className="mt-2 mb-3 text-base italic leading-relaxed text-slate/90">
                 Listen to the complete four-part series while you explore the timeline.
               </p>
-              <div className="overflow-hidden border border-border-beige/70 bg-card-bg">
+              <div className="overflow-hidden border border-border-beige/70 bg-card-bg rounded-2xl">
                 <iframe
                   src="https://open.spotify.com/embed/playlist/1Gq4lfQjuD0AC94PV4HSD7?utm_source=generator&theme=0"
                   width="100%"
