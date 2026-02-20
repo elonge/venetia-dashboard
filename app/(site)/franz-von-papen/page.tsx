@@ -219,9 +219,9 @@ export default function FranzVonPapenPage() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(77,122,130,0.14),transparent_52%)]" />
 
         <div className="relative mx-auto max-w-[1500px] px-6 pt-12 md:pt-16">
-          <div className="grid items-end gap-8 md:grid-cols-[minmax(0,1fr)_minmax(460px,42vw)]">
-            <div className="flex flex-col gap-2">
-            <div className="pb-8 md:pb-10">
+          <div className="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_minmax(460px,42vw)]">
+            <div className="flex h-full flex-col justify-center gap-6">
+            <div>
               <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent-brown">
                 Historical Profile
               </p>
@@ -233,21 +233,31 @@ export default function FranzVonPapenPage() {
                 maps the key moments, miscalculations, and political maneuvers
                 that made him a central figure in Weimar&apos;s collapse.
               </p>
-              <p className="mt-8 text-[11px] font-semibold uppercase tracking-[0.28em] text-muted-gray">
+              <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-muted-gray">
                 Chancellor (1932)
                 <span className="px-2 text-accent-brown">&middot;</span>
                 Vice Chancellor (1933-1934)
               </p>
             </div>
-<iframe 
-  src="https://open.spotify.com/embed/playlist/1Gq4lfQjuD0AC94PV4HSD7?utm_source=generator&theme=0" 
-  width="100%" 
-  height="352" 
-  allowFullScreen={false} 
-  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-  loading="lazy">
-</iframe>
-</div>
+            <div className="mt-8 max-w-xl">
+              <h3 className="text-[16px] font-semibold uppercase tracking-[0.32em] text-slate">
+                Companion Podcast
+              </h3>
+              <p className="mt-2 mb-3 text-base italic leading-relaxed text-slate/90">
+                Listen to the complete four-part series while you explore the timeline.
+              </p>
+              <div className="overflow-hidden border border-border-beige/70 bg-card-bg">
+                <iframe
+                  src="https://open.spotify.com/embed/playlist/1Gq4lfQjuD0AC94PV4HSD7?utm_source=generator&theme=0"
+                  width="100%"
+                  height="152"
+                  allowFullScreen={false}
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
             <div className="relative w-full md:mr-[-9vw] lg:mr-[-11vw]">
               <img
                 src={heroImage}
