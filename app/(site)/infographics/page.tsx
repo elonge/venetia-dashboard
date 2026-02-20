@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useChatVisibility } from "@/components/chat/useChatVisibility";
@@ -13,6 +13,8 @@ const infographics = [
       "A visual briefing on the inflationary spiral that hollowed out the Weimar economy and accelerated political instability.",
     alt: "Infographic showing the hyperinflation crisis in the Weimar Republic",
     tileClass: "md:col-span-7 md:row-span-5 md:-rotate-1",
+    link: "https://thevenetiaproject.substack.com/p/from-100000-houses-to-a-crumb-of",
+    linkLabel: "Read the related Substack article",
   },
   {
     slug: "ww1-origins-domino-effect-infographic",
@@ -53,6 +55,25 @@ const socialLinks = [
 
 export default function InfographicsPage() {
   useChatVisibility(false);
+  const [activeItem, setActiveItem] = useState<(typeof infographics)[number] | null>(null);
+
+  useEffect(() => {
+    if (!activeItem) return undefined;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setActiveItem(null);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [activeItem]);
 
   return (
     <div className="min-h-screen bg-page-bg text-ink">
@@ -77,31 +98,34 @@ Compact visual summaries of a world in transition. While rooted in the archives 
             const pdfPath = `/infographics/${item.slug}.pdf`;
 
             const imageElement = (
-              <Image
-                src={pngPath}
-                alt={item.alt}
-                width={1024}
-                height={1536}
-                className="h-auto w-full object-cover"
-                sizes="(min-width: 1024px) 520px, (min-width: 768px) 45vw, 90vw"
-              />
+              <div className="relative h-full w-full">
+                <Image
+                  src={pngPath}
+                  alt={item.alt}
+                  fill
+                  className="object-contain"
+                  sizes="(min-width: 1024px) 520px, (min-width: 768px) 45vw, 90vw"
+                />
+              </div>
             );
 
             return (
               <article
                 key={item.slug}
-                className={`group flex h-full flex-col rounded-3xl border border-border-beige bg-card-bg/90 p-6 shadow-[0_24px_46px_rgba(36,27,21,0.12)] transition-transform duration-500 hover:-translate-y-1 ${
+                className={`group flex h-full min-h-0 flex-col rounded-3xl border border-border-beige bg-card-bg/90 p-6 shadow-[0_24px_46px_rgba(36,27,21,0.12)] transition-transform duration-500 hover:-translate-y-1 ${
                   item.tileClass ?? ""
                 }`}
               >
-                <div className="overflow-hidden rounded-2xl border border-border-beige bg-page-bg">
-                  {item.link ? (
-                    <Link href={item.link} aria-label={item.linkLabel} className="block">
-                      {imageElement}
-                    </Link>
-                  ) : (
-                    imageElement
-                  )}
+                <div className="relative flex-1 min-h-[260px] aspect-[2/3] md:aspect-auto md:h-full md:min-h-0 overflow-hidden rounded-2xl border border-border-beige bg-page-bg p-3">
+                  <button
+                    type="button"
+                    onClick={() => setActiveItem(item)}
+                    className="group relative h-full w-full cursor-zoom-in rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-green/70"
+                    aria-label={`Open ${item.title} infographic`}
+                  >
+                    {imageElement}
+                    <span className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-transparent transition group-hover:ring-accent-green/30" />
+                  </button>
                 </div>
                 <div className="mt-6">
                   <h2 className="text-2xl font-serif font-semibold text-navy">
@@ -126,6 +150,16 @@ Compact visual summaries of a world in transition. While rooted in the archives 
                     >
                       PNG
                     </a>
+                    {item.link && item.linkLabel && (
+                      <Link
+                        href={item.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-full border border-border-beige bg-page-bg px-3 py-1 text-accent-green transition-colors hover:text-navy"
+                      >
+                        View Page
+                      </Link>
+                    )}
                   </div>
                 </div>
               </article>
@@ -133,6 +167,78 @@ Compact visual summaries of a world in transition. While rooted in the archives 
           })}
         </div>
         </div>
+
+        {activeItem && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-ink/70 px-4 py-8"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${activeItem.title} infographic`}
+            onClick={() => setActiveItem(null)}
+          >
+            <div
+              className="relative w-full max-w-5xl rounded-3xl border border-border-beige bg-page-bg shadow-[0_30px_80px_rgba(20,20,20,0.4)]"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <button
+                type="button"
+                onClick={() => setActiveItem(null)}
+                className="absolute right-4 top-4 z-10 rounded-full border border-border-beige bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-muted-gray transition hover:text-navy"
+              >
+                Close
+              </button>
+              <div className="grid gap-6 p-6 md:grid-cols-[minmax(0,1fr)_minmax(0,320px)]">
+                <div className="relative h-[70vh] w-full overflow-hidden rounded-2xl border border-border-beige bg-white">
+                  <Image
+                    src={`/infographics/${activeItem.slug}.png`}
+                    alt={activeItem.alt}
+                    fill
+                    className="object-contain"
+                    sizes="(min-width: 1024px) 720px, 90vw"
+                    priority
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <h3 className="text-2xl font-serif font-semibold text-navy">
+                    {activeItem.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-slate">
+                    {activeItem.description}
+                  </p>
+                  <div className="mt-6 flex flex-wrap gap-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-muted-gray">
+                    <a
+                      href={`/infographics/${activeItem.slug}.pdf`}
+                      download
+                      className="rounded-full border border-border-beige bg-white px-4 py-2 text-accent-brown transition-colors hover:text-navy"
+                    >
+                      Download PDF
+                    </a>
+                    <a
+                      href={`/infographics/${activeItem.slug}.png`}
+                      download
+                      className="rounded-full border border-border-beige bg-white px-4 py-2 text-accent-brown transition-colors hover:text-navy"
+                    >
+                      Download PNG
+                    </a>
+                    {activeItem.link && activeItem.linkLabel && (
+                      <Link
+                        href={activeItem.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full rounded-2xl border border-accent-green/40 bg-accent-green px-5 py-3 text-center text-sm font-semibold uppercase tracking-[0.28em] text-white transition hover:-translate-y-0.5 hover:bg-accent-green/90 md:w-auto"
+                      >
+                        View Page
+                      </Link>
+                    )}
+                  </div>
+                  <p className="mt-6 text-xs uppercase tracking-[0.3em] text-muted-gray">
+                    Tip: click outside to close
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
 {socialLinks.length > 0 && (
   <div className="mt-16 overflow-hidden rounded-2xl border border-border-beige bg-section-bg/90 shadow-sm transition-all hover:shadow-md">

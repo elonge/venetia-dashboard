@@ -27,14 +27,21 @@ export default function SiteLayout({
   const [isChatOpen, setIsChatOpen] = useState(false); // For mobile bottom sheet - always starts closed
 
   const isHome = pathname === '/';
-  const hideChat = pathname === '/archive_search';
+  const hideChat = pathname === '/archive_search' || pathname === '/franz-von-papen';
   const isWw1Origins = pathname === '/ww1-origins';
+  const isFranzVonPapen = pathname === '/franz-von-papen';
+  const substackUrl = process.env.NEXT_PUBLIC_SUBSTACK_URL ?? 'https://thevenetiaproject.substack.com';
   const footerLinks = isWw1Origins
     ? [
         { href: '/', label: 'Home' },
         { href: '/about', label: 'About the Project' },
       ]
-    : undefined;
+    : isFranzVonPapen
+      ? [
+          { href: '/', label: 'Home' },
+          ...(substackUrl ? [{ href: substackUrl, label: 'Substack' }] : []),
+        ]
+      : undefined;
 
   // Ensure chat is closed on mobile by default when switching views
   useEffect(() => {
