@@ -36,11 +36,11 @@ function RelatedChapterLink({ chapterId, chapterTitle }: RelatedChapterLinkProps
 
 function InlineArchiveFigure({ src, alt, caption }: InlineArchiveFigureProps) {
   return (
-    <figure className="not-prose my-6">
+    <figure className="not-prose my-8 md:my-10 w-full">
       <img
         src={src}
         alt={alt}
-        className="w-full h-auto rounded-sm shadow-lg sepia-[0.25] contrast-105 grayscale-[0.15]"
+        className="block w-full h-auto rounded-sm shadow-lg object-cover sepia-[0.25] contrast-105 grayscale-[0.15]"
       />
       <figcaption className="mt-2 text-sm italic text-stone-500">
         {caption}
@@ -205,57 +205,57 @@ export default function PrecipiceFactVsFictionPage() {
           <div className="prose prose-lg prose-p:text-navy prose-headings:text-navy prose-li:text-slate">
             
             <header className="mb-12">
-              <div className="flex items-center gap-2 mb-4 text-accent-brown uppercase tracking-widest text-xs font-bold">
-                <BookOpen size={14} />
-                <span>Historical Guide</span>
+              <div className="flex flex-col gap-7 md:flex-row md:items-start">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-4 text-accent-brown uppercase tracking-widest text-xs font-bold">
+                    <BookOpen size={14} />
+                    <span>Historical Guide</span>
+                  </div>
+                  <h1 className="text-4xl md:text-5xl font-serif font-bold text-navy mb-6">
+                    Robert Harris’s &apos;Precipice&apos;: Fact vs. Fiction
+                  </h1>
+                  <p className="text-xl text-navy/80 font-serif italic">
+                    A guide to the historical reality behind the characters and events in Robert Harris&apos;s 2024 novel.
+                  </p>
+                  <p className="mt-4 text-base italic text-navy/85">
+                    The Venetia Project is a digital archive and audio series dedicated to the real letters between H.H. Asquith and Venetia Stanley. Below, we fact-check Robert Harris&apos;s novel against the primary sources.
+                  </p>
+                </div>
+                <figure className="not-prose w-full md:w-[140px] md:shrink-0 border-4 border-[#FDFBF7] shadow-md">
+                  <img
+                    src="/venetia-without-clementine.png"
+                    alt="Portrait of Venetia Stanley"
+                    className="block w-full h-auto rounded-sm shadow-lg sepia-[0.25] contrast-105 grayscale-[0.15]"
+                  />
+                  <figcaption className="mt-2 text-sm italic text-stone-500">
+                    Venetia Stanley c. 1912.
+                  </figcaption>
+                </figure>
               </div>
-              <h1 className="text-4xl md:text-5xl font-serif font-bold text-navy mb-6">
-                Robert Harris’s &apos;Precipice&apos;: Fact vs. Fiction
-              </h1>
-              <p className="text-xl text-navy/80 font-serif italic">
-                A guide to the historical reality behind the characters and events in Robert Harris&apos;s 2024 novel.
-              </p>
-              <p className="mt-4 text-base italic text-navy/85">
-                The Venetia Project is a digital archive and audio series dedicated to the real letters between H.H. Asquith and Venetia Stanley. Below, we fact-check Robert Harris&apos;s novel against the primary sources.
-              </p>
             </header>
 
             <div className="space-y-12">
 
               <section id="letters-real" className="scroll-mt-20">
-                <div className="flex flex-col gap-6 md:flex-row md:items-start">
-                  <div className="flex-1">
-                    <QuestionHeading>
-                      Are the Asquith-Venetia Stanley Letters Real?
-                    </QuestionHeading>
-                    <div className="bg-white/50 p-6 rounded-sm border-l-4 border-accent-green/30 mb-4">
-                      <p className="font-bold text-navy mb-2">The Short Answer: Yes, and they are even more extraordinary than the novel suggests.</p>
-                      <p className="m-0">
-                        H.H. Asquith wrote to Venetia Stanley up to three times a day, often while sitting at the Cabinet table. Over 500 of these letters survive.
-                      </p>
-                    </div>
-                    <p>
-                      What makes <span className="italic">Precipice</span> so compelling is that Harris uses many of Asquith&apos;s actual words. The Prime Minister really did share top-secret telegrams, discussed the movements of the fleet, and revealed the inner workings of his Cabinet to a woman half his age. 
-                    </p>
-                    <Link
-                      href="/venetia"
-                      className="mt-5 inline-flex items-center gap-2 rounded-sm border border-accent-green/35 bg-accent-green px-4 py-2 text-[11px] font-bold uppercase tracking-[0.2em] text-white shadow-[0_10px_24px_rgba(61,102,73,0.26)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2f523a]"
-                    >
-                      Learn more about Venetia
-                      <ArrowRight size={14} />
-                    </Link>
-                  </div>
-                  <figure className="w-full md:w-[140px] md:shrink-0">
-                    <img
-                      src="/venetia-without-clementine.png"
-                      alt="Portrait of Venetia Stanley"
-                      className="w-full h-auto rounded-sm shadow-lg sepia-[0.25] contrast-105 grayscale-[0.15]"
-                    />
-                    <figcaption className="mt-2 text-sm italic text-stone-500">
-                      Venetia Stanley c. 1912
-                    </figcaption>
-                  </figure>
+                <QuestionHeading>
+                  Are the Asquith-Venetia Stanley Letters Real?
+                </QuestionHeading>
+                <div className="bg-white/50 p-6 rounded-sm border-l-4 border-accent-green/30 mb-4">
+                  <p className="font-bold text-navy mb-2">The Short Answer: Yes, and they are even more extraordinary than the novel suggests.</p>
+                  <p className="m-0">
+                    H.H. Asquith wrote to Venetia Stanley up to three times a day, often while sitting at the Cabinet table. Over 500 of these letters survive.
+                  </p>
                 </div>
+                <p>
+                  What makes <span className="italic">Precipice</span> so compelling is that Harris uses many of Asquith&apos;s actual words. The Prime Minister really did share top-secret telegrams, discussed the movements of the fleet, and revealed the inner workings of his Cabinet to a woman half his age. 
+                </p>
+                <Link
+                  href="/venetia"
+                  className="mt-5 inline-flex items-center gap-2 rounded-sm border border-accent-green/35 bg-accent-green px-4 py-2 text-[11px] font-bold uppercase tracking-[0.2em] text-white shadow-[0_10px_24px_rgba(61,102,73,0.26)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2f523a]"
+                >
+                  Learn more about Venetia
+                  <ArrowRight size={14} />
+                </Link>
               </section>
 
               <HistoricalDivider icon="nib" />
@@ -302,18 +302,18 @@ export default function PrecipiceFactVsFictionPage() {
                 <RelatedChapterLink chapterId="jewish_conversion" chapterTitle="Read more about Venetia's Engagement to Edwin Montagu" />
               </section>
 
-            <div className="mt-8 bg-white/50 p-6 rounded-sm border-l-4 border-accent-amber/30 mb-4">
+            <div className="my-16 md:my-20 bg-white/50 p-6 rounded-sm border-l-4 border-accent-amber/30">
               <h3 className="text-[16px] font-semibold uppercase tracking-[0.32em] text-slate">
                 COMPANION AUDIO SERIES
               </h3>
               <p className="mt-2 mb-3 text-base italic leading-relaxed text-slate/90">
                 Press play to hear the true story about the letters, the affair, and the historical context that inspired Robert Harris&apos;s novel.
               </p>
-              <div className="overflow-hidden border border-border-beige/70 bg-card-bg rounded-2xl">
+              <div className="overflow-hidden border border-border-beige/70 bg-card-bg rounded-2xl shadow-md">
                 <iframe
                   src="https://open.spotify.com/embed/playlist/1VQRZpMOAQKyG2UHA1l4oP?utm_source=generator&theme=0"
                   width="100%"
-                  height="152"
+                  height="352"
                   allowFullScreen={false}
                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                   loading="lazy"
