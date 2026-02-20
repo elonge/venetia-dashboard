@@ -183,8 +183,12 @@ export default function PrecipiceFactVsFictionPage() {
                     <p>
                       What makes <span className="italic">Precipice</span> so compelling is that Harris uses many of Asquith&apos;s actual words. The Prime Minister really did share top-secret telegrams, discussed the movements of the fleet, and revealed the inner workings of his Cabinet to a woman half his age. 
                     </p>
-                    <Link href="/venetia" className="inline-flex items-center gap-1 text-accent-green hover:underline font-bold">
-                      Learn more about Venetia <ArrowRight size={16} />
+                    <Link
+                      href="/venetia"
+                      className="mt-5 inline-flex items-center gap-2 rounded-sm border border-accent-green/35 bg-accent-green px-4 py-2 text-[11px] font-bold uppercase tracking-[0.2em] text-white shadow-[0_10px_24px_rgba(61,102,73,0.26)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2f523a]"
+                    >
+                      Learn more about Venetia
+                      <ArrowRight size={14} />
                     </Link>
                   </div>
                   <figure className="w-full md:w-80 shrink-0">
