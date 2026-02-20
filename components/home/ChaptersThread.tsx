@@ -183,7 +183,7 @@ export default function ChaptersThread() {
             <ChapterThreadItem chapter={chapter} index={index} />
             {index === 2 && <VenetiaPromoCard />}
             {index === 5 && <CoteriePromoCard />}
-            {chapter.chapter_id === "end_of_piece" && <WW1OriginsPromoCard />}
+            {/* {chapter.chapter_id === "end_of_piece" && <WW1OriginsPromoCard />} */}
           </React.Fragment>
         ))}
       </div>
