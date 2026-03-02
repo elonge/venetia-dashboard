@@ -49,4 +49,9 @@ export const FAQ_ITEMS: FaqItem[] = [
     answer:
       "Yes, but narrowly. Just weeks after his Marburg Speech, Hitler purged his political rivals. While Papen was placed under house arrest and spared due to his close relationship with President Hindenburg, several of his closest aides were murdered.",
   },
+  {
+    question: "What was Franz von Papen's cause of death?",
+    answer:
+      "He died on May 2, 1969, in Obersasbach, West Germany, at age 89. Historical accounts describe his death as from natural causes in old age.",
+  },
 ];
