@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Robert Harris Precipice: Real History vs Fiction | The Venetia Project",
-  description: "A guide to the historical reality behind the characters and events in Robert Harris's 2024 novel Precipice, focusing on Asquith and Venetia Stanley.",
+  title: "Is Robert Harris Precipice a True Story? Fact vs Fiction",
+  description:
+    "Is Precipice by Robert Harris a true story? A fact-checked guide to the real history, people, and events behind the novel.",
 };
 
 export default function PrecipiceLayout({

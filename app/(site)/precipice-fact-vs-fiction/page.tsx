@@ -122,6 +122,7 @@ export default function PrecipiceFactVsFictionPage() {
   const [activeId, setActiveId] = useState<string>("");
 
   const sections = [
+    { id: "true-story", title: "True Story?" },
     { id: "letters-real", title: "The Letters" },
     { id: "paul-deemer", title: "Paul Deemer" },
     { id: "conversion", title: "The Conversion" },
@@ -235,6 +236,22 @@ export default function PrecipiceFactVsFictionPage() {
             </header>
 
             <div className="space-y-12">
+              <section id="true-story" className="scroll-mt-20">
+                <h2 className="text-[1.75rem] md:text-[1.95rem] font-serif font-semibold leading-tight text-accent-brown mb-4">
+                  Is Precipice by Robert Harris based on a true story?
+                </h2>
+                <div className="bg-white/50 p-6 rounded-sm border-l-4 border-accent-green/30 mb-4">
+                  <p className="font-bold text-navy mb-2">The Short Answer: Yes, but it is historical fiction.</p>
+                  <p className="m-0">
+                    Robert Harris built <span className="italic">Precipice</span> around real people and documented events, especially the letters between Prime Minister H.H. Asquith and Venetia Stanley.
+                  </p>
+                </div>
+                <p>
+                  This page separates what is historically verified from what is dramatized for the novel.
+                </p>
+              </section>
+
+              <HistoricalDivider icon="ink" />
 
               <section id="letters-real" className="scroll-mt-20">
                 <QuestionHeading>
