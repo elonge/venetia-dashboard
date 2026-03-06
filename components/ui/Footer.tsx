@@ -8,7 +8,6 @@ type FooterLink = {
 
 const defaultLinks: FooterLink[] = [
   { href: '/about', label: 'About the Project' },
-  { href: '/infographics', label: 'Infographics' },
   { href: '/precipice-fact-vs-fiction', label: 'Fact vs. Fiction' },
 ];
 
