@@ -24,7 +24,7 @@
     "lucide-react": "^0.561.0",
     "mixpanel-browser": "^2.73.0",
     "mongodb": "^7.0.0",
-    "next": "16.0.8",
+    "next": "16.0.10",
     "openai": "^4.20.0",
     "pondjs": "^0.8.0",
     "react": "19.2.1",
