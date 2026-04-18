@@ -9,6 +9,8 @@ type FooterLink = {
 const defaultLinks: FooterLink[] = [
   { href: '/about', label: 'About the Project' },
   { href: '/precipice-fact-vs-fiction', label: 'Fact vs. Fiction' },
+  { href: '/franz-von-papen', label: 'Franz von Papen' },
+
 ];
 
 export function Footer({ links = defaultLinks }: { links?: FooterLink[] }) {
