@@ -4,9 +4,20 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Send, Loader2, Sparkles, Search, Trash2, AlertTriangle, ArrowRight } from 'lucide-react';
 import MessageBubble, { Message } from './MessageBubble';
+import { trackEvent } from '@/lib/mixpanel';
 
 const CHAT_STORAGE_KEY = 'chatMessages';
 const CONVERSATION_ID_STORAGE_KEY = 'chatConversationId';
+const DEFAULT_CHAT_REPLY_ERROR_MESSAGE = 'Sorry, I encountered an error. Please try again.';
+const DEFAULT_CHAT_REPLY_ERROR_CODE = 'CHAT_REPLY_FAILED';
+
+type ChatQuestionSource = 'typed' | 'suggested_question' | 'query_param';
+
+type ChatReplyErrorDetails = {
+  code: string;
+  message: string;
+  httpStatus?: number;
+};
 
 const SUGGESTED_QUESTIONS = [
   {
@@ -34,6 +45,126 @@ const SUGGESTED_QUESTIONS = [
     ]
   }
 ];
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
+function getStringProperty(
+  value: Record<string, unknown>,
+  keys: string[]
+): string | undefined {
+  for (const key of keys) {
+    const candidate = value[key];
+    if (typeof candidate === 'string' && candidate.trim()) {
+      return candidate;
+    }
+  }
+
+  return undefined;
+}
+
+function getNumberProperty(
+  value: Record<string, unknown>,
+  keys: string[]
+): number | undefined {
+  for (const key of keys) {
+    const candidate = value[key];
+    if (typeof candidate === 'number' && Number.isFinite(candidate)) {
+      return candidate;
+    }
+  }
+
+  return undefined;
+}
+
+async function getHttpErrorDetails(response: Response): Promise<ChatReplyErrorDetails> {
+  let payload: unknown;
+
+  try {
+    payload = await response.json();
+  } catch {
+    payload = null;
+  }
+
+  if (isRecord(payload)) {
+    return {
+      code:
+        getStringProperty(payload, ['error_code', 'errorCode', 'code']) ||
+        `HTTP_${response.status}`,
+      message:
+        getStringProperty(payload, ['error', 'message']) ||
+        `Request failed with status ${response.status}`,
+      httpStatus: response.status,
+    };
+  }
+
+  return {
+    code: `HTTP_${response.status}`,
+    message: `Request failed with status ${response.status}`,
+    httpStatus: response.status,
+  };
+}
+
+function getStreamErrorDetails(value: unknown): ChatReplyErrorDetails | null {
+  if (!isRecord(value)) {
+    return null;
+  }
+
+  const hasErrorPayload =
+    typeof value.error === 'string' ||
+    typeof value.error_code === 'string' ||
+    typeof value.errorCode === 'string' ||
+    typeof value.code === 'string';
+
+  if (!hasErrorPayload) {
+    return null;
+  }
+
+  return {
+    code:
+      getStringProperty(value, ['error_code', 'errorCode', 'code']) ||
+      DEFAULT_CHAT_REPLY_ERROR_CODE,
+    message:
+      getStringProperty(value, ['error', 'message']) ||
+      DEFAULT_CHAT_REPLY_ERROR_MESSAGE,
+    httpStatus: getNumberProperty(value, ['http_status', 'httpStatus', 'status']),
+  };
+}
+
+function normalizeChatReplyError(error: unknown): ChatReplyErrorDetails {
+  if (error instanceof Error) {
+    const maybeError = error as Error & {
+      code?: string;
+      errorCode?: string;
+      httpStatus?: number;
+    };
+
+    return {
+      code: maybeError.errorCode || maybeError.code || DEFAULT_CHAT_REPLY_ERROR_CODE,
+      message: error.message || DEFAULT_CHAT_REPLY_ERROR_MESSAGE,
+      httpStatus:
+        typeof maybeError.httpStatus === 'number' ? maybeError.httpStatus : undefined,
+    };
+  }
+
+  if (isRecord(error)) {
+    return {
+      code:
+        getStringProperty(error, ['error_code', 'errorCode', 'code']) ||
+        DEFAULT_CHAT_REPLY_ERROR_CODE,
+      message:
+        getStringProperty(error, ['error', 'message']) ||
+        DEFAULT_CHAT_REPLY_ERROR_MESSAGE,
+      httpStatus: getNumberProperty(error, ['http_status', 'httpStatus', 'status']),
+    };
+  }
+
+  return {
+    code: DEFAULT_CHAT_REPLY_ERROR_CODE,
+    message: DEFAULT_CHAT_REPLY_ERROR_MESSAGE,
+  };
+}
 
 export default function ChatInterface() {
   const searchParams = useSearchParams();
@@ -113,7 +244,10 @@ export default function ChatInterface() {
     setIsClearConfirmOpen(false);
   };
 
-  const handleSend = useCallback(async (questionOverride?: string) => {
+  const handleSend = useCallback(async (
+    questionOverride?: string,
+    source: ChatQuestionSource = questionOverride ? 'suggested_question' : 'typed'
+  ) => {
     const questionToSend = questionOverride || input.trim();
     if (!questionToSend || isLoading) return;
 
@@ -134,6 +268,13 @@ export default function ChatInterface() {
       question: questionToSend,
       historyCount: historyToSend.length,
       historyPreview: historyToSend.slice(-2),
+    });
+
+    trackEvent('Chat: Question Asked', {
+      question_text: questionToSend,
+      question_source: source,
+      conversation_id: conversationId || undefined,
+      history_count: historyToSend.length,
     });
 
     const assistantMessage: Message = {
@@ -162,16 +303,22 @@ export default function ChatInterface() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to get response');
+        throw await getHttpErrorDetails(response);
       }
 
       const reader = response.body?.getReader();
       const decoder = new TextDecoder();
       let markdownText: string | undefined = undefined;
       let footnotes: Array<{ sourceId: string; date: string | null }> | undefined = undefined;
+      let responseConversationId = conversationId;
+      let streamError: ChatReplyErrorDetails | null = null;
 
       if (!reader) {
-        throw new Error('No response body');
+        throw {
+          code: 'NO_RESPONSE_BODY',
+          message: 'No response body',
+          httpStatus: response.status,
+        };
       }
 
       let buffer = '';
@@ -220,13 +367,29 @@ export default function ChatInterface() {
         for (const line of lines) {
           if (line.startsWith('data: ')) {
             try {
-              const data = JSON.parse(line.slice(6));
-              
-              if (data.status) {
+              const data: unknown = JSON.parse(line.slice(6));
+              const streamErrorDetails = getStreamErrorDetails(data);
+
+              if (streamErrorDetails) {
+                if (pendingUpdate) {
+                  cancelAnimationFrame(pendingUpdate);
+                  pendingUpdate = null;
+                }
+
+                streamError = streamErrorDetails;
+                updateMessage(DEFAULT_CHAT_REPLY_ERROR_MESSAGE, true);
+                continue;
+              }
+
+              if (!isRecord(data)) {
+                continue;
+              }
+
+              if (typeof data.status === 'string') {
                 updateMessage(fullContent, false, data.status);
               }
 
-              if (data.loading && !data.done) {
+              if (data.loading === true && data.done !== true) {
                 const displayContent = ''; // Keep empty to let the UI show "Consulting Sources" loader
                 const now = Date.now();
                 if (now - lastUpdateTime >= UPDATE_THROTTLE_MS) {
@@ -245,35 +408,36 @@ export default function ChatInterface() {
                 }
               }
               
-              if (data.content && !data.loading) {
+              if (typeof data.content === 'string' && data.loading !== true) {
                 fullContent += data.content;
               }
 
-              if (data.markdownText) {
+              if (typeof data.markdownText === 'string') {
                 markdownText = data.markdownText;
               }
-              if (data.footnotes) {
-                footnotes = data.footnotes;
+              if (Array.isArray(data.footnotes)) {
+                footnotes = data.footnotes as Array<{ sourceId: string; date: string | null }>;
               }
               
-              if (data.done) {
+              if (data.done === true) {
                 if (pendingUpdate) {
                   cancelAnimationFrame(pendingUpdate);
                   pendingUpdate = null;
                 }
-                if (data.markdownText) {
+                if (typeof data.markdownText === 'string') {
                     markdownText = data.markdownText;
                 }
-                if (data.footnotes) {
-                    footnotes = data.footnotes;
+                if (Array.isArray(data.footnotes)) {
+                    footnotes = data.footnotes as Array<{ sourceId: string; date: string | null }>;
                 }
 
                 console.log('Final markdownText:', markdownText, footnotes);
                 const finalContent = markdownText ? '' : fullContent;
                 updateMessage(finalContent, true, undefined, markdownText, footnotes);
               }
-              if (data.conversationId) {
+              if (typeof data.conversationId === 'string') {
                 console.log('Conversation ID:', data.conversationId);
+                responseConversationId = data.conversationId;
                 setConversationId(data.conversationId);
               }
             } catch {
@@ -286,16 +450,45 @@ export default function ChatInterface() {
       if (pendingUpdate) {
         cancelAnimationFrame(pendingUpdate);
       }
+
+      if (streamError) {
+        trackEvent('Chat: Response Failed', {
+          question_text: questionToSend,
+          question_source: source,
+          conversation_id: responseConversationId || undefined,
+          error_code: streamError.code,
+          error_message: streamError.message,
+          http_status: streamError.httpStatus,
+        });
+        return;
+      }
+
       const finalContent = markdownText ? '' : fullContent;
       updateMessage(finalContent, true, undefined, markdownText, footnotes);
+      trackEvent('Chat: Response Succeeded', {
+        question_text: questionToSend,
+        question_source: source,
+        conversation_id: responseConversationId || undefined,
+        response_char_count: markdownText?.length ?? finalContent.length,
+        response_format: markdownText ? 'markdown' : 'text',
+        footnote_count: footnotes?.length ?? 0,
+      });
     } catch (error) {
+      const errorDetails = normalizeChatReplyError(error);
       console.error('Error sending message:', error);
+      trackEvent('Chat: Response Failed', {
+        question_text: questionToSend,
+        question_source: source,
+        conversation_id: conversationId || undefined,
+        error_code: errorDetails.code,
+        error_message: errorDetails.message,
+        http_status: errorDetails.httpStatus,
+      });
       setMessages((prev) => {
         const newMessages = [...prev];
         const lastMessage = newMessages[newMessages.length - 1];
         if (lastMessage.role === 'assistant') {
-          lastMessage.content =
-            'Sorry, I encountered an error. Please try again.';
+          lastMessage.content = DEFAULT_CHAT_REPLY_ERROR_MESSAGE;
           lastMessage.isStreaming = false;
         }
         return newMessages;
@@ -311,7 +504,7 @@ export default function ChatInterface() {
     if (question && !hasAutoSentRef.current && messages.length === 0 && !isLoading) {
       hasAutoSentRef.current = true;
       setTimeout(() => {
-        handleSend(question);
+        handleSend(question, 'query_param');
       }, 100);
     }
   }, [searchParams, messages.length, handleSend, isLoading]);
@@ -379,7 +572,7 @@ export default function ChatInterface() {
                     {section.questions.map((q, qIdx) => (
                       <button
                         key={qIdx}
-                        onClick={() => handleSend(q)}
+                        onClick={() => handleSend(q, 'suggested_question')}
                         className="w-full text-left p-2.5 md:p-3 text-xs md:text-sm text-[#1A2A40] bg-white/50 border border-transparent hover:border-[#D4CFC4] hover:bg-white hover:shadow-sm rounded-md transition-all duration-200 group flex items-start justify-between"
                       >
                         <span className="group-hover:text-[#4A7C59] transition-colors pr-2 leading-relaxed">{q}</span>
