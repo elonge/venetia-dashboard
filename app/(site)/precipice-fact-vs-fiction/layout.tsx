@@ -3,7 +3,7 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Is Precipice by Robert Harris a True Story? Fact vs Fiction",
   description:
-    "Is Precipice by Robert Harris a true story? A fact-checked guide to the real history, people, and events behind the novel.",
+    "Is Precipice by Robert Harris a true story? A complete fact-check of the real Asquith–Venetia Stanley letters, characters, and events behind the novel — verified against primary sources.",
 };
 
 

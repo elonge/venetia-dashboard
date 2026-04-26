@@ -213,7 +213,7 @@ export default function PrecipiceFactVsFictionPage() {
                     <span>Historical Guide</span>
                   </div>
                   <h1 className="text-4xl md:text-5xl font-serif font-bold text-navy mb-6">
-                    Robert Harris’s &apos;Precipice&apos;: Fact vs. Fiction
+                    Is Robert Harris’s &apos;Precipice&apos; a True Story? Fact vs. Fiction
                   </h1>
                   <p className="text-xl text-navy/80 font-serif italic">
                     A guide to the historical reality behind the characters and events in Robert Harris&apos;s 2024 novel.
