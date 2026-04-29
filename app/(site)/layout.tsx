@@ -5,12 +5,30 @@ import { usePathname, useRouter } from 'next/navigation';
 import { ArrowLeft, MessageCircle, X } from 'lucide-react';
 import ChatInterface from '@/components/chat/ChatInterface';
 import { ChatLayoutContext } from '@/components/chat/chat-layout-context';
+import { trackEvent } from '@/lib/mixpanel';
 import { useIsMobile } from '@/lib/useMediaQuery';
 import { Footer } from '@/components/ui/Footer';
 
 const CHAT_MIN_WIDTH = 300;
 const CHAT_MAX_WIDTH = 1200;
 const CHAT_DEFAULT_WIDTH = 400;
+
+function getPreferredChatWidth() {
+  if (typeof window === 'undefined') {
+    return CHAT_DEFAULT_WIDTH;
+  }
+
+  const savedChatWidth = window.localStorage.getItem('chatWidth');
+  if (savedChatWidth) {
+    const width = parseInt(savedChatWidth, 10);
+    if (width >= CHAT_MIN_WIDTH && width <= CHAT_MAX_WIDTH) {
+      return width;
+    }
+  }
+
+  const preferredWidth = Math.floor(window.innerWidth * 0.33);
+  return Math.max(CHAT_MIN_WIDTH, Math.min(CHAT_MAX_WIDTH, preferredWidth));
+}
 
 export default function SiteLayout({
   children,
@@ -23,8 +41,8 @@ export default function SiteLayout({
 
   const [chatWidth, setChatWidth] = useState(CHAT_DEFAULT_WIDTH);
   const [isResizingChat, setIsResizingChat] = useState(false);
-  const [showChat, setShowChat] = useState(false); // Start closed, will open on desktop via useEffect
-  const [isChatOpen, setIsChatOpen] = useState(false); // For mobile bottom sheet - always starts closed
+  const [showChat, setShowChat] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const isHome = pathname === '/';
   const hideChat = pathname === '/archive_search' || pathname === '/franz-von-papen';
@@ -42,35 +60,21 @@ export default function SiteLayout({
           ...(substackUrl ? [{ href: substackUrl, label: 'Substack' }] : []),
         ]
       : undefined;
-
-  // Ensure chat is closed on mobile by default when switching views
-  useEffect(() => {
-    if (isMobile || hideChat) {
-      setShowChat(false);
-      setIsChatOpen(false);
-    }
-  }, [isMobile, hideChat]);
-
-  // On mobile, never auto-open the chat drawer across route changes.
-  useEffect(() => {
-    if (isMobile || hideChat) setIsChatOpen(false);
-  }, [isMobile, pathname, hideChat]);
+  const isDesktopChatOpen = !isMobile && !hideChat && showChat;
+  const isMobileChatOpen = isMobile && !hideChat && isChatOpen;
 
   useEffect(() => {
-    const savedChatWidth = localStorage.getItem('chatWidth');
-    if (savedChatWidth) {
-      const width = parseInt(savedChatWidth, 10);
-      if (width >= CHAT_MIN_WIDTH && width <= CHAT_MAX_WIDTH && width !== chatWidth) {
-        setChatWidth(width);
-      }
-    } else if (typeof window !== 'undefined') {
-      const preferredWidth = Math.floor(window.innerWidth * 0.33);
-      const clampedWidth = Math.max(CHAT_MIN_WIDTH, Math.min(CHAT_MAX_WIDTH, preferredWidth));
-      if (clampedWidth !== chatWidth) {
-        setChatWidth(clampedWidth);
-      }
-    }
-  }, [chatWidth]);
+    const frameId = window.requestAnimationFrame(() => {
+      setChatWidth((currentWidth) => {
+        const preferredWidth = getPreferredChatWidth();
+        return currentWidth === preferredWidth ? currentWidth : preferredWidth;
+      });
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+    };
+  }, []);
 
   useEffect(() => {
     if (chatWidth !== CHAT_DEFAULT_WIDTH) {
@@ -80,11 +84,11 @@ export default function SiteLayout({
 
   const handleChatResizeStart = useCallback(
     (e: React.MouseEvent) => {
-      if (!showChat || isMobile) return; // Disable resizing on mobile
+      if (!isDesktopChatOpen) return; // Disable resizing when the desktop sidebar is hidden
       e.preventDefault();
       setIsResizingChat(true);
     },
-    [showChat, isMobile]
+    [isDesktopChatOpen]
   );
 
   const handleMouseMove = useCallback(
@@ -128,19 +132,42 @@ export default function SiteLayout({
 
   const handleHeaderBack = useCallback(() => {
     router.push('/');
-  }, [pathname, router]);
+  }, [router]);
+
+  const openDesktopChat = useCallback(() => {
+    trackEvent('Chat: Opened', {
+      device: 'desktop',
+      trigger: 'floating_button',
+      pathname,
+    });
+    setShowChat(true);
+  }, [pathname]);
+
+  const closeDesktopChat = useCallback(() => {
+    setShowChat(false);
+  }, []);
 
   const toggleMobileChat = useCallback(() => {
+    trackEvent('Chat: Opened', {
+      device: 'mobile',
+      trigger: 'floating_button',
+      pathname,
+    });
     setIsChatOpen((prev) => !prev);
-  }, []);
+  }, [pathname]);
 
-  const closeMobileChat = useCallback(() => {
+  const closeMobileChat = useCallback((trigger: 'header_button' | 'backdrop') => {
+    trackEvent('Chat: Closed', {
+      device: 'mobile',
+      trigger,
+      pathname,
+    });
     setIsChatOpen(false);
-  }, []);
+  }, [pathname]);
 
   // Prevent body scroll when mobile chat is open
   useEffect(() => {
-    if (isMobile && isChatOpen) {
+    if (isMobileChatOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -148,10 +175,10 @@ export default function SiteLayout({
     return () => {
       document.body.style.overflow = '';
     };
-  }, [isMobile, isChatOpen]);
+  }, [isMobileChatOpen]);
 
   return (
-    <ChatLayoutContext.Provider value={{ showChat: isMobile ? isChatOpen : showChat, setShowChat: isMobile ? setIsChatOpen : setShowChat }}>
+    <ChatLayoutContext.Provider value={{ showChat: isMobile ? isMobileChatOpen : isDesktopChatOpen, setShowChat: isMobile ? setIsChatOpen : setShowChat }}>
       <div className="flex h-screen flex-col bg-page-bg">
 <header className="sticky top-0 z-50 w-full bg-page-bg/95 backdrop-blur-sm border-b border-border-beige shadow-[0_1px_3px_rgba(0,0,0,0.02)] transition-all duration-300">
   <div className="max-w-[1600px] mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
@@ -201,10 +228,22 @@ export default function SiteLayout({
           {/* Desktop Chat Sidebar */}
           {!isMobile && !hideChat && (
             <>
+              {!isDesktopChatOpen && (
+                <button
+                  type="button"
+                  onClick={openDesktopChat}
+                  className="fixed bottom-6 right-6 z-40 inline-flex items-center gap-3 rounded-full border border-[#1A2A40]/12 bg-[#1A2A40] px-5 py-3 text-sm font-semibold text-[#F5F0E8] shadow-[0_18px_45px_rgba(26,42,64,0.22)] transition-all hover:-translate-y-0.5 hover:bg-[#27415f] active:translate-y-0"
+                  aria-label="Open archive chat"
+                >
+                  <MessageCircle className="h-4 w-4 shrink-0" />
+                  <span>Chat with the archives</span>
+                </button>
+              )}
+
               <div
                 className={`w-1 bg-border-beige hover:bg-accent-green cursor-col-resize transition-colors ${
                   isResizingChat ? 'bg-accent-green' : ''
-                } ${showChat ? '' : 'hidden'}`}
+                } ${isDesktopChatOpen ? '' : 'hidden'}`}
                 onMouseDown={handleChatResizeStart}
               >
                 <div className="w-3 h-full -mx-1" />
@@ -212,13 +251,13 @@ export default function SiteLayout({
 
               <div
                 className={`flex-shrink-0 bg-page-bg h-full overflow-hidden p-4 border-l border-border-beige ${
-                  showChat ? '' : 'hidden'
+                  isDesktopChatOpen ? '' : 'hidden'
                 }`}
                 style={{
                   width: `${chatWidth}px`,
                   minWidth: `${CHAT_MIN_WIDTH}px`,
                 }}
-                aria-hidden={!showChat}
+                aria-hidden={!isDesktopChatOpen}
               >
                 <Suspense
                   fallback={
@@ -229,7 +268,7 @@ export default function SiteLayout({
                     </div>
                   }
                 >
-                  <ChatInterface />
+                  <ChatInterface onMinimize={closeDesktopChat} />
                 </Suspense>
               </div>
             </>
@@ -239,10 +278,10 @@ export default function SiteLayout({
           {isMobile && !hideChat && (
             <>
               {/* Backdrop */}
-              {isChatOpen && (
+              {isMobileChatOpen && (
                 <div
                   className="fixed inset-0 bg-black/50 z-40 transition-opacity"
-                  onClick={closeMobileChat}
+                  onClick={() => closeMobileChat('backdrop')}
                   aria-hidden="true"
                 />
               )}
@@ -250,7 +289,7 @@ export default function SiteLayout({
               {/* Bottom Sheet */}
               <div
                 className={`fixed inset-x-0 bottom-0 z-50 bg-page-bg rounded-t-2xl shadow-2xl transition-transform duration-300 ease-out ${
-                  isChatOpen ? 'translate-y-0' : 'translate-y-full'
+                  isMobileChatOpen ? 'translate-y-0' : 'translate-y-full'
                 }`}
                 style={{
                   height: '85vh',
@@ -261,7 +300,7 @@ export default function SiteLayout({
                 <div className="flex items-center justify-center pt-3 pb-2">
                   <div className="w-12 h-1 bg-border-beige rounded-full" />
                   <button
-                    onClick={closeMobileChat}
+                    onClick={() => closeMobileChat('header_button')}
                     className="absolute right-4 top-3 p-2 text-navy hover:text-accent-green transition-colors"
                     aria-label="Close chat"
                   >
@@ -285,18 +324,17 @@ export default function SiteLayout({
                 </div>
               </div>
 
-              {/* Floating Chat Toggle Button */}
-              <button
-                onClick={toggleMobileChat}
-                className="fixed bottom-6 right-6 w-14 h-14 bg-accent-green text-white rounded-full shadow-lg hover:bg-accent-green/80 transition-all z-[60] flex items-center justify-center active:scale-95"
-                aria-label={isChatOpen ? 'Close chat' : 'Open chat'}
-              >
-                {isChatOpen ? (
-                  <X className="w-6 h-6" />
-                ) : (
-                  <MessageCircle className="w-6 h-6" />
-                )}
-              </button>
+              {!isMobileChatOpen && (
+                <button
+                  type="button"
+                  onClick={toggleMobileChat}
+                  className="fixed bottom-6 right-6 z-[60] inline-flex min-h-14 items-center gap-3 rounded-full bg-accent-green px-5 py-3 text-sm font-semibold text-white shadow-lg transition-all hover:bg-accent-green/90 active:scale-95"
+                  aria-label="Open archive chat"
+                >
+                  <MessageCircle className="h-5 w-5 shrink-0" />
+                  <span>Chat with the archives</span>
+                </button>
+              )}
             </>
           )}
         </div>

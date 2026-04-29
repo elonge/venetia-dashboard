@@ -8,7 +8,6 @@ import HeroSection from "@/components/home/HeroSection";
 import { useChatVisibility } from "@/components/chat/useChatVisibility";
 import {
   DailyWidget,
-  getDayByDate,
   isInterestingDay,
   normalizeDayDate,
 } from "@/components/daily";
@@ -18,7 +17,7 @@ import ChaptersThread from "@/components/home/ChaptersThread";
 
 export default function Home() {
   const router = useRouter();
-  useChatVisibility(true);
+  useChatVisibility(false);
 
   // Daily widget state
   const [todayInHistory, setTodayInHistory] = useState<DayData | null>(null);

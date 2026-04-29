@@ -23,7 +23,7 @@ function QAContent() {
   const [allQuestions, setAllQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState(true);
   const searchParams = useSearchParams();
-  useChatVisibility(true);
+  useChatVisibility(false);
   
   useEffect(() => {
     async function fetchData() {

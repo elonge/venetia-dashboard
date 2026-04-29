@@ -9,10 +9,11 @@ export function useChatVisibility(show: boolean) {
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    // On mobile, don't automatically open/close chat - user controls it via button
-    // On desktop, respect the show parameter
-    if (!isMobile) {
-      setShowChat(show);
+    // On mobile, don't automatically open/close chat - user controls it via button.
+    // On desktop, only auto-open when a page explicitly opts in.
+    // Never auto-close here so the user's manual open/minimize state can persist while browsing.
+    if (!isMobile && show) {
+      setShowChat(true);
     }
   }, [setShowChat, show, isMobile]);
 }

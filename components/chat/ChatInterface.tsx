@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Send, Loader2, Sparkles, Search, Trash2, AlertTriangle, ArrowRight } from 'lucide-react';
+import { Send, Loader2, Sparkles, Search, Trash2, AlertTriangle, ArrowRight, Minus } from 'lucide-react';
 import MessageBubble, { Message } from './MessageBubble';
 import { trackEvent } from '@/lib/mixpanel';
 
@@ -166,7 +166,11 @@ function normalizeChatReplyError(error: unknown): ChatReplyErrorDetails {
   };
 }
 
-export default function ChatInterface() {
+interface ChatInterfaceProps {
+  onMinimize?: () => void;
+}
+
+export default function ChatInterface({ onMinimize }: ChatInterfaceProps) {
   const searchParams = useSearchParams();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -535,16 +539,36 @@ export default function ChatInterface() {
           </div>
         </div>
 
-        {/* Clear Chat Button */}
-        {messages.length > 0 && (
-             <button
-               onClick={() => setIsClearConfirmOpen(true)}
-               className="p-2 text-[#5A6472] hover:text-[#C24E42] hover:bg-[#C24E42]/10 rounded-md transition-colors"
-               title="Clear chat history"
-             >
-               <Trash2 size={16} />
-             </button>
-        )}
+        <div className="flex items-center gap-1">
+          {onMinimize && (
+            <button
+              type="button"
+              onClick={() => {
+                trackEvent('Chat: Minimized', {
+                  device: 'desktop',
+                  trigger: 'header_button',
+                });
+                onMinimize();
+              }}
+              className="p-2 text-[#5A6472] hover:text-[#1A2A40] hover:bg-[#1A2A40]/8 rounded-md transition-colors"
+              aria-label="Minimize chat"
+              title="Minimize chat"
+            >
+              <Minus size={16} />
+            </button>
+          )}
+
+          {messages.length > 0 && (
+            <button
+              type="button"
+              onClick={() => setIsClearConfirmOpen(true)}
+              className="p-2 text-[#5A6472] hover:text-[#C24E42] hover:bg-[#C24E42]/10 rounded-md transition-colors"
+              title="Clear chat history"
+            >
+              <Trash2 size={16} />
+            </button>
+          )}
+        </div>
       </div>
 
       {/* 2. MESSAGES AREA */}
