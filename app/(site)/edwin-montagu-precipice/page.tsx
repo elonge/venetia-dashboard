@@ -390,7 +390,7 @@ export default function EdwinMontaguPrecipicePage() {
               <section id="death" className="scroll-mt-20">
                 <QuestionHeading>How did Edwin Montagu die?</QuestionHeading>
                 <div className="bg-white/50 p-6 rounded-sm border-l-4 border-accent-amber/30 mb-4">
-                  <p className="font-bold text-navy mb-2">The Short Answer: He died in 1924 at age 44 after a period of illness.</p>
+                  <p className="font-bold text-navy mb-2">The Short Answer: Edwin Montagu died of blood poisoning on November 15, 1924, at the age of 45.</p>
                   <p className="m-0">
                     His early death cut short what had already been a consequential political career and fixed his legacy within a turbulent wartime and postwar decade.
                   </p>

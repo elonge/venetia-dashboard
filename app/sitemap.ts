@@ -61,6 +61,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'daily',
       priority: 0.7,
     },
+    {
+      url: `${baseUrl}/edwin-montagu-precipice`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.7,
+    }
   ];
 
   // 2. Dynamic Chapter Routes
