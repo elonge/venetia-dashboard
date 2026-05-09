@@ -66,6 +66,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/venetia-stanley-edwin-montagu-marriage`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/venetia-stanley-after-1915`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.7,
     }
   ];
 

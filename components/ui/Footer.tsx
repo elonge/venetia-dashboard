@@ -40,6 +40,8 @@ const baseColumns: FooterColumn[] = [
     links: [
       { href: '/precipice-fact-vs-fiction', label: 'Fact vs. Fiction' },
       { href: '/edwin-montagu-precipice', label: 'Edwin Montagu' },
+      { href: '/venetia-stanley-edwin-montagu-marriage', label: 'Venetia Montagu Marriage' },
+      { href: '/venetia-stanley-after-1915', label: 'Venetia After 1915' },
       { href: '/franz-von-papen', label: 'Franz von Papen' },
     ],
   },
