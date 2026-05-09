@@ -82,6 +82,7 @@ The underlying search capability is powered by **MongoDB Atlas Vector Search** a
     *   `MONGODB_URI`: Connection string for the data.
     *   `OPENAI_API_KEY`: For vector search and AI features.
     *   `NEXT_PUBLIC_MIXPANEL_TOKEN`: For analytics.
+    *   `MIXPANEL_PROXY_TARGET`: (Optional) Mixpanel ingestion host for the server-side proxy. Defaults to `https://api-js.mixpanel.com`.
     *   `NEXT_PUBLIC_APP_URL`: The production URL.
 
 4.  **Run the development server:**

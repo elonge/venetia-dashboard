@@ -47,6 +47,7 @@ We welcome ideas for new features! Please open a GitHub issue to discuss your id
 2.  Install dependencies: `npm install`
 3.  Set up environment variables (copy `.env.example` to `.env.local` if available, or ask a maintainer).
     *   `NEXT_PUBLIC_MIXPANEL_TOKEN`: (Optional) For analytics.
+    *   `MIXPANEL_PROXY_TARGET`: (Optional) Server-side Mixpanel proxy target. Defaults to `https://api-js.mixpanel.com`.
 4.  Run the development server: `npm run dev`
 
 ## License
