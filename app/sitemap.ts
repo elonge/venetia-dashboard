@@ -95,7 +95,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const interestingDailyRecords = dailyRecords.filter(record => (record?.letters?.length && record.letters.length > 0));
   const dailyRoutes: MetadataRoute.Sitemap = interestingDailyRecords.map((record) => ({
     url: `${baseUrl}/daily/${encodeURIComponent(record.date)}`,
-    lastModified: new Date(record.date), // Ideally this would be record.last_modified if available
+    lastModified: new Date('2025-09-01'), // Date the archive was published/stabilized
     changeFrequency: 'never', // Historical records rarely change
     priority: 0.4,
   }));
