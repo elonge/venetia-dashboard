@@ -131,7 +131,7 @@ ${
                 <div className="relative">
                   <div className="w-20 h-28 relative shadow-[2px_4px_6px_rgba(0,0,0,0.15)] rotate-[-1deg] group-hover:rotate-0 transition-transform duration-500 bg-section-bg border-4 border-card-bg overflow-hidden">
                     <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Asquith_Q_42036_%28cropped%29%28b%29.jpg/250px-Asquith_Q_42036_%28cropped%29%28b%29.jpg"
+                      src="portraits/H_H_Asquith.jpg"
                       alt="H.H. Asquith"
                       className="w-full h-full object-cover grayscale sepia-[0.3]"
                     />
@@ -222,7 +222,7 @@ ${
                 <div className="relative">
                   <div className="w-20 h-28 relative shadow-[2px_4px_6px_rgba(0,0,0,0.15)] rotate-[1deg] group-hover:rotate-0 transition-transform duration-500 bg-section-bg border-4 border-card-bg overflow-hidden">
                     <img
-                      src="https://upload.wikimedia.org/wikipedia/en/1/1c/Venetia_Stanley.jpg"
+                      src="portraits/Venetia_Stanley.jpg"
                       alt="Venetia Stanley"
                       className="w-full h-full object-cover grayscale sepia-[0.3]"
                     />

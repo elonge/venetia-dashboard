@@ -6,7 +6,7 @@ import { useChatVisibility } from "@/components/chat/useChatVisibility";
 import { ArrowRight, BookOpen, ExternalLink, Info, List } from "lucide-react";
 
 type RelatedChapterLinkProps = {
-  chapterId: string;
+  href: string;
   chapterTitle: string;
 };
 
@@ -20,10 +20,10 @@ type QuestionHeadingProps = {
   children: React.ReactNode;
 };
 
-function RelatedChapterLink({ chapterId, chapterTitle }: RelatedChapterLinkProps) {
+function RelatedChapterLink({ href, chapterTitle }: RelatedChapterLinkProps) {
   return (
     <Link
-      href={`/chapter?chapter_id=${encodeURIComponent(chapterId)}`}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       className="mt-5 inline-flex items-center gap-2 text-[15px] font-semibold leading-snug text-accent-brown transition-colors duration-200 hover:text-navy"
@@ -290,7 +290,7 @@ export default function PrecipiceFactVsFictionPage() {
                     However, Harris bases the <em>practice</em> of letter interception on historical reality. The Home Office and military intelligence did monitor communications, especially as the &quot;Shells Scandal&quot; and political leaks became a matter of national security.
                   </p>
                 </div>
-                <RelatedChapterLink chapterId="secrets" chapterTitle="Explore the secrets that PM Asquith shared with Venetia Stanley" />
+                <RelatedChapterLink href="/chapter/secrets" chapterTitle="Explore the secrets that PM Asquith shared with Venetia Stanley" />
               </section>
 
               <HistoricalDivider icon="flourish" />
@@ -307,8 +307,8 @@ export default function PrecipiceFactVsFictionPage() {
                 </p>
                 <InlineArchiveFigure
                   src="/venetia_marriage.png"
-                  alt="Venetia Stanley and Edwin Montagu on their wedding day"
-                  caption="Venetia Stanley and Edwin Montagu on their wedding day."
+                  alt="Venetia Stanley and Edwin Montagu on their wedding day in 1915"
+                  caption="Venetia Stanley and Edwin Montagu on their wedding day in 1915."
                 />
                 <div className="flex items-start gap-4 p-4 bg-stone-100 rounded-sm">
                   <Info className="text-stone-400 shrink-0 mt-1" size={20} />
@@ -316,7 +316,7 @@ export default function PrecipiceFactVsFictionPage() {
                     Historians often debate whether Venetia married Edwin out of love, or as a desperate &quot;escape hatch&quot; from the overwhelming intensity of Asquith&apos;s obsession.
                   </p>
                 </div>
-                <RelatedChapterLink chapterId="jewish_conversion" chapterTitle="Read more about Venetia's Engagement to Edwin Montagu" />
+                <RelatedChapterLink href="/chapter/jewish-conversion" chapterTitle="Read more about Venetia's Engagement to Edwin Montagu" />
               </section>
 
             <div className="my-16 md:my-20 bg-white/50 p-6 rounded-sm border-l-4 border-accent-amber/30">
@@ -349,7 +349,7 @@ export default function PrecipiceFactVsFictionPage() {
                 <p>
                   The crisis, combined with the resignation of Admiral Lord Fisher over the Dardanelles (Gallipoli) campaign, forced Asquith to dissolve his Liberal government and form a Coalition. This moment marked the beginning of the end for the traditional Liberal Party and is a central pivot point in <span className="italic">Precipice</span>.
                 </p>
-                <RelatedChapterLink chapterId="shells_scandal" chapterTitle="Read more about the Shells Scandal" />
+                <RelatedChapterLink href="/chapter/shells-scandal" chapterTitle="Read more about the Shells Scandal" />
               </section>
 
               <HistoricalDivider icon="flourish" />
@@ -372,7 +372,7 @@ export default function PrecipiceFactVsFictionPage() {
                 <p>
                   Harris&apos;s novel explores the tension and the potential for a more scandalous connection, but stays largely within the bounds of the historical ambiguity that exists in the letters.
                 </p>
-                <RelatedChapterLink chapterId="friday_drives" chapterTitle="Read more about PM Asquith and Venetia Stanley's Friday drives" />
+                <RelatedChapterLink href="/chapter/friday-drives" chapterTitle="Read more about PM Asquith and Venetia Stanley's Friday drives" />
               </section>
 
               <HistoricalDivider icon="nib" />
@@ -390,7 +390,7 @@ export default function PrecipiceFactVsFictionPage() {
                   In one instance, he even asked her for advice on whether to go ahead with the Dardanelles expedition. His obsession with her was so great that he prioritized his correspondence with her over his duty to keep state secrets.
                 </p>
                 </div>
-                <RelatedChapterLink chapterId="secrets" chapterTitle="Read more about the secrets that PM Asquith shared with Venetia Stanley" />
+                <RelatedChapterLink href="/chapter/secrets" chapterTitle="Read more about the secrets that PM Asquith shared with Venetia Stanley" />
               </section>
 
               <HistoricalDivider icon="flourish" />
@@ -427,7 +427,7 @@ export default function PrecipiceFactVsFictionPage() {
                     H.H. Asquith frequently wrote personal letters, particularly to Venetia Stanley, during official government meetings. Biographers and historians analyzing his correspondence have identified that out of a collection of 425 letters, at least 15 were written in part while Asquith was "on duty": 4 during Cabinet discussions, 3 during committee meetings, 1 during a Committee of Imperial Defence meeting, 1 during a War Council session, and 6 from the Treasury Bench in the House of Commons
                   </p>
                 </div>
-                <RelatedChapterLink chapterId="the_letters" chapterTitle="Read more about the Asquith-Stanley Letters" />
+                <RelatedChapterLink href="/chapter/the-letters" chapterTitle="Read more about the Asquith-Stanley Letters" />
               </section>
 
               <HistoricalDivider icon="nib" />
@@ -475,7 +475,7 @@ export default function PrecipiceFactVsFictionPage() {
                 <p>
                   After Edwin&apos;s early death in 1924, Venetia lived a colorful, independent life, traveling widely and remaining a fixture in British social circles until her death in 1948.
                 </p>
-                <RelatedChapterLink chapterId="after_breakup" chapterTitle="Read more about Venetia Stanley's life after announcing her engagement to Edwin Montagu" />
+                <RelatedChapterLink href="/chapter/after-breakup" chapterTitle="Read more about Venetia Stanley's life after announcing her engagement to Edwin Montagu" />
               </section>
 
               <HistoricalDivider icon="flourish" />
@@ -498,10 +498,10 @@ export default function PrecipiceFactVsFictionPage() {
                 </div>
                 <InlineArchiveFigure
                   src="/venetia_nurse.jpeg"
-                  alt="Painting often associated with Venetia Stanley's when she was in nursering school ."
-                  caption="Painting often associated with Venetia Stanley's when she was in nursering school ."
+                  alt="Painting often associated with Venetia Stanley's when she was in nursing school."
+                  caption="Painting often associated with Venetia Stanley's when she was in nursing school."
                 />
-                <RelatedChapterLink chapterId="venetia_nurse" chapterTitle="Read more about Venetia Stanley's time as a nurse" />
+                <RelatedChapterLink href="/chapter/venetia-nurse" chapterTitle="Read more about Venetia Stanley's time as a nurse" />
               </section>
 
               <section className="bg-navy text-white p-8 rounded-sm mt-16">

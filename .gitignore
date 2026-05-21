@@ -8,3 +8,5 @@ tsconfig.tsbuildinfo
 all_photos/
 scripts/embed-primary-sources.ts
 .gemini/
+all_images_in_indexed_page.txt
+download_wikimedia.sh

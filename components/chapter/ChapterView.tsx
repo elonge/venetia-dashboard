@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { Play, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { PEOPLE_IMAGES, PODCASTS, getRealSourceName, sourceNameMapping } from '@/constants';
+import { PEOPLE_DESCRIPTIONS, PEOPLE_IMAGES, PODCASTS, getRealSourceName, sourceNameMapping } from '@/constants';
 import { useChatVisibility } from '@/components/chat/useChatVisibility';
 import { Chapter } from '@/lib/chapters';
 import Timeline from '@/components/chapter/Timeline';
@@ -61,7 +61,8 @@ export default function ChapterView({ chapterData }: ChapterViewProps) {
   const perspectivesArray = Object.entries(chapterData.perspectives).map(([character, description]) => ({
     character,
     description,
-    image: PEOPLE_IMAGES[character as keyof typeof PEOPLE_IMAGES] || null
+    image: PEOPLE_IMAGES[character as keyof typeof PEOPLE_IMAGES] || null,
+    imageAlt: PEOPLE_DESCRIPTIONS[character as keyof typeof PEOPLE_DESCRIPTIONS] || character,
   }));
 
   const podcastData = PODCASTS.find(p => p.chapter_id === chapterData.chapter_id);
@@ -191,7 +192,7 @@ export default function ChapterView({ chapterData }: ChapterViewProps) {
                       {perspective.image && (
                         <img 
                           src={perspective.image}
-                          alt={perspective.character}
+                          alt={perspective.imageAlt}
                           className="w-16 h-16 rounded-full object-cover border-2 border-border-beige flex-shrink-0"
                           onError={(e) => { e.currentTarget.style.display = 'none'; }}
                         />

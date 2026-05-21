@@ -5,6 +5,7 @@ export const STATIC_CHAPTERS: Chapter[] = [
   {
     "_id": "693bf8d2211fd469b88001fe",
     "chapter_id": "sicily",
+    "slug": "asquith-venetia-sicily-1912",
     "chapter_title": "The Sicily Journey",
     "date_range": "January 1912",
     "thematic_subtitle": "Asquith fall in love",
@@ -59,6 +60,7 @@ export const STATIC_CHAPTERS: Chapter[] = [
   {
     "_id": "693bf8d2211fd469b88001ff",
     "chapter_id": "marconi_scandal",
+    "slug": "marconi-scandal-1912",
     "chapter_title": "The Marconi Scandal",
     "date_range": "1912 - 1913",
     "thematic_subtitle": "Ministers' gambling threatens Government",
@@ -89,6 +91,7 @@ export const STATIC_CHAPTERS: Chapter[] = [
   {
     "_id": "693bf8d2211fd469b8800200",
     "chapter_id": "friday_drives",
+    "slug": "asquith-venetia-friday-drives",
     "chapter_title": "Friday Drives",
     "date_range": "1912 - 1915",
     "thematic_subtitle": "Asquith's weekly escape with Venetia",
@@ -136,6 +139,7 @@ export const STATIC_CHAPTERS: Chapter[] = [
   {
     "_id": "693bf8d2211fd469b8800202",
     "chapter_id": "enchantress_cruise",
+    "slug": "hms-enchantress-cruise-1912",
     "chapter_title": "The Enchantress Cruise",
     "date_range": "May 1912 & May 1913",
     "thematic_subtitle": "Naval strategy and Mediterranean leisure",
@@ -213,6 +217,7 @@ export const STATIC_CHAPTERS: Chapter[] = [
   {
     "_id": "693bf8d2211fd469b8800203",
     "chapter_id": "home_rule_crisis",
+    "slug": "irish-home-rule-crisis-1912",
     "chapter_title": "The Home Rule Crisis",
     "date_range": "1912 - 1914",
     "thematic_subtitle": "Ireland on the brink of civil war",
@@ -273,6 +278,7 @@ export const STATIC_CHAPTERS: Chapter[] = [
   {
     "_id": "693bf8d2211fd469b8800204",
     "chapter_id": "end_of_piece",
+    "slug": "outbreak-of-war-1914",
     "chapter_title": "The end of piece",
     "date_range": "July–August 1914",
     "thematic_subtitle": "From serene peace to the outbreak of war",
@@ -312,6 +318,7 @@ export const STATIC_CHAPTERS: Chapter[] = [
   {
     "_id": "693bf8d2211fd469b8800205",
     "chapter_id": "venetia_nurse",
+    "slug": "venetia-stanley-nursing-1915",
     "chapter_title": "Venetia Enlists",
     "date_range": "January–May 1915",
     "thematic_subtitle": "Nursing training distances Asquith",
@@ -347,6 +354,7 @@ export const STATIC_CHAPTERS: Chapter[] = [
   {
     "_id": "693bf8d2211fd469b8800206",
     "chapter_id": "venetia_engagement",
+    "slug": "venetia-stanley-engagement-1915",
     "chapter_title": "Venetia's Engagement",
     "date_range": "May–July 1915",
     "thematic_subtitle": "Asquith's heartbreak and political turmoil",
@@ -373,6 +381,7 @@ export const STATIC_CHAPTERS: Chapter[] = [
   {
     "_id": "693bf8d2211fd469b8800207",
     "chapter_id": "fisher_churchill_crisis",
+    "slug": "fisher-churchill-crisis-1915",
     "chapter_title": "The Fisher-Churchill Crisis",
     "date_range": "May 1915",
     "thematic_subtitle": "Naval showdown topples the government",
@@ -414,6 +423,7 @@ export const STATIC_CHAPTERS: Chapter[] = [
   {
     "_id": "693bf8d2211fd469b8800208",
     "chapter_id": "shells_scandal",
+    "slug": "shells-crisis-1915",
     "chapter_title": "The Shells Scandal",
     "date_range": "May 1915",
     "thematic_subtitle": "Munitions shortage topples Asquith",
@@ -455,6 +465,7 @@ export const STATIC_CHAPTERS: Chapter[] = [
   {
     "_id": "694b75aa66ea731c78676974",
     "chapter_id": "the_letters",
+    "slug": "asquith-letters-venetia-stanley",
     "chapter_title": "Introduction - Asquith letters to Venetia Stanley",
     "date_range": "1912–1915",
     "thematic_subtitle": "An obsessive wartime correspondence",
@@ -510,6 +521,7 @@ export const STATIC_CHAPTERS: Chapter[] = [
   {
     "_id": "694b9e1877fb988660e26b0a",
     "chapter_id": "asquith_family",
+    "slug": "asquith-family-history",
     "chapter_title": "The Asquith Family: Power, Passion, and Tragedy",
     "date_range": "1852–1928",
     "thematic_subtitle": "A dynasty shaped by ambition and war",
@@ -534,6 +546,7 @@ export const STATIC_CHAPTERS: Chapter[] = [
   {
     "_id": "694b9e1877fb988660e26b0b",
     "chapter_id": "after_breakup",
+    "slug": "asquith-venetia-after-1915",
     "chapter_title": "After the Breakup: Asquith, Venetia, and the Montagus",
     "date_range": "May 1915 – November 1927",
     "thematic_subtitle": "Estrangement, reconciliation, and decline",
@@ -586,6 +599,7 @@ export const STATIC_CHAPTERS: Chapter[] = [
   {
     "_id": "69512c95770a83fc3a986722",
     "chapter_id": "jewish_conversion",
+    "slug": "venetia-stanley-jewish-conversion",
     "chapter_title": "The Jewish Conversion",
     "date_range": "May–July 1915",
     "thematic_subtitle": "A marriage of convenience sparks controversy",
@@ -651,6 +665,7 @@ export const STATIC_CHAPTERS: Chapter[] = [
   {
     "_id": "695b4d23f9c7b1b8969cfec6",
     "chapter_id": "secrets",
+    "slug": "asquith-state-secrets-venetia-stanley",
     "chapter_title": "State Secrets Shared",
     "date_range": "1914 – May 1915",
     "thematic_subtitle": "Cabinet decisions sent by post",

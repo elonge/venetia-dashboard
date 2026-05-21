@@ -8,6 +8,7 @@ import { PODCASTS } from '@/constants';
 interface Chapter {
   _id: string;
   chapter_id: string;
+  slug: string;
   chapter_title: string;
   main_story: string;
   perspectives: { [key: string]: string };
@@ -197,7 +198,7 @@ export default function ChapterCarousel({ chapters, loading }: ChapterCarouselPr
         {sortedChapters.map((chapter) => (
           <Link
             key={chapter._id}
-            href={`/chapter?chapter_id=${encodeURIComponent(chapter.chapter_id)}`}
+            href={`/chapter/${encodeURIComponent(chapter.slug)}`}
             className="shrink-0 w-80 bg-card-bg text-navy rounded-lg p-4 cursor-pointer hover:bg-section-bg transition-all hover:shadow-md group hover:no-underline border border-border-beige/50"
             onClick={(e) => {
               // Prevent navigation if user was dragging

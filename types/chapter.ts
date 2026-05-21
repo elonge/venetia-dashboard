@@ -16,6 +16,7 @@ export interface TimelineEvent {
 export interface Chapter {
   _id: string;
   chapter_id: string;
+  slug: string;
   chapter_title: string;
   date_range?: string;
   thematic_subtitle?: string;

@@ -22,13 +22,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: `${baseUrl}/lab`,
       lastModified: new Date(),
-      changeFrequency: 'daily',
+      changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/data-room`,
       lastModified: new Date(),
-      changeFrequency: 'daily',
+      changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
@@ -53,7 +53,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseUrl}/precipice-fact-vs-fiction`,
       lastModified: new Date(),
       changeFrequency: 'daily',
-      priority: 0.6,
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/franz-von-papen`,
@@ -65,28 +65,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseUrl}/edwin-montagu-precipice`,
       lastModified: new Date(),
       changeFrequency: 'daily',
-      priority: 0.7,
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/venetia-stanley-edwin-montagu-marriage`,
       lastModified: new Date(),
       changeFrequency: 'daily',
-      priority: 0.7,
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/venetia-stanley-after-1915`,
       lastModified: new Date(),
       changeFrequency: 'daily',
-      priority: 0.7,
+      priority: 0.8,
     }
   ];
 
   // 2. Dynamic Chapter Routes
   const chapters = await getAllChapters();
   const chapterRoutes: MetadataRoute.Sitemap = chapters.map((chapter) => ({
-    url: `${baseUrl}/chapter?chapter_id=${encodeURIComponent(chapter.chapter_id)}`,
+    url: `${baseUrl}/chapter/${encodeURIComponent(chapter.slug)}`,
     lastModified: new Date(),
-    changeFrequency: 'daily',
+    changeFrequency: 'monthly',
     priority: 0.7,
   }));
 
@@ -95,9 +95,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const interestingDailyRecords = dailyRecords.filter(record => (record?.letters?.length && record.letters.length > 0));
   const dailyRoutes: MetadataRoute.Sitemap = interestingDailyRecords.map((record) => ({
     url: `${baseUrl}/daily/${encodeURIComponent(record.date)}`,
-    lastModified: new Date(), // Ideally this would be record.last_modified if available
+    lastModified: new Date(record.date), // Ideally this would be record.last_modified if available
     changeFrequency: 'never', // Historical records rarely change
-    priority: 0.5,
+    priority: 0.4,
   }));
 
   return [...staticRoutes, ...chapterRoutes, ...dailyRoutes];

@@ -133,7 +133,7 @@ export default function EssentialsPage() {
                         <h2 className="text-3xl font-serif font-bold text-navy group-hover/letters:text-accent-brown transition-colors duration-500">The Letters (1912–1915)</h2>
                         <p className="text-muted-gray italic font-serif mt-1">The documentation of a national security nightmare.</p>
                         <div className="mt-3">
-                            <Link href="/chapter?chapter_id=the_letters" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-accent-brown hover:text-navy transition-colors group/link">
+                            <Link href="/chapter/the-letters" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-accent-brown hover:text-navy transition-colors group/link">
                                 <span>Read Full Chapter</span>
                                 <ArrowRight size={14} className="group-hover/link:translate-x-1 transition-transform" />
                             </Link>
@@ -203,7 +203,7 @@ export default function EssentialsPage() {
                             </p>
                          </div>
                          <div className="pt-2">
-                            <Link href="/chapter?chapter_id=venetia_engagement" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-accent-red hover:text-accent-red/80 transition-colors group/link">
+                            <Link href="/chapter/venetia-engagement" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-accent-red hover:text-accent-red/80 transition-colors group/link">
                                 <span>Read Full Chapter</span>
                                 <ArrowRight size={14} className="group-hover/link:translate-x-1 transition-transform" />
                             </Link>
@@ -242,7 +242,7 @@ export default function EssentialsPage() {
                     </div>
 
                     <div className="flex justify-center pt-4">
-                        <Link href="/chapter?chapter_id=after_breakup" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-accent-brown hover:text-navy transition-colors group/link">
+                        <Link href="/chapter/after-breakup" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-accent-brown hover:text-navy transition-colors group/link">
                             <span>Read Full Chapter</span>
                             <ArrowRight size={14} className="group-hover/link:translate-x-1 transition-transform" />
                         </Link>
@@ -297,7 +297,7 @@ export default function EssentialsPage() {
         {/* Footer Link */}
         <div className="bg-page-bg py-16 text-center">
             <Link 
-                href="/chapter?chapter_id=the_letters" 
+                href="/chapter/the-letters" 
                 className="inline-flex items-center gap-2 px-8 py-4 bg-navy text-card-bg rounded-sm hover:bg-accent-red transition-all duration-500 shadow-lg hover:shadow-accent-red/20 font-serif group/cta"
             >
                 <BookOpen size={20} className="group-hover/cta:scale-110 group-hover/cta:rotate-3 transition-transform duration-500" />

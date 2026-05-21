@@ -210,9 +210,7 @@ function ChapterThreadItem({
   // Use deterministic letter count based on index for now, or real data if available
   const thematicSubtitle = chapter.thematic_subtitle || "";
   const displayDateRange = chapter.date_range || "1912 - 1915";
-  const chapterUrl = `/chapter?chapter_id=${encodeURIComponent(
-    chapter.chapter_id
-  )}`;
+  const chapterUrl = `/chapter/${encodeURIComponent(chapter.slug)}`;
 
   return (
     <div className="relative pl-8 md:pl-16 group">
@@ -412,7 +410,7 @@ function MontaguMarriagePromoCard() {
             <img
               src="/venetia_marriage.png"
               className="w-full h-full object-cover opacity-100 grayscale mix-blend-multiply group-hover/card:scale-105 transition-all duration-700"
-              alt="Venetia Stanley and Edwin Montagu"
+              alt="Venetia Stanley and Edwin Montagu on their wedding day in 1915"
             />
           </div>
 
@@ -543,7 +541,7 @@ function PrecipicePromoCard() {
             <img
               src="/covers/precipice_facts_vs_fiction.png"
               className="w-full h-full object-cover opacity-100 grayscale mix-blend-multiply group-hover/card:scale-105 transition-all duration-700"
-              alt="Venetia Stanley"
+              alt="Is Precipice a True Story? Fact vs Fiction guide cover"
             />
           </div>
 

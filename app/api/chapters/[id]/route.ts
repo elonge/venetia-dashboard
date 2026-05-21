@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getChapterByChapterId } from '@/lib/chapters';
+import { getChapterBySlugOrChapterId } from '@/lib/chapters';
 
 export async function GET(
   request: Request,
@@ -7,7 +7,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const chapter = await getChapterByChapterId(id);
+    const chapter = await getChapterBySlugOrChapterId(id);
     
     if (!chapter) {
       return NextResponse.json(
@@ -25,5 +25,4 @@ export async function GET(
     );
   }
 }
-
 

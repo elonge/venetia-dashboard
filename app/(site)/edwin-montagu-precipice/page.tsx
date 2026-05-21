@@ -18,14 +18,14 @@ type InlineArchiveFigureProps = {
 };
 
 type RelatedChapterLinkProps = {
-  chapterId: string;
+  href: string;
   chapterTitle: string;
 };
 
-function RelatedChapterLink({ chapterId, chapterTitle }: RelatedChapterLinkProps) {
+function RelatedChapterLink({ href, chapterTitle }: RelatedChapterLinkProps) {
   return (
     <Link
-      href={`/chapter?chapter_id=${encodeURIComponent(chapterId)}`}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       className="mt-5 inline-flex items-center gap-2 text-[15px] font-semibold leading-snug text-accent-brown transition-colors duration-200 hover:text-navy"
@@ -237,7 +237,7 @@ export default function EdwinMontaguPrecipicePage() {
                 <figure className="not-prose w-full md:w-35 md:shrink-0 border-4 border-[#FDFBF7] shadow-md">
                   <img
                     src="/venetia_marriage.png"
-                    alt="Venetia Stanley and Edwin Montagu on their wedding day"
+                    alt="Venetia Stanley and Edwin Montagu on their wedding day in 1915"
                     className="block w-full h-auto rounded-sm shadow-lg sepia-[0.25] contrast-105 grayscale-[0.15]"
                   />
                   <figcaption className="mt-2 text-sm italic text-stone-500">Venetia Stanley and Edwin Montagu, 1915.</figcaption>
@@ -282,7 +282,7 @@ export default function EdwinMontaguPrecipicePage() {
                 </p>
                 <InlineArchiveFigure
                   src="/edwin-montagu/edwin-montagu-teeth.jpg"
-                  alt="Edwin Montagu smiling in a bowler hat"
+                  alt="Edwin Montagu — contemporaries frequently remarked on his teeth and appearance"
                   caption="A surviving photograph that helps explain why so many accounts mention Montagu's self-consciousness about his smile and appearance."
                   className="max-w-[28rem] mx-auto"
                 />
@@ -331,7 +331,7 @@ export default function EdwinMontaguPrecipicePage() {
                 <p>
                   Just as importantly, marrying Montagu gave Venetia a decisive way to break free from Asquith’s emotional dependence on her. In that sense, the marriage was less a romantic surrender than a calculated bargain: Venetia gained wealth, position, and personal liberty, while Montagu gained the woman he had loved for years.
                 </p>
-                <RelatedChapterLink chapterId="jewish_conversion" chapterTitle="Read more about Venetia's Engagement to Edwin Montagu" />
+                <RelatedChapterLink href="/chapter/jewish-conversion" chapterTitle="Read more about Venetia's Engagement to Edwin Montagu" />
               </section>
               <HistoricalDivider icon="ink" />
 
@@ -350,7 +350,7 @@ export default function EdwinMontaguPrecipicePage() {
                   He was jealous, but also genuinely worried: Asquith was leading Britain during a world war, and Montagu feared that his obsession with Venetia might damage his focus and judgment. The letters therefore mattered twice over — personally, because they revealed the rival who dominated Venetia’s emotional life, and politically, because they exposed how vulnerable the Prime Minister had become.
                 </p>
               <Link
-                  href="/chapter?chapter_id=secrets"
+                  href="/chapter/secrets"
                   className="mt-5 inline-flex items-center gap-2 rounded-sm border border-accent-green/35 bg-accent-green px-4 py-2 text-[11px] font-bold uppercase tracking-[0.2em] text-white shadow-[0_10px_24px_rgba(61,102,73,0.26)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2f523a]"
                 >
                   Learn more about Asquith's Letters to Venetia

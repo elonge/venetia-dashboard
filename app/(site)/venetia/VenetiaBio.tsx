@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, Headphones } from 'lucide-react';
 import { useChatVisibility } from '@/components/chat/useChatVisibility';
 import { PEOPLE_IMAGES } from '@/constants';
+import { alt } from '@/app/opengraph-image';
 
 interface CarouselSlide {
   id: string;
@@ -165,9 +166,9 @@ const dailySchedule = [
 
 
 const hobbies = [
-  { title: 'The Menagerie', description: 'Owned a bear, a fox, a penguin, and a monkey named Pluto.', image: '/venetia-page/venetia-hobby-bear.png' },
-  { title: 'Gambling', description: 'Poker and Bridge for money with "zest & determination".', image: '/venetia-page/venetia-gambling.jpg' },
-  { title: 'Sport', description: 'Fencing (3x a week) and Tennis.', image: '/venetia-page/venetia-tennis.png' }
+  { title: 'The Menagerie', description: 'Owned a bear, a fox, a penguin, and a monkey named Pluto.', image: '/venetia-page/venetia-hobby-bear.png', alt: 'A vintage photo of a bear in a Victorian parlor, representing Venetia Stanley\'s pet bear.' },
+  { title: 'Gambling', description: 'Poker and Bridge for money with "zest & determination".', image: '/venetia-page/venetia-gambling.jpg', alt: 'Venetia Stanley playing poker, representing her interest in gambling.' },
+  { title: 'Sport', description: 'Fencing (3x a week) and Tennis.', image: '/venetia-page/venetia-tennis.png', alt: 'Venetia Stanley engaging in fencing, representing her interest in sports.' }
 ];
 
 export default function VenetiaBio() {
@@ -610,7 +611,7 @@ export default function VenetiaBio() {
                         <div className="absolute inset-0 bg-navy/20 group-hover:bg-transparent transition-all z-10" />
                         <img 
                           src={hobby.image} 
-                          alt={hobby.title}
+                          alt={hobby.alt}
                           className="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                         />
                       </div>

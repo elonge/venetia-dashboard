@@ -537,17 +537,17 @@ export default function VenetiaStanleyEdwinMontaguMarriagePage() {
                 </h2>
                 <div className="mt-6 grid gap-4 md:grid-cols-2">
                   <RelatedLink
-                    href="/chapter?chapter_id=venetia_engagement"
+                    href="/chapter/venetia-engagement"
                     label="Venetia's Engagement"
                     description="The project chapter on the spring and summer 1915 engagement crisis."
                   />
                   <RelatedLink
-                    href="/chapter?chapter_id=jewish_conversion"
+                    href="/chapter/jewish-conversion"
                     label="The Jewish Conversion"
                     description="A chapter-length version of the inheritance issue, conversion, and backlash."
                   />
                   <RelatedLink
-                    href="/chapter?chapter_id=after_breakup"
+                    href="/chapter/after-breakup"
                     label="After the Breakup"
                     description="What happened to Asquith, Venetia, and the Montagus after the wedding."
                   />
