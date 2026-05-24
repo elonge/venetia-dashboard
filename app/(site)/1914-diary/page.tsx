@@ -135,14 +135,15 @@ const VenetiaDiaryLayout = () => {
         </div>
 
         {/* Content Area */}
-        <div className="flex-1 flex flex-col justify-start pt-24 px-12 md:px-20 overflow-y-auto custom-scrollbar overflow-x-hidden">
+        <div className="flex-1 flex flex-col justify-start pt-12 px-12 md:px-20 overflow-y-auto custom-scrollbar overflow-x-hidden">
           <div
             key={entry.id}
             className={`${animating ? "animate-slide-in-right" : ""}`}
           >
             <div className="mb-10">
-              <span className="text-stone-400 text-[10px] font-bold uppercase tracking-[0.3em] block mb-6">
-                A Reconstructed Diary of Venetia in 1914
+              <span className="text-stone-700 text-[10px] font-bold uppercase tracking-[0.3em] block mb-6  bg-stone-100 px-3 py-2 rounded-sm">
+                This is an imaginative reconstruction. Venetia Stanley did not
+                keep a diary.
               </span>
               <div className="flex items-center text-red-800 mb-3 space-x-2">
                 <MapPin size={16} />
