@@ -1,8 +1,9 @@
 'use client';
 
-import React, { Suspense, useCallback, useEffect, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { ArrowLeft, MessageCircle, X } from 'lucide-react';
+import SiteScrollDepthTracker from '@/components/analytics/SiteScrollDepthTracker';
 import ChatInterface from '@/components/chat/ChatInterface';
 import { ChatLayoutContext } from '@/components/chat/chat-layout-context';
 import { trackEvent } from '@/lib/mixpanel';
@@ -38,6 +39,7 @@ export default function SiteLayout({
   const pathname = usePathname();
   const router = useRouter();
   const isMobile = useIsMobile();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const [chatWidth, setChatWidth] = useState(CHAT_DEFAULT_WIDTH);
   const [isResizingChat, setIsResizingChat] = useState(false);
@@ -177,6 +179,10 @@ export default function SiteLayout({
     };
   }, [isMobileChatOpen]);
 
+  useEffect(() => {
+    scrollContainerRef.current?.scrollTo({ left: 0, top: 0 });
+  }, [pathname]);
+
   return (
     <ChatLayoutContext.Provider value={{ showChat: isMobile ? isMobileChatOpen : isDesktopChatOpen, setShowChat: isMobile ? setIsChatOpen : setShowChat }}>
       <div className="flex h-screen flex-col bg-page-bg">
@@ -217,7 +223,11 @@ export default function SiteLayout({
 </header>
 
         <div className="flex flex-1 min-h-0 relative">
-          <div className="flex-1 min-w-0 relative overflow-y-auto flex flex-col">
+          <div
+            ref={scrollContainerRef}
+            className="flex-1 min-w-0 relative overflow-y-auto flex flex-col"
+          >
+            <SiteScrollDepthTracker containerRef={scrollContainerRef} />
             <div className="flex-1">
               {children}
             </div>

@@ -1,4 +1,5 @@
 import mixpanel from 'mixpanel-browser';
+import type { RequestOptions } from 'mixpanel-browser';
 
 const MIXPANEL_TOKEN = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN;
 const MIXPANEL_PROXY_HOST = '/ingest';
@@ -37,12 +38,16 @@ export const initMixpanel = () => {
   hasInitialized = true;
 };
 
-export const trackEvent = (name: string, props: Record<string, unknown> = {}) => {
+export const trackEvent = (
+  name: string,
+  props: Record<string, unknown> = {},
+  options?: RequestOptions
+) => {
   if (!MIXPANEL_TOKEN) {
     warnMixpanelDisabled('Mixpanel token is not set. Event not tracked:', name, props);
     return;
   }
 
   initMixpanel();
-  mixpanel.track(name, props);
+  mixpanel.track(name, props, options);
 };
