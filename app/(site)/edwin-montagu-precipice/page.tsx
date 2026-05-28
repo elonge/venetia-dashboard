@@ -331,7 +331,7 @@ export default function EdwinMontaguPrecipicePage() {
                 <p>
                   Just as importantly, marrying Montagu gave Venetia a decisive way to break free from Asquith’s emotional dependence on her. In that sense, the marriage was less a romantic surrender than a calculated bargain: Venetia gained wealth, position, and personal liberty, while Montagu gained the woman he had loved for years.
                 </p>
-                <RelatedChapterLink href="/chapter/jewish-conversion" chapterTitle="Read more about Venetia's Engagement to Edwin Montagu" />
+                <RelatedChapterLink href="/chapter/venetia-stanley-jewish-conversion" chapterTitle="Read more about Venetia's Engagement to Edwin Montagu" />
               </section>
               <HistoricalDivider icon="ink" />
 
@@ -350,7 +350,7 @@ export default function EdwinMontaguPrecipicePage() {
                   He was jealous, but also genuinely worried: Asquith was leading Britain during a world war, and Montagu feared that his obsession with Venetia might damage his focus and judgment. The letters therefore mattered twice over — personally, because they revealed the rival who dominated Venetia’s emotional life, and politically, because they exposed how vulnerable the Prime Minister had become.
                 </p>
               <Link
-                  href="/chapter/secrets"
+                  href="/chapter/asquith-state-secrets-venetia-stanley"
                   className="mt-5 inline-flex items-center gap-2 rounded-sm border border-accent-green/35 bg-accent-green px-4 py-2 text-[11px] font-bold uppercase tracking-[0.2em] text-white shadow-[0_10px_24px_rgba(61,102,73,0.26)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2f523a]"
                 >
                   Learn more about Asquith's Letters to Venetia

@@ -1416,7 +1416,7 @@ const VenetiaSimulationLabNew = () => {
                 <div className="flex items-center justify-center flex-1 my-8">
                   <div className="aspect-square rounded-full border-8 md:border-[12px] border-navy shadow-2xl relative group ring-2 md:ring-4 ring-accent-brown/20 max-w-[280px] md:max-w-none mx-auto">
                     <img
-                      src="portraits/H_H_Asquith.jpg"
+                      src="/portraits/H_H_Asquith.jpg"
                       className="w-full h-full object-cover brightness-50 grayscale group-hover:brightness-90 transition-all duration-700 rounded-full"
                       alt="H.H. Asquith"
                     />

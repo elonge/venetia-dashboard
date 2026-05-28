@@ -467,7 +467,7 @@ export default function VenetiaStanleyAfter1915Page() {
                     description="The 1915 wedding, conversion, courtship timeline, and Asquith's reaction."
                   />
                   <RelatedLink
-                    href="/chapter/after-breakup"
+                    href="/chapter/asquith-venetia-after-1915"
                     label="After the Breakup"
                     description="The project chapter on estrangement, reconciliation, and the Montagus after 1915."
                   />

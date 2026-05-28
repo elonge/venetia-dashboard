@@ -210,7 +210,7 @@ export const metadata: Metadata = {
 };
 
 export default function FranzVonPapenPage() {
-  const heroImage = "portraits/Franz_von_Papen.jpg";
+  const heroImage = "/portraits/Franz_von_Papen.jpg";
 
   return (
     <div className="min-h-screen bg-page-bg text-ink">
