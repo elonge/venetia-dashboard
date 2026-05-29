@@ -26,4 +26,9 @@ export interface Chapter {
   locations: Location[];
   timeline?: TimelineEvent[];
   sources: string[];
+  letters?: {
+    date: string;
+    context: string;
+    image_url: string;  
+  }[];
 }

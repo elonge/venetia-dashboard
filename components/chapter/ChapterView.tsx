@@ -1,9 +1,10 @@
 'use client';
+/* eslint-disable @next/next/no-img-element */
 
 import React from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { Play, Sparkles } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PEOPLE_DESCRIPTIONS, PEOPLE_IMAGES, PODCASTS, getRealSourceName, sourceNameMapping } from '@/constants';
 import { useChatVisibility } from '@/components/chat/useChatVisibility';
@@ -32,6 +33,7 @@ interface ChapterViewProps {
 
 export default function ChapterView({ chapterData }: ChapterViewProps) {
   useChatVisibility(false);
+  const [currentLetterIndex, setCurrentLetterIndex] = React.useState(0);
 
   const replaceSourceNames = (text: string): string => {
     const entries = Object.entries(sourceNameMapping).sort(([a], [b]) => b.length - a.length);
@@ -40,6 +42,15 @@ export default function ChapterView({ chapterData }: ChapterViewProps) {
       return acc.split(sourceName).join(displayName);
     }, text);
   };
+
+  const formatChapterText = (text: string, stripReferences = false): string => {
+    const formatted = replaceSourceNames(text);
+    return stripReferences ? formatted.replace(/\[.*?\]/g, '').trim() : formatted.trim();
+  };
+
+  React.useEffect(() => {
+    setCurrentLetterIndex(0);
+  }, [chapterData?.chapter_id]);
 
   if (!chapterData) {
     return (
@@ -69,6 +80,12 @@ export default function ChapterView({ chapterData }: ChapterViewProps) {
   const hasPodcast = !!(podcastData || chapterData.podcast);
   const activePodcast = podcastData || chapterData.podcast;
   const spotifyUrl = activePodcast?.spotify_url;
+  const chapterLetters = chapterData.letters ?? [];
+  const hasLetters = chapterLetters.length > 0;
+  const activeLetterIndex = hasLetters
+    ? Math.min(currentLetterIndex, chapterLetters.length - 1)
+    : 0;
+  const activeLetter = hasLetters ? chapterLetters[activeLetterIndex] : null;
 
   return (
     <div className="h-full bg-page-bg">
@@ -93,7 +110,7 @@ export default function ChapterView({ chapterData }: ChapterViewProps) {
                   The Context
                 </span>
                 <p className="font-serif text-[15px] leading-relaxed text-navy">
-                  {replaceSourceNames(chapterData.main_story).replace(/\[.*?\]/g, '').trim()}
+                  {formatChapterText(chapterData.main_story, true)}
                 </p>
               </div>
 
@@ -157,7 +174,97 @@ export default function ChapterView({ chapterData }: ChapterViewProps) {
               )}
             </div>
 
-            {/* 3. TIMELINE / MAP */}
+            {/* 3. LETTERS */}
+            {hasLetters && activeLetter && (
+              <section className="mb-10 border-t border-dashed border-border-beige pt-8">
+                <div className="mb-4 flex items-center justify-between gap-4">
+                  <div>
+                    <h2 className="text-xs font-semibold text-muted-gray uppercase tracking-wider">
+                      Selected Letters
+                    </h2>
+                    <p className="mt-1 text-sm text-slate">
+                      Contemporary extracts tied directly to this chapter.
+                    </p>
+                  </div>
+
+                  {chapterLetters.length > 1 && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-gray">
+                        {activeLetterIndex + 1} of {chapterLetters.length}
+                      </span>
+                      <button
+                        onClick={() => setCurrentLetterIndex((prev) => Math.max(0, prev - 1))}
+                        disabled={activeLetterIndex === 0}
+                        className="rounded-sm border border-border-beige bg-card-bg p-2 text-navy transition-colors hover:text-accent-brown disabled:cursor-not-allowed disabled:opacity-30"
+                        aria-label="Previous chapter letter"
+                      >
+                        <ChevronLeft className="h-4 w-4" />
+                      </button>
+                      <button
+                        onClick={() =>
+                          setCurrentLetterIndex((prev) => Math.min(chapterLetters.length - 1, prev + 1))
+                        }
+                        disabled={activeLetterIndex === chapterLetters.length - 1}
+                        className="rounded-sm border border-border-beige bg-card-bg p-2 text-navy transition-colors hover:text-accent-brown disabled:cursor-not-allowed disabled:opacity-30"
+                        aria-label="Next chapter letter"
+                      >
+                        <ChevronRight className="h-4 w-4" />
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                <div
+                  key={`${chapterData.chapter_id}-${activeLetterIndex}`}
+                  className="animate-in fade-in slide-in-from-right-4 duration-500 overflow-hidden rounded-lg border border-border-beige/60 bg-card-bg shadow-sm"
+                >
+                  {activeLetter.image_url && (
+                    <div className="flex items-center justify-center bg-page-bg/70 p-4 md:p-6">
+                      <img
+                        src={activeLetter.image_url}
+                        alt={`${chapterData.chapter_title} letter illustration for ${activeLetter.date}`}
+                        className="h-72 w-full object-contain md:h-96"
+                      />
+                    </div>
+                  )}
+
+                  <div className="p-6 md:p-8">
+                    <div className="mb-4 flex items-center justify-between gap-3 border-b border-border-beige/60 pb-4">
+                      <span className="text-[10px] font-black uppercase tracking-[0.22em] text-accent-brown">
+                        Letter Extract
+                      </span>
+                      <span className="text-sm font-semibold text-navy">
+                        {activeLetter.date}
+                      </span>
+                    </div>
+
+                    <p className="font-serif text-lg leading-relaxed text-navy">
+                      {formatChapterText(activeLetter.context, true)}
+                    </p>
+
+                    {chapterLetters.length > 1 && (
+                      <div className="mt-6 flex items-center gap-2">
+                        {chapterLetters.map((letter, index) => (
+                          <button
+                            key={`${letter.date}-${index}`}
+                            onClick={() => setCurrentLetterIndex(index)}
+                            className={`h-2 rounded-full transition-all ${
+                              index === activeLetterIndex
+                                ? 'w-8 bg-accent-brown'
+                                : 'w-2 bg-border-beige hover:bg-accent-brown/50'
+                            }`}
+                            aria-label={`Show letter ${index + 1}`}
+                            aria-pressed={index === activeLetterIndex}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </section>
+            )}
+
+            {/* 4. TIMELINE / MAP */}
             {chapterData.locations && chapterData.locations.length > 0 ? (
               <section className="mb-6 border-t border-dashed border-border-beige pt-8">
                 <SicilyMap 
@@ -176,7 +283,7 @@ export default function ChapterView({ chapterData }: ChapterViewProps) {
               </section>
             ) : null}
 
-            {/* 4. PERSPECTIVES */}
+            {/* 5. PERSPECTIVES */}
             {perspectivesArray.length > 0 && (
               <section className="mb-8">
                 <h2 className="text-xs font-semibold text-muted-gray uppercase tracking-wider mb-4">
@@ -211,7 +318,7 @@ export default function ChapterView({ chapterData }: ChapterViewProps) {
               </section>
             )}
 
-            {/* 5. FUN FACT */}
+            {/* 6. FUN FACT */}
             {chapterData.fun_fact && (
               <section className="bg-section-bg border-2 border-accent-brown/20 rounded-lg p-6 mb-8 shadow-md relative">
                 <div className="flex items-center gap-2 mb-3">
@@ -227,7 +334,7 @@ export default function ChapterView({ chapterData }: ChapterViewProps) {
               </section>
             )}
 
-            {/* 6. VIDEO */}
+            {/* 7. VIDEO */}
             {chapterData.video && (
               <section className="mb-8 bg-card-bg rounded-lg overflow-hidden border border-border-beige shadow-sm">
                 <div className="p-6">
@@ -256,7 +363,7 @@ export default function ChapterView({ chapterData }: ChapterViewProps) {
               </section>
             )}
 
-            {/* 7. SOURCES */}
+            {/* 8. SOURCES */}
             {chapterData.sources && chapterData.sources.length > 0 && (
               <section className="bg-card-bg border border-border-beige/50 rounded-lg p-4 mb-12">
                 <div className="flex items-start gap-2">

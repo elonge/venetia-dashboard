@@ -266,13 +266,15 @@ export default function PrecipiceFactVsFictionPage() {
                 <p>
                   What makes <span className="italic">Precipice</span> so compelling is that Harris uses many of Asquith&apos;s actual words. The Prime Minister really did share top-secret telegrams, discussed the movements of the fleet, and revealed the inner workings of his Cabinet to a woman half his age. 
                 </p>
-                <Link
-                  href="/venetia"
-                  className="mt-5 inline-flex items-center gap-2 rounded-sm border border-accent-green/35 bg-accent-green px-4 py-2 text-[11px] font-bold uppercase tracking-[0.2em] text-white shadow-[0_10px_24px_rgba(61,102,73,0.26)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2f523a]"
-                >
-                  Learn more about Venetia
-                  <ArrowRight size={14} />
-                </Link>
+                <div className="mt-6 flex flex-col items-start gap-2">
+                  <Link
+                    href="/chapter/asquith-state-secrets-venetia-stanley"
+                    className="mt-5 inline-flex items-center gap-2 rounded-sm border border-accent-brown/25 bg-accent-brown/80 px-6 py-3 text-[16px] font-semibold text-white shadow-[0_10px_24px_rgba(122,58,20,0.24)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#63300F]"
+                  >
+                    See What Asquith Revealed to Venetia
+                    <ArrowRight size={14} />
+                  </Link>
+                </div>
               </section>
 
               <HistoricalDivider icon="nib" />
@@ -290,7 +292,7 @@ export default function PrecipiceFactVsFictionPage() {
                     However, Harris bases the <em>practice</em> of letter interception on historical reality. The Home Office and military intelligence did monitor communications, especially as the &quot;Shells Scandal&quot; and political leaks became a matter of national security.
                   </p>
                 </div>
-                <RelatedChapterLink href="/chapter/asquith-state-secrets-venetia-stanley" chapterTitle="Explore the secrets that PM Asquith shared with Venetia Stanley" />
+                <RelatedChapterLink href="/chapter/shells-crisis-1915" chapterTitle="Read more about the Shells Crisis of 1915" />
               </section>
 
               <HistoricalDivider icon="flourish" />
@@ -316,7 +318,17 @@ export default function PrecipiceFactVsFictionPage() {
                     Historians often debate whether Venetia married Edwin out of love, or as a desperate &quot;escape hatch&quot; from the overwhelming intensity of Asquith&apos;s obsession.
                   </p>
                 </div>
-                <RelatedChapterLink href="/chapter/venetia-stanley-jewish-conversion" chapterTitle="Read more about Venetia's Engagement to Edwin Montagu" />
+                <div className="mt-6 flex flex-col items-start gap-2">
+                  <Link
+                    href="/venetia"
+                    className="mt-5 inline-flex items-center gap-2 rounded-sm border border-accent-brown/25 bg-accent-brown/80 px-6 py-3 text-[16px] font-semibold text-white shadow-[0_10px_24px_rgba(122,58,20,0.24)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#63300F]"
+                  >
+                    Discover Who Venetia Really Was
+                    <ArrowRight size={14} />
+                  </Link>
+                </div>
+
+                {/* <RelatedChapterLink href="/chapter/venetia-stanley-jewish-conversion" chapterTitle="Read more about Venetia's Engagement to Edwin Montagu" /> */}
               </section>
 
             <div className="my-16 md:my-20 bg-white/50 p-6 rounded-sm border-l-4 border-accent-amber/30">

@@ -666,10 +666,37 @@ export const STATIC_CHAPTERS: Chapter[] = [
     "_id": "695b4d23f9c7b1b8969cfec6",
     "chapter_id": "secrets",
     "slug": "asquith-state-secrets-venetia-stanley",
-    "chapter_title": "State Secrets Shared",
+    "chapter_title": "Asquith's State Secrets - What He Revealed to Venetia Stanley",
     "date_range": "1914 – May 1915",
     "thematic_subtitle": "Cabinet decisions sent by post",
-    "main_story": "Prime Minister Asquith shared highly sensitive military and political secrets with Venetia Stanley, treating her as a trusted confidante in affairs of state. He wrote to her during Cabinet and War Council meetings, revealing unfiltered accounts of secret decisions, including the covert deployment of the British Expeditionary Force to France, the concealed sinking of the Audacious, and Lord Kitchener’s secret mission to confront Sir John French.His letters also contained detailed operational plans, intelligence on ammunition shortages, secret diplomatic negotiations, and candid accounts of Cabinet infighting and ministerial resignations. Sent by ordinary post and sometimes shared with Edwin Montagu, this correspondence has been described by historians as a grave breach of security, making Venetia an inadvertent but serious risk to wartime secrecy.",
+    "letters": [
+      {
+        "date": "August 18, 1914",
+        "context": "Asquith carelessly threw a highly classified 'flimsy' (a thin carbon copy of secret Foreign Office telegrams given only to five senior ministers) out of his car window while driving with Venetia. He joked with her about the police finding discarded fragments and the severe security warning issued by the Foreign Secretary",
+        "image_url": "/letter_quote_August_18_1914.png"
+      },
+      {
+        "date": "September 2, 1914",
+        "context": "Asquith shared top-secret Allied military strategy with Venetia, detailing a proposed plan to transport Russian Siberian Army Corps via the White Sea to Ostend to reinforce British troops and cut off German communications.",
+        "image_url": "/letter_quote_September_2_1914.png"
+      },
+      {
+        "date": "October 28, 1914",
+        "context": "Asquith informed Venetia of the sinking of HMS Audacious by a German mine. The loss of this super-dreadnought was one of the most closely guarded state secrets of the early war, deliberately suppressed from the British public and the enemy.",
+        "image_url": "/letter_quote_October_28_1914.png"
+      },
+      {
+        "date": "February 13, 1915",
+        "context": "Asquith revealed the exact timeline and operational plans for the Allied naval bombardment of the Dardanelles. He explicitly acknowledged that this strategic military secret was being kept even from some members of his own Cabinet.",
+        "image_url": "/letter_quote_February_13_1915.png"
+      },
+      {
+        "date": "April 25, 1915",
+        "context": "Asquith updated Venetia on the highly sensitive diplomatic negotiations surrounding the secret Treaty of London, which would formally bring Italy into the war on the side of the Allies. He also forwarded her classified correspondence to read and instructed her to keep it secret or destroy it.",
+        "image_url": "/letter_quote_April_25_1915.png  "
+      }
+    ],
+    "main_story": "Asquith’s letters to Venetia Stanley were not just intimate correspondence. While serving as Prime Minister during the First World War, he repeatedly shared sensitive military, diplomatic, and Cabinet information with her, often in strikingly casual terms. Sent by ordinary post and sometimes circulated beyond Venetia herself, the letters blurred the line between private confidence and state secrecy — which is why historians have treated them as a serious breach of wartime security",
     "perspectives": {
       "H.H. Asquith": "He believed sharing state secrets with Venetia was essential to his emotional survival and effectiveness as Prime Minister, regarding her judgment as superior and her discretion as absolute, and even writing to her from the Cabinet table to escape what he called 'sterility, impotence, & despair.'",
       "Venetia Stanley": "She relished being the Prime Minister’s confidante and 'always in the know,' but did not keep his secrets entirely private, sharing letters with Edwin Montagu and later allowing their contents to be used and circulated despite their sensitivity.",
