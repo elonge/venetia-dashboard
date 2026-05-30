@@ -183,7 +183,7 @@ export default function ChapterView({ chapterData }: ChapterViewProps) {
                       Selected Letters
                     </h2>
                     <p className="mt-1 text-sm text-slate">
-                      Contemporary extracts tied directly to this chapter.
+                      Contemporary extracts from the letters of H.H. Asquith to Venetia Stanley.
                     </p>
                   </div>
 

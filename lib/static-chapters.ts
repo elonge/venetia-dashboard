@@ -470,6 +470,33 @@ export const STATIC_CHAPTERS: Chapter[] = [
     "date_range": "1912–1915",
     "thematic_subtitle": "An obsessive wartime correspondence",
     "main_story": "Prime Minister H.H. Asquith developed an intense emotional dependence on Venetia Stanley, writing her up to three times a day to share military secrets, Cabinet disputes, and his personal anxieties during the early Great War [asquith_letters_full.txt, 144, 227]. He viewed her as his 'pole-star' and 'life-buoy,' valuing her judgment above his colleagues', and often wrote to her while presiding over Cabinet meetings [asquith_letters_full.txt, 227, 269]. This obsessive correspondence came to a devastating halt in May 1915 when Venetia announced her engagement to Edwin Montagu, leaving Asquith heartbroken during a major political crisis.",
+    "letters": [
+      {
+        "date": "July 24, 1914",
+        "context": "Written on the very day the Cabinet first discussed the Austrian ultimatum to Serbia, marking the start of the immediate crisis leading to World War I. Venetia had just left London for Penrhos, and Asquith's obsessive reliance on her was so total that he equated her absence to drowning without a life-saving device right as the war began",
+        "image_url": "/letter_quote_July_24_1914.png"
+      },
+      {
+        "date": "November 18, 1914",
+        "context": "Penned from the House of Commons, Asquith expresses the sheer desperation he feels when he misses her. He illustrates his intense emotional dependency by using the metaphor of physical starvation to describe the pain of going just 48 hours without her companionship.",
+        "image_url": "/letter_quote_November_18_1914.png"
+      },
+      {
+          "date": "January 13, 1915",
+          "context": "In an act that historians consider a serious dereliction of duty, Asquith's compulsion to communicate with Venetia was so obsessive that he wrote to her during the highly critical War Council meeting that launched the Dardanelles expedition, describing the seating arrangements rather than focusing on the vital strategic military debate.",
+          "image_url": "/letter_quote_January_13_1915.png"
+      },
+      {
+        "date": "February 23, 1915",
+        "context": "Suffering from a dark, suicidal mood fueled by his obsessive fear of losing Venetia, the Prime Minister confessed to a desire to be killed by a German submarine so he could die with his memories of her rather than face a life without her.",
+        "image_url": "/letter_quote_February_23_1915.png"
+      },
+      {
+        "date": "March 8, 1915",
+        "context": "Written while Asquith was managing the immense daily stress and burdens of the First World War, he confesses that his love for Venetia has become the absolute sovereign factor of his existence, crediting her with saving his spirit and his ability to govern.",
+        "image_url": "/letter_quote_March_8_1915.png"
+      }
+    ],
     "perspectives": {
       "H.H. Asquith": "He viewed the correspondence as the 'blood of life' and Venetia as his 'pole-star' and 'life-buoy' without whom he could not function [asquith_letters_full.txt, 227]. He believed he had written to her with more intimacy than to any other human being and valued her judgment above his Cabinet colleagues.",
       "Venetia Stanley": "he initially found the attention flattering but eventually felt the relationship was a heavy burden; she sought to escape the 'horror of England' and the intensity of Asquith's demands by working in a hospital and eventually marrying Montagu.",
