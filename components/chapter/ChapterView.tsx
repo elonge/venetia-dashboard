@@ -109,7 +109,7 @@ export default function ChapterView({ chapterData }: ChapterViewProps) {
                 <span className="text-[9px] font-black text-accent-brown uppercase tracking-[0.25em] mb-4 block">
                   The Context
                 </span>
-                <p className="font-serif text-[15px] leading-relaxed text-navy">
+                <p className="font-serif text-[17px] leading-relaxed text-navy">
                   {formatChapterText(chapterData.main_story, true)}
                 </p>
               </div>
@@ -179,7 +179,7 @@ export default function ChapterView({ chapterData }: ChapterViewProps) {
               <section className="mb-10 border-t border-dashed border-border-beige pt-8">
                 <div className="mb-4 flex items-center justify-between gap-4">
                   <div>
-                    <h2 className="text-xs font-semibold text-muted-gray uppercase tracking-wider">
+                    <h2 className="text-base font-semibold text-muted-gray uppercase tracking-wider">
                       Selected Letters
                     </h2>
                     <p className="mt-1 text-sm text-slate">
@@ -233,7 +233,7 @@ export default function ChapterView({ chapterData }: ChapterViewProps) {
                       <span className="text-[10px] font-black uppercase tracking-[0.22em] text-accent-brown">
                         Letter Extract
                       </span>
-                      <span className="text-sm font-semibold text-navy">
+                      <span className="text-base font-semibold text-navy">
                         {activeLetter.date}
                       </span>
                     </div>
@@ -286,7 +286,7 @@ export default function ChapterView({ chapterData }: ChapterViewProps) {
             {/* 5. PERSPECTIVES */}
             {perspectivesArray.length > 0 && (
               <section className="mb-8">
-                <h2 className="text-xs font-semibold text-muted-gray uppercase tracking-wider mb-4">
+                <h2 className="text-base font-semibold text-muted-gray uppercase tracking-wider mb-4">
                   Character Perspectives
                   <span className="text-muted-gray/60 font-normal ml-2">(How each character saw that)</span>
                 </h2>
@@ -308,7 +308,7 @@ export default function ChapterView({ chapterData }: ChapterViewProps) {
                         <h3 className="font-serif text-lg font-semibold text-navy mb-2">
                           {perspective.character}
                         </h3>
-                        <p className="text-slate leading-relaxed">
+                        <p className="text-slate leading-relaxed text-base">
                           {replaceSourceNames(perspective.description)}
                         </p>
                       </div>
