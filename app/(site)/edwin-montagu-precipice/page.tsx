@@ -305,13 +305,15 @@ export default function EdwinMontaguPrecipicePage() {
                 <p>
                   Yet Montagu’s letters continued to overflow with affection and anxiety about losing her. Whatever Venetia felt for him, Montagu’s love appears to have been real, intense, and painfully enduring.
                 </p>
-                <Link
-                  href="/venetia"
-                  className="mt-5 inline-flex items-center gap-2 rounded-sm border border-accent-green/35 bg-accent-green px-4 py-2 text-[11px] font-bold uppercase tracking-[0.2em] text-white shadow-[0_10px_24px_rgba(61,102,73,0.26)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2f523a]"
-                >
-                  Learn more about Venetia
-                  <ArrowRight size={14} />
-                </Link>
+                <div className="mt-6 flex flex-col items-start gap-2">
+                  <Link
+                    href="/venetia"
+                    className="mt-5 inline-flex items-center gap-2 rounded-sm border border-accent-brown/25 bg-accent-brown/80 px-6 py-3 text-[16px] font-semibold text-white shadow-[0_10px_24px_rgba(122,58,20,0.24)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#63300F]"
+                  >
+                    Discover Who Venetia Really Was
+                    <ArrowRight size={14} />
+                  </Link>
+                </div>
               </section>
 
               <HistoricalDivider icon="flourish" />
@@ -351,7 +353,7 @@ export default function EdwinMontaguPrecipicePage() {
                 </p>
               <Link
                   href="/chapter/asquith-state-secrets-venetia-stanley"
-                  className="mt-5 inline-flex items-center gap-2 rounded-sm border border-accent-green/35 bg-accent-green px-4 py-2 text-[11px] font-bold uppercase tracking-[0.2em] text-white shadow-[0_10px_24px_rgba(61,102,73,0.26)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2f523a]"
+                  className="mt-5 inline-flex items-center gap-2 rounded-sm border border-accent-brown/25 bg-accent-brown/80 px-6 py-3 text-[16px] font-semibold text-white shadow-[0_10px_24px_rgba(122,58,20,0.24)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#63300F]"
                 >
                   Learn more about Asquith's Letters to Venetia
                   <ArrowRight size={14} />
