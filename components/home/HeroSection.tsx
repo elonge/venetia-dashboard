@@ -82,7 +82,7 @@ export default function HeroSection() {
             </Link>
 
             <a
-              href="https://open.spotify.com/show/6sSEg9Sf5MHjcrqFVIb4SJ"
+              href="https://open.spotify.com/episode/52Ky4OrJIOVo71gxHmkr5y?si=GdG-AZ9RTy2i9wqowR6a0Q"
               target="_blank"
               rel="noopener noreferrer"
               className="pointer-events-auto group inline-flex items-center gap-2 px-4 py-2 bg-[#1DB954]/20 hover:bg-[#1DB954]/30 backdrop-blur-sm border border-[#1DB954]/30 hover:border-[#1DB954]/50 rounded-md text-white text-sm md:text-base font-serif transition-all duration-300 hover:shadow-lg"
