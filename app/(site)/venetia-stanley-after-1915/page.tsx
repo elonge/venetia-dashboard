@@ -206,6 +206,9 @@ export default function VenetiaStanleyAfter1915Page() {
                 <a href="#judith" className="transition-colors hover:text-accent-green">
                   Judith and Dudley
                 </a>
+                <a href="#precipice" className="transition-colors hover:text-accent-green">
+                  Precipice Readers
+                </a>
                 <a href="#sources" className="transition-colors hover:text-accent-green">
                   Sources and Method
                 </a>
@@ -456,6 +459,33 @@ export default function VenetiaStanleyAfter1915Page() {
                 </div>
               </section>
 
+              <section id="precipice" className="scroll-mt-20">
+                <h2 className="text-[1.8rem] font-serif font-semibold leading-tight text-accent-brown md:text-[2rem]">
+                  5. Robert Harris&apos;s Precipice - how accurate is the novel?
+                </h2>
+                <div className="mt-5 space-y-4 text-base leading-relaxed text-navy/85">
+                  <p>
+                    Many readers now reach Venetia Stanley through Robert Harris&apos;s popular novel
+                    <span className="italic"> Precipice</span>, which has introduced her story to a much wider audience.
+                    That is useful, but it also creates a predictable problem: the novel is built on real people and real
+                    events, yet it remains historical fiction rather than a documentary reconstruction.
+                  </p>
+                  <p>
+                    If you arrived here because of the book, the best next step is our dedicated guide separating what the
+                    novel gets right from what it reshapes, compresses, or invents for dramatic effect.
+                  </p>
+                  <div className="mt-6 flex flex-col items-start gap-2">
+                    <Link
+                      href="/precipice-fact-vs-fiction"
+                      className="mt-5 inline-flex items-center gap-2 rounded-sm border border-accent-brown/25 bg-accent-brown/80 px-6 py-3 text-[16px] font-semibold text-white shadow-[0_10px_24px_rgba(122,58,20,0.24)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#63300F]"
+                    >
+                      Read the Precipice fact-vs-fiction guide.
+                      <ArrowRight size={14} />
+                    </Link>
+                  </div>
+                </div>
+              </section>
+
               <section className="rounded-sm border border-border-beige/60 bg-white/70 p-6 md:p-8">
                 <h2 className="text-[1.6rem] font-serif font-semibold leading-tight text-navy">
                   Related Reading
@@ -477,9 +507,9 @@ export default function VenetiaStanleyAfter1915Page() {
                     description="Montagu's politics, marriage, decline, and death in one wider guide."
                   />
                   <RelatedLink
-                    href="/precipice-fact-vs-fiction"
-                    label="What Happened After the Book?"
-                    description="The broader fact-check page for readers arriving from Robert Harris's Precipice."
+                    href="/chapter/asquith-state-secrets-venetia-stanley"
+                    label="Asquith, Venetia, and State Secrets"
+                    description="Read more about the secret that PM Asquith shared with Venetia Stanley."
                   />
                 </div>
               </section>
