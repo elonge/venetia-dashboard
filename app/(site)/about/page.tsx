@@ -5,6 +5,27 @@ import { useChatVisibility } from "@/components/chat/useChatVisibility";
 import PrimarySource from "@/components/about/PrimarySource";
 import Link from "next/link";
 
+const AMAZON_AFFILIATE_ID =
+  process.env.NEXT_PUBLIC_AMAZON_AFFILIATE_ID?.trim();
+
+function withAmazonAffiliate(link: string) {
+  if (!AMAZON_AFFILIATE_ID) {
+    return link;
+  }
+
+  try {
+    const url = new URL(link);
+    if (!/(^|\.)amazon\./i.test(url.hostname)) {
+      return link;
+    }
+
+    url.searchParams.set("tag", AMAZON_AFFILIATE_ID);
+    return url.toString();
+  } catch {
+    return link;
+  }
+}
+
 export default function AboutPage() {
   useChatVisibility(false);
 
@@ -426,7 +447,9 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
                   title="H.H. Asquith: Letters to Venetia Stanley"
                   credibility="High Credibility / Primary Source"
                   description="Contemporary letters written by the Prime Minister. They offer a unique, unfiltered view of the executive mindset, containing state secrets and private anxieties shared in real-time."
-                  link="https://www.amazon.com/H-H-Asquith-Letters-Venetia-Stanley/dp/0192122002"
+                  link={withAmazonAffiliate(
+                    "https://www.amazon.com/H-H-Asquith-Letters-Venetia-Stanley/dp/0192122002"
+                  )}
                   author="Michael Brock"
                 />
 
@@ -447,7 +470,9 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
                   title="Margot Asquith's Great War Diary 1914–1916"
                   credibility="Mixed Reliability / Subjective Primary Source"
                   description={'Valuable for access to the PM\'s inner circle, though editors warn Margot was "an opinionated egotist, often inaccurate... and occasionally prone to fantasy."'}
-                  link="https://www.amazon.com/Margot-Asquiths-Great-Diary-1914-1916-ebook/dp/B00KB1BROG"
+                  link={withAmazonAffiliate(
+                    "https://www.amazon.com/Margot-Asquiths-Great-Diary-1914-1916-ebook/dp/B00KB1BROG"
+                  )}
                   author="Michael Brock & Eleanor Brock"
                 />
 
@@ -456,7 +481,9 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
                   title="Lantern Slides"
                   credibility="High Credibility / Edited Primary Source"
                   description="Edited selections of diaries and letters from Asquith's daughter, intensely loyal to the Asquithian liberal viewpoint."
-                  link="https://www.amazon.com/Lantern-Slides-Diaries-Letters-1904-1914/dp/0297816497"
+                  link={withAmazonAffiliate(
+                    "https://www.amazon.com/Lantern-Slides-Diaries-Letters-1904-1914/dp/0297816497"
+                  )}
                   author="Violet Bonham Carter"
                 />
 
@@ -465,7 +492,9 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
                   title="Lady Cynthia Asquith: Diaries 1915–1918"
                   credibility="High Credibility / Primary Source"
                   description='An "intimate, unselfconscious record." Highly reliable for social history and the mood of the aristocracy during the war.'
-                  link="https://www.amazon.com/Diaries-Lady-Cynthia-Asquith-1915-1918/dp/B004H5UMLQ"
+                  link={withAmazonAffiliate(
+                    "https://www.amazon.com/Diaries-Lady-Cynthia-Asquith-1915-1918/dp/B004H5UMLQ"
+                  )}
                   author="Lady Cynthia Asquith"
                 />
 
@@ -474,7 +503,9 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
                   title="Lloyd George: A Diary by Frances Stevenson"
                   credibility="High Credibility / Partisan Primary Source"
                   description="Stevenson was both Lloyd George's secretary and mistress. The diary reflects his biases and justifications from the center of power."
-                  link="https://www.amazon.com/Lloyd-George-Diary-Frances-Stevenson/dp/0060141166"
+                  link={withAmazonAffiliate(
+                    "https://www.amazon.com/Lloyd-George-Diary-Frances-Stevenson/dp/0060141166"
+                  )}
                   author="Frances Stevenson"
                 />
 
@@ -483,7 +514,9 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
                   title="Lord Riddell's War Diary 1914–1918"
                   credibility="High Credibility / Journalistic Primary Source"
                   description="Riddell was a press baron and intermediary. Highly reliable regarding the relationship between the media and the government."
-                  link="https://www.amazon.com/Lord-Riddells-war-diary-1914-1918/dp/B000857OVA"
+                  link={withAmazonAffiliate(
+                    "https://www.amazon.com/Lord-Riddells-war-diary-1914-1918/dp/B000857OVA"
+                  )}
                   author="Lord Riddell"
                 />
 
@@ -492,7 +525,9 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
                   title="The Rainbow Comes and Goes (Lady Diana Cooper)"
                   credibility="Medium Reliability / Memoir"
                   description="Written in 1958, this is a retrospective memoir. It captures the spirit and romance of the Coterie and the era."
-                  link="https://www.amazon.com/Rainbow-Comes-Diana-Cooper-Autobiog-ebook/dp/B074MBTCKQ"
+                  link={withAmazonAffiliate(
+                    "https://www.amazon.com/Rainbow-Comes-Diana-Cooper-Autobiog-ebook/dp/B074MBTCKQ"
+                  )}
                   author="Lady Diana Cooper"
                 />
 
@@ -501,7 +536,9 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
                   title="The Supreme Command 1914–1918 (Lord Hankey)"
                   credibility="High Reliability / Authoritative Memoir-History"
                   description="Hankey was Secretary to the War Council. Considered a definitive administrative history of the war's direction."
-                  link="https://www.amazon.com/Supreme-Command-1914-1918-Routledge-Revivals-ebook/dp/B0B36PJRMR"
+                  link={withAmazonAffiliate(
+                    "https://www.amazon.com/Supreme-Command-1914-1918-Routledge-Revivals-ebook/dp/B0B36PJRMR"
+                  )}
                   author="Lord Hankey"
                 />
 
@@ -517,7 +554,9 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
                   title="Winston S. Churchill: Companion Volumes"
                   credibility="Highest Reliability / Primary Documentary Collection"
                   description="Raw primary documents: telegrams, secret memos, and private letters from Churchill, Asquith, Fisher, and others."
-                  link="https://www.amazon.com/Winston-Churchill-Companion-1874-1895-1896-1900/dp/B0097RP0UW"
+                  link={withAmazonAffiliate(
+                    "https://www.amazon.com/Winston-Churchill-Companion-1874-1895-1896-1900/dp/B0097RP0UW"
+                  )}
                   author="Randolph S. Churchill"
                 />
 
@@ -562,7 +601,9 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
                   title="Asquith (Roy Jenkins)"
                   credibility="Political Biography"
                   description="A seminal biography written by a former Home Secretary and Chancellor. It offers deep political insight into Asquith's career and decisions."
-                  link="https://www.amazon.com/Asquith-Roy-Jenkins-ebook/dp/B00BWL8L02"
+                  link={withAmazonAffiliate(
+                    "https://www.amazon.com/Asquith-Roy-Jenkins-ebook/dp/B00BWL8L02"
+                  )}
                   author="Roy Jenkins"
                   badgeColor="stone"
                 />
@@ -573,7 +614,9 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
                   credibility="Narrative History"
                   description="Published in 2002, this is a synthesis of diaries and letters. It provides a reliable narrative overview, utilizing primary sources."
                   badgeColor="stone"
-                  link="https://www.amazon.com/Asquiths-Colin-Clifford-ebook/dp/B0FK3NQQK2"
+                  link={withAmazonAffiliate(
+                    "https://www.amazon.com/Asquiths-Colin-Clifford-ebook/dp/B0FK3NQQK2"
+                  )}
                   author="Colin Clifford"
                 />
 
@@ -583,7 +626,9 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
                   credibility="Biographical Study"
                   description="This text reconstructs the life of Edwin Montagu using his letters and other primary archives."
                   badgeColor="stone"
-                  link="https://www.amazon.com/Politics-Religion-Love-Asquith-Venetia/dp/0814750575"
+                  link={withAmazonAffiliate(
+                    "https://www.amazon.com/Politics-Religion-Love-Asquith-Venetia/dp/0814750575"
+                  )}
                   author="Naomi B. Levine"
                 />
               </div>
