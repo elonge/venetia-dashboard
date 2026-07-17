@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { ChevronLeft, ChevronRight, Headphones } from 'lucide-react';
 import { useChatVisibility } from '@/components/chat/useChatVisibility';
 import { PEOPLE_IMAGES } from '@/constants';
-import { alt } from '@/app/opengraph-image';
 
 interface CarouselSlide {
   id: string;
@@ -19,6 +19,11 @@ interface HandwrittenQuote {
   id: string;
   category: string;
   quote: string;
+}
+
+interface FaqItem {
+  question: string;
+  answer: React.ReactNode;
 }
 
 const carouselSlides: CarouselSlide[] = [
@@ -171,6 +176,71 @@ const hobbies = [
   { title: 'Sport', description: 'Fencing (3x a week) and Tennis.', image: '/venetia-page/venetia-tennis.png', alt: 'Venetia Stanley engaging in fencing, representing her interest in sports.' }
 ];
 
+const faqItems: FaqItem[] = [
+  {
+    question: 'Did Venetia Stanley and Asquith have an affair?',
+    answer: (
+      <>
+        That remains contested. The surviving letters show extraordinary intimacy, emotional dependence, and a level of candor that was already risky for a serving prime minister, but they do not prove a physical sexual relationship. Asquith often framed the bond in intellectual and emotional terms, treating Venetia as the mind he most wanted beside him. Most careful readings therefore separate what the correspondence certainly reveals from what later rumor only inferred.
+      </>
+    ),
+  },
+  {
+    question: 'Why did Venetia Stanley marry Edwin Montagu?',
+    answer: (
+      <>
+        She accepted Edwin Montagu after years of refusing him, which suggests a serious decision rather than a sudden romantic reversal. Her own letters point to a mixture of pragmatism, companionship, and genuine affection, even if it was not love in the intense Asquithian sense. Montagu offered loyalty, position, and a plausible future at a moment when the Asquith relationship had become increasingly untenable. The marriage makes more sense as a deliberate choice within her social and financial world than as an impulsive surrender.
+      </>
+    ),
+  },
+  {
+    question: 'Did Venetia Stanley convert to Judaism?',
+    answer: (
+      <>
+        Yes. Venetia converted in 1915 in order to marry Edwin Montagu, and the surviving letters show that she understood the decision in notably practical terms. She wrote privately that the change did not alter her sense of race or nationality, which is one of the bluntest surviving statements we have about her view of it. The episode matters historically less as a story of religious conviction than as a revealing intersection of money, identity, family pressure, and marriage.
+      </>
+    ),
+  },
+  {
+    question: 'Is Robert Harris\' Precipice based on a true story?',
+    answer: (
+      <>
+        Yes, closely, though it remains a novel rather than a documentary reconstruction. Harris built the book around real people, real letters, and real wartime tensions, especially the Asquith-Stanley correspondence. Some scenes and connective tissue are dramatized for narrative effect, but the underlying scandal and political stakes are historical. For the fuller source-by-source breakdown, see the{' '}
+        <Link
+          href="/precipice-fact-vs-fiction"
+          className="font-semibold text-accent-green underline decoration-accent-green/40 underline-offset-4 transition-colors hover:text-navy"
+        >
+          Precipice fact-vs-fiction guide
+        </Link>
+        .
+      </>
+    ),
+  },
+  {
+    question: 'What happened to Venetia Stanley after 1915?',
+    answer: (
+      <>
+        After 1915 she moved into the Montagu years, then into widowhood after Edwin Montagu&apos;s death in 1924. She became a society hostess and remained socially magnetic, though later accounts increasingly blend documented fact with gossip and retrospective myth. Her later life matters because it shows that she was not frozen in history as Asquith&apos;s muse but continued shaping her own world for decades. For the fuller later story, see{' '}
+        <Link
+          href="/venetia-stanley-after-1915"
+          className="font-semibold text-accent-green underline decoration-accent-green/40 underline-offset-4 transition-colors hover:text-navy"
+        >
+          Venetia Stanley after 1915
+        </Link>
+        .
+      </>
+    ),
+  },
+  {
+    question: 'Is there any footage of Venetia Stanley?',
+    answer: (
+      <>
+        Yes: one known surviving clip from 1928 shows Venetia at Alderley Edge playing bridge with her mother (see below). That makes it unusually valuable, because so much of her archive survives only through letters written by other people about her rather than through moving images of her own presence. Most references to the footage sit buried in archival catalog language rather than inside a readable biography. This page is one of the few places that surfaces the clip clearly and places it back into the broader story of her life.
+      </>
+    ),
+  },
+];
+
 export default function VenetiaBio() {
   useChatVisibility(false);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -197,7 +267,7 @@ export default function VenetiaBio() {
     <div className="h-full bg-page-bg">
       <div className="mx-auto max-w-7xl">
         {/* 1. Hero Section - COMPACT VERSION */}
-        <section className="w-full bg-navy/95 py-12 md:py-20 border-b border-white/10 relative overflow-hidden">
+        <section className="w-full bg-navy py-12 md:py-20 border-b border-white/10 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-8 md:gap-16">
 
             {/* LEFT COL: The Portrait (Sized Down) */}
@@ -637,7 +707,56 @@ export default function VenetiaBio() {
           </div>
         </section>
 
-        {/* 5. Footer */}
+        {/* 5. FAQ */}
+        <section className="w-full border-t border-border-beige bg-page-bg py-12 md:py-16 lg:py-20">
+          <div className="mx-auto max-w-5xl px-4 md:px-6">
+            <div className="mb-8 text-center md:mb-10">
+              <p className="mb-3 text-[10px] font-black uppercase tracking-[0.3em] text-accent-brown">
+                Source-Grounded FAQ
+              </p>
+              <h3 className="text-2xl font-serif font-bold text-navy md:text-3xl lg:text-4xl">
+                Frequently Asked Questions
+              </h3>
+              <p className="mx-auto mt-4 max-w-3xl text-sm leading-relaxed text-slate md:text-base">
+                Venetia survives unevenly in the archive: vividly in some moments, frustratingly by rumor in others. These are the questions readers usually ask first, answered from the surviving letters and from the limits of what the evidence can honestly prove.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              {faqItems.map((item, index) => (
+                <details
+                  key={item.question}
+                  className="group overflow-hidden rounded-sm border border-border-beige bg-card-bg/90 shadow-sm"
+                  open={index === 0}
+                  data-track-component="venetia_faq_item"
+                  data-track-section="venetia-faq"
+                  data-track-item={item.question}
+                >
+                  <summary className="flex cursor-pointer list-none items-start gap-4 px-5 py-5 marker:content-none md:px-6">
+                    <div className="flex-1 text-left">
+                      <span className="mb-2 block text-[10px] font-black uppercase tracking-[0.24em] text-accent-brown">
+                        Question {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <h4 className="text-lg font-serif font-semibold leading-snug text-navy md:text-xl">
+                        {item.question}
+                      </h4>
+                    </div>
+                    <span className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border-beige bg-page-bg text-navy transition-transform duration-200 group-open:rotate-90">
+                      <ChevronRight className="h-4 w-4" />
+                    </span>
+                  </summary>
+                  <div className="border-t border-border-beige bg-page-bg/70 px-5 pb-5 pt-4 md:px-6">
+                    <p className="max-w-4xl text-sm leading-relaxed text-slate md:text-base">
+                      {item.answer}
+                    </p>
+                  </div>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 6. Footer */}
         <footer className="w-full bg-section-bg py-20 border-t border-border-beige relative overflow-hidden">
   
           {/* Background Texture: Subtle paper grain */}
