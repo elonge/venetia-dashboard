@@ -12,12 +12,11 @@ export default function EssentialsPage() {
         {/* 1. Hero Section */}
         <section className="w-full bg-navy py-16 md:py-24 relative overflow-hidden text-page-bg rounded-none md:rounded-sm shadow-2xl mx-auto md:max-w-[calc(100%-3rem)] md:mb-12 group/hero">
           {/* Background Elements */}
-          <div className="absolute inset-0 bg-[url('/images/noise.png')] opacity-20 mix-blend-overlay pointer-events-none"></div>
           <div className="absolute top-0 right-0 w-96 h-96 bg-accent-red opacity-10 blur-[100px] rounded-full pointer-events-none group-hover/hero:opacity-20 transition-opacity duration-1000"></div>
           
           <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
             <div className="inline-block border-b border-accent-red pb-1 mb-6 transform group-hover/hero:scale-105 transition-transform duration-500">
-                <span className="text-xs md:text-sm font-black uppercase tracking-[0.25em] text-accent-red">
+                <span className="text-sm md:text-sm font-black uppercase tracking-[0.25em] text-page-bg">
                     The Essential Guide
                 </span>
             </div>
