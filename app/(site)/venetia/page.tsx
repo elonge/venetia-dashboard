@@ -2,14 +2,14 @@ import { Metadata } from 'next';
 import VenetiaBio from './VenetiaBio';
 
 export const metadata: Metadata = {
-  title: 'Venetia Stanley — The Woman Who Captivated a Prime Minister',
+  title: 'Venetia Stanley — The Woman Behind the Letters',
   description:
-    'One of the only pages on the web with archival 1928 footage of Venetia Stanley. Her own words, her world — not just Asquith\'s obsession',
+    'Venetia Stanley in her own words and those of her contemporaries. Explore rare 1928 footage, photographs, letters, and other archival material',
 
   openGraph: {
-    title: 'Venetia Stanley — The Woman Who Captivated a Prime Minister',
+    title: 'Venetia Stanley — The Woman Behind the Letters',
     description:
-      'One of the only pages on the web with archival 1928 footage of Venetia Stanley. Her own words, her world — not just Asquith\'s obsession',
+      'Venetia Stanley in her own words and those of her contemporaries. Explore rare 1928 footage, photographs, letters, and other archival material',
     images: ['/venetia-without-clementine.png'],
   },
 
