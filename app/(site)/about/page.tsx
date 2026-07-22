@@ -261,9 +261,12 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
                   The Speculative Studio:
                 </Link>{" "}
                 An experimental space attempting to{" "}
-                <span className="my-highlight">
+                <Link
+                  href="/1914-diary"
+                  className="my-highlight text-accent-green hover:text-navy transition-colors underline decoration-accent-green/30 underline-offset-4"
+                >
                   reconstruct Venetia&apos;s missing diary
-                </span>{" "}
+                </Link>{" "}
                 and explore &quot;what if&quot; scenarios
               </li>
               <li>
