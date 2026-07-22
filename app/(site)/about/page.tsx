@@ -226,35 +226,87 @@ const HistoricalDivider = ({ icon = 'nib' }) => {
 
             <ul className="list-disc list-inside space-y-3 ml-4 mt-4 text-slate">
               <li>
-                <strong>A daily view</strong> reconstructing what was happening
-                on specific dates
+                <Link
+                  href="/venetia"
+                  className="font-bold text-accent-green hover:text-navy transition-colors underline decoration-accent-green/30 underline-offset-4"
+                >
+                  Venetia Stanley&apos;s story
+                </Link>{" "}
+                and the world she inhabited
               </li>
               <li>
-                <strong>The Data Room:</strong> A statistical breakdown of the
-                archive, visualizing correspondence patterns, sentiment
-                analysis, and metadata
+                <Link
+                  href="/daily/1914-07-22"
+                  className="font-bold text-accent-green hover:text-navy transition-colors underline decoration-accent-green/30 underline-offset-4"
+                >
+                  A daily view
+                </Link>{" "}
+                reconstructing what was happening on specific dates
               </li>
               <li>
-                <strong>The Speculative Studio:</strong> An experimental space
-                attempting to{" "}
+                <Link
+                  href="/data-room"
+                  className="font-bold text-accent-green hover:text-navy transition-colors underline decoration-accent-green/30 underline-offset-4"
+                >
+                  The Data Room:
+                </Link>{" "}
+                A statistical breakdown of the archive, visualizing
+                correspondence patterns, sentiment analysis, and metadata
+              </li>
+              <li>
+                <Link
+                  href="/lab"
+                  className="font-bold text-accent-green hover:text-navy transition-colors underline decoration-accent-green/30 underline-offset-4"
+                >
+                  The Speculative Studio:
+                </Link>{" "}
+                An experimental space attempting to{" "}
                 <span className="my-highlight">
-                  reconstruct Venetia's missing diary
+                  reconstruct Venetia&apos;s missing diary
                 </span>{" "}
-                and explore "what if" scenarios
+                and explore &quot;what if&quot; scenarios
               </li>
               <li>
-                <strong>Thematic chapters</strong> on key episodes and pressures
+                <Link
+                  href="/chapter/asquith-letters-venetia-stanley"
+                  className="font-bold text-accent-green hover:text-navy transition-colors underline decoration-accent-green/30 underline-offset-4"
+                >
+                  Thematic chapters
+                </Link>{" "}
+                on key episodes and pressures (e.g., the{" "}
+                <Link
+                  href="/chapter/asquith-venetia-sicily-1912"
+                  className="text-accent-green hover:text-navy transition-colors underline decoration-accent-green/30 underline-offset-4"
+                >
+                  1912 Sicilian trip
+                </Link>
+                , the{" "}
+                <Link
+                  href="/chapter/venetia-stanley-engagement-1915"
+                  className="text-accent-green hover:text-navy transition-colors underline decoration-accent-green/30 underline-offset-4"
+                >
+                  1915 engagement
+                </Link>
+                {" etc..."}
+                )
               </li>
               <li>
-                <strong>The underlying archive:</strong> A fully searchable
-                database where you can{" "}
+                <Link
+                  href="/archive_search"
+                  className="font-bold text-accent-green hover:text-navy transition-colors underline decoration-accent-green/30 underline-offset-4"
+                >
+                  The underlying archive:
+                </Link>{" "}
+                A fully searchable database where you can{" "}
                 <span className="my-highlight">
                   chat directly with the primary sources
                 </span>
               </li>
               <li>
-                <strong>Fact vs. Fiction:</strong> A guide to the historical
-                accuracy of{" "}
+                <strong>
+                  Fact vs. Fiction:
+                </strong>{" "}
+                A guide to the historical accuracy of{" "}
                 <Link
                   href="/precipice-fact-vs-fiction"
                   className="text-accent-green hover:text-navy transition-colors underline decoration-accent-green/30 underline-offset-4"
