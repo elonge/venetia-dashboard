@@ -276,7 +276,7 @@ export default function VenetiaBio() {
                 <div className="relative aspect-[3/4] w-full max-w-sm rounded-sm overflow-hidden shadow-2xl filter sepia-[0.05] contrast-110">
                   <img
                     src={PEOPLE_IMAGES['Venetia Stanley']}
-                    alt="Venetia Stanley"
+                    alt="Venetia Stanley (1887–1948)"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 shadow-[inset_0_0_80px_rgba(0,0,0,0.5)]" />
@@ -289,21 +289,26 @@ export default function VenetiaBio() {
               
               {/* Title Block */}
               <div>
+                <p className="mb-3 text-[10px] font-black uppercase tracking-[0.28em] text-accent-brown">
+                  Biography &amp; Primary Sources
+                </p>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-page-bg mb-4 leading-none tracking-tight drop-shadow-lg">
-                  The Enigma of <br/>
-                  <span className="text-accent-brown">Venetia Stanley</span>
+                  Venetia Stanley
+                  <span className="mt-2 block text-2xl md:text-3xl lg:text-4xl text-accent-brown">
+                    (1887–1948)
+                  </span>
                 </h1>
                 <div className="w-20 h-[2px] bg-accent-brown opacity-80" />
               </div>
 
-              {/* Subtitle */}
+              {/* Editorial subtitle */}
               <p className="text-xl md:text-2xl text-page-bg/90 italic font-serif leading-snug drop-shadow-md max-w-lg">
-                The &quot;Pole star&quot; of the Edwardian Era—Intellectual, Hedonist, and &quot;Uncertain Prop.&quot;
+                The Enigma of Venetia Stanley
               </p>
 
-              {/* Intro Text */}
-              <p className="text-base text-page-bg/70 font-normal leading-relaxed tracking-wide max-w-lg border-t border-white/10 pt-5">
-                In an era of rigid social codes and impending war, she was a brilliant anomaly. A woman who commanded the obsession of the most powerful men in the Empire, leaving a trail of burned letters and broken hearts in her wake.
+              {/* Direct biography intro */}
+              <p className="text-base text-page-bg/75 font-normal leading-relaxed max-w-xl border-t border-white/10 pt-5">
+                Beatrice Venetia Stanley (1887–1948), later Venetia Montagu, was a British society figure and the principal correspondent of Prime Minister H.H. Asquith during the First World War. In 1915, she married Liberal politician Edwin Montagu.
               </p>
 
               {/* Hero Podcast Player (Integrated tightly) */}
@@ -345,8 +350,68 @@ export default function VenetiaBio() {
           <div className="absolute inset-0 pointer-events-none opacity-10 bg-[url('/images/noise.png')] mix-blend-overlay"></div>
         </section>
 
+        {/* 2. Biography overview - optimized for broad "Venetia Stanley" search intent */}
+        <section className="w-full bg-page-bg py-10 md:py-14 border-b border-border-beige">
+          <div className="mx-auto max-w-5xl px-4 md:px-6">
+            <div className="grid gap-8 lg:grid-cols-[1.5fr_1fr] lg:gap-12">
+              <div>
+                <p className="mb-3 text-[10px] font-black uppercase tracking-[0.28em] text-accent-brown">
+                  Biography
+                </p>
+                <h2 className="text-3xl md:text-4xl font-serif font-bold text-navy mb-5">
+                  Who was Venetia Stanley?
+                </h2>
+                <div className="space-y-4 text-base md:text-lg leading-relaxed text-slate">
+                  <p>
+                    Venetia Stanley is best known through her relationship with H.H. Asquith, whose surviving letters reveal extraordinary intimacy, emotional dependence, and political candor while he was serving as prime minister. Those letters place her unusually close to the private and political world of Asquith&apos;s wartime government.
+                  </p>
+                  <p>
+                    In 1915 she converted to Judaism and married Edwin Montagu, later Secretary of State for India. Her life did not end with the Asquith correspondence: she lived for more than three decades afterward, becoming a society hostess and remaining a subject of fascination, gossip, and conflicting contemporary accounts.
+                  </p>
+                  <p>
+                    This page brings those accounts together with Venetia&apos;s own words, photographs, surviving archival material, and rare 1928 footage to separate what the sources show from what later legend has added.
+                  </p>
+                </div>
+              </div>
 
-        {/* 2. How Others Saw Her - Full-Width Carousel */}
+              <aside className="self-start border border-border-beige bg-section-bg p-6 md:p-7" aria-label="Venetia Stanley quick facts">
+                <h3 className="font-serif text-xl font-bold text-navy mb-5">
+                  Venetia Stanley: quick facts
+                </h3>
+                <dl className="space-y-4 text-sm">
+                  <div className="border-b border-navy/10 pb-3">
+                    <dt className="text-[10px] font-black uppercase tracking-[0.18em] text-muted-gray">Born</dt>
+                    <dd className="mt-1 font-serif text-base text-navy">22 August 1887 · Alderley Edge, Cheshire</dd>
+                  </div>
+                  <div className="border-b border-navy/10 pb-3">
+                    <dt className="text-[10px] font-black uppercase tracking-[0.18em] text-muted-gray">Died</dt>
+                    <dd className="mt-1 font-serif text-base text-navy">3 August 1948 · London</dd>
+                  </div>
+                  <div className="border-b border-navy/10 pb-3">
+                    <dt className="text-[10px] font-black uppercase tracking-[0.18em] text-muted-gray">Also known as</dt>
+                    <dd className="mt-1 font-serif text-base text-navy">Beatrice Venetia Stanley · Venetia Montagu</dd>
+                  </div>
+                  <div className="border-b border-navy/10 pb-3">
+                    <dt className="text-[10px] font-black uppercase tracking-[0.18em] text-muted-gray">Spouse</dt>
+                    <dd className="mt-1 font-serif text-base text-navy">
+                      <Link href="/edwin-montagu-precipice" className="underline decoration-accent-green/40 underline-offset-4 hover:text-accent-green">
+                        Edwin Montagu
+                      </Link>
+                      {' '}· married 1915
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="text-[10px] font-black uppercase tracking-[0.18em] text-muted-gray">Known for</dt>
+                    <dd className="mt-1 font-serif text-base leading-relaxed text-navy">Her correspondence and relationship with H.H. Asquith</dd>
+                  </div>
+                </dl>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+
+        {/* 3. How Others Saw Her - Full-Width Carousel */}
         <section className="w-full bg-page-bg py-12 md:py-16">
           <div className="px-4 md:px-6 mb-6 md:mb-8">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-navy mb-2 text-center">

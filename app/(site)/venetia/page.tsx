@@ -2,14 +2,14 @@ import { Metadata } from 'next';
 import VenetiaBio from './VenetiaBio';
 
 export const metadata: Metadata = {
-  title: 'Venetia Stanley — The Woman Behind the Letters',
+  title: 'Venetia Stanley (1887–1948): Biography & Asquith Letters',
   description:
-    'Venetia Stanley in her own words and those of her contemporaries. Explore rare 1928 footage, photographs, letters, and other archival material',
+    'Venetia Stanley in her own words and those of her contemporaries. Explore rare 1928 footage, photographs, letters, and other archival material.',
 
   openGraph: {
-    title: 'Venetia Stanley — The Woman Behind the Letters',
+    title: 'Venetia Stanley (1887–1948): Biography & Asquith Letters',
     description:
-      'Venetia Stanley in her own words and those of her contemporaries. Explore rare 1928 footage, photographs, letters, and other archival material',
+      'Venetia Stanley in her own words and those of her contemporaries. Explore rare 1928 footage, photographs, letters, and other archival material.',
     images: ['/venetia-without-clementine.png'],
   },
 
@@ -22,13 +22,16 @@ export const metadata: Metadata = {
 export default function VenetiaPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'ProfilePage',
-    name: 'Venetia Stanley — The Venetia Project',
+    '@type': 'WebPage',
+    name: 'Venetia Stanley (1887–1948): Biography & Asquith Letters',
+    description:
+      'Venetia Stanley in her own words and those of her contemporaries. Explore rare 1928 footage, photographs, letters, and other archival material.',
     url: 'https://www.thevenetiaproject.com/venetia',
     mainEntity: {
       '@type': 'Person',
+      '@id': 'https://www.thevenetiaproject.com/venetia#venetia-stanley',
       name: 'Venetia Stanley',
-      alternateName: ['Venetia Montagu', 'Beatrice Venetia Stanley'],
+      alternateName: ['Venetia Montagu', 'Beatrice Venetia Stanley', 'Beatrice Venetia Stanley Montagu'],
       birthDate: '1887-08-22',
       deathDate: '1948-08-03',
       birthPlace: {

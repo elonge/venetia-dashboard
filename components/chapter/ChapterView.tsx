@@ -16,6 +16,17 @@ const SicilyMap = dynamic(() => import('@/components/chapter/SicilyMap'), {
   ssr: false,
 });
 
+const VENETIA_CHAPTER_SLUGS = new Set([
+  'asquith-venetia-sicily-1912',
+  'asquith-venetia-friday-drives',
+  'venetia-stanley-nursing-1915',
+  'venetia-stanley-engagement-1915',
+  'asquith-letters-venetia-stanley',
+  'asquith-venetia-after-1915',
+  'venetia-stanley-jewish-conversion',
+  'asquith-state-secrets-venetia-stanley',
+]);
+
 // Extended interface to match what the view expects (including potential extra fields not yet in lib type)
 interface ChapterViewProps {
   chapterData: Chapter & {
@@ -112,6 +123,18 @@ export default function ChapterView({ chapterData }: ChapterViewProps) {
                 <p className="font-serif text-[17px] leading-relaxed text-navy">
                   {formatChapterText(chapterData.main_story, true)}
                 </p>
+                {VENETIA_CHAPTER_SLUGS.has(chapterData.slug) && (
+                  <p className="mb-10 mt-8 text-sm leading-relaxed text-slate">
+                    This chapter is part of The Venetia Project&apos;s research into{' '}
+                    <Link
+                      href="/venetia"
+                      className="font-semibold text-accent-brown underline underline-offset-4"
+                    >
+                      Venetia Stanley
+                    </Link>
+                    , her correspondence, relationships, and life.
+                  </p>
+                )}
               </div>
 
               {/* RIGHT: PODCAST CARD */}

@@ -23,6 +23,7 @@ const baseColumns: FooterColumn[] = [
   {
     heading: 'Project',
     links: [
+      { href: '/venetia', label: 'Venetia Stanley' },
       { href: '/about', label: 'About the Project' },
       { href: '/essentials', label: 'The Essentials' },
     ],

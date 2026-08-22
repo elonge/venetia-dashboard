@@ -323,7 +323,7 @@ export default function PrecipiceFactVsFictionPage() {
                     href="/venetia"
                     className="mt-5 inline-flex items-center gap-2 rounded-sm border border-accent-brown/25 bg-accent-brown/80 px-6 py-3 text-[16px] font-semibold text-white shadow-[0_10px_24px_rgba(122,58,20,0.24)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#63300F]"
                   >
-                    Discover Who Venetia Really Was
+                    Read the Venetia Stanley biography
                     <ArrowRight size={14} />
                   </Link>
                 </div>

@@ -202,7 +202,7 @@ export default function EssentialsPage() {
                             </p>
                          </div>
                          <div className="pt-2">
-                            <Link href="/chapter/venetia-engagement" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-accent-red hover:text-accent-red/80 transition-colors group/link">
+                            <Link href="/chapter/venetia-stanley-engagement-1915" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-accent-red hover:text-accent-red/80 transition-colors group/link">
                                 <span>Read Full Chapter</span>
                                 <ArrowRight size={14} className="group-hover/link:translate-x-1 transition-transform" />
                             </Link>

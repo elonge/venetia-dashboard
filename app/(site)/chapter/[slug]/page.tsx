@@ -23,7 +23,7 @@ export async function generateMetadata(
   if (!chapter) return { title: 'Chapter Not Found | The Venetia Project' };
 
   return {
-    title: `${chapter.chapter_title} | The Venetia Project`,
+    title: chapter.chapter_title,
     description: chapter.main_story
       ? `${chapter.main_story.substring(0, 160)}...`
       : 'A chapter from the Venetia Project.',

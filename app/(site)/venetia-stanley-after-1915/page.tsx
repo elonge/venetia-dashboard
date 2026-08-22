@@ -237,6 +237,15 @@ export default function VenetiaStanleyAfter1915Page() {
                     became the center of so much gossip. This page answers those questions directly,
                     while staying honest about where the surviving record is rich and where it is thin.
                   </p>
+                  <p className="mt-4 max-w-3xl text-base leading-relaxed text-navy/80">
+                    This page continues the story told in our{' '}
+                    <Link
+                      href="/venetia"
+                      className="font-semibold text-accent-brown underline underline-offset-4"
+                    >
+                      biography of Venetia Stanley
+                    </Link>, focusing on her life after the end of the Asquith correspondence in 1915.
+                  </p>
                 </div>
 
                 <figure className="w-full md:w-48 md:shrink-0">

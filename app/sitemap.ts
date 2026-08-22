@@ -3,102 +3,73 @@ import { getAllChapters } from '@/lib/chapters';
 import { getAllDailyRecords } from '@/lib/daily_records';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.thevenetiaproject.com';
+  const baseUrl = (
+    process.env.NEXT_PUBLIC_APP_URL ||
+    'https://www.thevenetiaproject.com'
+  ).replace(/\/$/, '');
 
-  // 1. Static Routes
+  /*
+   * Only include canonical, indexable pages.
+   *
+   * Add lastModified ONLY when we know the page had a
+   * meaningful content / structured-data / linking update.
+   */
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/1914-diary`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/lab`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/data-room`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
     },
     {
       url: `${baseUrl}/venetia`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/essentials`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/precipice-fact-vs-fiction`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/franz-von-papen`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/edwin-montagu-precipice`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
+      // Major biography + SEO update
+      lastModified: new Date('2026-08-22'),
     },
     {
       url: `${baseUrl}/venetia-stanley-edwin-montagu-marriage`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
     },
     {
       url: `${baseUrl}/venetia-stanley-after-1915`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    }
+    },
+    {
+      url: `${baseUrl}/edwin-montagu-precipice`,
+    },
+    {
+      url: `${baseUrl}/precipice-fact-vs-fiction`,
+    },
+    {
+      url: `${baseUrl}/franz-von-papen`,
+    },
+    {
+      url: `${baseUrl}/essentials`,
+    },
+    {
+      url: `${baseUrl}/1914-diary`,
+    },
+    {
+      url: `${baseUrl}/data-room`,
+    },
+    {
+      url: `${baseUrl}/about`,
+    },
+    {
+      url: `${baseUrl}/lab`,
+    },
   ];
 
-  // 2. Dynamic Chapter Routes
+  // Historical chapters
   const chapters = await getAllChapters();
+
   const chapterRoutes: MetadataRoute.Sitemap = chapters.map((chapter) => ({
     url: `${baseUrl}/chapter/${encodeURIComponent(chapter.slug)}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly',
-    priority: 0.7,
   }));
 
-  // 3. Dynamic Daily Entry Routes
+  // Only daily archive pages that actually contain letters
   const dailyRecords = await getAllDailyRecords();
-  const interestingDailyRecords = dailyRecords.filter(record => (record?.letters?.length && record.letters.length > 0));
-  const dailyRoutes: MetadataRoute.Sitemap = interestingDailyRecords.map((record) => ({
-    url: `${baseUrl}/daily/${encodeURIComponent(record.date)}`,
-    lastModified: new Date('2025-09-01'), // Date the archive was published/stabilized
-    changeFrequency: 'never', // Historical records rarely change
-    priority: 0.4,
-  }));
+
+  const dailyRoutes: MetadataRoute.Sitemap = dailyRecords
+    .filter((record) => record?.letters?.length)
+    .map((record) => ({
+      url: `${baseUrl}/daily/${encodeURIComponent(record.date)}`,
+    }));
 
   return [...staticRoutes, ...chapterRoutes, ...dailyRoutes];
 }

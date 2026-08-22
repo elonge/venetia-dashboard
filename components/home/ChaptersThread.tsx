@@ -312,7 +312,7 @@ function VenetiaPromoCard() {
 
         {/* The Stretched Link */}
         <Link href="/venetia" className="absolute inset-0 z-10">
-          <span className="sr-only">Who is Venetia?</span>
+          <span className="sr-only">Venetia Stanley biography</span>
         </Link>
 
         {/* Content Structure */}
@@ -340,7 +340,7 @@ function VenetiaPromoCard() {
 
             {/* Title - DARK STONE (Black) */}
             <h3 className="text-2xl font-serif font-bold text-stone-900 mb-1 drop-shadow-none group-hover/card:text-black transition-colors">
-              Who was Venetia?
+              Who was Venetia Stanley?
             </h3>
 
             {/* Subtitle - Dark Grey/Brown */}

@@ -235,6 +235,15 @@ export default function VenetiaStanleyEdwinMontaguMarriagePage() {
                     Cambridge archive, including Series MONT II, so the aim here is not gossip
                     but chronology, quotation, and context.
                   </p>
+                  <p className="mt-4 max-w-3xl text-base leading-relaxed text-navy/80">
+                    For the wider story of her life, relationships, and surviving archive, see our{' '}
+                    <Link
+                      href="/venetia"
+                      className="font-semibold text-accent-brown underline underline-offset-4"
+                    >
+                      biography of Venetia Stanley
+                    </Link>.
+                  </p>
                 </div>
 
                 <figure className="w-full md:w-44 md:shrink-0">
