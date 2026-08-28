@@ -4,6 +4,7 @@ import React, { useEffect, useMemo } from "react";
 import { CircleMarker, MapContainer, Polyline, TileLayer, Tooltip, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { CARTO_ATTRIBUTION, CARTO_LIGHT_TILE_URL } from "@/lib/carto-basemap";
 
 type Coords = { lat: number; lng: number };
 
@@ -55,6 +56,14 @@ export default function ProximityMap({
   const isClose = distance < 2000; // Less than 2km
   const showMergedPin = isClose || hasMeeting;
 
+  if (!CARTO_LIGHT_TILE_URL) {
+    return (
+      <div className="flex h-full w-full items-center justify-center bg-[#E8E4D9] px-4 text-center text-xs font-bold uppercase tracking-widest text-muted-gray">
+        Map unavailable: NEXT_PUBLIC_CARTO_API_KEY is not configured
+      </div>
+    );
+  }
+
   return (
     // THE PHYSICAL ARTIFACT CONTAINER
     <div className="relative h-full w-full bg-[#E8E4D9] border-[6px] border-white shadow-xl rotate-1 overflow-hidden rounded-sm">
@@ -96,13 +105,14 @@ export default function ProximityMap({
         style={{ height: "100%", width: "100%", background: '#E8E4D9' }}
         scrollWheelZoom={false}
         zoomControl={false} // Remove modern +/- buttons
-        attributionControl={false} // Clean look (add attribution elsewhere if needed)
+        attributionControl
       >
         <FitBounds points={[pm, venetia]} />
         
         {/* 3. CARTODB TILES + SEPIA FILTER */}
         <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+          url={CARTO_LIGHT_TILE_URL}
+          attribution={CARTO_ATTRIBUTION}
           className="archival-tiles"
           maxNativeZoom={12} // Prevents loading high-detail tiles with building footprints
         />

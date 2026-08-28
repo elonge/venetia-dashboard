@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Polyline, useMap } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { CARTO_ATTRIBUTION, CARTO_LIGHT_TILE_URL } from '@/lib/carto-basemap';
 
 // Fix for default Leaflet marker icons in React
 const icon = L.icon({
@@ -40,6 +41,14 @@ interface DiaryMapProps {
 const DiaryMap = ({ center, destination, locationName }: DiaryMapProps) => {
   if (!center || isNaN(center[0]) || isNaN(center[1])) return null;
 
+  if (!CARTO_LIGHT_TILE_URL) {
+    return (
+      <div className="absolute top-6 left-6 z-20 flex h-32 w-48 items-center justify-center rounded-lg border-4 border-white bg-stone-200 px-3 text-center text-[10px] font-bold uppercase tracking-widest text-stone-600 shadow-2xl">
+        Map unavailable: NEXT_PUBLIC_CARTO_API_KEY is not configured
+      </div>
+    );
+  }
+
   return (
     <div className="absolute top-6 left-6 z-20 w-48 h-32 rounded-lg overflow-hidden border-4 border-white shadow-2xl opacity-90 hover:opacity-100 transition-opacity">
         <MapContainer 
@@ -47,12 +56,13 @@ const DiaryMap = ({ center, destination, locationName }: DiaryMapProps) => {
             zoom={7} 
             scrollWheelZoom={false} 
             zoomControl={false}
-            attributionControl={false}
+            attributionControl
             className="w-full h-full"
         >
             {/* Vintage-looking tiles */}
             <TileLayer
-                url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+                url={CARTO_LIGHT_TILE_URL}
+                attribution={CARTO_ATTRIBUTION}
             />
             <Marker position={center} icon={icon}></Marker>
             
