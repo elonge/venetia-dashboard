@@ -50,45 +50,6 @@ const timeline = [
   },
 ] as const;
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "What happened to Venetia Stanley after 1915?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "After marrying Edwin Montagu in 1915, Venetia spent the next decade in an increasingly strained marriage, moved through elite political and social circles, had a daughter in 1923, was widowed in 1924, and remained a socially mobile, controversial figure until her death in 1948.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Did Venetia Stanley stay married to Edwin Montagu?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes. The marriage lasted until Montagu's death in November 1924, though by most accounts it was unhappy and marked by Venetia's affairs and Montagu's continued devotion.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Did Venetia Stanley have an affair with Lord Beaverbrook?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Later biographical accounts and existing project summaries describe a long affair with Lord Beaverbrook beginning around 1919. The surviving direct correspondence used on this site is thinner here than it is for 1914-1915, so the claim rests more on later synthesis than on one decisive letter.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Was Judith Montagu really Edwin Montagu's daughter?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "That question has generated decades of gossip. Later accounts often link Judith's paternity to the Dudley circle rather than to Edwin Montagu, but the surviving material used here is better at recording rumor than at proving it conclusively.",
-      },
-    },
-  ],
-};
-
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
@@ -114,10 +75,96 @@ const articleSchema = {
   ],
 };
 
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "https://www.thevenetiaproject.com/venetia-stanley-after-1915#person",
+  name: "Venetia Stanley",
+  alternateName: ["Venetia Montagu", "Beatrice Venetia Stanley", "Beatrice Venetia Stanley Montagu"],
+  birthDate: "1887-08-22",
+  deathDate: "1948-08-03",
+  birthPlace: {
+    "@type": "Place",
+    name: "Alderley Edge, Cheshire, England",
+  },
+  deathPlace: {
+    "@type": "Place",
+    name: "London, England",
+  },
+  sameAs: ["https://en.wikipedia.org/wiki/Venetia_Stanley"],
+  spouse: {
+    "@type": "Person",
+    name: "Edwin Montagu",
+    url: "https://www.thevenetiaproject.com/edwin-montagu-precipice",
+  },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Who was Venetia Stanley?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Beatrice Venetia Stanley (1887–1948) was an English aristocrat best known as the close confidante of Prime Minister H.H. Asquith during World War I, who wrote her hundreds of letters containing sensitive political secrets. In 1915, she married politician Edwin Montagu.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Were H.H. Asquith and Venetia Stanley lovers?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Historians view their relationship as an obsessive intellectual and emotional romance rather than a sexual affair. Asquith relied heavily on her counsel until she broke off the intimacy by marrying Edwin Montagu in July 1915.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What happened to Venetia Stanley after 1915?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "After marrying Edwin Montagu in 1915, Venetia lived at the center of London political society, gave birth to her daughter Judith in 1923, and was widowed when Edwin died in 1924. She remained an influential society figure and hostess until her death in 1948.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Did Venetia Stanley have children?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. Venetia gave birth to a daughter, Judith Montagu, on 6 February 1923. Decades of society gossip questioned whether Edwin Montagu was her biological father, frequently pointing to William Humble Eric Ward (later 3rd Earl of Dudley).",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Why did Venetia Stanley marry Edwin Montagu?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Venetia sought independence from Asquith's suffocating obsession, along with companionship and financial security. She formally converted to Judaism in July 1915 to satisfy the Montagu family trust terms.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "When and how did Venetia Stanley die?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Venetia Stanley died of cancer on 3 August 1948 at her home, Breccles Hall in Norfolk, at the age of 60. She outlived both Edwin Montagu (who died in 1924) and H.H. Asquith (who died in 1928).",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Did Venetia Stanley have an affair with Lord Beaverbrook?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Biographical accounts and contemporary memoirs record a long-running romantic relationship with press baron Lord Beaverbrook beginning around 1919, which kept her connected to political and press power throughout the 1920s.",
+      },
+    },
+  ],
+};
 export const metadata: Metadata = {
-  title: "What Happened to Venetia Stanley? Her Later Life After 1915",
+  title: "Venetia Stanley (1887–1948): Life After 1915 & Asquith Letters",
   description:
-    "Venetia Stanley's later life after 1915: the Montagu marriage years, widowhood, Beaverbrook, Judith, and the Dudley paternity question.",
+    "Who was Venetia Stanley? Discover the life of H.H. Asquith's wartime confidante, her 1915 marriage to Edwin Montagu, her later life, and rare 1928 footage.",
   alternates: {
     canonical: PAGE_URL,
   },
@@ -181,6 +228,10 @@ export default function VenetiaStanleyAfter1915Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+      />
 
       <div className="bg-page-bg">
         <div className="mx-auto flex max-w-7xl gap-12 px-6 py-12">
@@ -222,29 +273,33 @@ export default function VenetiaStanleyAfter1915Page() {
                 <div className="flex-1">
                   <div className="mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.24em] text-accent-brown">
                     <CalendarDays size={14} />
-                    <span>Later Life Guide</span>
+                    <span>Biographical &amp; Historical Guide</span>
                   </div>
                   <h1 className="text-4xl font-serif font-bold leading-tight text-navy md:text-5xl">
-                    What Happened to Venetia Stanley? Her Later Life After 1915
+                    Venetia Stanley: Biography, Asquith Letters &amp; Later Life
                   </h1>
+
+                  {/* Definitive Bio Summary - Targets Google's Featured Snippet */}
+                  <div className="mt-5 rounded-sm border-l-4 border-accent-brown bg-stone-50/90 p-4 font-serif text-base leading-relaxed text-navy/90 shadow-sm">
+                    <p>
+                      <strong>Beatrice Venetia Stanley</strong> (1887–1948) was an English aristocrat best known for her intimate wartime correspondence with British Prime Minister H.H. Asquith, who sent her hundreds of letters containing sensitive Cabinet secrets. In July 1915, she broke with Asquith to marry politician Edwin Montagu, later raising her daughter Judith and remaining an influential society figure until her death in 1948.
+                    </p>
+                  </div>
+
                   <p className="mt-5 text-xl font-serif italic leading-relaxed text-navy/85">
-                    The marriage years, the widowhood, the Beaverbrook affair, and the long afterlife of the Judith rumor.
-                  </p>
-                  <p className="mt-5 max-w-3xl text-base leading-relaxed text-navy/80">
-                    Search interest around Venetia Stanley usually does not stop with the Asquith
-                    letters. Readers want to know what came next: whether the marriage worked,
-                    what widowhood changed, how she lived in the 1920s, and why her daughter Judith
-                    became the center of so much gossip. This page answers those questions directly,
-                    while staying honest about where the surviving record is rich and where it is thin.
+                    From Asquith&apos;s wartime letters to the Montagu marriage, widowhood, and the Judith paternity rumors.
                   </p>
                   <p className="mt-4 max-w-3xl text-base leading-relaxed text-navy/80">
-                    This page continues the story told in our{' '}
+                    Search interest around Venetia Stanley often begins with her portrayal in Robert Harris&apos;s novel <em>Precipice</em> or her letters with H.H. Asquith. But readers inevitably want the full picture: whether the Montagu marriage survived, what widowhood changed, and how her daughter Judith became the focus of enduring society gossip.
+                  </p>
+                  <p className="mt-4 max-w-3xl text-base leading-relaxed text-navy/80">
+                    To explore her full primary-source archive, contemporary letters, and rare 1928 footage of her playing bridge, visit our companion{' '}
                     <Link
                       href="/venetia"
-                      className="font-semibold text-accent-brown underline underline-offset-4"
+                      className="font-semibold text-accent-brown underline underline-offset-4 hover:text-accent-green"
                     >
-                      biography of Venetia Stanley
-                    </Link>, focusing on her life after the end of the Asquith correspondence in 1915.
+                      Venetia Stanley archival footage &amp; multimedia profile
+                    </Link>.
                   </p>
                 </div>
 
@@ -255,7 +310,7 @@ export default function VenetiaStanleyAfter1915Page() {
                     className="block w-full rounded-sm border-4 border-[#FDFBF7] shadow-md sepia-[0.16] contrast-105 grayscale-[0.06]"
                   />
                   <figcaption className="mt-2 text-sm italic text-stone-500">
-                    Venetia Stanley with her daughter Judith, the figure around whom later rumor clustered.
+                    Venetia Stanley with her daughter Judith, who became central to interwar society rumor.
                   </figcaption>
                 </figure>
               </div>

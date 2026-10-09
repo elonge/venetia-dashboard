@@ -189,7 +189,14 @@ const faqItems: FaqItem[] = [
     question: 'Why did Venetia Stanley marry Edwin Montagu?',
     answer: (
       <>
-        She accepted Edwin Montagu after years of refusing him, which suggests a serious decision rather than a sudden romantic reversal. Her own letters point to a mixture of pragmatism, companionship, and genuine affection, even if it was not love in the intense Asquithian sense. Montagu offered loyalty, position, and a plausible future at a moment when the Asquith relationship had become increasingly untenable. The marriage makes more sense as a deliberate choice within her social and financial world than as an impulsive surrender.
+        She accepted Edwin Montagu after years of hesitation, choosing pragmatism, companionship, and financial independence at a time when Prime Minister Asquith&apos;s obsessive demands had become suffocating. In July 1915, she converted to Judaism to satisfy the Montagu family inheritance settlement and married Edwin in a private ceremony that devastated Asquith. For the complete correspondence, conversion controversy, and fallout, read our guide to the{' '}
+        <Link
+          href="/venetia-stanley-edwin-montagu-marriage"
+          className="font-semibold text-accent-green underline decoration-accent-green/40 underline-offset-4 transition-colors hover:text-navy"
+        >
+          marriage of Venetia Stanley and Edwin Montagu
+        </Link>
+        .
       </>
     ),
   },
