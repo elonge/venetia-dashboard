@@ -56,10 +56,26 @@ const faqSchema = {
   mainEntity: [
     {
       "@type": "Question",
-      name: "When did Venetia Stanley marry Edwin Montagu?",
+      name: "When and where did Venetia Stanley marry Edwin Montagu?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Venetia Stanley married Edwin Montagu on 26 July 1915.",
+        text: "Venetia Stanley married Edwin Montagu on 26 July 1915 in a private Jewish ceremony held at the London home of his brother, Lord Swaythling (28 Kensington Palace Gardens).",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Who was Venetia Stanley's husband?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Venetia Stanley's husband was Edwin Samuel Montagu, an influential British Liberal politician who served as Financial Secretary to the Treasury, Minister of Munitions, and Secretary of State for India.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Why did Venetia Stanley marry Edwin Montagu instead of H.H. Asquith?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Prime Minister H.H. Asquith was already married to Margot Asquith and more than thirty years older than Venetia. Edwin Montagu offered financial security, social standing, and an opportunity for Venetia to establish an independent domestic life, despite Asquith's desperate objections.",
       },
     },
     {
@@ -67,23 +83,15 @@ const faqSchema = {
       name: "Why did Venetia Stanley convert to Judaism?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "She converted so the marriage would satisfy the Montagu family settlement and inheritance terms. Her own letters make clear that she treated the conversion as a nominal label rather than a deep religious change.",
+        text: "She converted because the Montagu family trust and inheritance settlement required Edwin to marry within the Jewish faith to retain his substantial patrimony. Venetia treated the conversion as a formal legal requirement rather than a religious awakening.",
       },
     },
     {
       "@type": "Question",
-      name: "Did H.H. Asquith attend Venetia Stanley's wedding?",
+      name: "Did H.H. Asquith attend the wedding?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "No. Asquith did not attend the wedding, though he later sent silver boxes as a gift.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Why do people search for Edwin Montagu's teeth or appearance?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Because hostile contemporaries, especially Asquith, wrote cruelly about Montagu's looks. The more historically revealing point is not a single feature but the way appearance, nerves, and antisemitic bias were blended together in elite private correspondence.",
+        text: "No. Devastated by the union, Asquith chose not to attend the ceremony, though he later sent silver boxes as a formal wedding gift.",
       },
     },
   ],
@@ -92,7 +100,7 @@ const faqSchema = {
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
-  headline: "The Marriage of Venetia Stanley and Edwin Montagu (1915)",
+  headline: "The 1915 Marriage of Venetia Stanley and Edwin Montagu: Letters, Conversion, and Scandal",
   description:
     "A source-grounded account of Venetia Stanley's 1915 marriage to Edwin Montagu: the courtship, Asquith's heartbreak, the conversion to Judaism, and the wedding day.",
   image: ["https://www.thevenetiaproject.com/venetia_marriage.png"],
@@ -115,9 +123,9 @@ const articleSchema = {
 };
 
 export const metadata: Metadata = {
-  title: "The Marriage of Venetia Stanley and Edwin Montagu (1915)",
+  title: "Venetia Stanley & Edwin Montagu's 1915 Marriage: The Scandal & Asquith's Heartbreak",
   description:
-    "Courtship, conversion, wedding day, and Asquith's reaction: a primary-source guide to Venetia Stanley's marriage to Edwin Montagu.",
+    "Why did Venetia Stanley abruptly marry Edwin Montagu in July 1915? Explore their courtship, her controversial Jewish conversion, and Asquith's devastated reaction.",
   alternates: {
     canonical: PAGE_URL,
   },
@@ -545,6 +553,11 @@ export default function VenetiaStanleyEdwinMontaguMarriagePage() {
                   Related Reading
                 </h2>
                 <div className="mt-6 grid gap-4 md:grid-cols-2">
+                  <RelatedLink
+                    href="/venetia-stanley-after-1915"
+                    label="Venetia Stanley After 1915"
+                    description="Her daughter Judy, post-war life, and relationship with Edwin until his death in 1924."
+                  />
                   <RelatedLink
                     href="/chapter/venetia-stanley-engagement-1915"
                     label="Venetia's Engagement"
