@@ -75,30 +75,6 @@ const articleSchema = {
   ],
 };
 
-const personSchema = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "@id": "https://www.thevenetiaproject.com/venetia-stanley-after-1915#person",
-  name: "Venetia Stanley",
-  alternateName: ["Venetia Montagu", "Beatrice Venetia Stanley", "Beatrice Venetia Stanley Montagu"],
-  birthDate: "1887-08-22",
-  deathDate: "1948-08-03",
-  birthPlace: {
-    "@type": "Place",
-    name: "Alderley Edge, Cheshire, England",
-  },
-  deathPlace: {
-    "@type": "Place",
-    name: "London, England",
-  },
-  sameAs: ["https://en.wikipedia.org/wiki/Venetia_Stanley"],
-  spouse: {
-    "@type": "Person",
-    name: "Edwin Montagu",
-    url: "https://www.thevenetiaproject.com/edwin-montagu-precipice",
-  },
-};
-
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -162,7 +138,7 @@ const faqSchema = {
   ],
 };
 export const metadata: Metadata = {
-  title: "Venetia Stanley (1887–1948): Life After 1915 & Asquith Letters",
+  title: "Venetia Stanley: Later Life After 1915, Marriage & Biography",
   description:
     "Who was Venetia Stanley? Discover the life of H.H. Asquith's wartime confidante, her 1915 marriage to Edwin Montagu, her later life, and rare 1928 footage.",
   alternates: {
@@ -228,10 +204,6 @@ export default function VenetiaStanleyAfter1915Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
-      />
 
       <div className="bg-page-bg">
         <div className="mx-auto flex max-w-7xl gap-12 px-6 py-12">
@@ -276,7 +248,7 @@ export default function VenetiaStanleyAfter1915Page() {
                     <span>Biographical &amp; Historical Guide</span>
                   </div>
                   <h1 className="text-4xl font-serif font-bold leading-tight text-navy md:text-5xl">
-                    Venetia Stanley: Biography, Asquith Letters &amp; Later Life
+                    Venetia Stanley: Later Life After 1915, Marriage &amp; Aftermath
                   </h1>
 
                   {/* Definitive Bio Summary - Targets Google's Featured Snippet */}
@@ -293,14 +265,14 @@ export default function VenetiaStanleyAfter1915Page() {
                     Search interest around Venetia Stanley often begins with her portrayal in Robert Harris&apos;s novel <em>Precipice</em> or her letters with H.H. Asquith. But readers inevitably want the full picture: whether the Montagu marriage survived, what widowhood changed, and how her daughter Judith became the focus of enduring society gossip.
                   </p>
                   <p className="mt-4 max-w-3xl text-base leading-relaxed text-navy/80">
-                    To explore her full primary-source archive, contemporary letters, and rare 1928 footage of her playing bridge, visit our companion{' '}
+                    For her early life, Asquith letters, contemporary portraits, and rare 1928 footage, read our main{' '}
                     <Link
                       href="/venetia"
                       className="font-semibold text-accent-brown underline underline-offset-4 hover:text-accent-green"
                     >
-                      Venetia Stanley archival footage &amp; multimedia profile
+                      biography of Venetia Stanley
                     </Link>.
-                  </p>
+                  </p>                
                 </div>
 
                 <figure className="w-full md:w-48 md:shrink-0">
