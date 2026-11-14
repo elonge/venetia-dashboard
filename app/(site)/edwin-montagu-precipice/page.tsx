@@ -333,6 +333,15 @@ export default function EdwinMontaguPrecipicePage() {
                 <p>
                   Just as importantly, marrying Montagu gave Venetia a decisive way to break free from Asquith’s emotional dependence on her. In that sense, the marriage was less a romantic surrender than a calculated bargain: Venetia gained wealth, position, and personal liberty, while Montagu gained the woman he had loved for years.
                 </p>
+                <p>
+                  Read the complete account of their conversion, wedding, and its aftermath in our guide to the{' '}
+                  <Link
+                    href="/venetia-stanley-edwin-montagu-marriage"
+                    className="font-semibold text-accent-brown underline decoration-accent-brown/40 underline-offset-4 hover:text-navy"
+                  >
+                    marriage of Venetia Stanley and Edwin Montagu
+                  </Link>.
+                </p>
                 <RelatedChapterLink href="/chapter/venetia-stanley-jewish-conversion" chapterTitle="Read more about Venetia's Engagement to Edwin Montagu" />
               </section>
               <HistoricalDivider icon="ink" />

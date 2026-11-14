@@ -227,7 +227,7 @@ const faqItems: FaqItem[] = [
     question: 'What happened to Venetia Stanley after 1915?',
     answer: (
       <>
-        After 1915 she moved into the Montagu years, then into widowhood after Edwin Montagu&apos;s death in 1924. She became a society hostess and remained socially magnetic, though later accounts increasingly blend documented fact with gossip and retrospective myth. Her later life matters because it shows that she was not frozen in history as Asquith&apos;s muse but continued shaping her own world for decades. For the fuller later story, see{' '}
+        She married Edwin Montagu in 1915, became a mother, and was widowed in 1924. Read the documented story of her marriage, widowhood, later relationships, and life through 1948 in{' '}
         <Link
           href="/venetia-stanley-after-1915"
           className="font-semibold text-accent-green underline decoration-accent-green/40 underline-offset-4 transition-colors hover:text-navy"
@@ -300,7 +300,7 @@ export default function VenetiaBio() {
                   Biography &amp; Primary Sources
                 </p>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-page-bg mb-4 leading-none tracking-tight drop-shadow-lg">
-                  Venetia Stanley
+                  Venetia Stanley{' '}
                   <span className="mt-2 block text-2xl md:text-3xl lg:text-4xl text-accent-brown">
                     (1887–1948)
                   </span>

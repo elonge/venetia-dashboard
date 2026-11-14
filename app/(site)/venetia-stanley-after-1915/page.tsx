@@ -81,22 +81,6 @@ const faqSchema = {
   mainEntity: [
     {
       "@type": "Question",
-      name: "Who was Venetia Stanley?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Beatrice Venetia Stanley (1887–1948) was an English aristocrat best known as the close confidante of Prime Minister H.H. Asquith during World War I, who wrote her hundreds of letters containing sensitive political secrets. In 1915, she married politician Edwin Montagu.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Were H.H. Asquith and Venetia Stanley lovers?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Historians view their relationship as an obsessive intellectual and emotional romance rather than a sexual affair. Asquith relied heavily on her counsel until she broke off the intimacy by marrying Edwin Montagu in July 1915.",
-      },
-    },
-    {
-      "@type": "Question",
       name: "What happened to Venetia Stanley after 1915?",
       acceptedAnswer: {
         "@type": "Answer",
@@ -138,9 +122,9 @@ const faqSchema = {
   ],
 };
 export const metadata: Metadata = {
-  title: "Venetia Stanley: Later Life After 1915, Marriage & Biography",
+  title: "Venetia Stanley After 1915: Later Life & Widowhood",
   description:
-    "Who was Venetia Stanley? Discover the life of H.H. Asquith's wartime confidante, her 1915 marriage to Edwin Montagu, her later life, and rare 1928 footage.",
+    "What happened to Venetia Stanley after 1915: her marriage to Edwin Montagu, daughter Judith, widowhood, Beaverbrook, and later life through 1948.",
   alternates: {
     canonical: PAGE_URL,
   },
@@ -251,10 +235,10 @@ export default function VenetiaStanleyAfter1915Page() {
                     Venetia Stanley: Later Life After 1915, Marriage &amp; Aftermath
                   </h1>
 
-                  {/* Definitive Bio Summary - Targets Google's Featured Snippet */}
+                  {/* Concise context before the page's post-1915 account. */}
                   <div className="mt-5 rounded-sm border-l-4 border-accent-brown bg-stone-50/90 p-4 font-serif text-base leading-relaxed text-navy/90 shadow-sm">
                     <p>
-                      <strong>Beatrice Venetia Stanley</strong> (1887–1948) was an English aristocrat best known for her intimate wartime correspondence with British Prime Minister H.H. Asquith, who sent her hundreds of letters containing sensitive Cabinet secrets. In July 1915, she broke with Asquith to marry politician Edwin Montagu, later raising her daughter Judith and remaining an influential society figure until her death in 1948.
+                      <strong>Beatrice Venetia Stanley</strong> (1887–1948) married Edwin Montagu in July 1915. This account follows the part of her life that came next: the Montagu marriage, motherhood, widowhood, later relationships, and the decades before her death in 1948.
                     </p>
                   </div>
 

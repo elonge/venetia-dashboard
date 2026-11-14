@@ -10,15 +10,19 @@
     "ingest": "tsx scripts/ingest-documents.ts",
     "ingest:asquith": "tsx scripts/ingest-asquith-letters.ts",
     "build:asquith-buckets": "tsx scripts/build-asquith-bucket-embeddings.ts",
-    "clear-chunks": "tsx scripts/clear-document-chunks.ts"
+    "clear-chunks": "tsx scripts/clear-document-chunks.ts",
+    "seo:collect": "tsx --env-file=.env.local scripts/seo-agent/index.ts",
+    "seo:mcp": "tsx --env-file=.env.local scripts/seo-agent/mcp-server.ts"
   },
   "dependencies": {
     "@babel/runtime": "^7.28.4",
+    "@modelcontextprotocol/sdk": "^1.32.2",
     "@openai/agents": "^0.3.7",
     "@types/leaflet": "^1.9.21",
     "@vercel/analytics": "^1.6.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "googleapis": "^190.0.0",
     "immutable": "^5.1.4",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.561.0",

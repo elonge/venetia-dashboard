@@ -1,9 +1,43 @@
 import { Metadata } from "next";
 
+const PAGE_URL = "https://www.thevenetiaproject.com/edwin-montagu-precipice";
+
 export const metadata: Metadata = {
-  title: "Who Was Edwin Montagu? The Real Man Behind Precipice",
+  title: "Edwin Montagu (1879–1924): Biography & Precipice",
   description:
-    "A historical Q&A on Edwin Montagu: his marriage to Venetia Stanley, his politics, his role in the Balfour era, and how accurately Precipice portrays him.",
+    "A biography of Edwin Samuel Montagu: Liberal politician, Secretary of State for India, husband of Venetia Stanley, and the real figure behind Precipice.",
+  alternates: {
+    canonical: PAGE_URL,
+  },
+};
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": `${PAGE_URL}#edwin-montagu`,
+  name: "Edwin Samuel Montagu",
+  alternateName: "Edwin Montagu",
+  birthDate: "1879-02-06",
+  deathDate: "1924-11-15",
+  description:
+    "British Liberal politician, Secretary of State for India, and husband of Venetia Stanley.",
+  spouse: {
+    "@type": "Person",
+    name: "Venetia Stanley",
+    url: "https://www.thevenetiaproject.com/venetia",
+  },
+  sameAs: ["https://en.wikipedia.org/wiki/Edwin_Montagu"],
+};
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "Edwin Montagu (1879–1924): Biography and the Real Man Behind Precipice",
+  description: metadata.description,
+  mainEntityOfPage: PAGE_URL,
+  about: { "@id": `${PAGE_URL}#edwin-montagu` },
+  author: { "@type": "Organization", name: "The Venetia Project" },
+  publisher: { "@type": "Organization", name: "The Venetia Project" },
 };
 
 const faqSchema = {
@@ -95,6 +129,14 @@ export default function EdwinMontaguPrecipiceLayout({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
       {children}
     </>

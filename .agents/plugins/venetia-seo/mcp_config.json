@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "venetia-seo": {
+      "command": "npm",
+      "args": [
+        "--prefix",
+        "/Users/elongecht/code/venetia-dashboard",
+        "--silent",
+        "run",
+        "seo:mcp"
+      ]
+    }
+  }
+}

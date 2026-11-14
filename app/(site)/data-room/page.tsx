@@ -6,6 +6,9 @@ import DataRoomClient from './DataRoomClient';
 export const metadata: Metadata = {
   title: 'Search 500+ Asquith-Venetia Letters',
   description: 'Access the complete structured dataset of the Asquith-Venetia correspondence (1912–1915). Filter by sentiment, date, topic, and entity analysis.',
+  alternates: {
+    canonical: 'https://www.thevenetiaproject.com/data-room',
+  },
 };
 
 export default function DataRoomPage() {
