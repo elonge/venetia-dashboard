@@ -44,6 +44,7 @@ const baseColumns: FooterColumn[] = [
       { href: '/venetia-stanley-edwin-montagu-marriage', label: 'Venetia Montagu Marriage' },
       { href: '/venetia-stanley-after-1915', label: 'Venetia After 1915' },
       { href: '/franz-von-papen', label: 'Franz von Papen' },
+      { href: '/sisi', label: 'Empress Elisabeth (Sisi)' },
     ],
   },
   {
