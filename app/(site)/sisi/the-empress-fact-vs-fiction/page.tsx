@@ -3,7 +3,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useChatVisibility } from "@/components/chat/useChatVisibility";
 import { ArrowRight, BookOpen, Info, List } from "lucide-react";
 
 type RelatedPageLinkProps = {
@@ -134,7 +133,6 @@ const SECTIONS = [
 ];
 
 export default function TheEmpressFactVsFictionPage() {
-  useChatVisibility(false);
   const [activeId, setActiveId] = useState<string>("");
 
   useEffect(() => {

@@ -409,14 +409,14 @@ export default function SisiTimelinePage() {
                           <div className="overflow-hidden">
                             <div className="mt-4 border-t border-border-beige pt-4">
                               {event.evidenceImage && (
-                                <div className="mt-3 mb-4 aspect-[4/3] overflow-hidden border border-border-beige bg-page-bg">
+                                <div className="mt-3 mb-4 flex aspect-[3/4] items-center justify-center overflow-hidden border border-border-beige bg-page-bg md:aspect-[4/3]">
                                   <Image
                                     src={event.evidenceImage}
                                     alt={event.imageAlt || event.title}
                                     width={1920}
                                     height={1440}
                                     sizes="(min-width: 768px) 50vw, 100vw"
-                                    className="h-full w-full object-cover object-top"
+                                    className="h-full w-full object-contain"
                                     loading="lazy"
                                   />
                                 </div>
