@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Is Netflix's 'The Empress' Season 3 a True Story? Fact vs Fiction",
+  title: "The Empress Season 3: True Story vs. Fiction",
   description:
     "Is Netflix's The Empress Season 3 based on a true story? A complete fact-check of Sisi, Franz Joseph, Count Andrássy, Terese, and Maximilian — verified against Habsburg archives.",
   alternates: {

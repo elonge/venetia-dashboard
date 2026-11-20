@@ -5,14 +5,14 @@ import { ArrowRight, BookOpen, CalendarDays, Scale, Sparkles } from "lucide-reac
 const PAGE_URL = "https://www.thevenetiaproject.com/sisi";
 
 export const metadata: Metadata = {
-  title: "Empress Elisabeth (Sisi) Archive Case Study | The Venetia Project",
+  title: "Empress Elisabeth (Sisi): Archive Case Study",
   description:
     "Testing Netflix's The Empress and popular Sisi mythology against surviving Habsburg letters, diaries, and sealed poetry—a primary-source case study from The Venetia Project.",
   alternates: {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: "Empress Elisabeth (Sisi) Archive Case Study | The Venetia Project",
+    title: "Empress Elisabeth (Sisi): Archive Case Study",
     description:
       "Primary-source fact-checks, biographical timelines, and archival context on Empress Elisabeth of Austria and Emperor Franz Joseph.",
     url: PAGE_URL,

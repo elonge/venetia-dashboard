@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Metadata } from "next";
 import { ReactNode } from "react";
 import { ArrowRight, BookOpen, CalendarDays, Quote } from "lucide-react";
@@ -56,7 +57,7 @@ const articleSchema = {
   headline: "What Happened to Sisi After 1867? Empress Elisabeth's Later Life (1868–1898)",
   description:
     "A source-grounded guide to Empress Elisabeth of Austria after Netflix's The Empress ends: Marie Valerie, Katharina Schratt, Mayerling, endless travel, and Geneva.",
-  image: ["https://www.thevenetiaproject.com/sisi/elisabeth-mourning.jpg"],
+  image: ["https://www.thevenetiaproject.com/sisi/elisabeth-last-photo.jpg"],
   mainEntityOfPage: PAGE_URL,
   author: {
     "@type": "Organization",
@@ -123,7 +124,7 @@ const faqSchema = {
 };
 
 export const metadata: Metadata = {
-  title: "Sisi After 1867: Empress Elisabeth's Later Life & Death (1868–1898)",
+  title: "Sisi After 1867: Later Life & Death",
   description:
     "What happened to Sisi after 1867: her daughter Marie Valerie, Katharina Schratt, Crown Prince Rudolf's suicide at Mayerling, and her assassination in Geneva.",
   alternates: {
@@ -134,7 +135,7 @@ export const metadata: Metadata = {
     description:
       "A source-grounded guide to Empress Elisabeth's final three decades: withdrawal from Vienna, Mayerling, private poetry, and Geneva.",
     url: PAGE_URL,
-    images: ["/sisi/elisabeth-mourning.jpg"],
+    images: ["/sisi/elisabeth-last-photo.jpg"],
   },
 };
 
@@ -267,13 +268,16 @@ export default function SisiAfter1867Page() {
                 </div>
 
                 <figure className="w-full md:w-48 md:shrink-0">
-                  <img
+                  <Image
                     src="/sisi/elisabeth-last-photo.jpg"
                     alt="Empress Elisabeth of Austria in her last known photograph"
+                    width={2697}
+                    height={3623}
+                    sizes="(min-width: 768px) 192px, 100vw"
                     className="block w-full rounded-sm border-4 border-[#FDFBF7] shadow-md sepia-[0.16] contrast-105 grayscale-[0.06]"
                   />
                   <figcaption className="mt-2 text-sm italic text-stone-500">
-                    Elisabeth's last known photograph, taken shortly before her assassination.
+                    Elisabeth&apos;s last known photograph, taken shortly before her assassination.
                   </figcaption>
                 </figure>
               </div>

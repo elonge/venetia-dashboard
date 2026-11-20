@@ -36,6 +36,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseUrl}/precipice-fact-vs-fiction`,
     },
     {
+      url: `${baseUrl}/sisi`,
+      lastModified: new Date('2026-11-20'),
+    },
+    {
+      url: `${baseUrl}/sisi/timeline`,
+      lastModified: new Date('2026-11-20'),
+    },
+    {
+      url: `${baseUrl}/sisi/after-1867`,
+      lastModified: new Date('2026-11-20'),
+    },
+    {
+      url: `${baseUrl}/sisi/the-empress-fact-vs-fiction`,
+      lastModified: new Date('2026-11-20'),
+    },
+    {
       url: `${baseUrl}/franz-von-papen`,
     },
     {

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { FAQ_ITEMS } from "./faq";
 import { ArrowRight } from "lucide-react";
 
@@ -324,11 +325,14 @@ export default function SisiTimelinePage() {
             </div>
 
             <div className="relative w-full md:mr-[-9vw] lg:mr-[-11vw]">
-              <img
+              <Image
                 src={heroImage}
                 alt="Portrait of Empress Elisabeth of Austria by Franz Xaver Winterhalter"
+                width={2090}
+                height={3400}
+                sizes="(min-width: 768px) 42vw, 100vw"
                 className="h-[390px] w-full object-cover object-top md:h-[620px]"
-                loading="eager"
+                priority
               />
               <div className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-page-bg to-transparent md:w-44" />
             </div>
@@ -406,9 +410,12 @@ export default function SisiTimelinePage() {
                             <div className="mt-4 border-t border-border-beige pt-4">
                               {event.evidenceImage && (
                                 <div className="mt-3 mb-4 aspect-[4/3] overflow-hidden border border-border-beige bg-page-bg">
-                                  <img
+                                  <Image
                                     src={event.evidenceImage}
                                     alt={event.imageAlt || event.title}
+                                    width={1920}
+                                    height={1440}
+                                    sizes="(min-width: 768px) 50vw, 100vw"
                                     className="h-full w-full object-cover object-top"
                                     loading="lazy"
                                   />

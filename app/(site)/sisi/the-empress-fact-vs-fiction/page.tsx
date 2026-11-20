@@ -2,18 +2,13 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useChatVisibility } from "@/components/chat/useChatVisibility";
 import { ArrowRight, BookOpen, Info, List } from "lucide-react";
 
 type RelatedPageLinkProps = {
   href: string;
   linkTitle: string;
-};
-
-type InlineArchiveFigureProps = {
-  src: string;
-  alt: string;
-  caption: string;
 };
 
 type QuestionHeadingProps = {
@@ -29,21 +24,6 @@ function RelatedPageLink({ href, linkTitle }: RelatedPageLinkProps) {
       <ArrowRight size={15} className="shrink-0" />
       <span>{linkTitle}</span>
     </Link>
-  );
-}
-
-function InlineArchiveFigure({ src, alt, caption }: InlineArchiveFigureProps) {
-  return (
-    <figure className="not-prose my-8 md:my-10 w-full">
-      <img
-        src={src}
-        alt={alt}
-        className="block w-full h-auto rounded-sm shadow-lg object-cover sepia-[0.25] contrast-105 grayscale-[0.15]"
-      />
-      <figcaption className="mt-2 text-sm italic text-stone-500">
-        {caption}
-      </figcaption>
-    </figure>
   );
 }
 
@@ -140,22 +120,22 @@ const HistoricalDivider = ({ icon = "nib" }: { icon?: "nib" | "flourish" | "ink"
   );
 };
 
+const SECTIONS = [
+  { id: "true-story", title: "True Story?" },
+  { id: "andrassy-affair", title: "Sisi & Andrássy" },
+  { id: "marie-valerie-paternity", title: "Marie Valerie's Father" },
+  { id: "franz-terese-twins", title: "Terese & the Twins" },
+  { id: "corfu-retreat", title: "Escape to Corfu" },
+  { id: "surviving-letters", title: "The Real Letters" },
+  { id: "ida-ferenczy", title: "Ida Ferenczy" },
+  { id: "locked-in-rooms", title: "Confined to Her Rooms" },
+  { id: "hungary-1867", title: "The 1867 Coronation" },
+  { id: "maximilian-mexico", title: "Maximilian in Mexico" },
+];
+
 export default function TheEmpressFactVsFictionPage() {
   useChatVisibility(false);
   const [activeId, setActiveId] = useState<string>("");
-
-  const sections = [
-    { id: "true-story", title: "True Story?" },
-    { id: "andrassy-affair", title: "Sisi & Andrássy" },
-    { id: "marie-valerie-paternity", title: "Marie Valerie's Father" },
-    { id: "franz-terese-twins", title: "Terese & the Twins" },
-    { id: "corfu-retreat", title: "Escape to Corfu" },
-    { id: "surviving-letters", title: "The Real Letters" },
-    { id: "ida-ferenczy", title: "Ida Ferenczy" },
-    { id: "locked-in-rooms", title: "Confined to Her Rooms" },
-    { id: "hungary-1867", title: "The 1867 Coronation" },
-    { id: "maximilian-mexico", title: "Maximilian in Mexico" },
-  ];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -169,7 +149,7 @@ export default function TheEmpressFactVsFictionPage() {
       { rootMargin: "-20% 0% -35% 0%" }
     );
 
-    sections.forEach((section) => {
+    SECTIONS.forEach((section) => {
       const element = document.getElementById(section.id);
       if (element) observer.observe(element);
     });
@@ -198,7 +178,7 @@ export default function TheEmpressFactVsFictionPage() {
               <span>Frequently Asked Questions</span>
             </div>
             <nav className="flex flex-col gap-4">
-              {sections.map((section) => (
+              {SECTIONS.map((section) => (
                 <button
                   key={section.id}
                   onClick={() => scrollTo(section.id)}
@@ -225,7 +205,7 @@ export default function TheEmpressFactVsFictionPage() {
                 className="group flex items-center gap-2 text-xs font-bold text-navy hover:text-accent-green transition-colors"
               >
                 <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                Timeline of the Elisabeth's Life
+                Timeline of Elisabeth&apos;s Life
               </Link>
             </div>
           </div>
@@ -258,9 +238,12 @@ export default function TheEmpressFactVsFictionPage() {
                   </div>
                 </div>
                 <figure className="not-prose w-full md:w-[150px] md:shrink-0 border-4 border-[#FDFBF7] shadow-md">
-                  <img
+                  <Image
                     src="/sisi/elisabeth-1867.jpg"
                     alt="Empress Elisabeth of Austria around 1867"
+                    width={1405}
+                    height={1885}
+                    sizes="(min-width: 768px) 150px, 100vw"
                     className="block w-full h-auto rounded-sm shadow-lg sepia-[0.25] contrast-105 grayscale-[0.15]"
                   />
                   <figcaption className="mt-2 text-sm italic text-stone-500">
@@ -499,10 +482,10 @@ export default function TheEmpressFactVsFictionPage() {
                   className="p-4 bg-stone-50 rounded-sm hover:bg-stone-100 transition-colors border border-stone-200 group flex flex-col items-center md:items-start gap-1"
                 >
                   <span className="block font-bold text-navy group-hover:text-accent-green">
-                    Timeline of Elisabeth's Life
+                    Timeline of Elisabeth&apos;s Life
                   </span>
                   <span className="text-xs text-stone-500 font-sans">
-                    Key events in Elisabeth's life, alongside relevant historical context.
+                    Key events in Elisabeth&apos;s life, alongside relevant historical context.
                   </span>
                 </Link>
               </div>
