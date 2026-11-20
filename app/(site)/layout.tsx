@@ -47,7 +47,11 @@ export default function SiteLayout({
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   const isHome = pathname === '/';
-  const hideChat = pathname === '/archive_search' || pathname === '/franz-von-papen';
+  const hideChat =
+    pathname === '/archive_search' ||
+    pathname === '/franz-von-papen' ||
+    pathname === '/sisi' ||
+    pathname.startsWith('/sisi/');
   const isWw1Origins = pathname === '/ww1-origins';
   const isFranzVonPapen = pathname === '/franz-von-papen';
   const substackUrl = process.env.NEXT_PUBLIC_SUBSTACK_URL ?? 'https://thevenetiaproject.substack.com';
