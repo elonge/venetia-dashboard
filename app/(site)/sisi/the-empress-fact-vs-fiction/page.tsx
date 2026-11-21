@@ -129,6 +129,8 @@ const SECTIONS = [
   { id: "ida-ferenczy", title: "Ida Ferenczy" },
   { id: "locked-in-rooms", title: "Confined to Her Rooms" },
   { id: "hungary-1867", title: "The 1867 Coronation" },
+  { id: "maximilian-adopted-son", title: "Maximilian's Adopted Son" },
+  { id: "smissen-child-plan", title: "Charlotte & Smissen" },
   { id: "maximilian-mexico", title: "Maximilian in Mexico" },
 ];
 
@@ -436,6 +438,44 @@ export default function TheEmpressFactVsFictionPage() {
               </section>
 
               <HistoricalDivider icon="flourish" />
+
+              <section id="maximilian-adopted-son" className="scroll-mt-20">
+                <QuestionHeading>
+                  Did Maximilian and Charlotte Really Adopt a Son in Mexico?
+                </QuestionHeading>
+                <div className="bg-white/50 p-6 rounded-sm border-l-4 border-accent-green/30 mb-4">
+                  <p className="font-bold text-navy mb-2">
+                    The Short Answer: Yes—but the series changes what happened afterward.
+                  </p>
+                  <p className="m-0">
+                    On September 9, 1865, Maximilian and Charlotte adopted two descendants of Mexico&apos;s first emperor: Agustín de Iturbide y Green and his cousin Salvador de Iturbide y de Marzán. Agustín was about two years old and received the title Prince of Iturbide.
+                  </p>
+                </div>
+                <p>
+                  The adoption was Maximilian&apos;s decision, and Charlotte disapproved. Agustín was separated from his mother as the imperial couple tried to create a dynastic succession. The series instead has the child presented to Maximilian and then quickly returned, which is its own simplified resolution rather than the documented course of the adoption.
+                </p>
+              </section>
+
+              <HistoricalDivider icon="ink" />
+
+              <section id="smissen-child-plan" className="scroll-mt-20">
+                <QuestionHeading>
+                  Did Maximilian Arrange for Charlotte to Have a Child with Alfred van der Smissen?
+                </QuestionHeading>
+                <div className="bg-white/50 p-6 rounded-sm border-l-4 border-accent-amber/30 mb-4">
+                  <p className="font-bold text-navy mb-2">
+                    The Short Answer: No evidence supports the arrangement shown in the series.
+                  </p>
+                  <p className="m-0">
+                    The series has Maximilian propose that Charlotte conceive a child with Belgian officer Alfred van der Smissen, with Charlotte accepting and Maximilian&apos;s approval. Van der Smissen was a real Belgian officer who served in Mexico, but no known source establishes that Maximilian arranged such an encounter.
+                  </p>
+                </div>
+                <p>
+                  A much later rumor claimed that Charlotte secretly gave birth in January 1867 to Van der Smissen&apos;s child, sometimes identified as the future French general Maxime Weygand. That allegation remains an unproven paternity story, not established history, and it does not substantiate the series&apos; specific claim that Maximilian planned or approved the liaison.
+                </p>
+              </section>
+
+              <HistoricalDivider icon="nib" />
 
               <section id="maximilian-mexico" className="scroll-mt-20">
                 <QuestionHeading>

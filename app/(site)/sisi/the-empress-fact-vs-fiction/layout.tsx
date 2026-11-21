@@ -87,6 +87,22 @@ const faqSchema = {
     },
     {
       "@type": "Question",
+      name: "Did Maximilian and Charlotte really adopt a son in Mexico?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. On September 9, 1865, Maximilian and Charlotte adopted Agustín de Iturbide y Green, a young grandson of Mexico's first emperor, and his cousin Salvador de Iturbide y de Marzán. Agustín received the title Prince of Iturbide. The series changes the aftermath by having Maximilian quickly return the child.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Did Maximilian arrange for Charlotte to have a child with Alfred van der Smissen?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No known source establishes the arrangement depicted in the series. Alfred van der Smissen was a real Belgian officer in Mexico, but the later claim that Charlotte bore his child—sometimes identified as the future French general Maxime Weygand—remains an unproven rumor, not established fact.",
+      },
+    },
+    {
+      "@type": "Question",
       name: "Was Archduke Maximilian really executed by firing squad in Mexico?",
       acceptedAnswer: {
         "@type": "Answer",
