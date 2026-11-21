@@ -122,13 +122,7 @@ function romanize(num: number): string {
 }
 
 export default function ChaptersThread() {
-  const [chapters, setChapters] = useState<Chapter[]>([]);
-  // We can treat loading as false initially since we have static data,
-  // or use an effect to simulate "mounting" if needed.
-  // But for better UX, instant load is better.
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
+  const [chapters] = useState<Chapter[]>(() => {
     const extendWithPodcastInfo = (chapters: BaseChapter[]): Chapter[] => {
       return chapters.map((chapter) => {
         const podcast = PODCASTS.find(
@@ -138,31 +132,10 @@ export default function ChaptersThread() {
       });
     };
 
-    // Load static chapters
-    const data = extendWithPodcastInfo(STATIC_CHAPTERS);
-    setChapters(data);
-    setLoading(false);
-  }, []);
+    return extendWithPodcastInfo(STATIC_CHAPTERS);
+  });
 
   const sortedChapters = chapters?.length > 0 ? sortChapters(chapters) : [];
-
-  if (loading) {
-    return (
-      <div className="space-y-12 pl-4 border-l border-accent-brown/20">
-        {[1, 2, 3].map((key) => (
-          <div key={key} className="relative pl-8">
-            <div className="absolute -left-[5px] top-0 h-2.5 w-2.5 rounded-full bg-accent-brown/20" />
-            <div className="h-6 w-32 rounded bg-black/5 mb-4" />
-            <div className="h-48 w-full rounded bg-black/5 mb-4" />
-            <div className="space-y-2">
-              <div className="h-4 w-full rounded bg-black/5" />
-              <div className="h-4 w-3/4 rounded bg-black/5" />
-            </div>
-          </div>
-        ))}
-      </div>
-    );
-  }
 
   if (sortedChapters.length === 0) {
     return (
@@ -563,7 +536,7 @@ function PrecipicePromoCard() {
 
             {/* Subtitle - Dark Grey/Brown */}
             <div className="flex items-center gap-3 text-[10px] md:text-xs text-stone-800 uppercase tracking-wider font-bold mb-4 opacity-80">
-              <span>The real letters behind Robert Harris's bestseller</span>
+              <span>The real letters behind Robert Harris&apos;s bestseller</span>
             </div>
 
             {/* CTA Button - BLACK Button on Gold Card */}

@@ -1,365 +1,43 @@
-"use client";
+import type { Metadata } from "next";
+import type { DayData } from "@/components/daily/types";
+import { isInterestingDay } from "@/components/daily/dayUtils";
+import { getDailyRecordByDate } from "@/lib/daily_records";
+import { getAllFunFacts } from "@/lib/fun_facts";
+import HomeClient from "./HomeClient";
 
-import React, { useState, useEffect, useCallback } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { ArrowRight, Shuffle, FlaskConical, Search } from "lucide-react";
-import HeroSection from "@/components/home/HeroSection";
-import { useChatVisibility } from "@/components/chat/useChatVisibility";
-import {
-  DailyWidget,
-  isInterestingDay,
-  normalizeDayDate,
-} from "@/components/daily";
-import type { DayData } from "@/components/daily";
-import DataRoomPreview from "@/components/data-room/DataRoomPreview";
-import ChaptersThread from "@/components/home/ChaptersThread";
+const SITE_URL = "https://www.thevenetiaproject.com";
 
-export default function Home() {
-  const router = useRouter();
-  useChatVisibility(false);
+export const metadata: Metadata = {
+  alternates: { canonical: `${SITE_URL}/` },
+};
 
-  // Daily widget state
-  const [todayInHistory, setTodayInHistory] = useState<DayData | null>(null);
-  const [loadingDays, setLoadingDays] = useState(true);
-  const [navigating, setNavigating] = useState(false);
+async function getTodayInHistory(): Promise<DayData | null> {
+  const today = new Date();
+  const month = today.getUTCMonth() + 1;
+  const day = today.getUTCDate();
+  const suffix = `${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
 
-  const [funFacts, setFunFacts] = useState<Array<{
-    _id: string;
-    fact: string;
-  }> | null>(null);
-  const [funFactIndex, setFunFactIndex] = useState(0);
-  const [loadingFunFacts, setLoadingFunFacts] = useState(true);
+  for (const year of [1914, 1915, 1913, 1912]) {
+    const record = await getDailyRecordByDate(`${year}-${suffix}`);
+    if (record && isInterestingDay(record)) return record;
+  }
 
-  const handleNextDay = async () => {
-    if (!todayInHistory || navigating) return;
-    setNavigating(true);
-    try {
-      const date = normalizeDayDate(todayInHistory.date);
-      const res = await fetch(`/api/daily_records/next?date=${date}`);
-      if (res.ok) {
-        const nextDay = await res.json();
-        setTodayInHistory(nextDay);
-      }
-    } catch (error) {
-      console.error("Error navigating to next day:", error);
-    } finally {
-      setNavigating(false);
-    }
-  };
+  const fallbackYear = month < 7 ? 1915 : 1914;
+  return getDailyRecordByDate(`${fallbackYear}-${suffix}`);
+}
 
-  const handlePrevDay = async () => {
-    if (!todayInHistory || navigating) return;
-    setNavigating(true);
-    try {
-      const date = normalizeDayDate(todayInHistory.date);
-      const res = await fetch(`/api/daily_records/previous?date=${date}`);
-      if (res.ok) {
-        const prevDay = await res.json();
-        setTodayInHistory(prevDay);
-      }
-    } catch (error) {
-      console.error("Error navigating to previous day:", error);
-    } finally {
-      setNavigating(false);
-    }
-  };
+export default async function Home() {
+  const [initialTodayInHistory, funFacts] = await Promise.all([
+    getTodayInHistory().catch(() => null),
+    getAllFunFacts().catch(() => []),
+  ]);
 
-  // Find an "interesting" day matching today's month/day in priority years.
-  useEffect(() => {
-    async function loadDays() {
-      try {
-        const today = new Date();
-        const month = today.getMonth() + 1; // 1-12
-        const day = today.getDate();
-        const yearsByPriority = [1914, 1915, 1913, 1912] as const;
-
-        const candidateDateStrings = yearsByPriority.map(
-          (year) =>
-            `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(
-              2,
-              "0"
-            )}`
-        );
-
-        for (const candidate of candidateDateStrings) {
-          const directResponse = await fetch(
-            `/api/daily_records/${encodeURIComponent(candidate)}`
-          );
-          if (!directResponse.ok) continue;
-
-          const dayData = (await directResponse.json()) as DayData;
-          if (isInterestingDay(dayData)) {
-            setTodayInHistory(dayData);
-            return;
-          }
-        }
-
-        // Fallback logic if no interesting day found
-        const fallbackYear = month < 7 ? 1915 : 1914;
-        const fallbackDate = `${fallbackYear}-${String(month).padStart(
-          2,
-          "0"
-        )}-${String(day).padStart(2, "0")}`;
-
-        // Fetch specific fallback date directly to ensure data consistency
-        const fallbackRes = await fetch(`/api/daily_records/${fallbackDate}`);
-        if (fallbackRes.ok) {
-          const fallbackData = await fallbackRes.json();
-          setTodayInHistory(fallbackData);
-        } else {
-          // Absolute minimal fallback if API fails
-          setTodayInHistory({
-            date: fallbackDate,
-            summary: "No historical record available for this date.",
-            events: [],
-            letters: [],
-          } as DayData);
-        }
-      } catch (error) {
-        console.error("Error loading days:", error);
-      } finally {
-        setLoadingDays(false);
-      }
-    }
-
-    loadDays();
-  }, []);
-
-  useEffect(() => {
-    async function loadFunFacts() {
-      try {
-        const response = await fetch("/api/fun_facts");
-        if (!response.ok) {
-          throw new Error("Failed to load fun facts");
-        }
-        const data = (await response.json()) as Array<{
-          _id: string;
-          fact: string;
-        }>;
-        setFunFacts(data);
-        // Start with a random fact instead of 0
-        setFunFactIndex(Math.floor(Math.random() * data.length));
-      } catch (error) {
-        console.error("Error loading fun facts:", error);
-        setFunFacts(null);
-      } finally {
-        setLoadingFunFacts(false);
-      }
-    }
-
-    loadFunFacts();
-  }, []);
-
-  const handleShuffleFunFact = useCallback(() => {
-    if (!funFacts || funFacts.length === 0) return;
-    if (funFacts.length === 1) {
-      setFunFactIndex(0);
-      return;
-    }
-
-    setFunFactIndex((prev) => {
-      let next = prev;
-      while (next === prev) {
-        next = Math.floor(Math.random() * funFacts.length);
-      }
-      return next;
-    });
-  }, [funFacts]);
+  const initialFunFacts = funFacts.map(({ _id, fact }) => ({ _id, fact }));
 
   return (
-    <div className="h-full bg-page-bg">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-6">
-        <HeroSection />
-
-        <main className="grid grid-cols-1 items-start gap-4 md:gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-          {/* Daily view (2/3) */}
-          <section className="min-w-0">
-            {loadingDays ? (
-              <div className="bg-card-bg rounded-md p-4 md:p-6 text-center text-slate border border-border-beige min-h-[200px] md:min-h-[250px] flex items-center justify-center shadow-[0_14px_34px_rgba(0,0,0,0.08)]">
-                <span className="text-sm md:text-base">
-                  Loading today&apos;s date in 1912–1915...
-                </span>
-              </div>
-            ) : todayInHistory ? (
-              <DailyWidget
-                day={todayInHistory}
-                onClick={() =>
-                  router.push(`/daily/${normalizeDayDate(todayInHistory.date)}`)
-                }
-                onNext={handleNextDay}
-                onPrev={handlePrevDay}
-                isNextDisabled={navigating}
-                isPrevDisabled={navigating}
-              />
-            ) : (
-              <div className="bg-card-bg rounded-2xl p-4 md:p-6 text-center text-slate border border-border-beige min-h-[200px] md:min-h-[250px] flex items-center justify-center shadow-[0_14px_34px_rgba(0,0,0,0.08)]">
-                <span className="text-sm md:text-base">
-                  No interesting day found for today&apos;s date in 1912–1915.
-                </span>
-              </div>
-            )}
-          </section>
-
-          {/* Data Room + Simulation Lab (1/3) */}
-          <section className="space-y-4 md:space-y-6">
-            <Link
-              href="/archive_search"
-              className="relative block w-full overflow-hidden rounded-md bg-white p-5 group transition-all duration-300 border border-stone-200 hover:border-stone-300 hover:shadow-sm"
-            >
-              <div className="flex items-center gap-4">
-                <div className="p-2.5 rounded-full bg-stone-100 text-stone-600 group-hover:bg-stone-200 transition-colors">
-                  <Search size={20} />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-lg font-serif font-bold text-stone-800 group-hover:text-stone-900 truncate">
-                    Trace a Person
-                  </h3>
-                  <p className="text-xs md:text-sm text-stone-500 mt-0.5 truncate">
-                    Search the archive by name or alias
-                  </p>
-                </div>
-                <div className="shrink-0 text-stone-400 group-hover:text-stone-600 transition-colors">
-                  <ArrowRight
-                    size={18}
-                    className="group-hover:translate-x-1 transition-transform"
-                  />
-                </div>
-              </div>
-            </Link>
-
-            <DataRoomPreview />
-            <Link
-              href="/lab"
-              className="relative block min-h-[160px] md:min-h-[180px] w-full overflow-hidden rounded-md bg-card-bg p-6 group transition-all duration-300 border border-dashed border-accent-brown/30 hover:border-accent-brown hover:shadow-[0_8px_30px_rgba(120,53,15,0.06)] hover:bg-[#FDFBF7]"
-            >
-              {/* Abstract "Blueprint" Background */}
-              <div
-                className="absolute inset-0 pointer-events-none opacity-[0.03]"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(circle, #78350F 1px, transparent 1px)",
-                  backgroundSize: "16px 16px",
-                }}
-              />
-
-              <div className="relative z-10 flex flex-col h-full justify-between">
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="px-2 py-0.5 rounded-full bg-accent-brown/10 border border-accent-brown/20 text-[9px] font-sans font-bold uppercase tracking-widest text-accent-brown flex items-center gap-1.5">
-                      <FlaskConical size={10} className="stroke-[2.5]" />
-                      <span>Experimental</span>
-                    </div>
-                  </div>
-
-                  <h3 className="text-xl md:text-2xl font-serif font-bold text-navy mb-2 group-hover:text-accent-brown transition-colors">
-                    The Speculative Studio
-                  </h3>
-
-                  <p className="text-sm text-slate font-sans leading-relaxed max-w-[90%]">
-                    What if history happened differently? Use AI to fill the
-                    gaps and reconstruct missing timelines.
-                  </p>
-                </div>
-
-                <div className="flex justify-end mt-2">
-                  <div className="p-2 rounded-full bg-accent-brown/5 group-hover:bg-accent-brown/10 transition-colors text-accent-brown">
-                    <ArrowRight
-                      size={18}
-                      className="group-hover:translate-x-1 transition-transform"
-                    />
-                  </div>
-                </div>
-              </div>
-            </Link>
-          </section>
-
-          {/* Fun Facts (1/3) */}
-          <section className="min-w-0">
-            <div className="flex items-baseline justify-between gap-4">
-              <h2 className="text-navy font-serif text-xl md:text-2xl font-semibold">
-                Get to Know the Story
-              </h2>
-            </div>
-            <div className="mt-3 md:mt-4">
-              <ChaptersThread />
-            </div>
-          </section>          
-          <section>
-            <div
-              className="relative cursor-pointer rounded-md border min-h-50 border-accent-amber/50 bg-accent-amber p-4 md:p-6 shadow-[0_14px_34px_rgba(0,0,0,0.10)] rotate-[0.6deg] overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-900/40 focus-visible:ring-offset-2 focus-visible:ring-offset-page-bg transition-all duration-500 hover:rotate-0 hover:shadow-2xl hover:-translate-y-1 group"
-              role="button"
-              tabIndex={0}
-              aria-label="Fun facts (click to shuffle)"
-              onClick={handleShuffleFunFact}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  handleShuffleFunFact();
-                }
-              }}
-            >
-              <div
-                className="absolute inset-0 pointer-events-none opacity-45"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(circle at 14px 14px, rgba(120, 53, 15, 0.10) 1px, transparent 1px)",
-                  backgroundSize: "26px 26px",
-                }}
-              />
-
-              {/* Pin */}
-              <div className="absolute -top-2 left-1/2 -translate-x-1/2 h-5 w-5 rounded-full bg-amber-800 shadow-[0_10px_20px_rgba(120, 53, 15, 0.35)] border border-amber-950/30 transition-all duration-500 group-hover:scale-110 group-hover:bg-amber-700" />
-
-              <div className="relative">
-                <div className="flex items-start justify-between gap-3 md:gap-4">
-                  <div className="min-w-0 flex-1">
-                    <div className="text-[10px] md:text-[11px] font-semibold tracking-[0.14em] uppercase text-amber-950/70">
-                      Fun Facts
-                    </div>
-                    <div className="mt-1 md:mt-2 text-base md:text-lg font-bold text-amber-950">
-                      From the Archive
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleShuffleFunFact();
-                    }}
-                    className="inline-flex h-9 w-9 md:h-9 md:w-9 items-center justify-center rounded-md border border-accent-amber/50 bg-white/60 text-amber-900 hover:bg-white transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shrink-0 min-w-[44px] min-h-[44px]"
-                    disabled={
-                      loadingFunFacts || !funFacts || funFacts.length === 0
-                    }
-                    aria-label="Shuffle fun fact"
-                    title="Shuffle"
-                  >
-                    <Shuffle className="h-4 w-4" />
-                  </button>
-                </div>
-
-                <div className="mt-3 md:mt-4">
-                  {loadingFunFacts ? (
-                    <div className="text-xs md:text-sm text-amber-900/70">
-                      Loading fun facts...
-                    </div>
-                  ) : funFacts && funFacts.length > 0 ? (
-                    <p className="text-sm md:text-[15px] leading-relaxed text-amber-950">
-                      {funFacts[funFactIndex]?.fact}
-                    </p>
-                  ) : (
-                    <p className="text-sm md:text-[15px] leading-relaxed text-amber-950">
-                      In 1914, the UK&apos;s Parliament was debating crises at
-                      home and abroad—while private letters carried entirely
-                      different stakes.
-                    </p>
-                  )}
-                </div>
-              </div>
-            </div>
-          </section>
-        </main>
-      </div>
-    </div>
+    <HomeClient
+      initialTodayInHistory={initialTodayInHistory}
+      initialFunFacts={initialFunFacts}
+    />
   );
 }

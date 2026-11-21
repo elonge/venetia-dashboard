@@ -3,6 +3,8 @@ import { getDailyRecordByDate, getNextDailyRecordByDate, getPreviousDailyRecordB
 import { normalizeDayDate } from '@/components/daily/dayUtils';
 import DailyPageClient from '@/components/daily/DailyPageClient';
 
+const SITE_URL = 'https://www.thevenetiaproject.com';
+
 type Props = {
   params: Promise<{ date: string }>;
 }
@@ -16,6 +18,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
       title: `Archive: ${date}`,
       description: 'No letters from Asquith to Venetia found for this date.',
+      alternates: {
+        canonical: `${SITE_URL}/daily/${encodeURIComponent(normalizedDate)}`,
+      },
       // 🛑 STOP GOOGLE HERE
       robots: {
         index: false,
@@ -25,8 +30,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: `Daily Entry: ${normalizedDate} | The Venetia Project`,
+    title: `Daily Entry: ${normalizedDate}`,
     description: `Daily activities and correspondence for ${normalizedDate}. Letters: ${day.total_number_letters || 0}.`,
+    alternates: {
+      canonical: `${SITE_URL}/daily/${encodeURIComponent(normalizedDate)}`,
+    },
   };
 }
 
