@@ -11,6 +11,7 @@
     "ingest:asquith": "tsx scripts/ingest-asquith-letters.ts",
     "build:asquith-buckets": "tsx scripts/build-asquith-bucket-embeddings.ts",
     "clear-chunks": "tsx scripts/clear-document-chunks.ts",
+    "analytics:export:24h": "tsx --env-file=.env.local scripts/export-mixpanel-events.ts",
     "seo:collect": "tsx --env-file=.env.local scripts/seo-agent/index.ts",
     "seo:mcp": "tsx --env-file=.env.local scripts/seo-agent/mcp-server.ts"
   },
