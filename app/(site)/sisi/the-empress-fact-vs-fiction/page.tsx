@@ -4,6 +4,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, BookOpen, Info, List } from "lucide-react";
+import BooksCard from "@/components/sisi/BooksCard";
 
 type RelatedPageLinkProps = {
   href: string;
@@ -212,7 +213,7 @@ export default function TheEmpressFactVsFictionPage() {
         </aside>
 
         {/* Main Content */}
-        <div className="max-w-3xl flex-1">
+        <div className="max-w-3xl min-w-0 flex-1">
           <div className="prose prose-lg prose-p:text-navy prose-headings:text-navy prose-li:text-slate">
             <header className="mb-12">
               <div className="flex flex-col gap-7 md:flex-row md:items-start">
@@ -269,6 +270,7 @@ export default function TheEmpressFactVsFictionPage() {
                 <p>
                   Below, we separate documented Habsburg history from the show&apos;s dramatic license.
                 </p>
+                <BooksCard placement="intro" variant="inline" context="fact-vs-fiction"/>
               </section>
 
               <HistoricalDivider icon="ink" />
@@ -497,6 +499,10 @@ export default function TheEmpressFactVsFictionPage() {
                   linkTitle="Explore the timeline of Elisabeth's life"
                 />
               </section>
+            </div>
+
+            <div className="mt-12 md:mt-16">
+              <BooksCard placement="end" context="fact-vs-fiction" />
             </div>
 
             <footer className="mt-16 md:mt-20 pt-8 md:pt-10 border-t border-stone-200 text-center md:text-left">

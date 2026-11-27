@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FAQ_ITEMS } from "./faq";
 import { ArrowRight } from "lucide-react";
+import BooksCard from "@/components/sisi/BooksCard";
 
 type BioTimelineTone = "cyan" | "orange" | "navy";
 
@@ -353,6 +354,10 @@ export default function SisiTimelinePage() {
           </p>
         </div>
 
+        <div className="mx-auto max-w-3xl">
+          <BooksCard context="timeline" placement="intro" variant="inline" />
+        </div>
+
         <div className="relative mt-10">
           <div className="absolute bottom-0 left-6 top-0 w-px bg-border-beige md:left-1/2 md:-translate-x-1/2" />
 
@@ -465,6 +470,10 @@ export default function SisiTimelinePage() {
                 </p>
               </details>
             ))}
+          </div>
+
+          <div className="mx-auto mt-12 max-w-3xl md:mt-16">
+            <BooksCard context="timeline" placement="end" />
           </div>
 
           <div className="mt-12 grid gap-4 border-t border-border-beige pt-8 md:grid-cols-2">

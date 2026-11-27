@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BooksCard from "@/components/sisi/BooksCard";
 import Image from "next/image";
 import { Metadata } from "next";
 import { ReactNode } from "react";
@@ -310,7 +311,7 @@ export default function SisiAfter1867Page() {
               </div>
             </section>
 
-            <section className="mb-14 rounded-sm border border-border-beige/60 bg-white/65 p-6 md:p-8">
+            <section className="mb-8 rounded-sm border border-border-beige/60 bg-white/65 p-6 md:p-8">
               <div className="mb-5 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-muted-gray">
                 <CalendarDays size={14} />
                 <span>Timeline, 1867 to 1898</span>
@@ -327,6 +328,10 @@ export default function SisiAfter1867Page() {
                 ))}
               </div>
             </section>
+
+            <div className="mb-14">
+              <BooksCard context="after-1867" placement="intro" variant="inline" />
+            </div>
 
             <div className="space-y-14">
               <section id="hungarian-child" className="scroll-mt-20">
@@ -447,6 +452,8 @@ export default function SisiAfter1867Page() {
                   </div>
                 </div>
               </section>
+
+              <BooksCard context="after-1867" placement="end" />
 
               <section className="rounded-sm border border-border-beige/60 bg-white/70 p-6 md:p-8">
                 <h2 className="text-[1.6rem] font-serif font-semibold leading-tight text-navy">
